@@ -1,38 +1,104 @@
-.App {
-  text-align: center;
+:root {
+  --white: #fff;
+  --yellow: #c7ab62;
+  --main-black: #222;
+  --price-compare: #888;
+  --main-gray: #444;
+  --secondary-gray: #666;
+  --footer-links: #999;
+  --light-gray: #f6f6f6;
+  --red: #e21c1c;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* typography */
+body,
+button,
+input {
+  font-family: "DM Sans", sans-serif!important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  color: var(--main-black);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* start custom classes */
+.hover-bg-yellow:hover {
+  background-color: var(--yellow) !important;
 }
 
-.App-link {
-  color: #61dafb;
+.hover-color-yellow:hover {
+  color: var(--yellow) !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn-bg-dark {
+  background-color: var(--main-black);
 }
+
+.btn-bg-dark:hover {
+  background-color: var(--yellow);
+}
+
+.btn-bg-gray {
+  background-color: var(--light-gray);
+}
+
+.btn-bg-white {
+  background-color: var(--white);
+}
+
+.btn-bg-gray:hover,
+.btn-bg-white:hover {
+  background-color: var(--yellow);
+  color: white !important;
+}
+
+.btn-with-border {
+  border: 2px solid var(--main-black);
+  color: var(--main-black);
+}
+
+.btn-with-border:hover {
+  border-color: var(--yellow);
+  color: var(--yellow);
+}
+
+.text-red {
+  color: var(--red);
+}
+
+.color-old-price {
+  color: var(--price-compare);
+}
+
+.color-product-name {
+  color: var(--main-gray);
+}
+
+.slider-btn {
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  opacity: 0;
+}
+
+.slider-btn:hover {
+  background-color: var(--yellow);
+}
+
+.color-main-gray {
+  color: var(--main-gray);
+}
+
+.color-secondary-gray {
+  color: var(--secondary-gray);
+}
+
+.color-main-black{
+  color: var(--main-black);
+}
+
+.color-yellow {
+  color: var(--yellow);
+}
+/* end custom classes */
