@@ -147,5 +147,15 @@ img {
   -ms-transform: scale(1.1);
   transform: scale(1.1);
 }
-/* Ens instagram posts */
+/* end instagram posts */
+
+/* start brands slider*/
+.brands-slider img {
+  transition: transform ease 0.5s;
+}
+
+.brands-slider img:hover {
+ transform: scale(1.2); 
+}
+/* end brands slider*/
 /* End main layout */
