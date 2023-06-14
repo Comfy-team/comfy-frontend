@@ -19,7 +19,7 @@ function App() {
   useEffect(() => {
     axiosInstance
       .get("/brands")
-      .then(async (res) => {
+      .then((res) => {
         dispatch(setBrands(res.data));
       })
       .catch((error) => console.log(error));
