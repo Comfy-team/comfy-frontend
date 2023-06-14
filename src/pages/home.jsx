@@ -1,12 +1,5 @@
-// components
-import FollowUs from "../components/common/followUs";
-
 const Home = () => {
-  return (
-    <div id="home">
-      <FollowUs />
-    </div>
-  );
-};
-
+    return ( <div id="home">home</div> );
+}
+ 
 export default Home;
