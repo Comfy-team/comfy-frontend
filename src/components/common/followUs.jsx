@@ -73,7 +73,7 @@ const FollowUs = () => {
 
   return (
     <section className="insta-posts py-5 ps-3">
-      <h2 className="h3 fw-bolder text-center text-capitalize mb-4 pe-3">
+      <h2 className="h2 fw-bolder text-center text-capitalize mb-4 py-3 pe-3">
         @Comfy! Follow us on Instagram
       </h2>
       <div
