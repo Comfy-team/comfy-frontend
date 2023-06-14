@@ -150,6 +150,14 @@ img {
 /* end instagram posts */
 
 /* start brands slider*/
+.brands-slider .slider-btn {
+  opacity: 0!important;
+}
+
+.brands-slider:hover .slider-btn {
+  opacity: 1!important;
+}
+
 .brands-slider img {
   transition: transform ease 0.5s;
 }
