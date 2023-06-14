@@ -21,17 +21,22 @@ const responsive = {
   medium: {
     breakpoint: { max: 1023, min: 768 },
     items: 3,
-    partialVisibilityGutter: 20,
+    partialVisibilityGutter: 40,
   },
   small: {
     breakpoint: { max: 767, min: 481 },
     items: 2,
-    partialVisibilityGutter: 50,
+    partialVisibilityGutter: 40,
   },
   extraSmall: {
-    breakpoint: { max: 480, min: 0 },
-    items: 1,
-    partialVisibilityGutter: 80,
+    breakpoint: { max: 480, min: 375 },
+    items: 2,
+    partialVisibilityGutter: 40,
+  },
+  extraExtraSmall: {
+    breakpoint: { max: 374, min: 0 },
+    items: 2,
+    partialVisibilityGutter: 30,
   },
 };
 
@@ -39,7 +44,7 @@ const Brands = () => {
   const [isDragged, setIsdragged] = useState(false);
   const [isMouseDown, setIsMouseDown] = useState(false);
   const brands = useSelector((state) => state.brands.brands);
-  
+
   // Disable link pointer events if it's being dragged
   const handleDrag = () => {
     if (!isMouseDown) {
@@ -50,7 +55,7 @@ const Brands = () => {
   };
 
   return (
-    <section className="brands-slider py-5 ps-3 border border-secondary border-start-0 border-end-0">
+    <section className="brands-slider py-5 ps-3 border border-start-0 border-end-0">
       <div
         onMouseLeave={() => setIsMouseDown(false)}
         onMouseUp={() => setIsMouseDown(false)}
@@ -64,18 +69,22 @@ const Brands = () => {
           infinite
           keyBoardControl
           minimumTouchDrag={80}
-          removeArrowOnDeviceType={["medium", "small", "extraSmall"]}
+          removeArrowOnDeviceType={["medium", "small", "extraSmall","extraExtraSmall"]}
           customRightArrow={<RightArrow />}
           customLeftArrow={<LeftArrow />}
         >
           {brands.map((brand) => (
             <div
               key={brand._id}
-              className={`logo-holder pe-3`}
+              className="logo-holder pe-3 py-3"
               onMouseDown={() => setIsMouseDown(true)}
               onMouseMove={handleDrag}
             >
-              <img src={process.env.REACT_APP_BASE_URL+"/"+ brand.image} alt={brand.name} className="d-block img-fluid" />
+              <img
+                src={process.env.REACT_APP_BASE_URL + "/" + brand.image}
+                alt={brand.name}
+                className="d-block img-fluid"
+              />
             </div>
           ))}
         </Carousel>
