@@ -14,11 +14,17 @@
 body,
 button,
 input {
-  font-family: "DM Sans", sans-serif!important;
+  font-family: "DM Sans", sans-serif !important;
 }
 
 body {
   color: var(--main-black);
+}
+
+/* global style */
+a,
+img {
+  -webkit-user-drag: none;
 }
 
 /* start custom classes */
@@ -75,7 +81,7 @@ body {
 }
 
 .slider-btn {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.4)!important;
   width: 50px;
   height: 50px;
   border-radius: 100%;
@@ -83,7 +89,7 @@ body {
 }
 
 .slider-btn:hover {
-  background-color: var(--yellow);
+  background-color: var(--yellow)!important;
 }
 
 .color-main-gray {
@@ -94,7 +100,7 @@ body {
   color: var(--secondary-gray);
 }
 
-.color-main-black{
+.color-main-black {
   color: var(--main-black);
 }
 
@@ -102,3 +108,44 @@ body {
   color: var(--yellow);
 }
 /* end custom classes */
+
+/* start main layout */
+/* Start instagram posts */
+.insta-posts .multi-carousel .slider-btn {
+  opacity: 0!important;
+}
+
+.insta-posts .multi-carousel:hover .slider-btn {
+  opacity: 1!important;
+}
+
+.insta-posts .dragged {
+  pointer-events: none;
+}
+
+.insta-posts .icon-holder {
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  z-index: 10;
+  transition: opacity 0.5s ease;
+}
+
+.insta-posts .post:hover .icon-holder {
+  opacity: 1;
+}
+
+.insta-posts .post img {
+  -webkit-transition: -webkit-transform 0.5s ease;
+  transition: -webkit-transform 0.5s ease;
+  -o-transition: transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+}
+
+.insta-posts .post:hover img {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+/* Ens instagram posts */
+/* End main layout */
