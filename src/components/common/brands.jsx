@@ -57,6 +57,7 @@ const Brands = () => {
   return (
     <section className="brands-slider py-5 ps-3 border border-start-0 border-end-0">
       <div
+      className="py-3"
         onMouseLeave={() => setIsMouseDown(false)}
         onMouseUp={() => setIsMouseDown(false)}
       >
