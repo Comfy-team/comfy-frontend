@@ -5,8 +5,8 @@ import FollowUs from "./../components/common/followUs";
 const Home = () => {
   return (
     <div id="home">
-      <FollowUs />
       <Brands />
+      <FollowUs />
     </div>
   );
 };
