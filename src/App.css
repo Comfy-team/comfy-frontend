@@ -258,6 +258,12 @@ footer {
 /* end footer */
 
 /* start header */
+.header {
+  position: fixed;
+  width: 100vw;
+  z-index: 10;
+  background-color: var(--white);
+}
 .headerPage p,
 .headerPage h2 {
   width: 50%;
@@ -265,7 +271,7 @@ footer {
   color: black;
 }
 .headerPage {
-  height: 100vh;
+  height: 90vh;
   margin-bottom: 0;
 }
 
@@ -308,22 +314,13 @@ a.nav-link.Register.fs-5.active:hover {
   align-items: center;
   color: #f4f4f4;
 }
+
+.Register-nav {
+  color: var(--main-gray);
+  margin-left: 150px;
+}
 /* with 786 or less */
 @media (max-width: 768px) {
-  .headerCarusel .carousel-item {
-    height: 60vh;
-  }
-  .headerPage {
-    height: 60vh;
-    margin-bottom: 0;
-  }
-
-  .Register-nav {
-    margin-left: -0px !important;
-    margin-bottom: 10px;
-    text-align: left;
-  }
-
   .searchIcon {
     display: block;
     margin-left: 2px;
@@ -335,8 +332,40 @@ a.nav-link.Register.fs-5.active:hover {
     margin-bottom: 10px;
     text-align: left;
   }
-}
 
+  .headerPage {
+    height: 60vh;
+    margin-bottom: 0;
+  }
+
+  .Register-nav {
+    margin-left: -0px !important;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+
+  .headerCarusel .carousel-item {
+    height: 60vh;
+  }
+}
+@media (max-width: 1024px) {
+  .Register-nav {
+    margin-left: -20px !important;
+    margin-bottom: 10px;
+    margin-left: 5px !important;
+    text-align: left;
+  }
+  .navbar-expand-md .navbar-nav .nav-link {
+    padding: 3px;
+    font-size: 15px;
+  }
+
+  .Register-nav .nav {
+    width: 50px;
+    font-size: 10px;
+    padding: 0 !important;
+  }
+}
 @keyframes moveText {
   from {
     right: -30%;
