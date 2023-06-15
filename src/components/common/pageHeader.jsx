@@ -34,7 +34,7 @@ const PageHeader = () => {
     <div className="  headerPage  ">
       <Carousel className=" headerCarusel  mb-0">
         {HomImgs.map(img => (
-          <Carousel.Item className=" headerCarusel-Item ">
+          <Carousel.Item key={img.id} className=" headerCarusel-Item ">
             <img
               className="d-block w-100 h-100"
               src={img.src}
