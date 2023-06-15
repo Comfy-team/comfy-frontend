@@ -147,13 +147,48 @@ img {
   -ms-transform: scale(1.1);
   transform: scale(1.1);
 }
-/* Ens instagram posts */
-/* End main layout */
+/* end instagram posts */
 
+/* start brands slider*/
+.brands-slider .slider-btn {
+  opacity: 0 !important;
+}
 
+.brands-slider:hover .slider-btn {
+  opacity: 1 !important;
+}
 
+.brands-slider img {
+  transition: transform ease 0.5s;
+}
 
-/*Footer*/
+.brands-slider img:hover {
+  transform: scale(1.2);
+}
+/* end brands slider*/
+
+/* start product card */
+.product-card .holder .hover-img {
+  opacity: 0;
+  transition: opacity ease 0.5s, transform ease 0.7s;
+}
+
+.product-card:hover .holder .hover-img {
+  opacity: 1;
+}
+
+.product-card .holder:hover .hover-img {
+  transform: scale(1.2);
+}
+
+.product-card .badge {
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 1;
+}
+/* end product card */
+
+/* start footer */
 footer {
   padding-top: 80px;
 }
@@ -163,7 +198,7 @@ footer {
 }
 
 .menu-footer .nav-link {
-  text-decoration: none ;
+  text-decoration: none;
 }
 
 .nav-link:hover {
@@ -173,7 +208,6 @@ footer {
 footer {
   background-color: var(--main-black);
 }
-
 
 .footer-toggle {
   cursor: pointer;
@@ -219,7 +253,8 @@ footer {
   transform: rotate(180deg);
 }
 
-.contacts{
+.contacts {
   text-decoration: underline;
 }
-/*End footer*/
+/* end footer */
+/* end main layout */
