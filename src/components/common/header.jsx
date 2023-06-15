@@ -140,7 +140,7 @@ const Header = () => {
               </div>
 
               <div
-                className="Register-nav mt-2 ml-2"
+                className="mt-2 ml-2"
                 style={{
                   color: "#5b5d62",
                   marginLeft: "150px",
