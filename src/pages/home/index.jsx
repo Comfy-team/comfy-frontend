@@ -1,6 +1,6 @@
 // components
-import Brands from "../components/common/brands";
-import FollowUs from "./../components/common/followUs";
+import Brands from "../../components/common/brands";
+import FollowUs from "../../components/common/followUs";
 
 const Home = () => {
   return (
