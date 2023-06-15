@@ -1,4 +1,9 @@
-/* start login style*/
+/* start modal style*/
+
+.modal-open {
+  overflow: hidden;
+}
+
 .cancel {
   transition: all 0.3s linear 0s;
   -webkit-transition: all 0.3s linear 0s;
@@ -16,8 +21,8 @@
   margin: 0;
 }
 .title.active {
-  /* font-size: 1.25rem; */
-  border-color: var(--color-main);
+  color: var(--yellow);
+  border-color: var(--yellow);
 }
 .appear{
     background-color: rgba(0, 0, 0, 0.5);
@@ -25,6 +30,8 @@
 .button-navigate{
   margin-bottom:50px;
 }
+
+
 
 .or {
   display: flex;
