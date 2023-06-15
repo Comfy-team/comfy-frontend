@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 
 import Login from "./login";
@@ -31,14 +31,20 @@ const Modal =({ closeModal })=>{
       // Set the decoded user data in the state
       setUserData(decodedToken)
     }
+    useEffect(() => {
+    document.body.classList.add(styles["modal-open"]);
+
+    return () => {
+      document.body.classList.remove(styles["modal-open"]);
+    };
+  }, []);
 
     return (
         <>
           <div
-            className={`modal fade show ${styles.appear}`}
-            style={{ display: "block" }}
+            className={`modal fade show d-block ${styles.modal} ${styles.appear}`}
           >
-            <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
               <div className="modal-content container">
                 <div className="modal-header row border-0">
                   <div className="d-flex align-items-end justify-content-end">
