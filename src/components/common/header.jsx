@@ -2,14 +2,22 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { faUnlock } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-import logo1 from "../../assets/logos/logo-5.png";
+import logo1 from "../../assets/logos/logo-header.png";
+import Modal from "../login-register/modal";
 
 const Header = () => {
   const [count, setCount] = useState(0);
+
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const isLoggedIn = localStorage.getItem("userToken");
+  const handleLoginClick = () => {
+    setShowLoginModal(true);
+  };
 
   return (
     <header style={{ hight: "5vh", backgroundColor: "bla" }}>
@@ -130,6 +138,7 @@ const Header = () => {
                   FAQ
                 </NavLink>
               </div>
+
               <div
                 className="Register-nav mt-2 ml-2"
                 style={{
@@ -138,19 +147,18 @@ const Header = () => {
                   marginRight: "20px",
                 }}
               >
-                <FontAwesomeIcon
-                  icon={faLock}
-                  className="outlined-icon  "
-                  style={{ color: "#5b5d62", display: "inline" }}
-                  size="lg"
-                />
-                <NavLink
-                  className="nav-link fs-5"
-                  to="/faq"
-                  style={{ color: "#5b5d62", display: "inline-block" }}
-                >
-                  login/Register
-                </NavLink>
+                {isLoggedIn ? (
+                  <NavLink className="nav-link fs-5" to="/account">
+                    <FontAwesomeIcon icon={faUser} />
+                  </NavLink>
+                ) : (
+                  <button className="nav-link fs-5" onClick={handleLoginClick}>
+                    <FontAwesomeIcon icon={faUnlock} /> Login / Register
+                  </button>
+                )}
+                {showLoginModal && (
+                  <Modal closeModal={() => setShowLoginModal(false)} />
+                )}
               </div>
 
               <div className="mt-3 mt-2 ">
