@@ -1,0 +1,102 @@
+.headerPage p,
+h2 {
+  width: 50%;
+  font-size: 3vw;
+  color: black;
+}
+.headerPage {
+  height: 100vh;
+  margin-bottom: 0;
+}
+
+.headerCarusel img {
+  height: 100%;
+  height: max-content;
+}
+
+@media (max-width: 576px) {
+  .Register-nav {
+    margin-left: 0 !important;
+    margin-top: 10px;
+  }
+}
+
+.Register-nav :hover,
+.nav-link:hover {
+  color: rgb(219, 159, 9) !important;
+}
+
+a.nav-link.Register.fs-5.active:hover {
+  background-color: #f8f9fa !important;
+  color: #eeca03 !important;
+}
+
+.headerCarusel .carousel-item {
+  height: 100vh;
+}
+.headerCarusel .carousel-item img {
+  height: 100%;
+  width: auto;
+}
+
+.cart-counter {
+  background-color: #bcb02f;
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  display: inline-block;
+  text-align: center;
+  font-size: 15px;
+  align-items: center;
+  color: #f4f4f4;
+}
+/* with 786 or less */
+@media (max-width: 768px) {
+  .headerCarusel .carousel-item {
+    height: 60vh;
+  }
+  .headerPage {
+    height: 60vh;
+    margin-bottom: 0;
+  }
+
+  .Register-nav {
+    margin-left: -0px !important;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+
+  .searchIcon {
+    display: block;
+    margin-left: 2px;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+  .cartContainer {
+    margin-left: -15px;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+}
+
+@keyframes moveText {
+  from {
+    right: -30%;
+  }
+  to {
+    right: 20%;
+  }
+}
+
+.content {
+  width: 200%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 100px;
+}
+.content {
+  position: absolute;
+  right: 0;
+  animation: moveText 5s linear;
+}
