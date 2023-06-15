@@ -1,7 +1,5 @@
-import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
-import logo1 from "../../assets/logos/logo-footer.png";
-import "./footer.css";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookF,
@@ -14,6 +12,8 @@ import {
   faEnvelope,
   faAngleDown,
 } from "@fortawesome/free-solid-svg-icons";
+
+import logo1 from "../../assets/logos/logo-footer.png";
 
 const Footer = () => {
   const [showFollowUs, setShowFollowUs] = useState(false);
@@ -67,15 +67,13 @@ const Footer = () => {
         <div className="row footer-top ">
           <div className="col-lg-5 col-md-6 col-sm-12 mb-4">
             <img src={logo1} alt="" style={{ width: "9rem" }} />
-            <br />
-            <br />
-            <p>
+            <p className="pt-4">
               Since 2013 we’ve been creating industrial design, residential
               architecture, commercial interiors. Chase mice attack feet but rub
               face on everything cepteur sint occaecat cupidatat proident.
             </p>
             <h6
-              className="text-light footer-toggle d-sm-none"
+              className="text-light footer-toggle d-sm-none d-flex"
               onClick={toggleFollowUs}
             >
               Follow Us{" "}
@@ -84,7 +82,6 @@ const Footer = () => {
                 className={`icon ${showFollowUs ? "icon-rotate" : ""}`}
               />
             </h6>{" "}
-            <br />
             <div
               className={`footer-content ${
                 showFollowUs || window.innerWidth > 576 ? "show" : "hide"
@@ -92,35 +89,37 @@ const Footer = () => {
             >
               <h6 className="text-light d-none d-sm-block ">Follow Us</h6>
               <div className="social-icons">
-                <NavLink to="/" className="me-4 link-light  hover-color-yellow">
-                  <FontAwesomeIcon icon={faTwitter} size="lg" />
-                </NavLink>
-                <NavLink to="/" className="me-4 link-light  hover-color-yellow">
+                <Link to="/" className="me-4 link-light  hover-color-yellow">
+                  <FontAwesomeIcon
+                    icon={faTwitter}
+                    size="lg"
+                    className="pt-2"
+                  />
+                </Link>
+                <Link to="/" className="me-4 link-light  hover-color-yellow">
                   <FontAwesomeIcon icon={faFacebookF} size="lg" />
-                </NavLink>
-                <NavLink to="/" className="me-4 link-light  hover-color-yellow">
+                </Link>
+                <Link to="/" className="me-4 link-light  hover-color-yellow">
                   <FontAwesomeIcon icon={faLinkedin} size="lg" />
-                </NavLink>
-                <NavLink to="/" className="me-4 link-light  hover-color-yellow">
+                </Link>
+                <Link to="/" className="me-4 link-light  hover-color-yellow">
                   <FontAwesomeIcon icon={faGithub} size="lg" />
-                </NavLink>
+                </Link>
               </div>
             </div>
-           
           </div>
           <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
             <h6
-              className="text-light footer-toggle d-sm-none"
+              className="text-light footer-toggle d-sm-none "
               onClick={toggleHereToHelp}
             >
               HERE TO HELP{" "}
               <FontAwesomeIcon
                 icon={faAngleDown}
-                className={`icon ${showHereToHelp ? "icon-rotate" : ""}`}
+                className={`icon ${showHereToHelp ? "icon-rotate" : ""} `}
               />
             </h6>
-            <h6 className="text-light d-none d-sm-block">HERE TO HELP</h6>
-            <br />
+            <h6 className="text-light d-none d-sm-block ">HERE TO HELP</h6>
 
             <div
               className={`footer-content ${
@@ -128,43 +127,56 @@ const Footer = () => {
               }`}
             >
               <div>
-                <p>
+                <p className="pt-3">
                   Have a question? You may find an answer in our FAQs. But you
                   can also contact us:
                 </p>
               </div>
               <div>
                 <p>
-                  <FontAwesomeIcon
-                    icon={faPhoneVolume}
-                    className="text-light"
-                    size="lg"
-                  />
-                  <br />
-                  <br />
-                  <span className="text-light">Order by phone</span>
-                  <br />
-                  <span>Available everyday</span>
-                  <br />
-                  <span className="contacts">+391 (0)35 2568 4593</span>
-                  <br />
+                  <Link to="tel:+39103525684593">
+                    <FontAwesomeIcon
+                      icon={faPhoneVolume}
+                      className="text-light  pt-4 pb-2 d-block hover-color-yellow"
+                      size="lg"
+                    />
+                  </Link>
+                  <span className="text-light d-block">Order by phone</span>
+
+                  <span className="d-block">Available everyday</span>
+
+                  <span className="contacts">
+                    <Link
+                      to="tel:+39103525684593"
+                      className="text-secondary hover-color-yellow"
+                    >
+                      +391 (0)35 2568 4593
+                    </Link>
+                  </span>
                 </p>
               </div>
               <div>
                 <p>
-                  <FontAwesomeIcon
-                    icon={faEnvelope}
-                    className="text-light"
-                    size="lg"
-                  />
-                  <br />
-                  <br />
-                  <span className="text-light">Email Us</span>
-                  <br />
-                  <span>Get in touch by email</span>
-                  <br />
-                  <span className="contacts">hello@domain.com</span>
-                  <br />
+                  <Link to="mailto:hello@domain.com">
+                    <FontAwesomeIcon
+                      icon={faEnvelope}
+                      className="text-light  pt-4 pb-2 d-block hover-color-yellow"
+                      size="lg"
+                    />
+                  </Link>
+
+                  <span className="text-light d-block">Email Us</span>
+
+                  <span className="d-block">Get in touch by email</span>
+
+                  <span className="contacts">
+                    <Link
+                      to="mailto:hello@domain.com"
+                      className="text-secondary hover-color-yellow"
+                    >
+                      hello@domain.com
+                    </Link>
+                  </span>
                 </p>
               </div>
             </div>
@@ -180,44 +192,44 @@ const Footer = () => {
                 className={`icon ${showCustomerService ? "icon-rotate" : ""}`}
               />
             </h6>
-            <h6 className="text-light d-none d-sm-block">Customer Service</h6>
-            <br />
+            <h6 className="text-light d-none d-sm-block ">Customer Service</h6>
+
             <div
               className={`footer-content ${
                 showCustomerService || window.innerWidth > 576 ? "show" : "hide"
               }`}
             >
               <div>
-                <p className="menu-footer">
-                  <NavLink
-                    to="/"
-                    className="text-secondary nav-link hover-color-yellow"
+                <p className="menu-footer pt-3">
+                  <Link
+                    to="/contact"
+                    className="text-secondary link hover-color-yellow "
                   >
                     Contact Us
-                  </NavLink>
+                  </Link>
                 </p>
                 <p className="menu-footer">
-                  <NavLink
-                    to="/"
-                    className="text-secondary nav-link hover-color-yellow"
+                  <Link
+                    to="/faq"
+                    className="text-secondary link hover-color-yellow"
                   >
                     FAQs
-                  </NavLink>
+                  </Link>
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-        <div className="raw">
-          <hr/>
-          <div className="col-12 col-sm d-flex justify-content-start justify-content-sm-center text-center">
-            <h5>
-              © Copyright 2023 Comfy Store. All Rights Reserved. Design By
-              Team3-ITI
-            </h5>
-          </div>
+      <div className="raw">
+        <hr />
+        <div className="col-12 col-sm d-flex justify-content-start justify-content-sm-center text-center">
+          <h5>
+            © Copyright 2023 Comfy Store. All Rights Reserved. Design By
+            Team3-ITI
+          </h5>
         </div>
+      </div>
     </footer>
   );
 };
