@@ -259,7 +259,7 @@ footer {
 
 /* start header */
 .headerPage p,
-h2 {
+.headerPage h2 {
   width: 50%;
   font-size: 3vw;
   color: black;
