@@ -4,7 +4,7 @@ const ProductCard = ({ product }) => {
   return (
     <div className="product-card card position-relative border-0 rounded-0">
       {product?.discount > 0 && (
-        <span class="badge d-block bg-yellow position-absolute text-white">
+        <span className="badge d-block bg-yellow position-absolute text-white">
           -{product.discount}%
         </span>
       )}
