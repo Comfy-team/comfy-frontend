@@ -6,7 +6,7 @@ import homeSlider2 from "../../assets/home-slider/slide-2.jpg";
 // import { Carousel } from "react-bootstrap";
 import Carousel from "react-bootstrap/Carousel";
 
-import "./pageHeader.css";
+// import "./pageHeader.css";
 
 const HomImgs = [
   {
