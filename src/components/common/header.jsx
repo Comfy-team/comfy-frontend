@@ -20,7 +20,7 @@ const Header = () => {
   };
 
   return (
-    <header style={{ hight: "5vh", backgroundColor: "bla" }}>
+    <header className="header" style={{ hight: "5vh", backgroundColor: "bla" }}>
       <nav
         className="navbar navbar-expand-md border-bottom border-bottom-dark"
         data-bs-theme="light"
@@ -29,7 +29,7 @@ const Header = () => {
           <img
             src={logo1}
             alt=""
-            style={{ width: "10rem", marginLeft: "50px" }}
+            style={{ width: "8rem", marginLeft: "0px" }}
             className="ml-5"
           />
 
@@ -125,10 +125,6 @@ const Header = () => {
                 <NavLink
                   className="nav-link fs-5"
                   to="/faq"
-                  class="
-                  
-                  
-                  dropdown-toggle"
                   type="button"
                   id="dropdownMenuButton"
                   data-toggle="dropdown"
@@ -139,16 +135,9 @@ const Header = () => {
                 </NavLink>
               </div>
 
-              <div
-                className="mt-2 ml-2"
-                style={{
-                  color: "#5b5d62",
-                  marginLeft: "150px",
-                  marginRight: "20px",
-                }}
-              >
+              <div className="mt-2 ml-0 Register-nav ">
                 {isLoggedIn ? (
-                  <NavLink className="nav-link fs-5" to="/account">
+                  <NavLink className="nav-link fs-5 " to="/account">
                     <FontAwesomeIcon icon={faUser} />
                   </NavLink>
                 ) : (
