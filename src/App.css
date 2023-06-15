@@ -193,9 +193,79 @@ img {
 }
 
 .product-card .badge {
-top: 1.5rem;
-left: 1.5rem;
-z-index: 1;  
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 1;
 }
 /* end product card */
+
+/* start footer */
+footer {
+  padding-top: 80px;
+}
+
+.footer-top {
+  padding-bottom: 80px;
+}
+
+.menu-footer .nav-link {
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  transition: all 0.24s linear 0ms;
+}
+
+footer {
+  background-color: var(--main-black);
+}
+
+.footer-toggle {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-toggle .icon {
+  transition: transform 0.3s ease-in-out;
+  margin-left: 1rem;
+}
+.footer-content {
+  display: none;
+}
+
+.footer-content.show {
+  display: block;
+}
+
+.footer-content.hide {
+  display: none;
+}
+
+.menu-footer .nav-link {
+  transition: all 0.3s ease;
+}
+
+.menu-footer .nav-link:hover {
+  transform: translateX(10px);
+}
+
+.icon {
+  transition: transform 0.3s ease-in-out;
+  margin-left: 1rem;
+}
+
+.icon::before {
+  transform: rotate(90deg);
+}
+
+.icon-rotate {
+  transform: rotate(180deg);
+}
+
+.contacts {
+  text-decoration: underline;
+}
+/* end footer */
 /* End main layout */
