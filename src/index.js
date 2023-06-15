@@ -2,6 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 
+// Leaflet
+import "leaflet/dist/leaflet.js";
+import "leaflet/dist/leaflet-src.js";
+
 // components
 import App from "./App";
 import store from "./store/store";
