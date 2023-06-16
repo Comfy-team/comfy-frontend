@@ -12,10 +12,10 @@ const PriceFilter = ({ min, max, value, onFilter }) => {
   const [step, setStep] = useState(50);
 
   useEffect(() => {
-    if (value <= min + 150) {
+    if (value <= min + 250) {
       setMinTooClose(true);
       setMaxTooClose(false);
-    } else if (value >= max - 200) {
+    } else if (value >= max - 250) {
       setMaxTooClose(true);
       setMinTooClose(false);
     } else {
