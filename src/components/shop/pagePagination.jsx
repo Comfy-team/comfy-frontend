@@ -1,0 +1,64 @@
+import { Link } from "react-router-dom";
+
+// style
+import style from "../../pages/shop/shop.module.css";
+
+const PagePagination = ({ totalPages, currentPage, pages, onPageChange }) => {
+  return (
+    <nav aria-label="Page navigation example">
+      <ul className="pagination justify-content-center mb-0">
+        <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+          <Link
+            className={`page-link ${style["page-link"]} text-white ${
+              currentPage === 1
+                ? `disabled ${style.disabled} bg-secondary`
+                : "bg-dark "
+            }`}
+            aria-label="Previous"
+            onClick={() => onPageChange(currentPage - 1)}
+          >
+            <span aria-hidden="true">&laquo;</span>
+          </Link>
+        </li>
+        {pages?.map((page) => (
+          <li
+            key={page}
+            className="page-item"
+            onClick={() => onPageChange(page)}
+          >
+            <Link
+              className={`page-link ${
+                style["page-link"]
+              } bg-transparent border ${
+                page === currentPage
+                  ? `active ${style.active}`
+                  : "text-secondary"
+              }`}
+            >
+              {page}
+            </Link>
+          </li>
+        ))}
+        <li
+          className={`page-item ${
+            currentPage === totalPages ? "disabled" : ""
+          }`}
+        >
+          <Link
+            className={`page-link ${style["page-link"]} text-white ${
+              currentPage === totalPages
+                ? `disabled ${style.disabled} bg-secondary`
+                : "bg-dark "
+            }`}
+            aria-label="Next"
+            onClick={() => onPageChange(currentPage + 1)}
+          >
+            <span aria-hidden="true">&raquo;</span>
+          </Link>
+        </li>
+      </ul>
+    </nav>
+  );
+};
+
+export default PagePagination;
