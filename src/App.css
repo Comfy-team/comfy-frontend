@@ -530,9 +530,17 @@ a.nav-link.Register.fs-5.active:hover {
 }
 
 @media (max-width: 1024px) {
-  .whatTellContainer .thecontent {
-    width: 80%;
-    font-size: 0.9rem;
+  .whatTellContainer .thecontent h1 {
+    width: 100%;
+    font-size: 1.5rem;
+    /* background-color: #e21c1c; */
+    top: -30px;
+    text-align: center;
+  }
+  .whatTellContainer .thecontent p {
+    width: 100%;
+    font-size: 0.7rem;
+    /* background-color: #e21c1c; */
   }
 }
 
