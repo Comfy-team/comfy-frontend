@@ -404,10 +404,20 @@ a.nav-link.Register.fs-5.active:hover {
     height: 50vh;
   }
 }
+.headerContent {
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
 .headerCover h1 {
   width: 50%;
   width: 100%;
   margin-bottom: 20px;
+  text-align: center;
 }
 .headerCover .breadcrumbContainer {
   width: 100%;
@@ -419,6 +429,7 @@ a.nav-link.Register.fs-5.active:hover {
 .headerCover .breadcrumbContainer li a {
   text-decoration: none;
   color: var(--main-black);
+  justify-content: center;
 }
 
 /* end main layout */
