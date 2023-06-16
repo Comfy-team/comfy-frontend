@@ -392,33 +392,33 @@ a.nav-link.Register.fs-5.active:hover {
 
 /* pageHeader */
 .headerCover {
-  height: 100vh !important;
+  height: 75vh;
   background-image: url(./assets/page-header.jpg);
-  background-repeat: no-repeat;
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
+@media (max-width: 1024px) {
+  .headerCover {
+    height: 50vh;
+  }
+}
 .headerCover h1 {
-  justify-content: center;
-  align-self: center;
-  z-index: 5;
-  /* height: 50%;
-  width: 50%; */
+  width: 50%;
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 .headerCover .breadcrumbContainer {
   width: 100%;
   font-size: 20px;
   text-decoration: none;
-  color: black;
+  color: var(--main-black);
+  /* margin-left: 15px; */
 }
 .headerCover .breadcrumbContainer li a {
   text-decoration: none;
-  color: black;
+  color: var(--main-black);
 }
 
 /* end main layout */
