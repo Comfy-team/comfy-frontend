@@ -1,7 +1,7 @@
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
-import styles from "./about.css";
+import styles from "./about.module.css";
 
 import img from "../../assets/about.jpg";
 
