@@ -8,14 +8,14 @@ const Services = () => {
   return (
     <div className="container">
       <div className={`row ${styles.services}` }>
-        <div className={`col-sm-12 col-md-4 col-lg-4 text-center ${styles.item}`}>
+        <div className={`col-sm-12 col-md-4 mb-md-0 mb-4 col-lg-4 text-center ${styles.item}`}>
             <div className={styles.icon}>
             <FontAwesomeIcon icon={faCube}/>
             </div>
             <h3>Free Worldwide Shipping</h3>
             <p>On all orders over $75.00</p>
         </div>
-        <div className={`col-sm-12 col-md-4 col-lg-4 text-center ${styles.item}`}>
+        <div className={`col-sm-12 col-md-4 mb-md-0 mb-4 col-lg-4 text-center ${styles.item}`}>
             <div className={styles.icon}>
             <FontAwesomeIcon icon={faCreditCard}/>
             </div>
