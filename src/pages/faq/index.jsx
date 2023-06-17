@@ -1,4 +1,4 @@
-import style from "./faq.module.css";
+import styles from "./faq.module.css";
 import "../../App.css";
 const list = [
   {
@@ -92,10 +92,10 @@ const list = [
 
 const FAQ = () => {
   return (
-    <div className={`mt-5 ${style.mainFaqContainer} container  `}>
-      <div className={`${style.faqcontainer}  row  w-100 m-s-5`}>
+    <div className={`${styles.mainFaqContainer} container  `}>
+      <div className={`${styles.faqcontainer}  row  w-100 m-s-5`}>
         <div
-          className={`${style.smallcolumn}  col-md-6 col-sm-12 col-lg-4  
+          className={`${styles.smallcolumn}  col-md-6 col-sm-12 col-lg-4  
           `}
         >
           <h1> frequently asked questions</h1>
@@ -104,26 +104,29 @@ const FAQ = () => {
             amet tortor vel mi lacinia aliquam. Sed interdum sapien eget elit
             malesuada, eu faucibus libero bibendum. Sed iaculis vestibulum
           </p>
-          <div
-            className={`${style.listoquestion}   mb-5
-          `}
-          >
-            <p>company polices </p>
-            <p>payment options</p>
-            <p>terms condition</p>
-            <p>marketplace</p>
-            <p>condition</p>
-            <p>delivery job</p>
-            <p>efficient</p>
+          <div className={`${styles.listoquestion}   mb-5`}>
+            <a href="#faqpara0">condition</a>
+            <a href="#faqpara1">terms condition</a>
+            <a href="#faqpara2">terms condition</a>
+            <a href="#faqpara3">payment options</a>
+            <a href="#faqpara4">terms condition</a>
+            <a href="#faqpara5">condition</a>
+            <a href="#faqpara6">marketplace</a>
+            <a href="#faqpara7">terms condition</a>
+            <a href="#faqpara8">delivery job</a>
+            <a href="#faqpara9">efficient</a>
           </div>
         </div>
 
         <div
-          className={`${style.largecolumn}  col-md-6 col-sm-12 col-lg-8    m-0   `}
+          className={`${styles.largecolumn}  col-md-6 col-sm-12 col-lg-8    m-0   `}
         >
           {list.map(item => (
             <div key={item.id} className="">
-              <h6 className="text-uppercase font-weight-bold">
+              <h6
+                className="text-uppercase font-weight-bold"
+                id={`faqpara${item.id}`}
+              >
                 {" "}
                 {item.heading}{" "}
               </h6>
@@ -131,6 +134,8 @@ const FAQ = () => {
               <p />
             </div>
           ))}
+
+          <p id="para5">payment options</p>
         </div>
       </div>
     </div>
