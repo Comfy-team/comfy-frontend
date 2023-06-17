@@ -134,8 +134,6 @@ const FAQ = () => {
               <p />
             </div>
           ))}
-
-          <p id="para5">payment options</p>
         </div>
       </div>
     </div>
