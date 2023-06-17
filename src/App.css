@@ -193,16 +193,15 @@ img {
 /* end product card */
 
 /*Footer*/
+.footer-color{
+  color: var(--footer-links) !important;
+}
 footer {
   background-color: var(--main-black);
 }
 
 footer {
-  padding-top: 80px;
-}
-
-.footer-top {
-  padding-bottom: 80px;
+  padding-top: 6rem;
 }
 
 .footer-toggle {
