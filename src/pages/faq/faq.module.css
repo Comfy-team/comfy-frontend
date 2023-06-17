@@ -3,8 +3,6 @@
 }
 
 .mainFaqContainer {
-  margin-top: 100px;
-  margin-bottom: 150px;
 }
 .mainFaqContainer p {
   color: var(--secondary-gray);
@@ -39,8 +37,9 @@
 }
 @media (max-width: 1024px) {
   .mainFaqContainer {
-    margin-left: 10px;
+    margin: auto;
   }
+
   .listoquestion {
     margin-left: 10px;
     margin-right: 10px;
