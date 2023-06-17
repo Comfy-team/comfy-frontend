@@ -92,10 +92,10 @@ const list = [
 
 const FAQ = () => {
   return (
-    <div className={`${styles.mainFaqContainer} container  `}>
-      <div className={`${styles.faqcontainer}  row  w-100 m-s-5`}>
+    <div className={`${styles.mainFaqContainer} container my-5  `}>
+      <div className={`${styles.faqcontainer}  row my-5   w-100 m-s-5`}>
         <div
-          className={`${styles.smallcolumn}  col-md-6 col-sm-12 col-lg-4  
+          className={`${styles.smallcolumn}  mt-5 col-md-6 col-sm-12 col-lg-4  
           `}
         >
           <h1> frequently asked questions</h1>
@@ -105,11 +105,7 @@ const FAQ = () => {
             malesuada, eu faucibus libero bibendum. Sed iaculis vestibulum
           </p>
           <div className={`${styles.listoquestion}   mb-5`}>
-            <a href="#faqpara0">condition</a>
-            <a href="#faqpara1">terms condition</a>
-            <a href="#faqpara2">terms condition</a>
             <a href="#faqpara3">payment options</a>
-            <a href="#faqpara4">terms condition</a>
             <a href="#faqpara5">condition</a>
             <a href="#faqpara6">marketplace</a>
             <a href="#faqpara7">terms condition</a>
@@ -119,7 +115,7 @@ const FAQ = () => {
         </div>
 
         <div
-          className={`${styles.largecolumn}  col-md-6 col-sm-12 col-lg-8    m-0   `}
+          className={`${styles.largecolumn}  col-md-6 col-sm-12 col-lg-8     mt-5  `}
         >
           {list.map(item => (
             <div key={item.id} className="">
@@ -134,8 +130,6 @@ const FAQ = () => {
               <p />
             </div>
           ))}
-
-          <p id="para5">payment options</p>
         </div>
       </div>
     </div>
