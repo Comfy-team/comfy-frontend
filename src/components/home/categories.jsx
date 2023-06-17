@@ -26,15 +26,17 @@ const Categories = () => {
       })
       .catch((error) => console.log(error));
   }, []);
+
   return (
     <>
-      <div className="container">
-        <div className={`row ${styles.category}`}>
-          <div className={`col-md-4 col-11 ${styles.itemOne}`}>
+      <div className="container-fluid px-md-5 ">
+        <div className={`row ${styles.gapColumn} ${styles.category}`}>
+          <div className={`col-md-4 col-12 ${styles.itemOne}`}>
             {firstCategory && (
-              <div className={`${styles.categoryItem}`}>
+              <div className={`${styles.categoryItem} h-100 `}>
                 <img
-                  src={
+                    className={`${styles.categiryImage}`}
+                  src={ 
                     process.env.REACT_APP_BASE_URL + "/" + firstCategory.image
                   }
                   alt={firstCategory.name}
@@ -56,8 +58,8 @@ const Categories = () => {
               </div>
             )}
           </div>
-          <div className="col-md-8 col-11">
-            <div className="row">
+          <div className={`col-md-8 col-12 d-flex flex-column ${styles.gapColumn}`}>
+            <div className={`row ${styles.gapColumn}`}>
               <div className={`col-md-5 col-12 ${styles.thirdItem}`}>
                 {thirdCategory && (
                   <div className={styles.categoryItem}>
@@ -115,7 +117,7 @@ const Categories = () => {
                 )}
               </div>
             </div>
-            <div className="row">
+            <div className={`row ${styles.gapColumn}`}>
               <div className={`col-md-7 col-12 ${styles.thirdItem}`}>
                 {forthCategory && (
                   <div className={styles.categoryItem}>
