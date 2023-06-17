@@ -3,11 +3,11 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import emailjs from "emailjs-com";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock, faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import {
-  faClock,
-  faEnvelope,
-} from "@fortawesome/free-regular-svg-icons";
-import { faHeadphones, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+  faHeadphones,
+  faMapMarkerAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import style from "../../pages/contact/contact.module.css";
 
 const ContactForm = () => {
@@ -27,7 +27,10 @@ const ContactForm = () => {
 
   const formRef = useRef(null);
 
-  const sendEmail = (values, { resetForm, setSubmitting }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMessageSent, setIsMessageSent] = useState(false);
+
+  const sendEmail = async (values, { resetForm }) => {
     // Set the template parameters to include the email address
     const templateParams = {
       from_email: values.email, // Use the user-entered email address as the "from" address
@@ -35,39 +38,40 @@ const ContactForm = () => {
       message: values.message,
     };
 
-    // Send email using EmailJS API
-    emailjs
-      .send(
+    setIsSubmitting(true);
+
+    try {
+      // Send email using EmailJS API
+      const result = await emailjs.send(
         "service_e1wev9l",
         "template_wh85pl4",
         templateParams,
         "TsoWOt-ZQTaLMUt3q"
-      )
-      .then((result) => {
-        console.log(result.text);
-        setIsMessageSent(true);
-        setTimeout(() => setIsMessageSent(false), 3000);
-      })
-      .catch((error) => {
-        console.log(error.text);
-        setIsMessageSent(false);
-      });
+      );
+      console.log(result.text);
+      setIsMessageSent(true);
+    } catch (error) {
+      console.log(error.text);
+    }
+
+    setIsSubmitting(false);
 
     // Reset the form
     resetForm();
-
-    setSubmitting(false);
   };
 
-  const [isMessageSent, setIsMessageSent] = useState(false);
+  const handleFormSubmit = async (values, { resetForm }) => {
+    setIsMessageSent(false); // Reset the isMessageSent state to false when the form is submitted again
+    await sendEmail(values, { resetForm });
+  };
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={sendEmail}
+      onSubmit={handleFormSubmit} // Use the handleFormSubmit function instead of sendEmail
     >
-      {({ errors, touched, isSubmitting }) => (
+      {({ errors, touched }) => (
         <Form ref={formRef}>
           <div className="mb-3 pt-3">
             <Field
@@ -121,7 +125,14 @@ const ContactForm = () => {
               className="btn btn-dark p-2 submit-btn rounded-0 border-0 hover-bg-yellow"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Sending..." : "Send Message"}
+              {isSubmitting ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" />
+                  Sending...
+                </>
+              ) : (
+                "Send Message"
+              )}
             </button>
           </div>
           {isMessageSent && (
@@ -135,6 +146,7 @@ const ContactForm = () => {
     </Formik>
   );
 };
+
 const ContactInfo = () => {
   return (
     <div className=" container-fluid container-lg pt-4 ">
