@@ -38,7 +38,7 @@ const MainCarousel = () => {
       {HomImgs.map((img) => (
         <Carousel.Item key={img.id} className={`${styles["carousel-item"]}`} >
         <img 
-        className="d-block w-100"
+        className={`d-block w-100 h-100 ${styles.carouselImage}`}
          src={img.src} alt={img.content}
         />
           <Carousel.Caption className={`${styles["carousel-caption"]}`}>
@@ -50,7 +50,7 @@ const MainCarousel = () => {
             <h3 className="col-10 col-md-6 col-xl-4">{img.content}</h3>
             </div>
             <Link to="/shop" className="text-decoration-none cursor-pointer">
-             <p className={styles.explore}> Explore Now  <span className="ms-2"><FontAwesomeIcon icon={faArrowRight}/></span></p>
+             <p className={styles.explore}> Explore Now  <span className="ms-2 "><FontAwesomeIcon icon={faArrowRight}/></span></p>
             </Link>
              </div>
           </Carousel.Caption>
