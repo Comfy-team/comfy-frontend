@@ -62,18 +62,18 @@ const Footer = () => {
   };
 
   return (
-    <footer className=" text-secondary">
+    <footer className=" ">
       <div className="container ">
-        <div className="row footer-top ">
+        <div className="row footer-top pb-4">
           <div className="col-lg-5 col-md-6 col-sm-12 mb-4">
             <img src={logo1} alt="" style={{ width: "9rem" }} />
-            <p className="pt-4">
+            <p className="pt-4 footer-color">
               Since 2013 we’ve been creating industrial design, residential
               architecture, commercial interiors. Chase mice attack feet but rub
               face on everything cepteur sint occaecat cupidatat proident.
             </p>
             <h6
-              className="text-light footer-toggle d-sm-none d-flex"
+              className="text-light footer-toggle d-sm-none d-flex "
               onClick={toggleFollowUs}
             >
               Follow Us{" "}
@@ -110,7 +110,7 @@ const Footer = () => {
           </div>
           <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
             <h6
-              className="text-light footer-toggle d-sm-none "
+              className="text-light footer-toggle d-sm-none"
               onClick={toggleHereToHelp}
             >
               HERE TO HELP{" "}
@@ -119,7 +119,7 @@ const Footer = () => {
                 className={`icon ${showHereToHelp ? "icon-rotate" : ""} `}
               />
             </h6>
-            <h6 className="text-light d-none d-sm-block ">HERE TO HELP</h6>
+            <h6 className="text-light d-none d-sm-block">HERE TO HELP</h6>
 
             <div
               className={`footer-content ${
@@ -127,7 +127,7 @@ const Footer = () => {
               }`}
             >
               <div>
-                <p className="pt-3">
+                <p className="pt-3 footer-color">
                   Have a question? You may find an answer in our FAQs. But you
                   can also contact us:
                 </p>
@@ -143,12 +143,12 @@ const Footer = () => {
                   </Link>
                   <span className="text-light d-block">Order by phone</span>
 
-                  <span className="d-block">Available everyday</span>
+                  <span className="d-block footer-color">Available everyday</span>
 
                   <span className="contacts">
                     <Link
                       to="tel:+39103525684593"
-                      className="text-secondary hover-color-yellow"
+                      className=" hover-color-yellow footer-color"
                     >
                       +391 (0)35 2568 4593
                     </Link>
@@ -167,12 +167,12 @@ const Footer = () => {
 
                   <span className="text-light d-block">Email Us</span>
 
-                  <span className="d-block">Get in touch by email</span>
+                  <span className="d-block footer-color">Get in touch by email</span>
 
                   <span className="contacts">
                     <Link
                       to="mailto:hello@domain.com"
-                      className="text-secondary hover-color-yellow"
+                      className=" hover-color-yellow footer-color"
                     >
                       hello@domain.com
                     </Link>
@@ -203,7 +203,7 @@ const Footer = () => {
                 <p className="menu-footer pt-3">
                   <Link
                     to="/contact"
-                    className="text-secondary link hover-color-yellow "
+                    className="footer-color link hover-color-yellow "
                   >
                     Contact Us
                   </Link>
@@ -211,7 +211,7 @@ const Footer = () => {
                 <p className="menu-footer">
                   <Link
                     to="/faq"
-                    className="text-secondary link hover-color-yellow"
+                    className="footer-color link hover-color-yellow"
                   >
                     FAQs
                   </Link>
@@ -221,13 +221,14 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      
       <div className="raw">
-        <hr />
-        <div className="col-12 col-sm d-flex justify-content-start justify-content-sm-center text-center">
-          <h5>
+        <hr className="footer-color" />
+        <div className="col-12 col-sm pt-2 pb-3 d-flex justify-content-start justify-content-sm-center text-center footer-color">
+          <h6>
             © Copyright 2023 Comfy Store. All Rights Reserved. Design By
             Team3-ITI
-          </h5>
+          </h6>
         </div>
       </div>
     </footer>
