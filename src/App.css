@@ -193,16 +193,15 @@ img {
 /* end product card */
 
 /*Footer*/
+.footer-color{
+  color: var(--footer-links) !important;
+}
 footer {
   background-color: var(--main-black);
 }
 
 footer {
-  padding-top: 80px;
-}
-
-.footer-top {
-  padding-bottom: 80px;
+  padding-top: 6rem;
 }
 
 .footer-toggle {
@@ -390,7 +389,7 @@ a.nav-link.Register.fs-5.active:hover {
 
 /* end header */
 
-/* pageHeader */
+/* pageHeader    */
 .headerCover {
   height: 75vh;
   background-image: url(./assets/page-header.jpg);
@@ -404,10 +403,20 @@ a.nav-link.Register.fs-5.active:hover {
     height: 50vh;
   }
 }
+.headerContent {
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
 .headerCover h1 {
   width: 50%;
   width: 100%;
   margin-bottom: 20px;
+  text-align: center;
 }
 .headerCover .breadcrumbContainer {
   width: 100%;
@@ -419,6 +428,137 @@ a.nav-link.Register.fs-5.active:hover {
 .headerCover .breadcrumbContainer li a {
   text-decoration: none;
   color: var(--main-black);
+  justify-content: center;
 }
 
 /* end main layout */
+
+/* about style page */
+
+.aboutContainer {
+  display: grid;
+  grid-template-rows: 1fr !important;
+  background-color: var(--light-gray) !important;
+}
+.aboutContainer.mgContainer {
+  height: 100%;
+  height: 20%;
+}
+.aboutContainer.aboutImg {
+  height: 100%;
+  object-fit: cover;
+}
+.contentContainer {
+  background-color: var(--light-gray) !important;
+}
+
+.aboutContainer.aboutBtns {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+
+.aboutContainer.aboutBtn {
+  height: 50px;
+  background-color: var(--main-black);
+  color: var(--white);
+  text-align: center;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  background-color: var(--main-black) !important;
+  color: white !important;
+}
+
+/* Define the color for the active tab */
+.aboutContainer .nav-link.active {
+  color: white;
+}
+
+.nav-link {
+  color: var(--main-black);
+}
+.Tabs {
+  /* background-color: var(--light-gray); */
+  margin-top: 0;
+}
+/* =====================================================  */
+.whatTellContainer {
+  height: 70vh;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+}
+.whatTellContainer .thecontent {
+  height: 60%;
+  width: 60%;
+  margin: auto;
+  padding-top: 45px;
+  position: relative;
+  text-align: center;
+}
+.whatTellContainer h1 {
+  position: absolute;
+  top: -50px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+.whatTellContainer p {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 40px;
+}
+.whatTellContainer h5 {
+  position: absolute;
+  bottom: 20px;
+  text-transform: uppercase;
+  text-align: center;
+}
+.whatTellContainer h6 {
+  position: absolute;
+  text-align: center;
+  bottom: 0px;
+}
+
+@media (max-width: 1024px) {
+  .whatTellContainer .thecontent {
+    height: 60%;
+    width: 100%;
+    margin: auto;
+    padding-top: 45px;
+    position: relative;
+    text-align: center;
+  }
+  .whatTellContainer .thecontent h1 {
+    width: 100%;
+    font-size: 1.5rem;
+    top: -30px;
+    text-align: center;
+  }
+  .whatTellContainer .thecontent p {
+    width: 100%;
+    font-size: 1rem;
+    line-height: 20px;
+  }
+}
+
+/* =====  end about page =============== */
+
+/* ===== start scroll to top button ======= */
+.flow-button {
+  display: flex;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  z-index: 12;
+  box-shadow: 1px 0px 6px rgb(203, 202, 202);
+}
+/* ===== end scroll to top button ======= */
+
+/* ===== start  home carousel  =======*/
+#home .carousel-inner{
+  height: 100%;
+}
+/* ====== end  home carousel ========= */

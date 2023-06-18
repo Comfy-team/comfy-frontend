@@ -9,7 +9,7 @@ const ProductCard = ({ product }) => {
         </span>
       )}
       <NavLink
-        to="/product-details/6488e975b97ebaee38bf9492"
+        to={`/product-details/${product._id}`}
         className="holder position-relative overflow-hidden"
       >
         <img
@@ -27,7 +27,7 @@ const ProductCard = ({ product }) => {
         <h3 className="h6 fw-bold card-title">
           <NavLink
             className="d-block text-ellipsis text-decoration-none hover-color-yellow color-product-name"
-            to="/product-details/6488e975b97ebaee38bf9492"
+            to={`/product-details/${product._id}`}
           >
             {product?.name}
           </NavLink>
