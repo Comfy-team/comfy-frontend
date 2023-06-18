@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function PageHeader({ props }) {
-  const [pagename, setPagename] = useState("props");
+export default function PageHeader({ pageTitle }) {
+  const [pageName, setPageName] = useState(pageTitle);
 
+  useEffect(() => {
+    setPageName(pageTitle);
+  }, [pageTitle]);
   return (
     <div className="headerCover">
       <div className="headerContent">
-        <h1> {pagename} </h1>
+        <h1 className="text-uppercase"> {pageName} </h1>
 
         <div className="breadcrumbContainer" style={{ clear: "both" }}>
           <nav aria-label="breadcrumb">
@@ -17,7 +20,7 @@ export default function PageHeader({ props }) {
               </li>
 
               <li className="breadcrumb-item active" aria-current="page">
-                {pagename}
+                {pageName}
               </li>
             </ol>
           </nav>
