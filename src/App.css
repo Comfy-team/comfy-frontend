@@ -193,16 +193,15 @@ img {
 /* end product card */
 
 /*Footer*/
+.footer-color{
+  color: var(--footer-links) !important;
+}
 footer {
   background-color: var(--main-black);
 }
 
 footer {
-  padding-top: 80px;
-}
-
-.footer-top {
-  padding-bottom: 80px;
+  padding-top: 6rem;
 }
 
 .footer-toggle {
@@ -545,3 +544,21 @@ a.nav-link.Register.fs-5.active:hover {
 }
 
 /* =====  end about page =============== */
+
+/* ===== start scroll to top button ======= */
+.flow-button {
+  display: flex;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  z-index: 12;
+  box-shadow: 1px 0px 6px rgb(203, 202, 202);
+}
+/* ===== end scroll to top button ======= */
+
+/* ===== start  home carousel  =======*/
+#home .carousel-inner{
+  height: 100%;
+}
+/* ====== end  home carousel ========= */

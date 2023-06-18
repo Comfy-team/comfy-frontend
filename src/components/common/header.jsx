@@ -135,7 +135,7 @@ const Header = () => {
                 </NavLink>
               </div>
 
-              <div className="mt-2 ml-0 Register-nav ">
+              <div className="mt-2 ml-0">
                 {isLoggedIn ? (
                   <NavLink className="nav-link fs-5 " to="/account">
                     <FontAwesomeIcon icon={faUser} />
