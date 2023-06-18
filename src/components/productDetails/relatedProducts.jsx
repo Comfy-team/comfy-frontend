@@ -72,7 +72,6 @@ const RelatedProducts = ({ data }) => {
               onMouseDown={() => setIsMouseDown(true)}
               onMouseMove={handleDrag}
             >
-              {/* product */}
               <ProductCard product={product} />
             </div>
           ))}
