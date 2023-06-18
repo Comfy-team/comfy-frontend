@@ -35,6 +35,11 @@ img {
   opacity: 1 !important;
 }
 
+.react-multi-carousel-track  {
+  margin-left: auto!important;
+  margin-right: auto!important;
+}
+
 /* start custom classes */
 .hover-bg-yellow:hover {
   background-color: var(--yellow) !important;
