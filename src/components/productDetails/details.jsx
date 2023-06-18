@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // components
 import Breadcrumb from "./breadcrumb";
@@ -7,6 +8,13 @@ import Price from "./price";
 import Colors from "./colors";
 import Quantity from "./quantity";
 import AdditionalInfo from "./additionalInfo";
+
+// functions
+import {
+  deleteItemFromCart,
+  updateItemQuantity,
+  addItemToCart,
+} from "../../functions/cart.js";
 
 // style
 import style from "../../pages/productDetails/productDetails.module.css";
@@ -16,23 +24,42 @@ const Details = ({ product }) => {
   const [activeQuantity, setActiveQuantity] = useState(1);
   const [inCart, setInCart] = useState(false);
   const [terms, setTerms] = useState(false);
+  const navigate = useNavigate();
+  const cart = useSelector((state) => state.cart.cart);
 
-  const handleColorChange = (id) => {
-    setActiveColor(id);
+  const handleColorChange = (color) => {
+    setActiveColor(color);
   };
 
-  const handleQuantityChange = (quantity) => {
+  const handleQuantityChange = (id, quantity) => {
     setActiveQuantity(quantity);
+    updateItemQuantity(cart._id, id, quantity);
   };
 
-  const handleAddToCart = (id) => {
-    if(localStorage.getItem("userToken")) {
-      setInCart(true);
-    }
+  const handleAddToCart = (id, color, price) => {
+    setInCart(true);
+    addItemToCart(cart._id, id, color, price);
+  };
+
+  const handleDeleteFromCart = (id) => {
+    setInCart(false);
+    deleteItemFromCart(cart._id, id);
+  };
+
+  const handleBuyProduct = (id, color, price) => {
+    handleAddToCart(id, color, price);
+    navigate("/cart");
   };
 
   useEffect(() => {
-    setActiveColor(product?.colors[0]._id);
+    if (product) {
+      setActiveColor(product.colors[0]);
+      const item = cart.items.find((ele) => ele.product_id === product._id);
+      if (item) {
+        setActiveQuantity(item.quantity);
+        setInCart(true);
+      }
+    }
   }, [product]);
 
   return product ? (
@@ -60,13 +87,17 @@ const Details = ({ product }) => {
         </div>
         {inCart ? (
           <Quantity
+            id={product._id}
             active={activeQuantity}
             stock={product.stock}
             onQuantityChange={handleQuantityChange}
+            onDeleteItem={handleDeleteFromCart}
           />
         ) : (
           <button
-            onClick={() => handleAddToCart(product._id)}
+            onClick={() =>
+              handleAddToCart(product._id, activeColor.color, product.price)
+            }
             className="btn btn-bg-dark text-white text-capitalize px-5 rounded-2 d-block mx-auto"
           >
             Add to cart
@@ -100,6 +131,9 @@ const Details = ({ product }) => {
           type="button"
           className="btn my-3 py-2 d-block w-100 bg-dark text-white text-uppercase"
           disabled={!terms ? true : false}
+          onClick={() =>
+            handleBuyProduct(product._id, activeColor.color, product.price)
+          }
         >
           buy it now
         </button>

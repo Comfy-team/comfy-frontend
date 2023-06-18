@@ -8,10 +8,10 @@ const Colors = ({ colors, active, onColorChange }) => {
         <span
           key={ele._id}
           className={`${style["color-choice"]} ${
-            ele._id === active && style.active
+            ele._id === active?._id && style.active
           } d-inline-block rounded-circle border border-2 border-white`}
           style={{ backgroundColor: ele.color }}
-          onClick={() => onColorChange(ele._id)}
+          onClick={() => onColorChange(ele)}
         ></span>
       ))}
     </div>
