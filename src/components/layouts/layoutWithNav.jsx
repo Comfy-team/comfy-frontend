@@ -4,11 +4,16 @@ import { Outlet } from "react-router-dom";
 import Header from "../common/header";
 import Footer from "../common/footer";
 
+// style
+import style from "./layouts.module.css";
+
 const LayoutWithNav = () => {
   return (
     <>
       <Header />
-      <Outlet />
+      <div className={style.content}>
+        <Outlet />
+      </div>
       <Footer />
     </>
   );
