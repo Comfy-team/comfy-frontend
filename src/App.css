@@ -27,6 +27,14 @@ img {
   -webkit-user-drag: none;
 }
 
+.multi-carousel .slider-btn {
+  opacity: 0 !important;
+}
+
+.multi-carousel:hover .slider-btn {
+  opacity: 1 !important;
+}
+
 /* start custom classes */
 .hover-bg-yellow:hover {
   background-color: var(--yellow) !important;
@@ -115,14 +123,6 @@ img {
 
 /* start main layout */
 /* Start instagram posts */
-.insta-posts .multi-carousel .slider-btn {
-  opacity: 0 !important;
-}
-
-.insta-posts .multi-carousel:hover .slider-btn {
-  opacity: 1 !important;
-}
-
 .insta-posts .dragged {
   pointer-events: none;
 }
@@ -154,14 +154,6 @@ img {
 /* end instagram posts */
 
 /* start brands slider*/
-.brands-slider .slider-btn {
-  opacity: 0 !important;
-}
-
-.brands-slider:hover .slider-btn {
-  opacity: 1 !important;
-}
-
 .brands-slider img {
   transition: transform ease 0.5s;
 }
