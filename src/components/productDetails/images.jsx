@@ -44,7 +44,7 @@ const Images = ({ imgs, name }) => {
   }, [imgs]);
 
   return imgs ? (
-    <div>
+    <>
       <FullScreen handle={handle} onChange={handleFullscreenChange}>
         {showCarousel ? (
           <>
@@ -61,7 +61,7 @@ const Images = ({ imgs, name }) => {
           ""
         )}
       </FullScreen>
-      <div className="position-sticky top-0">
+      <div className={`${style["sticky-top"]} position-sticky`}>
         <div className="row m-0">
           <div className="col-md-2 px-0 pe-md-3">
             <div className="d-flex flex-md-column gap-2 mb-md-0 mb-3">
@@ -95,7 +95,7 @@ const Images = ({ imgs, name }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   ) : (
     "loading"
   );
