@@ -66,7 +66,7 @@ const BottomNav = ({ cart }) => {
           <div>
             <button
               type="button"
-              className="cart-btn lh-1 btn p-0 fs-5 hover-color-yellow position-relative"
+              className="cart-btn btn lh-1 p-0 fs-5 hover-color-yellow position-relative"
             >
               <FontAwesomeIcon icon={faCartShopping} />
               <span className="visually-hidden">cart</span>
