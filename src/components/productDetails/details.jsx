@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // components
 import Breadcrumb from "./breadcrumb";
@@ -8,6 +8,7 @@ import Price from "./price";
 import Colors from "./colors";
 import Quantity from "./quantity";
 import AdditionalInfo from "./additionalInfo";
+import { showLoginModal } from "../../store/slices/loginModalSlice";
 
 // functions
 import {
@@ -26,6 +27,7 @@ const Details = ({ product }) => {
   const [terms, setTerms] = useState(false);
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart.cart);
+  const dispatch = useDispatch();
 
   const handleColorChange = (color) => {
     setActiveColor(color);
@@ -37,6 +39,10 @@ const Details = ({ product }) => {
   };
 
   const handleAddToCart = (id, color, price) => {
+    if (!localStorage.getItem("userToken")) {
+      dispatch(showLoginModal(true));
+      return;
+    }
     setInCart(true);
     addItemToCart(cart._id, id, color, price);
   };
@@ -52,12 +58,10 @@ const Details = ({ product }) => {
   };
 
   useEffect(() => {
-    console.log(cart);
     if (product) {
       setActiveColor(product.colors[0]);
       if (cart.items?.length > 0) {
         const item = cart.items.find((ele) => ele.product_id === product._id);
-        console.log(item)
         if (item) {
           setActiveQuantity(item.quantity);
           setInCart(true);
