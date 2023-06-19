@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+
+import jwtDecode from "jwt-decode";
+import { showLoginModal } from "../../store/slices/loginModalSlice";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUnlock } from "@fortawesome/free-solid-svg-icons";
@@ -8,16 +12,15 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 import logo1 from "../../assets/logos/logo-header.png";
-import Modal from "../login-register/modal";
-import jwtDecode from "jwt-decode";
 
 const Header = () => {
   const [count, setCount] = useState(0);
+  const dispatch=useDispatch();
 
-  const [showLoginModal, setShowLoginModal] = useState(false);
+
   const isLoggedIn = localStorage.getItem("userToken");
   const handleLoginClick = () => {
-    setShowLoginModal(true);
+      dispatch(showLoginModal(true))
   };
   
   let decodedToken;
@@ -151,9 +154,7 @@ const Header = () => {
                     <FontAwesomeIcon icon={faUnlock} /> Login / Register
                   </button>
                 )}
-                {showLoginModal && (
-                  <Modal closeModal={() => setShowLoginModal(false)} />
-                )}
+                
               </div>
 
               <div className="mt-3 mt-2 ">
