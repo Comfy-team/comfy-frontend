@@ -1,14 +1,5 @@
-<<<<<<< Updated upstream
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-
-import jwtDecode from "jwt-decode";
-import { showLoginModal } from "../../store/slices/loginModalSlice";
-=======
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
->>>>>>> Stashed changes
 
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,31 +10,12 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
-<<<<<<< Updated upstream
-import logo1 from "../../assets/logos/logo-header.png";
-
-const Header = () => {
-  const [count, setCount] = useState(0);
-  const dispatch=useDispatch();
-
-
-  const isLoggedIn = localStorage.getItem("userToken");
-  const handleLoginClick = () => {
-      dispatch(showLoginModal(true))
-  };
-  
-  let decodedToken;
-  if (isLoggedIn) {
-    decodedToken = jwtDecode(localStorage.getItem("userToken"));
-  }
-=======
 // components
 import logo from "../../assets/logos/logo-header.png";
 import { showLoginModal } from "../../store/slices/loginModalSlice";
 
 const Header = ({ isMediumScreen, cart }) => {
   const dispatch = useDispatch();
->>>>>>> Stashed changes
 
   return (
     <header className="header sticky-lg-top bg-white">
@@ -128,19 +100,9 @@ const Header = ({ isMediumScreen, cart }) => {
                     <span className="fw-semibold"> Login / Register</span>
                   </button>
                 )}
-<<<<<<< Updated upstream
-                
-              </div>
-
-              <div className="mt-3 mt-2 ">
-                <div
-                  className="mt-3 d-inline mr-3"
-                  style={{ marginTop: "10px", marginRight: "20px" }}
-=======
                 <Link
                   to="/search"
                   className="btn p-0 fs-5 color-main-gray hover-color-yellow"
->>>>>>> Stashed changes
                 >
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                   <span className="visually-hidden">search</span>
