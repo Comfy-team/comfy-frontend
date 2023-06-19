@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { Formik, Form, Field } from "formik";
@@ -9,6 +9,10 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "../../pages/account/account.module.css";
 import axiosInstance from "../../apis/config";
+import axios from "axios";
+import {governoratesData} from "../../apis/governorates";
+import {cities} from "../../apis/cities";
+
 
 const AccountInfo = ({ user, token }) => {
   const { id } = useParams();
@@ -29,6 +33,12 @@ const AccountInfo = ({ user, token }) => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  // const [cities, setCities] = useState([]);
+  const [selectedGovernorate, setSelectedGovernorate] = useState(0);
+  const filteredCities = cities.filter(
+    (city) => city.governorate_id === selectedGovernorate
+  );
+
   const updateUserSubmit = (updateUser) => {
     axiosInstance
       .patch("/users", updateUser, {
@@ -40,7 +50,6 @@ const AccountInfo = ({ user, token }) => {
       })
       .then((res) => {
         setIsSubmitted(true);
-
       })
       .catch((err) => {
         // handle error, e.g. show error message
@@ -57,9 +66,9 @@ const AccountInfo = ({ user, token }) => {
         <div
           className="alert alert-danger alert-dismissible fade show"
           role="alert"
-        > <FontAwesomeIcon icon={faTimes}/>
+        >
           {" "}
-          {errorMessage}
+          <FontAwesomeIcon icon={faTimes} /> {errorMessage}
           <button
             type="button"
             className="btn-close"
@@ -175,7 +184,32 @@ const AccountInfo = ({ user, token }) => {
                 <span className="text-danger ms-2">{errors.phone}</span>
               ) : null}
             </div>
-
+            <div className={`mb-4 ${styles["max-w-xl"]}`}>
+              <label className="mb-1" htmlFor="governorate">
+                Governorate
+              </label>
+              <Field
+                className={`form-control ${styles.input}`}
+                name="address.governorate"
+                type="text"
+                id="governorate"
+                as="select"
+                onChange={(event) => setSelectedGovernorate(event.target.value)}
+              >
+                 <option value="">Select a governorate</option>
+                {governoratesData.map((governorate) => (
+                  <option key={governorate.id} value={governorate.id}>
+                    {governorate.governorate_name_en}
+                  </option>
+                ))}
+              </Field>
+              {errors.address?.governorate && touched.address.governorate ? 
+              (
+                <span className="text-danger ms-2">
+                  {errors.address.governorate}
+                </span>
+              ) : null}
+            </div>
             <div className={`mb-4 ${styles["max-w-xl"]}`}>
               <label className="mb-1" htmlFor="city">
                 City
@@ -185,8 +219,16 @@ const AccountInfo = ({ user, token }) => {
                 name="address.city"
                 type="text"
                 id="city"
-                placeholder=" Please enter your city"
-              />
+                as="select"
+              >
+                <option value="">Select a city</option>
+                {filteredCities.map((city) => (
+                 <option key={city.id} value={city.id}>
+              {city.city_name_en}
+
+                  </option>
+                ))}
+              </Field>
               {errors.address?.city && touched.address.city ? (
                 <span className="text-danger ms-2">{errors.address.city}</span>
               ) : null}
@@ -228,23 +270,7 @@ const AccountInfo = ({ user, token }) => {
               ) : null}
             </div>
 
-            <div className={`mb-4 ${styles["max-w-xl"]}`}>
-              <label className="mb-1" htmlFor="governorate">
-                Governorate
-              </label>
-              <Field
-                className={`form-control ${styles.input}`}
-                name="address.governorate"
-                type="text"
-                id="governorate"
-                placeholder="Please enter your governorate"
-              />
-              {errors.address?.governorate && touched.address.governorate ? (
-                <span className="text-danger ms-2">
-                  {errors.address.governorate}
-                </span>
-              ) : null}
-            </div>
+            
             <div className={`mb-4 ${styles["max-w-xl"]}`}>
               <label className="mb-1" htmlFor="apartment">
                 Apartment
