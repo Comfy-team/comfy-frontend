@@ -296,7 +296,6 @@ export const cities=[
 {"id":"293","governorate_id":"18","city_name_ar":"حى المناخ","city_name_en":"Almanakh"},
 {"id":"294","governorate_id":"18","city_name_ar":"حى مبارك","city_name_en":"Mubarak"},
 {"id":"295","governorate_id":"19","city_name_ar":"دمياط","city_name_en":"Damietta"},
-{"id":"398","governorate_id":"19","city_name_ar":"المنصوره","city_name_en":"Mansoura"},
 {"id":"296","governorate_id":"19","city_name_ar":"دمياط الجديدة","city_name_en":"New Damietta"},
 {"id":"297","governorate_id":"19","city_name_ar":"رأس البر","city_name_en":"Ras El Bar"},
 {"id":"298","governorate_id":"19","city_name_ar":"فارسكور","city_name_en":"Faraskour"},
