@@ -9,6 +9,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 import logo1 from "../../assets/logos/logo-header.png";
 import Modal from "../login-register/modal";
+import jwtDecode from "jwt-decode";
 
 const Header = () => {
   const [count, setCount] = useState(0);
@@ -18,6 +19,11 @@ const Header = () => {
   const handleLoginClick = () => {
     setShowLoginModal(true);
   };
+  
+  let decodedToken;
+  if (isLoggedIn) {
+    decodedToken = jwtDecode(localStorage.getItem("userToken"));
+  }
 
   return (
     <header className="header" style={{ hight: "5vh", backgroundColor: "bla" }}>
@@ -137,7 +143,7 @@ const Header = () => {
 
               <div className="mt-2 ml-0">
                 {isLoggedIn ? (
-                  <NavLink className="nav-link fs-5 " to="/account">
+                  <NavLink className="nav-link fs-5 " to={`/account/${decodedToken.id}`}>
                     <FontAwesomeIcon icon={faUser} />
                   </NavLink>
                 ) : (
