@@ -273,15 +273,9 @@ footer {
 
 /* start page header */
 .headerCover {
-  height: 60vh;
+  height: 50vh;
   background-image: url(./assets/page-header.jpg);
   background-size: cover;
-}
-
-@media (max-width: 1024px) {
-  .headerCover {
-    height: 50vh;
-  }
 }
 
 .headerCover h1 {
@@ -342,10 +336,10 @@ footer {
   color: white;
 }
 
-.aboutContainer .nav-link {
+.nav-tabs .nav-link {
   color: var(--main-black);
 }
-.aboutContainer .Tabs {
+.nav-tabs .Tabs {
   /* background-color: var(--light-gray); */
   margin-top: 0;
 }
