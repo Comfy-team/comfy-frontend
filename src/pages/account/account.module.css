@@ -1,0 +1,123 @@
+#account {
+  margin-top: 8rem;
+  margin-bottom: 8rem;
+}
+.hiddenScrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* hr */
+.mt-10 {
+  margin-top: 2.5rem;
+}
+.border-ms {
+  margin-left: 0.2rem;
+}
+.title {
+  padding: 1.2rem 0;
+  width: fit-content;
+  border-bottom: 2px solid transparent;
+}
+.title h6 {
+  color: var(--footer-links);
+}
+.title h6:hover {
+  color: var(--main-black);
+}
+.active {
+  border-bottom: 2px solid var(--main-black) !important;
+}
+.active h6 {
+  color: var(--main-black) !important;
+  font-weight: 600;
+}
+
+@media (max-width: 576px) {
+  .title h6 {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+}
+.acountPage {
+  padding-top: 3.5rem;
+  max-width: 56rem;
+}
+
+/* ====== start acount info and password ========*/
+
+/* 1-title */
+.subTitle {
+  font-weight: 600;
+  margin-bottom: 3rem;
+}
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+@media (min-width: 640px) {
+  .subTitle {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+}
+@media (max-width: 640px) {
+  .subTitle {
+    margin-bottom: 1.2rem;
+  }
+}
+/* 2-inputs */
+.max-w-xl {
+  max-width: 36rem;
+}
+.label label {
+  color: var(--color-main);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.input {
+  color: var(--color-main);
+  border-radius: 1rem;
+}
+
+.input::placeholder {
+  color: #999;
+  font-size: 14px;
+}
+
+.passwordInputWrapper {
+  position: relative;
+}
+
+.togglePasswordVisibilityButton {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.button {
+  color: var(--white);
+  border: 0;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.75rem 1rem;
+  border-radius: 9999px;
+}
+@media (min-width: 640px) {
+  .button {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+/* ====== end account info and password ===========*/
+
+/* ====== start account order =======*/
+/* ====== end account order =======*/
