@@ -83,7 +83,7 @@ const Login = ({ closeModal, saveUserData }) => {
                   name="password"
                   type={showPassword ? "text" : "password"}
                   id="password"
-                  placeholder="Please enter s strong password"
+                  placeholder="Please enter a strong password"
                 />
                 <span
                   className={styles.togglePasswordVisibilityButton}
