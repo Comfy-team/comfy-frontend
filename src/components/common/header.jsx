@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
+import jwtDecode from "jwt-decode";
+import React, { useState ,useEffect} from "react";
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,7 +17,28 @@ import { showLoginModal } from "../../store/slices/loginModalSlice";
 
 const Header = ({ isMediumScreen, cart }) => {
   const dispatch = useDispatch();
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [decodedToken, setDecodedToken] = useState(null);
+  
+  const token = localStorage.getItem("userToken");
+  useEffect(() => {
+    console.log("Token:", token);
+    if (token) {
+      const decoded = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        setIsLoggedIn(false);
+        setDecodedToken(null);
+        localStorage.removeItem("userToken");
+      } else {
+        setIsLoggedIn(true);
+        setDecodedToken(decoded);
+      }
+    } else {
+      setIsLoggedIn(false);
+      setDecodedToken(null);
+    }
+  }, [token]);
   return (
     <header className="header sticky-lg-top bg-white">
       <nav
@@ -83,10 +105,10 @@ const Header = ({ isMediumScreen, cart }) => {
             </ul>
             {!isMediumScreen && (
               <div className="d-flex align-items-center gap-4">
-                {cart.user_id ? (
+                {isLoggedIn ? (
                   <Link
                     className="btn p-0 color-main-gray fs-5 hover-color-yellow"
-                    to={`/account/${cart.user_id}`}
+                    to={`/account/${decodedToken.id}`}
                   >
                     <FontAwesomeIcon icon={faUser} />
                     <span className="visually-hidden">account</span>
