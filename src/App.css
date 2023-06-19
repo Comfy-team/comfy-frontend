@@ -35,9 +35,9 @@ img {
   opacity: 1 !important;
 }
 
-.react-multi-carousel-track  {
-  margin-left: auto!important;
-  margin-right: auto!important;
+.react-multi-carousel-track {
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 /* start custom classes */
@@ -250,142 +250,25 @@ footer {
 .contacts {
   text-decoration: underline;
 }
-
 /* end footer */
 
 /* start header */
 .header {
-  position: fixed;
-  width: 100vw;
-  top: 0;
-  left: 0;
   z-index: 10;
-  background-color: var(--white);
-}
-.headerPage p,
-.headerPage h2 {
-  width: 50%;
-  font-size: 3vw;
-  color: black;
-}
-.headerPage {
-  height: 90vh;
-  margin-bottom: 0;
 }
 
-.headerCarusel img {
-  height: 100%;
-  height: max-content;
+.header .nav-link.active {
+  color: var(--yellow)!important;
 }
 
-@media (max-width: 576px) {
-  .Register-nav {
-    margin-left: 0 !important;
-    margin-top: 10px;
-  }
-}
-.Register-nav :hover,
-.nav-link:hover {
-  color: var(--yellow) !important;
+.header .logo {
+  width: 6rem;
 }
 
-a.nav-link.Register.fs-5.active:hover {
-  background-color: #f8f9fa !important;
-  color: var(--yellow) !important;
+.cart-btn .badge {
+  
+  font-size: 0.6rem;
 }
-
-.headerCarusel .carousel-item {
-  height: 100vh;
-}
-.headerCarusel .carousel-item img {
-  height: 100%;
-  width: auto;
-}
-.cart-counter {
-  background-color: var(--yellow);
-  width: 20px;
-  height: 20px;
-  border-radius: 100px;
-  display: inline-block;
-  text-align: center;
-  font-size: 15px;
-  align-items: center;
-  color: #f4f4f4;
-}
-
-.Register-nav {
-  color: var(--main-gray);
-  margin-left: 150px;
-}
-/* with 786 or less */
-@media (max-width: 768px) {
-  .searchIcon {
-    display: block;
-    margin-left: 2px;
-    margin-bottom: 10px;
-    text-align: left;
-  }
-  .cartContainer {
-    margin-left: -15px;
-    margin-bottom: 10px;
-    text-align: left;
-  }
-
-  .headerPage {
-    height: 60vh;
-    margin-bottom: 0;
-  }
-
-  .Register-nav {
-    margin-left: -0px !important;
-    margin-bottom: 10px;
-    text-align: left;
-  }
-
-  .headerCarusel .carousel-item {
-    height: 60vh;
-  }
-}
-@media (max-width: 1024px) {
-  .Register-nav {
-    margin-left: -20px !important;
-    margin-bottom: 10px;
-    margin-left: 5px !important;
-    text-align: left;
-  }
-  .navbar-expand-md .navbar-nav .nav-link {
-    padding: 3px;
-    font-size: 15px;
-  }
-
-  .Register-nav .nav {
-    width: 50px;
-    font-size: 10px;
-    padding: 0 !important;
-  }
-}
-@keyframes moveText {
-  from {
-    right: -30%;
-  }
-  to {
-    right: 20%;
-  }
-}
-
-.content {
-  width: 200%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 100px;
-}
-.content {
-  position: absolute;
-  right: 0;
-  animation: moveText 5s linear;
-}
-
 /* end header */
 
 /* start page header */
@@ -459,10 +342,10 @@ a.nav-link.Register.fs-5.active:hover {
   color: white;
 }
 
-.nav-link {
+.aboutContainer .nav-link {
   color: var(--main-black);
 }
-.Tabs {
+.aboutContainer .Tabs {
   /* background-color: var(--light-gray); */
   margin-top: 0;
 }
