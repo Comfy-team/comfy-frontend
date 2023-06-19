@@ -3,10 +3,12 @@ import { configureStore } from "@reduxjs/toolkit";
 // components
 import brandsSlice from "./slices/brandsSlice";
 import cartSlice from "./slices/cartSlice";
+import loginModalSlice from "./slices/loginModalSlice";
 
 export default configureStore({
   reducer: {
     brands: brandsSlice,
-    cart: cartSlice
+    cart: cartSlice,
+    loginModal: loginModalSlice,
   },
 });
