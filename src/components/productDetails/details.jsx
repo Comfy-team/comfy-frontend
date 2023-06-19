@@ -52,15 +52,19 @@ const Details = ({ product }) => {
   };
 
   useEffect(() => {
+    console.log(cart);
     if (product) {
       setActiveColor(product.colors[0]);
-      const item = cart.items.find((ele) => ele.product_id === product._id);
-      if (item) {
-        setActiveQuantity(item.quantity);
-        setInCart(true);
+      if (cart.items?.length > 0) {
+        const item = cart.items.find((ele) => ele.product_id === product._id);
+        console.log(item)
+        if (item) {
+          setActiveQuantity(item.quantity);
+          setInCart(true);
+        }
       }
     }
-  }, [product]);
+  }, [product, cart]);
 
   return product ? (
     <>
