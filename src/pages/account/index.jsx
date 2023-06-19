@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import AccountInfo from './../../components/account/accountInfo';
 import ChangePasswords from './../../components/account/changePassword';
@@ -10,6 +11,7 @@ import style from "./account.module.css";
 
 const Account = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   let token = localStorage.getItem("userToken");
 
   const [user, setUser] = useState({});
@@ -30,6 +32,13 @@ const Account = () => {
     setActiveTitle("myOrder");
     setActiveComponent(<AccountOrders user={user}/>);
   };
+  
+  useEffect(()=>{
+    if(!token)
+    {
+      navigate("/");
+    }
+  },[token])
 
   useEffect(() => {
     axiosInstance
