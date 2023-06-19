@@ -1,3 +1,4 @@
+import { useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 
@@ -5,19 +6,28 @@ import { Outlet } from "react-router-dom";
 import Header from "../common/header";
 import Footer from "../common/footer";
 import Modal from "../login-register/modal";
-
-// style
-import style from "./layouts.module.css";
+import BottomNav from "../common/bottomNav";
 
 const LayoutWithNav = () => {
+  const [isMediumScreen, setIsMediumScreen] = useState(false);
   const showLoginModal = useSelector((state) => state.loginModal.show);
+  const cart = useSelector((state) => state.cart.cart);
+
+  useLayoutEffect(() => {
+    function updateSize() {
+      setIsMediumScreen(window.innerWidth <= 991 ? true : false);
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+    return () => window.removeEventListener("resize", updateSize);
+  }, [window.innerWidth]);
+
   return (
     <>
-      <Header />
+      <Header cart={cart} isMediumScreen={isMediumScreen} />
       {showLoginModal && <Modal />}
-      <div className={style.content}>
-        <Outlet />
-      </div>
+      <Outlet />
+      {isMediumScreen && <BottomNav cart={cart} />}
       <Footer />
     </>
   );
