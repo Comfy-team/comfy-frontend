@@ -67,6 +67,9 @@ const BottomNav = ({ cart }) => {
             <button
               type="button"
               className="cart-btn btn lh-1 p-0 fs-5 hover-color-yellow position-relative"
+              onClick={() =>
+                cart.user_id ? "" : dispatch(showLoginModal(true))
+              }
             >
               <FontAwesomeIcon icon={faCartShopping} />
               <span className="visually-hidden">cart</span>
