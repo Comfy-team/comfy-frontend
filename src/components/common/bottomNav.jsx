@@ -17,7 +17,7 @@ const BottomNav = ({ cart }) => {
   const dispatch = useDispatch();
 
   return (
-    <nav className="bg-white sticky-bottom border-top">
+    <nav className="bg-white fixed-bottom border-top">
       <div className="list-unstyled row py-3 m-0">
         <div className="col-3 text-center">
           <div>
@@ -67,6 +67,9 @@ const BottomNav = ({ cart }) => {
             <button
               type="button"
               className="cart-btn btn lh-1 p-0 fs-5 hover-color-yellow position-relative"
+              onClick={() =>
+                cart.user_id ? "" : dispatch(showLoginModal(true))
+              }
             >
               <FontAwesomeIcon icon={faCartShopping} />
               <span className="visually-hidden">cart</span>
