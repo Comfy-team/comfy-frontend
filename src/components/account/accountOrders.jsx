@@ -31,109 +31,114 @@ const AccountOrders = ({ token }) => {
       <h2 className={`${styles["text-2xl"]} ${styles.subTitle}`}>
         Order History
       </h2>
-      {userOrder.map((order) => {
-        return (
-          <div id="accordion" key={order._id} className="container mb-5">
-            <div className="card row col-12 col-lg-9">
-              <div className={`card-header ${styles["cardHeader"]}`}>
-                <div
-                  className={`d-flex flex-column flex-sm-row p-2 justify-content-sm-between align-items-sm-center ${styles.orderHeader}`}
-                >
-                  <div>
-                    <p className={`${styles["text-lg"]}`}>
-                      #{order._id.substring(0, 11).toUpperCase()}
-                    </p>
 
-                    <p className={`text-secondary ${styles.deleverDate}`}>
-                      <span>{order.date}</span>
-                      <span className="mx-2">-</span>
-                      <span className={styles.deliever}>Delivered</span>
-                    </p>
-                  </div>
-                  <div className="mt-3 mt-sm-0">
-                    <button
-                      className={`btn rounded-pill px-3 py-2 bg-white ${styles["btn-show-order"]}`}
-                      data-toggle="collapse"
-                      data-target="#cardone"
-                      aria-expanded={isCollapsed ? "true" : "false"}
-                      onClick={handleToggleCollapse}
-                    >
-                      View Order
-                    </button>
+      {userOrder.length > 0 ? (
+        userOrder.map((order) => {
+          return (
+            <div id="accordion" key={order._id} className="container mb-5">
+              <div className="card row col-12 col-lg-9">
+                <div className={`card-header ${styles["cardHeader"]}`}>
+                  <div
+                    className={`d-flex flex-column flex-sm-row p-2 justify-content-sm-between align-items-sm-center ${styles.orderHeader}`}
+                  >
+                    <div>
+                      <p className={`${styles["text-lg"]}`}>
+                        #{order._id.substring(0, 11).toUpperCase()}
+                      </p>
+
+                      <p className={`text-secondary ${styles.deleverDate}`}>
+                        <span>{order.date}</span>
+                        <span className="mx-2">-</span>
+                        <span className={styles.deliever}>Delivered</span>
+                      </p>
+                    </div>
+                    <div className="mt-3 mt-sm-0">
+                      <button
+                        className={`btn rounded-pill px-3 py-2 bg-white ${styles["btn-show-order"]}`}
+                        data-toggle="collapse"
+                        data-target="#cardone"
+                        aria-expanded={isCollapsed ? "true" : "false"}
+                        onClick={handleToggleCollapse}
+                      >
+                        View Order
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                id="cardone"
-                data-parent="#accordion"
-                className={`collapse ${isCollapsed ? "show" : ""}`}
-              >
-                {order.cartId.items.map((item) => {
-                  return (
-                    <div
-                      className={`card-body text-center ${styles.cartBody}`}
-                      key={item._id}
-                    >
-                      <div className={`d-flex py-4`}>
-                        <div
-                          className={`position-relative flex-shrink-0 overflow-hidden ${styles.productImage}`}
-                        >
-                          <img
-                            className="position-absolute w-100 h-100 "
-                            src={
-                              process.env.REACT_APP_BASE_URL +
-                              "/" +
-                              item?.product_id?.images[0].src
-                            }
-                            alt="image"
-                          />
-                        </div>
-                        <div className="d-flex flex-grow-1 flex-column ml-4">
-                          <div className="d-flex justify-content-between">
-                            <div className="ms-4">
-                              <h3 className={styles.productName}>
-                                {item?.product_id?.name}
-                              </h3>
-                              <p className={`text-start text-secondary`}>
-                                {item?.product_id?.brand}
-                              </p>
-                            </div>
-                            <div className="ml-2 mt-1">
-                              <p
-                                className={`${styles.price} py-1 px-2 text-center`}
-                              >
-                                $ {item.price}
-                              </p>
-                            </div>
+                <div
+                  id="cardone"
+                  data-parent="#accordion"
+                  className={`collapse ${isCollapsed ? "show" : ""}`}
+                >
+                  {order.cartId.items.map((item) => {
+                    return (
+                      <div
+                        className={`card-body text-center ${styles.cartBody}`}
+                        key={item._id}
+                      >
+                        <div className={`d-flex py-4`}>
+                          <div
+                            className={`position-relative flex-shrink-0 overflow-hidden ${styles.productImage}`}
+                          >
+                            <img
+                              className="position-absolute w-100 h-100 "
+                              src={
+                                process.env.REACT_APP_BASE_URL +
+                                "/" +
+                                item?.product_id?.images[0].src
+                              }
+                              alt="image"
+                            />
                           </div>
+                          <div className="d-flex flex-grow-1 flex-column ml-4">
+                            <div className="d-flex justify-content-between">
+                              <div className="ms-4">
+                                <h3 className={styles.productName}>
+                                  {item?.product_id?.name}
+                                </h3>
+                                <p className={`text-start text-secondary`}>
+                                  {item?.product_id?.brand}
+                                </p>
+                              </div>
+                              <div className="ml-2 mt-1">
+                                <p
+                                  className={`${styles.price} py-1 px-2 text-center`}
+                                >
+                                  $ {item.price}
+                                </p>
+                              </div>
+                            </div>
 
-                          <div className="ms-4">
-                            <p className="text-start text-secondary">
-                              Qty {item.quantity}
-                            </p>
+                            <div className="ms-4">
+                              <p className="text-start text-secondary">
+                                Qty {item.quantity}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
+                    );
+                  })}
+                  <div
+                    className={`my-3 mx-3 d-flex justify-content-between align-items-center`}
+                  >
+                    <div>
+                      <p className="h5">Total Price</p>
                     </div>
-                  );
-                })}
-                <div
-                  className={`my-3 mx-3 d-flex justify-content-between align-items-center`}
-                >
-                  <div>
-                    <p className="h5">Total Price</p>
-                  </div>
-                  <div>
-                    <p className={`h5 ${styles.price} py-1 px-2 text-center`}>
-                      $ {order.cartId.totalPrice}
-                    </p>
+                    <div>
+                      <p className={`h5 ${styles.price} py-1 px-2 text-center`}>
+                        $ {order.cartId.totalPrice}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      ) : (
+        <p className="text-secondary">No orders yet.</p>
+      )}
     </div>
   );
 };
