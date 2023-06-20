@@ -165,7 +165,7 @@ const Header = ({ isMediumScreen, cart }) => {
       <div className="shopping-cart-container">
         {showCartModal && (
           <React.Fragment>
-            <div className="modal-backdrop" onClick={handleCartClose}></div>{" "}
+            <div className="modal-backdrop cartmodal-backdrop" onClick={handleCartClose}></div>{" "}
             <CartModal
               showModal={showCartModal}
               hideModal={() => setShowCartModal(false)}

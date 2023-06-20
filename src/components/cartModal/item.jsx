@@ -1,7 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { faTrashCan} from "@fortawesome/free-regular-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 import {
   deleteItemFromCart,
@@ -17,16 +16,15 @@ function Item({ item, cartId }) {
       </div>
       <div className="col-5 pl-2">
         <p className="pl-2 fs-6 hover-color-yellow">
-          <strong>{item.name}</strong>
+          <strong className="d-block">{item.name}</strong>
           <strong className="d-block">color: {item.color}</strong>
-          
+
           <strong>${item.price}</strong>
         </p>
         <FontAwesomeIcon
           icon={faTrashCan}
           onClick={() => deleteItemFromCart(cartId, item.product_id)}
           type="button"
-          
         />
       </div>
       <div className="col-4">
