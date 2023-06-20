@@ -1,0 +1,43 @@
+.search-page {
+  min-height: 80vh;
+}
+
+input:-webkit-autofill {
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0 50px white inset;
+}
+
+@media (max-width: 767px) {
+  input::placeholder {
+    font-size: 0.7rem !important;
+  }
+}
+
+.add-to-cart-btn {
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  width: 86%;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 992px) {
+  .add-to-cart-btn {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .search-card:hover .add-to-cart-btn {
+    opacity: 1;
+  }
+}
+
+.title {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.extra-info {
+  font-size: 0.85rem;
+}
