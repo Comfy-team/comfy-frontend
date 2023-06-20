@@ -50,24 +50,24 @@ img {
 }
 
 .btn-bg-dark {
-  background-color: var(--main-black);
+  background-color: var(--main-black)!important;
 }
 
 .btn-bg-dark:hover {
-  background-color: var(--yellow);
+  background-color: var(--yellow)!important;
 }
 
 .btn-bg-gray {
-  background-color: var(--light-gray);
+  background-color: var(--light-gray)!important;
 }
 
 .btn-bg-white {
-  background-color: var(--white);
+  background-color: var(--white)!important;
 }
 
 .btn-bg-gray:hover,
 .btn-bg-white:hover {
-  background-color: var(--yellow);
+  background-color: var(--yellow)!important;
   color: white !important;
 }
 
@@ -187,15 +187,6 @@ img {
   left: 1.5rem;
   z-index: 1;
 }
-.addToCart-btn:hover{
-  background-color: var(--yellow);
-}
-.removeFromCart-btn{
-  background-color: lightgray;
-}
-.removeFromCart-btn:hover{
-  background-color: lightgray;
-}
 /* end product card */
 
 /*Footer*/
@@ -267,7 +258,7 @@ footer {
 }
 
 .header .nav-link.active {
-  color: var(--yellow)!important;
+  color: var(--yellow) !important;
 }
 
 .header .logo {
@@ -275,7 +266,6 @@ footer {
 }
 
 .cart-btn .badge {
-  
   font-size: 0.6rem;
 }
 /* end header */
@@ -438,3 +428,24 @@ footer {
   background-color: rgba(0, 0, 0, 0.5);
 }
 /*end cartModal*/
+
+/* start delete alert */
+.delete-alert {
+  z-index: 1030;
+}
+
+.delete-alert .close-btn {
+  display: block!important;
+  position: relative!important;
+  margin-left: auto!important;
+  padding: 0.5rem!important;
+  font-size: 0.9rem;
+}
+/* end delete alert */
+
+/* disable body scroll */
+.disable-scroll {
+  height: 100vh;
+  overflow: hidden;
+}
+/* disable body scroll */
