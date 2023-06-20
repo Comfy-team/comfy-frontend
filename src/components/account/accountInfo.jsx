@@ -3,41 +3,36 @@ import { useParams } from "react-router-dom";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-import styles from "../../pages/account/account.module.css";
 import axiosInstance from "../../apis/config";
-import axios from "axios";
-import {governoratesData} from "../../apis/governorates";
-import {cities} from "../../apis/cities";
+import styles from "../../pages/account/account.module.css";
 
+import { governoratesData } from "../../apis/governorates";
+import { cities } from "../../apis/cities";
 
 const AccountInfo = ({ user, token }) => {
   const { id } = useParams();
   const [updateUser, setUpdateUser] = useState({
     id: id,
-    fullName: user.fullName,
-    email: user.email,
-    phone: user.phone,
+    fullName: user?.fullName,
+    email: user?.email,
+    phone: user?.phone,
     address: {
-      city: user.address?.city,
-      street: user.address?.street,
-      building: user.address?.building,
-      governorate: user.address?.governorate,
-      apartment: user.address?.apartment,
-      postalCode: user.address?.postalCode,
+      city: user?.address?.city,
+      street: user?.address?.street,
+      building: user?.address?.building,
+      governorate: user?.address?.governorate,
+      apartment: user?.address?.apartment,
+      postalCode: user?.address?.postalCode,
     },
   });
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  // const [cities, setCities] = useState([]);
-  const [selectedGovernorate, setSelectedGovernorate] = useState(0);
-  const filteredCities = cities.filter(
-    (city) => city.governorate_id === selectedGovernorate
-  );
 
   const updateUserSubmit = (updateUser) => {
     axiosInstance
@@ -194,17 +189,21 @@ const AccountInfo = ({ user, token }) => {
                 type="text"
                 id="governorate"
                 as="select"
-                onChange={(event) => setSelectedGovernorate(event.target.value)}
               >
-                 <option value="">Select a governorate</option>
+                <option value="" id="0">
+                  Select a governorate
+                </option>
                 {governoratesData.map((governorate) => (
-                  <option key={governorate.id} value={governorate.id}>
+                  <option
+                    key={governorate.id}
+                    id={governorate.id}
+                    value={governorate.governorate_name_en}
+                  >
                     {governorate.governorate_name_en}
                   </option>
                 ))}
               </Field>
-              {errors.address?.governorate && touched.address.governorate ? 
-              (
+              {errors.address?.governorate && touched.address.governorate ? (
                 <span className="text-danger ms-2">
                   {errors.address.governorate}
                 </span>
@@ -220,14 +219,27 @@ const AccountInfo = ({ user, token }) => {
                 type="text"
                 id="city"
                 as="select"
+
               >
                 <option value="">Select a city</option>
-                {filteredCities.map((city) => (
-                 <option key={city.id} value={city.id}>
-              {city.city_name_en}
-
-                  </option>
-                ))}
+                {cities.map((city) => {
+                const selectedGovernorateValue =
+                  document.querySelector("#governorate")?.value;
+                const selectedGovernorateOption = document.querySelector(
+                  `#governorate option[value="${selectedGovernorateValue}"]`
+                );
+                const selectedGovernorateId = selectedGovernorateOption
+                  ? selectedGovernorateOption.id 
+                  : null;
+                  if (city.governorate_id === selectedGovernorateId) {
+                    return (
+                      <option key={city.id} id={city.id} value={city.city_name_en}>
+                        {city.city_name_en}
+                      </option>
+                    );
+                  }
+                  return updateUser?.address.governorate;
+                })}
               </Field>
               {errors.address?.city && touched.address.city ? (
                 <span className="text-danger ms-2">{errors.address.city}</span>
@@ -270,7 +282,6 @@ const AccountInfo = ({ user, token }) => {
               ) : null}
             </div>
 
-            
             <div className={`mb-4 ${styles["max-w-xl"]}`}>
               <label className="mb-1" htmlFor="apartment">
                 Apartment
