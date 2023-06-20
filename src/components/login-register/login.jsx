@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./login-register.module.css";
+import { getCart } from "./../../functions/cart";
 
 const Login = ({ closeModal, saveUserData }) => {
   const [user, setUser] = useState({
@@ -27,6 +28,7 @@ const Login = ({ closeModal, saveUserData }) => {
         // store token in local storage
         localStorage.setItem("userToken", response.data.token);
         // save User Data
+        getCart(response.data.token);
         saveUserData();
         resetForm();
         closeModal();
@@ -49,13 +51,7 @@ const Login = ({ closeModal, saveUserData }) => {
           email: Yup.string()
             .required("Email is required")
             .email("Invalid email address"),
-          password: Yup.string()
-            .required("Password is required")
-            .min(8, "Password must be at least 8 characters long")
-            .matches(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              "Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol from (@$!%*?&)."
-            ),
+          password: Yup.string().required("Password is required"),
         })}
         onSubmit={handleSubmit}
       >
@@ -87,7 +83,7 @@ const Login = ({ closeModal, saveUserData }) => {
                   name="password"
                   type={showPassword ? "text" : "password"}
                   id="password"
-                  placeholder="Please enter s strong password"
+                  placeholder="Please enter a strong password"
                 />
                 <span
                   className={styles.togglePasswordVisibilityButton}

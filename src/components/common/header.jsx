@@ -1,185 +1,178 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-
+import { Link, NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import jwtDecode from "jwt-decode";
+import React, { useState, useEffect } from "react";
+// font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUnlock } from "@fortawesome/free-solid-svg-icons";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUnlock,
+  faMagnifyingGlass,
+  faCartShopping,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
-import logo1 from "../../assets/logos/logo-header.png";
-import Modal from "../login-register/modal";
+// components
+import logo from "../../assets/logos/logo-header.png";
+import { showLoginModal } from "../../store/slices/loginModalSlice";
+import CartModal from "../cartModal/cartModal";
 
-const Header = () => {
-  const [count, setCount] = useState(0);
+const Header = ({ isMediumScreen, cart }) => {
+  const dispatch = useDispatch();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [decodedToken, setDecodedToken] = useState(null);
+  const [showCartModal, setShowCartModal] = useState(false);
 
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const isLoggedIn = localStorage.getItem("userToken");
-  const handleLoginClick = () => {
-    setShowLoginModal(true);
+  const handleCartClose = () => {
+    setShowCartModal(false);
+  };
+  const handleCartIconClick = () => {
+    setShowCartModal(!showCartModal);
   };
 
+  const token = localStorage.getItem("userToken");
+  useEffect(() => {
+    console.log("Token:", token);
+    if (token) {
+      const decoded = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        setIsLoggedIn(false);
+        setDecodedToken(null);
+        localStorage.removeItem("userToken");
+      } else {
+        setIsLoggedIn(true);
+        setDecodedToken(decoded);
+      }
+    } else {
+      setIsLoggedIn(false);
+      setDecodedToken(null);
+    }
+  }, [token]);
   return (
-    <header className="header" style={{ hight: "5vh", backgroundColor: "bla" }}>
+    <header className="header sticky-lg-top bg-white">
       <nav
-        className="navbar navbar-expand-md border-bottom border-bottom-dark"
+        className="navbar navbar-expand-lg border-bottom"
         data-bs-theme="light"
       >
         <div className="container-fluid">
-          <img
-            src={logo1}
-            alt=""
-            style={{ width: "8rem", marginLeft: "0px" }}
-            className="ml-5"
-          />
-
+          <Link to="/" className="nav-link">
+            <img src={logo} alt="comfy logo" className="logo img-fluid" />
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup"
+            data-bs-target="#header-nav"
+            aria-controls="header-nav"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-
-          <div
-            className="collapse navbar-collapse collapse-horizontal"
-            id="navbarNavAltMarkup"
-            style={{ marginRight: "0px" }}
-          >
-            <div className="navbar-nav mx-auto gap-1">
-              {/** ------------------------------ */}
-
-              <div className="dropdown nav-link fs-5">
+          <div className="collapse navbar-collapse" id="header-nav">
+            <ul className="navbar-nav mx-auto">
+              <li className="nav-item">
                 <NavLink
                   to="/"
-                  className="nav-link fs-5  "
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
+                  className="nav-link color-main-gray hover-color-yellow fs-5"
                 >
                   Home
                 </NavLink>
-
-                <div
-                  className="dropdown-menu d-none d-lg-none mt-0 dropdown-menu-lg"
-                  aria-labelledby="dropdownMenuButton"
-                >
-                  <div
-                    className="container-fluid "
-                    style={{ width: "30rem", height: "12rem" }}
-                  ></div>
-                </div>
-                {/** ------------------------------ */}
-              </div>
-
-              {/** ------------------------------ */}
-              <div className="dropdown nav-link fs-5">
+              </li>
+              <li className="nav-item">
                 <NavLink
                   to="/shop"
-                  className="nav-link fs-5  "
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
+                  className="nav-link color-main-gray hover-color-yellow fs-5"
                 >
                   shop
                 </NavLink>
-              </div>
-              {/** ------------------------------ */}
-              <div className="dropdown nav-link fs-5">
+              </li>
+              <li className="nav-item">
                 <NavLink
                   to="/about"
-                  className="nav-link fs-5  "
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
+                  className="nav-link color-main-gray hover-color-yellow fs-5"
                 >
                   about
                 </NavLink>
-              </div>
-              {/** ------------------------------ */}
-              <div className="dropdown nav-link fs-5">
+              </li>
+              <li className="nav-item">
                 <NavLink
-                  className="nav-link fs-5"
+                  className="nav-link color-main-gray hover-color-yellow fs-5"
                   to="/contact"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
                 >
                   contact
                 </NavLink>
-              </div>
-              {/** ------------------------------ */}
-              <div className="dropdown nav-link fs-5">
+              </li>
+              <li className="nav-item">
                 <NavLink
-                  className="nav-link fs-5"
+                  className="nav-link color-main-gray hover-color-yellow fs-5"
                   to="/faq"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
                 >
                   FAQ
                 </NavLink>
-              </div>
-
-              <div className="mt-2 ml-0 Register-nav ">
+              </li>
+            </ul>
+            {!isMediumScreen && (
+              <div className="d-flex align-items-center gap-4">
                 {isLoggedIn ? (
-                  <NavLink className="nav-link fs-5 " to="/account">
+                  <Link
+                    className="btn p-0 color-main-gray fs-5 hover-color-yellow"
+                    to={`/account/${decodedToken.id}`}
+                  >
                     <FontAwesomeIcon icon={faUser} />
-                  </NavLink>
+                    <span className="visually-hidden">account</span>
+                  </Link>
                 ) : (
-                  <button className="nav-link fs-5" onClick={handleLoginClick}>
-                    <FontAwesomeIcon icon={faUnlock} /> Login / Register
+                  <button
+                    className="btn p-0 color-main-gray hover-color-yellow"
+                    onClick={() => dispatch(showLoginModal(true))}
+                  >
+                    <FontAwesomeIcon icon={faUnlock} />{" "}
+                    <span className="fw-semibold"> Login / Register</span>
                   </button>
                 )}
-                {showLoginModal && (
-                  <Modal closeModal={() => setShowLoginModal(false)} />
-                )}
-              </div>
-
-              <div className="mt-3 mt-2 ">
-                <div
-                  className="mt-3 d-inline mr-3"
-                  style={{ marginTop: "10px", marginRight: "20px" }}
+                <Link
+                  to="/search"
+                  className="btn p-0 fs-5 color-main-gray hover-color-yellow"
+                >
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                  <span className="visually-hidden">search</span>
+                </Link>
+                <button
+                  type="button"
+                  className="cart-btn btn p-0 fs-5 hover-color-yellow position-relative"
                 >
                   <FontAwesomeIcon
-                    icon={faMagnifyingGlass}
-                    className="outlined-icon searchIcon "
-                    size="lg"
-                  />
-                </div>
-
-                <div className=" cartContainer mt-3  d-inline mt-2 mr-0  ">
-                  <FontAwesomeIcon
                     icon={faCartShopping}
-                    size="lg"
-                    className="outlined-icon"
+                    className="outlined-icon pointer"
+                    onClick={handleCartIconClick}
                   />
-                  <span
-                    className="cart-counter js-cart-count"
-                    data-count={count}
-                  >
-                    {count}
+                  <span className="visually-hidden">cart</span>
+                  <span className="position-absolute bg-yellow top-0 start-0 translate-middle badge rounded-pill">
+                    {cart.items
+                      ? cart.items.length > 99
+                        ? "99+"
+                        : cart.items.length
+                      : 0}
+                    <span className="visually-hidden">items in cart</span>
                   </span>
-                </div>
+                </button>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </nav>
+      <div className="shopping-cart-container">
+        {showCartModal && (
+          <React.Fragment>
+            <div className="modal-backdrop cartmodal-backdrop" onClick={handleCartClose}></div>{" "}
+            <CartModal
+              showModal={showCartModal}
+              hideModal={() => setShowCartModal(false)}
+            />
+          </React.Fragment>
+        )}
+      </div>
     </header>
   );
 };

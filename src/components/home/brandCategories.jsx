@@ -9,11 +9,12 @@ import styles from "./../../pages/home/home.module.css";
 const BrandCategories = () => {
   return (
     <>
-      <div className={`row ${styles.brandCategory}`}>
+    <div className="container-fluid">
+      <div className={`row mx-0 ${styles.brandCategory}`}>
         <div
-          className={`col-10 col-lg-5 ${styles.modifyImage}`}
-          style={{ backgroundImage: `url(${ecoFriendly})` }}
+          className={`col-12 col-md-6 overflow-hidden ${styles.modifyImage}`}
         >
+          <img src={ecoFriendly} alt="ecoFriendly" className={`position-absolute top-0 start-0 h-100 w-100 ${styles.brandImage}`} />
           <div className={styles.content}>
             <h4>mid-season</h4>
             <h3>Eco-Friendly</h3>
@@ -28,9 +29,11 @@ const BrandCategories = () => {
           </div>
         </div>
         <div
-          className={`col-10 col-lg-5 ${styles.modifyImage}`}
-          style={{ backgroundImage: `url(${outDoor})` }}
-        ><div className={styles.content}>
+          className={`col-12 col-md-6 overflow-hidden ${styles.modifyImage}`}
+        >
+          <img src={outDoor} alt="outDoor" className={`position-absolute top-0 start-0 h-100 w-100 ${styles.brandImage}`} />
+
+          <div className={styles.content}>
           <h4>top trending</h4>
           <h3>Outdoor</h3>
           <Link to="/shop" className="text-decoration-none cursor-pointer">
@@ -43,6 +46,7 @@ const BrandCategories = () => {
           </Link>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

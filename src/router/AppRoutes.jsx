@@ -33,14 +33,13 @@ const AppRoutes = () => {
         />
         <Route path="/home" element={<Navigate to="/" replace />} />
         <Route
-          path="/account"
+          path="/account/:id"
           element={
             <Suspense fallback={<Spinner />}>
               <Account />
             </Suspense>
           }
         />
-        <Route></Route>
         <Route
           path="/product-details/:id"
           element={

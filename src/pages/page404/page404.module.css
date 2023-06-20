@@ -1,0 +1,15 @@
+.Page404{
+    margin-top: 6rem;
+}
+.text-9xl {
+    font-size: 8rem;
+}
+.font-bold {
+    font-weight: 700;
+}
+@media (max-width:700px) {
+    .text-9xl {
+        font-size: 5rem;
+    }
+    
+}
