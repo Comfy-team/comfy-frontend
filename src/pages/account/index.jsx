@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import AccountInfo from "./../../components/account/accountInfo";
 import ChangePasswords from "./../../components/account/changePassword";
 import AccountOrders from "./../../components/account/accountOrders";
+import { showLoginModal } from "../../store/slices/loginModalSlice";
 
 import axiosInstance from "./../../apis/config";
 import style from "./account.module.css";
@@ -12,28 +14,29 @@ import style from "./account.module.css";
 const Account = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   let token = localStorage.getItem("userToken");
   const [notAuth, setNotAuth] = useState(true);
 
   const [user, setUser] = useState({});
-  const [activeTitle, setActiveTitle] = useState("accountInfo");
+  const [activeTitle, setActiveTitle] = useState("myOrder");
   const [activeComponent, setActiveComponent] = useState(
-    <AccountInfo user={user} token={token} />
+    <AccountOrders user={user} token={token} />
   );
 
   const handleAccountInfoClick = () => {
     setActiveTitle("accountInfo");
-    setActiveComponent(<AccountInfo user={user} />);
+    setActiveComponent(<AccountInfo user={user} token={token}/>);
   };
 
   const handleChangePasswordClick = () => {
     setActiveTitle("changePassword");
-    setActiveComponent(<ChangePasswords user={user} />);
+    setActiveComponent(<ChangePasswords user={user} token={token}/>);
   };
 
   const handleMyOrderClick = () => {
     setActiveTitle("myOrder");
-    setActiveComponent(<AccountOrders user={user} />);
+    setActiveComponent(<AccountOrders user={user} token={token}/>);
   };
 
   useEffect(() => {
@@ -42,6 +45,7 @@ const Account = () => {
       setNotAuth(true);
 
       navigate("/");
+      dispatch(showLoginModal(true))
     } else {
       setNotAuth(false);
     }
@@ -77,6 +81,15 @@ const Account = () => {
           <div className="col-5 col-sm-4 col-lg-2">
             <div
               className={`mx-auto mx-sm-0 ${style["title"]}
+            ${activeTitle === "myOrder" ? style.active : ""}`}
+              onClick={handleMyOrderClick}
+            >
+              <h6>My Order</h6>
+            </div>
+          </div>
+          <div className="col-5 col-sm-4 col-lg-2">
+            <div
+              className={`mx-auto mx-sm-0 ${style["title"]}
              ${activeTitle === "accountInfo" ? style.active : ""}`}
               onClick={handleAccountInfoClick}
             >
@@ -92,27 +105,19 @@ const Account = () => {
               <h6 className="text-center text-sm-start ">Change password</h6>
             </div>
           </div>
-          <div className="col-5 col-sm-4 col-lg-2">
-            <div
-              className={`mx-auto mx-sm-0 ${style["title"]}
-            ${activeTitle === "myOrder" ? style.active : ""}`}
-              onClick={handleMyOrderClick}
-            >
-              <h6>My Order</h6>
-            </div>
-          </div>
         </div>
         <hr className={`row col-12 col-lg-7 ${style["border-ms"]}`} />
 
         <div className={`${style.acountPage}`}>
+          {activeTitle === "myOrder" && (
+            <AccountOrders user={user} token={token} />
+          )}
+
           {activeTitle === "accountInfo" && (
             <AccountInfo user={user} token={token} />
           )}
           {activeTitle === "changePassword" && (
             <ChangePasswords user={user} token={token} />
-          )}
-          {activeTitle === "myOrder" && (
-            <AccountOrders user={user} token={token} />
           )}
         </div>
       </div>
