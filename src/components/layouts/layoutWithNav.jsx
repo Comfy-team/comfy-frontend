@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // components
 import Header from "../common/header";
@@ -27,8 +27,8 @@ const LayoutWithNav = () => {
       <Header cart={cart} isMediumScreen={isMediumScreen} />
       {showLoginModal && <Modal />}
       <Outlet />
-      {isMediumScreen && <BottomNav cart={cart} />}
       <Footer />
+      {isMediumScreen && <BottomNav cart={cart} />}
     </>
   );
 };

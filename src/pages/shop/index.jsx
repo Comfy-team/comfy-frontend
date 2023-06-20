@@ -64,14 +64,14 @@ const Shop = () => {
       })
       .then((res) => {
         setProducts(res.data.data);
-        if (page === 1 && sorting === sort) {
+    
           setTotalPages(res.data.totalPages);
           const pages = [];
           for (let i = 1; i <= res.data.totalPages; i++) {
             pages.push(i);
           }
           setPagesArr(pages);
-        }
+        
         if (sorting === sort && price === 0) {
           setMinPrice(res.data.minPrice);
           setMaxPrice(res.data.maxPrice);
@@ -118,7 +118,22 @@ const Shop = () => {
   };
 
   useEffect(() => {
-    getData();
+    if (searchParams.get("page")) {
+      getData(
+        searchParams.get("page"),
+        searchParams.get("brand"),
+        searchParams.get("category"),
+        searchParams.get("sort"),
+        searchParams.get("price")
+      );
+      setPage(+searchParams.get("page"));
+      setSort(+searchParams.get("sort"));
+      setFilterBrand(searchParams.get("brand"));
+      setFilterPrice(searchParams.get("price"));
+      setFilterCategory(searchParams.get("category"));
+    } else {
+      getData();
+    }
     axiosInstance
       .get("/categories")
       .then((res) => {

@@ -187,6 +187,15 @@ img {
   left: 1.5rem;
   z-index: 1;
 }
+.addToCart-btn:hover{
+  background-color: var(--yellow);
+}
+.removeFromCart-btn{
+  background-color: lightgray;
+}
+.removeFromCart-btn:hover{
+  background-color: lightgray;
+}
 /* end product card */
 
 /*Footer*/

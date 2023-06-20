@@ -1,12 +1,16 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { deleteItemFromCart } from "../../functions/cart";
+import { deleteItemFromCart,addItemToCart } from "../../functions/cart";
+
 const ProductCard = ({ product }) => {
   const [showButton, setShowButton] = useState(false);
-  const [inCart, setInCart] = useState(false);
-  const [cart, setCart] = useState([]);
+  const [inCart, setInCart] = useState(
+    localStorage.getItem(`cartItem_${product._id}`) === "true"
+  );
+  const cart=useSelector((state)=>state.cart.cart)
 
   const handleMouseEnter = () => {
     setShowButton(true);
@@ -18,32 +22,17 @@ const ProductCard = ({ product }) => {
   const handleDeleteFromCart = (id) => {
     setInCart(false);
     deleteItemFromCart(cart._id, id);
+    localStorage.removeItem(`cartItem_${id}`); // remove the cart item from localStorage
+  };
+  const handleAddToCart = (id, color, price) => {
+    if (!localStorage.getItem("userToken")) {
+      return;
+    }
+    setInCart(true);
+    addItemToCart(cart._id, id, color, price);
+    localStorage.setItem(`cartItem_${id}`, true); // set the cart item in localStorage
   };
 
-  const handleAddToCart = (event) => {
-    setInCart(true);
-    event.preventDefault();
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmlhbS5tLnIuYWxpQGdtYWlsLmNvbSIsImlkIjoiNjQ4ZjBjNzNlNzE1YTBmN2FjMjY1OGU4Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODcyMTE5MDAsImV4cCI6MTY4NzIzMzUwMH0.JG5YXzvsf2SvjIoZYK2PcLXSqfGi__bRLySTx7EgoD4";
-    fetch(`http://localhost:8080/cart/648f0c74e715a0f7ac2658ea`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        product_id: product._id,
-        color: `${product.color}`, 
-        price: product.price,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Product added to cart:", data);
-      })
-      .catch((error) => {
-        console.error("Error adding product to cart:", error);
-      });
-  };
 
   return (
     <div
@@ -70,30 +59,19 @@ const ProductCard = ({ product }) => {
           alt={product?.name}
           className="img-fluid card-img-top rounded-0 hover-img position-absolute w-100 h-100 top-0 start-0"
         />
-        {/* {showButton && (
-          <button disabled={inCart}
-            className="btn btn-light w-75 p-3 border-0 addToCart-btn fw-bold position-absolute bottom-0 start-50 translate-middle"
-            onClick={handleAddToCart}
-          >
-            <FontAwesomeIcon icon={faPlus} /> Add to Cart
-          </button>
-        )}
-      {inCart && (
-        <button onClick={handleDeleteFromCart}>
-          Remove from Cart
-        </button>
-      )} */}
       {inCart ? (
           <button
-            className="btn btn-light w-75 p-3 border-0 addToCart-btn fw-bold position-absolute bottom-0 start-50 translate-middle"
-            onClick={() => handleDeleteFromCart(product?._id)}
+            className="btn text-dark removeFromCart-btn w-75 p-3 border-0 fw-bold position-absolute bottom-0 start-50 translate-middle"
+            onClick={(event) =>{event.preventDefault(); handleDeleteFromCart(product?._id)}}
           >
             Remove from Cart
           </button>
         ) : (
           <button
             className="btn btn-light w-75 p-3 border-0 addToCart-btn fw-bold position-absolute bottom-0 start-50 translate-middle"
-            onClick={handleAddToCart}
+            onClick={(event) =>{event.preventDefault(); 
+              handleAddToCart(product._id, product.colors[0].color, product.price);
+            }}
             style={{ pointerEvents: !showButton ? "none" : "auto" }}
           >
             <FontAwesomeIcon icon={faPlus} /> Add to Cart
