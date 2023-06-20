@@ -13,8 +13,12 @@ input:-webkit-autofill {
   }
 }
 
+input, .submit-holder{
+  height: 2.5rem;
+}
+
 .add-to-cart-btn {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   letter-spacing: 1px;
   width: 86%;
   bottom: 1rem;
