@@ -423,3 +423,9 @@ footer {
   height: 100%;
 }
 /* ====== end  home carousel ========= */
+
+/* for cartModal*/
+.cartmodal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+/*end cartModal*/
