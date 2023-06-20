@@ -2,6 +2,22 @@
   box-sizing: border-box;
 }
 
+.checkout {
+  margin-left: 0rem !important;
+  margin-right: 0rem !important;
+}
+@media only screen and (min-width: 768px) {
+  .checkout {
+    margin-left: 6rem !important;
+    margin-top: 2rem;
+  }
+}
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+  .checkout {
+    margin-left: 4rem !important;
+  }
+}
+
 .checkout .container {
   background-color: blue !important;
   margin-left: 40px !important;
@@ -21,21 +37,33 @@
   margin-top: 1rem;
 }
 .rightorderColumn {
-  background-color: var(--footer-links) !important;
+  padding-top: 20px;
+  background-color: #f1f1f1 !important;
+  height: 100lvh;
 }
 .leftFormColum .form-group {
   width: 50%;
 }
+.leftFormColum {
+  /* background-color: red; */
+}
+/* large screen */
+@media screen and (min-width: 992px) {
+  .leftFormColum {
+    padding-right: 60px;
+  }
+  .leftFormColum {
+    margin-left: 0rem;
+  }
 
+  .rightorderColumn {
+    margin-right: 0px;
+  }
+}
 @media (max-width: 1024px) {
 }
 .checklabal {
   margin-top: 10px;
-}
-nav ol li a {
-  text-decoration: none;
-  color: black;
-  font-weight: bold;
 }
 
 /* =============shoppping cart ===================== */
@@ -43,8 +71,8 @@ nav ol li a {
   position: relative;
 }
 .productImg {
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   border-radius: 15px;
   padding: 0px;
   border: 2px solid #eee;
@@ -52,16 +80,6 @@ nav ol li a {
 }
 .productImg img {
   background-color: var(--footer-links);
-}
-.productImg::before {
-  /* content: "m hhh"; */
-  position: absolute;
-  background-color: var(--footer-links);
-  width: 10px;
-  height: 1010px;
-  top: 10px;
-  left: 0px;
-  z-index: 5;
 }
 
 .productInfo p {
@@ -83,7 +101,7 @@ nav ol li a {
   position: absolute;
   background-color: var(--yellow);
   top: -4px;
-  left: 55px;
+  left: 38px;
   width: 20px !important;
   height: 20px !important;
   border-radius: 100px;
@@ -105,4 +123,23 @@ nav ol li a {
 .Shipping {
   font-size: 11;
   margin-top: -10px;
+}
+.blue {
+  background-color: #d0e9f7;
+  border: 1px solid #04397a81;
+}
+
+/* ----------------- */
+.gray {
+  color: var(--secondary-gray);
+}
+.orderbtn {
+  /* margin-right: 1px; */
+}
+.PaymentMethod {
+  height: 100%;
+  height: 80lvh;
+}
+.orderbtn {
+  /* margin-right: 1px; */
 }
