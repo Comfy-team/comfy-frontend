@@ -17,7 +17,7 @@ const BottomNav = ({ cart }) => {
   const dispatch = useDispatch();
 
   return (
-    <nav className="bg-white fixed-bottom border-top">
+    <nav className="bg-white sticky-bottom border-top">
       <div className="list-unstyled row py-3 m-0">
         <div className="col-3 text-center">
           <div>
