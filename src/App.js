@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import jwt_decode from "jwt-decode";
 
 // bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,7 +12,6 @@ import "./App.css";
 import AppRoutes from "./router/AppRoutes";
 import axiosInstance from "./apis/config";
 import { setBrands } from "./store/slices/brandsSlice";
-import { setCart } from "./store/slices/cartSlice";
 import { getCart } from "./functions/cart";
 
 function App() {
