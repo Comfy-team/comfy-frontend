@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // components
 import Header from "../common/header";
