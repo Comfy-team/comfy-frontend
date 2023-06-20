@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
+import jwtDecode from "jwt-decode";
+import React, { useState, useEffect } from "react";
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,10 +14,40 @@ import {
 // components
 import logo from "../../assets/logos/logo-header.png";
 import { showLoginModal } from "../../store/slices/loginModalSlice";
+import CartModal from "../cartModal/cartModal";
 
 const Header = ({ isMediumScreen, cart }) => {
   const dispatch = useDispatch();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [decodedToken, setDecodedToken] = useState(null);
+  const [showCartModal, setShowCartModal] = useState(false);
 
+  const handleCartClose = () => {
+    setShowCartModal(false);
+  };
+  const handleCartIconClick = () => {
+    setShowCartModal(!showCartModal);
+  };
+
+  const token = localStorage.getItem("userToken");
+  useEffect(() => {
+    console.log("Token:", token);
+    if (token) {
+      const decoded = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        setIsLoggedIn(false);
+        setDecodedToken(null);
+        localStorage.removeItem("userToken");
+      } else {
+        setIsLoggedIn(true);
+        setDecodedToken(decoded);
+      }
+    } else {
+      setIsLoggedIn(false);
+      setDecodedToken(null);
+    }
+  }, [token]);
   return (
     <header className="header sticky-lg-top bg-white">
       <nav
@@ -83,10 +114,10 @@ const Header = ({ isMediumScreen, cart }) => {
             </ul>
             {!isMediumScreen && (
               <div className="d-flex align-items-center gap-4">
-                {cart.user_id ? (
+                {isLoggedIn ? (
                   <Link
                     className="btn p-0 color-main-gray fs-5 hover-color-yellow"
-                    to={`/account/${cart.user_id}`}
+                    to={`/account/${decodedToken.id}`}
                   >
                     <FontAwesomeIcon icon={faUser} />
                     <span className="visually-hidden">account</span>
@@ -111,7 +142,11 @@ const Header = ({ isMediumScreen, cart }) => {
                   type="button"
                   className="cart-btn btn p-0 fs-5 hover-color-yellow position-relative"
                 >
-                  <FontAwesomeIcon icon={faCartShopping} />
+                  <FontAwesomeIcon
+                    icon={faCartShopping}
+                    className="outlined-icon pointer"
+                    onClick={handleCartIconClick}
+                  />
                   <span className="visually-hidden">cart</span>
                   <span className="position-absolute bg-yellow top-0 start-0 translate-middle badge rounded-pill">
                     {cart.items
@@ -127,6 +162,17 @@ const Header = ({ isMediumScreen, cart }) => {
           </div>
         </div>
       </nav>
+      <div className="shopping-cart-container">
+        {showCartModal && (
+          <React.Fragment>
+            <div className="modal-backdrop cartmodal-backdrop" onClick={handleCartClose}></div>{" "}
+            <CartModal
+              showModal={showCartModal}
+              hideModal={() => setShowCartModal(false)}
+            />
+          </React.Fragment>
+        )}
+      </div>
     </header>
   );
 };

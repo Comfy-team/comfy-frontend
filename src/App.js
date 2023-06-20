@@ -14,6 +14,7 @@ import AppRoutes from "./router/AppRoutes";
 import axiosInstance from "./apis/config";
 import { setBrands } from "./store/slices/brandsSlice";
 import { setCart } from "./store/slices/cartSlice";
+import { getCart } from "./functions/cart";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,18 +28,7 @@ function App() {
       .catch((error) => console.log(error));
 
     const token = localStorage.getItem("userToken");
-    if (token) {
-      let decoded = jwt_decode(token);
-      axiosInstance
-        .get(`/users/${decoded.id}/cart`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "x-access-token": token,
-          },
-        })
-        .then((res) => dispatch(setCart(res.data)))
-        .catch((error) => console.log(error));
-    }
+    if (token) getCart(token);
   }, []);
 
   return (
