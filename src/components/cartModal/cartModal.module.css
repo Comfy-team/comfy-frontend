@@ -48,7 +48,7 @@
 }
 .product-container {
   height: calc(
-    90vh - 150px
+    85vh - 150px
   );
   overflow-y: auto;
   max-height: 26rem;
