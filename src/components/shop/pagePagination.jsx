@@ -7,7 +7,10 @@ const PagePagination = ({ totalPages, currentPage, pages, onPageChange }) => {
   return (
     <nav aria-label="Page navigation example">
       <ul className="pagination justify-content-center mb-0">
-        <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+        <li
+          className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
+          onClick={() => currentPage !== 1 && onPageChange(currentPage - 1)}
+        >
           <Link
             className={`page-link ${style["page-link"]} text-white ${
               currentPage === 1
@@ -15,7 +18,6 @@ const PagePagination = ({ totalPages, currentPage, pages, onPageChange }) => {
                 : "bg-dark "
             }`}
             aria-label="Previous"
-            onClick={() => onPageChange(currentPage - 1)}
           >
             <span aria-hidden="true">&laquo;</span>
           </Link>
@@ -43,6 +45,9 @@ const PagePagination = ({ totalPages, currentPage, pages, onPageChange }) => {
           className={`page-item ${
             currentPage === totalPages ? "disabled" : ""
           }`}
+          onClick={() =>
+            currentPage !== totalPages && onPageChange(currentPage + 1)
+          }
         >
           <Link
             className={`page-link ${style["page-link"]} text-white ${
@@ -51,7 +56,6 @@ const PagePagination = ({ totalPages, currentPage, pages, onPageChange }) => {
                 : "bg-dark "
             }`}
             aria-label="Next"
-            onClick={() => onPageChange(currentPage + 1)}
           >
             <span aria-hidden="true">&raquo;</span>
           </Link>
