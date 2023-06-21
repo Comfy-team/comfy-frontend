@@ -44,13 +44,20 @@ const About = () => {
                   specialists.
                 </Tab>
                 <Tab eventKey="profile" title="Profile">
-                  Tab content for Profile rowrcol-6o wrow rowcol-6r col-6col-6ow
-                  Profile ProfileProfileProfileProfile Profile Profile Profile
-                  ProfileProfileProfileProfile Profile Profile Profile
-                  ProfileProfileProfileProfile Profile Profile
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nullam a aliquet libero. Sed id sodales massa. Nullam vel
+                  sapien ac enim lacinia fermentum. Fusce accumsan ultricies
+                  velit, eu fermentum sem vehicula a. Donec vel nulla vitae
+                  ipsum sodales molestie. Curabitur aliquet justo et est
+                  vehicula, id eleifend eros aliquet. Praesent
                 </Tab>
-                <Tab eventKey="contact" title="Contact">
-                  Tab content for Contact
+                <Tab eventKey="contact" title="Contact" className="">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nullam a aliquet libero. Sed id sodales massa. Nullam vel
+                  sapien ac enim lacinia fermentum. Fusce accumsan ultricies
+                  velit, eu fermentum sem vehicula a. Donec vel nulla vitae
+                  ipsum sodales molestie. Curabitur aliquet justo et est
+                  vehicula, id eleifend eros aliquet. Praesent{" "}
                 </Tab>
               </Tabs>
             </div>
