@@ -27,7 +27,9 @@ const Register = ({onRegistrationSuccess}) => {
         // handle response data, e.g. show success message
         setIsSubmitted(true);
         resetForm();
-        onRegistrationSuccess();
+        setTimeout(()=>{
+          onRegistrationSuccess();
+        },2000)
       })
       .catch((error) => {
         // handle error, e.g. show error message
