@@ -69,7 +69,7 @@ const RelatedProducts = ({ data }) => {
         >
           {data.map((product) => {
             const inCart = cart.items
-              ? cart.items.findIndex((ele) => ele._id === product._id) === -1
+              ? cart.items.findIndex((ele) => ele.product_id === product._id) === -1
                 ? false
                 : true
               : false;
