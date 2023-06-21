@@ -15,22 +15,18 @@ import ProductCard from "../../components/common/productCard";
 import SortDropdown from "../../components/shop/sortDropdown";
 import PagePagination from "../../components/shop/pagePagination";
 import Aside from "../../components/shop/aside";
+import Spinner from "../../components/common/spinner";
 
 // style
 import style from "./shop.module.css";
 
 const Shop = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState([]);
-  const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [pagesArr, setPagesArr] = useState(null);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(50);
-  const [filterBrand, setFilterBrand] = useState("all");
-  const [filterCategory, setFilterCategory] = useState("all");
-  const [filterPrice, setFilterPrice] = useState(0);
-  const [sort, setSort] = useState(0);
   const [isSmallScreen, SetIsSmallScreen] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [searchObj, setSearchObj] = useState({
@@ -40,17 +36,17 @@ const Shop = () => {
     sort: 0,
     price: 0,
   });
-  const [searchParams, setSearchParams] = useSearchParams(searchObj);
-  const content = useRef();
+  const [searchParams, setSearchParams] = useSearchParams({});
   const brands = useSelector((state) => state.brands.brands);
   const cart = useSelector((state) => state.cart.cart);
   const [animationParent] = useAutoAnimate();
+  const content = useRef();
 
   const getData = (
     page = 1,
-    brand = filterBrand,
-    category = filterCategory,
-    sorting = sort,
+    brand = searchObj.brand,
+    category = searchObj.category,
+    sort = searchObj.sort,
     price = 0
   ) => {
     axiosInstance
@@ -59,8 +55,8 @@ const Shop = () => {
           page,
           brand,
           category,
-          sort: sorting,
-          price: price,
+          sort,
+          price,
         },
       })
       .then((res) => {
@@ -72,66 +68,70 @@ const Shop = () => {
           pages.push(i);
         }
         setPagesArr(pages);
-
-        if (sorting === sort && price === 0) {
+        if (sort === searchObj.sort && price === 0) {
           setMinPrice(res.data.minPrice);
           setMaxPrice(res.data.maxPrice);
-          setFilterPrice(res.data.maxPrice);
+
+          setSearchObj({
+            page,
+            brand,
+            category,
+            sort,
+            price: res.data.maxPrice,
+          });
+          setSearchParams({
+            page,
+            brand,
+            category,
+            sort,
+            price: res.data.maxPrice,
+          });
         }
       })
       .catch((error) => console.log(error));
   };
 
+  const updateFilters = (key, value) => {
+    const obj = { ...searchObj };
+    obj[key] = value;
+    setSearchObj(obj);
+    setSearchParams(obj);
+  };
+
   const handlePageChange = (page) => {
-    content.current.scrollIntoView();
-    setSearchObj({ ...searchObj, page });
-    setSearchParams({ ...searchObj, page });
-    setPage(page);
+    content.current.scrollIntoView({ behavior: "smooth" });
     getData(page);
   };
 
   const handleSort = (sorting) => {
-    setSort(sorting);
-    setSearchObj({ ...searchObj, sort: sorting });
-    setSearchParams({ ...searchObj, sort: sorting });
-    getData(1, filterBrand, filterCategory, sorting);
+    updateFilters("sort", sorting);
+    getData(1, searchObj.brand, searchObj.category, sorting);
   };
 
   const handleCategoryFilter = (value) => {
-    setSearchObj({ ...searchObj, category: value });
-    setSearchParams({ ...searchObj, category: value });
-    setFilterCategory(value);
-    getData(1, filterBrand, value);
+    updateFilters("category", value);
+    getData(1, searchObj.brand, value);
   };
 
   const handleBrandFilter = (value) => {
-    setSearchObj({ ...searchObj, brand: value });
-    setSearchParams({ ...searchObj, brand: value });
-    setFilterBrand(value);
+    updateFilters("brand", value);
     getData(1, value);
   };
 
   const handlePriceFilter = (value) => {
-    setSearchObj({ ...searchObj, price: value });
-    setSearchParams({ ...searchObj, price: value });
-    setFilterPrice(value);
-    getData(1, filterBrand, filterCategory, sort, value);
+    updateFilters("price", value);
+    getData(1, searchObj.brand, searchObj.category, searchObj.sort, value);
   };
 
   useEffect(() => {
     if (searchParams.get("page")) {
-      getData(
-        searchParams.get("page"),
-        searchParams.get("brand"),
-        searchParams.get("category"),
-        searchParams.get("sort"),
-        searchParams.get("price")
-      );
-      setPage(+searchParams.get("page"));
-      setSort(+searchParams.get("sort"));
-      setFilterBrand(searchParams.get("brand"));
-      setFilterPrice(searchParams.get("price"));
-      setFilterCategory(searchParams.get("category"));
+      const page = +searchParams.get("page");
+      const brand = searchParams.get("brand") || searchObj.brand;
+      const category = searchParams.get("category") || searchObj.category;
+      const sort = Number(searchParams.get("sort")) || searchObj.sort;
+      const price = +searchParams.get("price") || searchObj.price;
+      setSearchObj({ page, brand, category, sort, price });
+      getData(page, brand, category, sort, price);
     } else {
       getData();
     }
@@ -166,74 +166,86 @@ const Shop = () => {
             brands={brands}
             minPrice={minPrice}
             maxPrice={maxPrice}
-            filterCategory={filterCategory}
-            filterBrand={filterBrand}
-            filterPrice={filterPrice}
+            filters={searchObj}
             handleCategoryFilter={handleCategoryFilter}
             handleBrandFilter={handleBrandFilter}
             handlePriceFilter={handlePriceFilter}
           />
           <div className="col-lg-9 col-md-8 d-flex flex-column justify-content-between">
-            {products.length > 0 ? (
-              <>
-                <div className="products mb-4">
-                  <div
-                    className={`${
-                      !isSmallScreen &&
-                      "d-flex justify-content-between align-items-center"
-                    } mb-4`}
-                  >
-                    <p className="mb-0">
-                      Showing page {page} of {totalPages} pages
-                    </p>
-                    {isSmallScreen ? (
-                      <div className="d-flex justify-content-between align-items-center pt-3">
-                        <button
-                          className="btn border"
-                          type="button"
-                          aria-expanded="false"
-                          onClick={() => setShowFilterModal(true)}
-                          aria-label="show filter modal"
-                        >
-                          <FontAwesomeIcon icon={faFilter} /> Filters
-                        </button>
-                        <SortDropdown active={sort} onSort={handleSort} />
-                      </div>
-                    ) : (
-                      <SortDropdown active={sort} onSort={handleSort} />
-                    )}
-                  </div>
-                  <div
-                    ref={animationParent}
-                    className={`row ${style["products-grid"]}`}
-                  >
-                    {products.map((product) => {
-                      const inCart = cart.items
-                        ? cart.items.findIndex(
-                            (ele) => ele.product_id === product._id
-                          ) === -1
-                          ? false
-                          : true
-                        : false;
-                      return (
-                        <div key={product._id} className="col-lg-4 col-sm-6">
-                          <ProductCard product={product} inCart={inCart} cart={cart} />
+            {products ? (
+              products.length > 0 ? (
+                <>
+                  <div className="products mb-4">
+                    <div
+                      className={`${
+                        !isSmallScreen &&
+                        "d-flex justify-content-between align-items-center"
+                      } mb-4`}
+                    >
+                      <p className="mb-0">
+                        Showing page {searchObj.page} of {totalPages} pages
+                      </p>
+                      {isSmallScreen ? (
+                        <div className="d-flex justify-content-between align-items-center pt-3">
+                          <button
+                            className="btn border"
+                            type="button"
+                            aria-expanded="false"
+                            onClick={() => setShowFilterModal(true)}
+                            aria-label="show filter modal"
+                          >
+                            <FontAwesomeIcon icon={faFilter} /> Filters
+                          </button>
+                          <SortDropdown
+                            active={searchObj.sort}
+                            onSort={handleSort}
+                          />
                         </div>
-                      );
-                    })}
+                      ) : (
+                        <SortDropdown
+                          active={searchObj.sort}
+                          onSort={handleSort}
+                        />
+                      )}
+                    </div>
+                    <div
+                      ref={animationParent}
+                      className={`row ${style["products-grid"]}`}
+                    >
+                      {products.map((product) => {
+                        const inCart = cart.items
+                          ? cart.items.findIndex(
+                              (ele) => ele.product_id === product._id
+                            ) === -1
+                            ? false
+                            : true
+                          : false;
+                        return (
+                          <div key={product._id} className="col-lg-4 col-sm-6">
+                            <ProductCard
+                              product={product}
+                              inCart={inCart}
+                              cart={cart}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-                <PagePagination
-                  pages={pagesArr}
-                  currentPage={page}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                />
-              </>
+                  <PagePagination
+                    pages={pagesArr}
+                    currentPage={searchObj.page}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
+                </>
+              ) : (
+                <p className="text-center h5 mt-5 pt-5">
+                  Sorry, no matching products
+                </p>
+              )
             ) : (
-              <p className="text-center h5 mt-5 pt-5">
-                Sorry, no matching products
-              </p>
+              <Spinner />
             )}
           </div>
         </div>
