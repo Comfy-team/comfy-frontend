@@ -177,16 +177,6 @@
   display: flex;
 }
 .modifyImage {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: start;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
   height: 400px;
   margin-bottom: 30px;
 }
