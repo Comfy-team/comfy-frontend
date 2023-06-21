@@ -5,6 +5,8 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import LayoutWithNav from "../components/layouts/layoutWithNav";
 import LayoutWithPageHeader from "../components/layouts/layoutWithPageHeader";
 import Spinner from "../components/common/spinner";
+import PaymentMethod from "./../pages/checkout/paymentMethod";
+import FormComonent from "./../pages/checkout/FormComonent";
 
 // pages
 const Home = React.lazy(() => import("./../pages/home"));
@@ -106,7 +108,11 @@ const AppRoutes = () => {
             <Checkout />
           </Suspense>
         }
-      />
+      >
+        <Route path="information" element={<FormComonent />} />
+        <Route path="shipping" element={<PaymentMethod />} />
+      </Route>
+
       <Route path="*" element={<Page404 />} />
     </Routes>
   );
