@@ -36,7 +36,7 @@ export const deleteItemFromCart = (cartId, id) => {
       )
       .then((res) => {
         if (res.status === 200) {
-          store.dispatch(setCart(res.data));
+          getCart(token);
         }
       })
       .catch((error) => console.log(error));
@@ -62,7 +62,7 @@ export const updateItemQuantity = (cartId, id, quantity) => {
       )
       .then((res) => {
         if (res.status === 200) {
-          store.dispatch(setCart(res.data));
+          getCart(token);
         }
       })
       .catch((error) => console.log(error));
@@ -88,7 +88,7 @@ export const addItemToCart = (cartId, id, color, price) => {
       )
       .then((res) => {
         if (res.status === 200) {
-          store.dispatch(setCart(res.data));
+          getCart(token);
         }
       })
       .catch((error) => console.log(error));
