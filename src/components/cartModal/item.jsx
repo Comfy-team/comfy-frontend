@@ -18,7 +18,7 @@ function Item({ item, cartId }) {
         <p className="pl-2 fs-6 hover-color-yellow">
           <strong className="d-block">{item.name}</strong>
           <strong className="d-block">color: {item.color}</strong>
-
+          <span className="text-secondary">{item.quantity}x </span>
           <strong>${item.price}</strong>
         </p>
         <FontAwesomeIcon
