@@ -84,7 +84,7 @@ const AccountOrders = ({ token }) => {
                   data-parent="#accordion"
                   className={`collapse ${isCollapsed[order._id] ? "" : "show"}`}
                 >
-                  {order.cartId.items.map((item) => {
+                  {order.items.map((item) => {
                     return (
                       <div
                         className={`card-body text-center ${styles.cartBody}`}
@@ -141,7 +141,7 @@ const AccountOrders = ({ token }) => {
                     </div>
                     <div>
                       <p className={`h5 ${styles.price} py-1 px-2 text-center`}>
-                        ${order.cartId.totalPrice}
+                        ${order.totalPrice}
                       </p>
                     </div>
                   </div>
