@@ -6,11 +6,11 @@ const Colors = ({ colors, active, onColorChange }) => {
     <div className="d-flex align-items-center gap-2">
       {colors.map((ele) => (
         <span
-          key={ele._id}
+          key={ele}
           className={`${style["color-choice"]} ${
-            ele._id === active?._id && style.active
+            ele === active && style.active
           } d-inline-block rounded-circle border border-2 border-white`}
-          style={{ backgroundColor: ele.color }}
+          style={{ backgroundColor: ele }}
           onClick={() => onColorChange(ele)}
         ></span>
       ))}

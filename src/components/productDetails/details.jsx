@@ -9,6 +9,7 @@ import Colors from "./colors";
 import Quantity from "./quantity";
 import AdditionalInfo from "./additionalInfo";
 import { showLoginModal } from "../../store/slices/loginModalSlice";
+import RemoveProductWarning from "../common/removeProductWarning";
 
 // functions
 import {
@@ -25,8 +26,9 @@ const Details = ({ product }) => {
   const [activeQuantity, setActiveQuantity] = useState(1);
   const [inCart, setInCart] = useState(false);
   const [terms, setTerms] = useState(false);
-  const navigate = useNavigate();
+  const [showWarning, setShowWarning] = useState(false);
   const cart = useSelector((state) => state.cart.cart);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleColorChange = (color) => {
@@ -39,17 +41,13 @@ const Details = ({ product }) => {
   };
 
   const handleAddToCart = (id, color, price) => {
-    if (!localStorage.getItem("userToken")) {
-      dispatch(showLoginModal(true));
-      return;
-    }
-    setInCart(true);
     addItemToCart(cart._id, id, color, price);
   };
 
-  const handleDeleteFromCart = (id) => {
+  const handleDeleteFromCart = () => {
+    deleteItemFromCart(cart._id, product._id);
+    setShowWarning(false);
     setInCart(false);
-    deleteItemFromCart(cart._id, id);
   };
 
   const handleBuyProduct = (id, color, price) => {
@@ -65,6 +63,8 @@ const Details = ({ product }) => {
         if (item) {
           setActiveQuantity(item.quantity);
           setInCart(true);
+        } else {
+          setInCart(false);
         }
       }
     }
@@ -83,7 +83,7 @@ const Details = ({ product }) => {
       <div className="border-top border-bottom py-4">
         <div className="d-flex align-items-center gap-2 mb-4">
           <span className="fw-semibold">Stock:</span>
-          <span>{product.stock}</span>
+          <span>{product.stock > 0 ? product.stock : "Out Of Stcok"}</span>
         </div>
         <div className="d-flex align-items-center gap-3 mb-4">
           <h3 className="h6 mb-0 fw-semibold">Colors:</h3>
@@ -99,13 +99,16 @@ const Details = ({ product }) => {
             active={activeQuantity}
             stock={product.stock}
             onQuantityChange={handleQuantityChange}
-            onDeleteItem={handleDeleteFromCart}
+            onDeleteItem={() => setShowWarning(true)}
           />
         ) : (
           <button
             onClick={() =>
-              handleAddToCart(product._id, activeColor.color, product.price)
+              cart.items
+                ? handleAddToCart(product._id, activeColor, product.price)
+                : dispatch(showLoginModal(true))
             }
+            disabled={product.stock > 0 ? false : true}
             className="btn btn-bg-dark text-white text-capitalize px-5 rounded-2 d-block mx-auto"
           >
             Add to cart
@@ -138,18 +141,26 @@ const Details = ({ product }) => {
         <button
           type="button"
           className="btn my-3 py-2 d-block w-100 bg-dark text-white text-uppercase"
-          disabled={!terms ? true : false}
+          disabled={!terms || product.stock === 0 ? true : false}
           onClick={() =>
-            handleBuyProduct(product._id, activeColor.color, product.price)
+            cart.items
+              ? handleBuyProduct(product._id, activeColor, product.price)
+              : dispatch(showLoginModal(true))
           }
         >
           buy it now
         </button>
         <AdditionalInfo product={product} />
       </div>
+      {showWarning && (
+        <RemoveProductWarning
+          onRemove={handleDeleteFromCart}
+          onCancel={() => setShowWarning(false)}
+        />
+      )}
     </>
   ) : (
-    "loading"
+    ""
   );
 };
 
