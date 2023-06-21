@@ -96,3 +96,29 @@ export const addItemToCart = (cartId, id, color, price) => {
     store.dispatch(showLoginModal(true));
   }
 };
+
+export const emptyCart = (cartId) => {
+  const token = localStorage.getItem("userToken");
+  if (token) {
+    axiosInstance
+      .patch(
+        `/cart/${cartId}/empty`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          store.dispatch(setCart(res.data));
+        }
+      })
+      .catch((error) => console.log(error));
+  } else {
+    store.dispatch(showLoginModal(true));
+  }
+};
