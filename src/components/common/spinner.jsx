@@ -1,6 +1,6 @@
 const Spinner = () => {
   return (
-    <div className="spinner-holder d-flex justify-content-center align-items-center">
+    <div className="spinner-holder py-5 my-5 d-flex justify-content-center align-items-center">
       <div
         className="spinner-border"
         role="status"
