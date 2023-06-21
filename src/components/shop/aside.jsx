@@ -17,9 +17,7 @@ const Aside = ({
   brands,
   minPrice,
   maxPrice,
-  filterCategory,
-  filterBrand,
-  filterPrice,
+  filters,
   handleCategoryFilter,
   handleBrandFilter,
   handlePriceFilter,
@@ -48,19 +46,19 @@ const Aside = ({
           <Filter
             data={categories}
             name="categories"
-            active={filterCategory}
+            active={filters.category}
             onFilter={handleCategoryFilter}
           />
           <Filter
             data={brands}
             name="brands"
-            active={filterBrand}
+            active={filters.brand}
             onFilter={handleBrandFilter}
           />
           <PriceFilter
             min={minPrice}
             max={maxPrice}
-            value={filterPrice}
+            value={filters.price}
             onFilter={handlePriceFilter}
           />
         </form>
