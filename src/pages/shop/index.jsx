@@ -43,6 +43,7 @@ const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams(searchObj);
   const content = useRef();
   const brands = useSelector((state) => state.brands.brands);
+  const cart = useSelector((state) => state.cart.cart);
   const [animationParent] = useAutoAnimate();
 
   const getData = (
@@ -64,14 +65,14 @@ const Shop = () => {
       })
       .then((res) => {
         setProducts(res.data.data);
-    
-          setTotalPages(res.data.totalPages);
-          const pages = [];
-          for (let i = 1; i <= res.data.totalPages; i++) {
-            pages.push(i);
-          }
-          setPagesArr(pages);
-        
+
+        setTotalPages(res.data.totalPages);
+        const pages = [];
+        for (let i = 1; i <= res.data.totalPages; i++) {
+          pages.push(i);
+        }
+        setPagesArr(pages);
+
         if (sorting === sort && price === 0) {
           setMinPrice(res.data.minPrice);
           setMaxPrice(res.data.maxPrice);
@@ -206,11 +207,20 @@ const Shop = () => {
                     ref={animationParent}
                     className={`row ${style["products-grid"]}`}
                   >
-                    {products.map((product) => (
-                      <div key={product._id} className="col-lg-4 col-sm-6">
-                        <ProductCard product={product} />
-                      </div>
-                    ))}
+                    {products.map((product) => {
+                      const inCart = cart.items
+                        ? cart.items.findIndex(
+                            (ele) => ele.product_id === product._id
+                          ) === -1
+                          ? false
+                          : true
+                        : false;
+                      return (
+                        <div key={product._id} className="col-lg-4 col-sm-6">
+                          <ProductCard product={product} inCart={inCart} cart={cart} />
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
                 <PagePagination
