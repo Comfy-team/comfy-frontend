@@ -428,7 +428,7 @@ footer {
 /* ===== start scroll to top button ======= */
 .flow-button {
   display: flex;
-  bottom: 2.5rem;
+  bottom: 4rem;
   right: 2.5rem;
   width: 2.5rem;
   height: 2.5rem;
