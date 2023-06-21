@@ -22,7 +22,7 @@ const Quantity = ({ id, active, stock, onQuantityChange, onDeleteItem }) => {
         className="btn fs-4 p-0 border-0 outline-0 color-main-black hover-color-yellow"
         disabled={active === 0 ? true : false}
         onClick={() =>
-          active === 1 ? onDeleteItem(id) : onQuantityChange(id, active - 1)
+          active === 1 ? onDeleteItem() : onQuantityChange(id, active - 1)
         }
       >
         <FontAwesomeIcon icon={faSquareMinus} />

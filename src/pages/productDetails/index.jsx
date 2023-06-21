@@ -9,6 +9,7 @@ import FullDescription from "../../components/productDetails/fullDescription";
 import RelatedProducts from "../../components/productDetails/relatedProducts";
 import Brands from "../../components/common/brands";
 import FollowUs from "../../components/common/followUs";
+import Spinner from "../../components/common/spinner";
 
 const ProductDetails = () => {
   const [data, setData] = useState(null);
@@ -34,7 +35,7 @@ const ProductDetails = () => {
       .catch((error) => console.log(error));
   }, [id]);
 
-  return (
+  return data ? (
     <div id="prodcut-details" className="pb-5">
       <div className="container-fluid border-bottom py-5">
         <div className="row m-0 mb-5">
@@ -50,6 +51,10 @@ const ProductDetails = () => {
       <RelatedProducts data={relatedProducts} />
       <Brands />
       <FollowUs />
+    </div>
+  ) : (
+    <div className="py-5 my-5">
+      <Spinner />
     </div>
   );
 };
