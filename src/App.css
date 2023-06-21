@@ -174,8 +174,24 @@ img {
   transition: opacity ease 0.5s, transform ease 0.7s;
 }
 
-.product-card:hover .holder .hover-img {
-  opacity: 1;
+.product-card .add-to-cart-btn {
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  width: 86%;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 992px) {
+  .product-card .add-to-cart-btn {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .product-card .holder:hover .add-to-cart-btn {
+    opacity: 1;
+  }
 }
 
 .product-card .holder:hover .hover-img {
