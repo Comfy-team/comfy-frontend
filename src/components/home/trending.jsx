@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
-import { NavLink} from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 //components
 import { LeftArrow, RightArrow } from "./../common/customSliderArrows";
-//icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-
-import styles from "./../../pages/home/home.module.css";
 import axiosInstance from "../../apis/config";
-import ProductCard from './../common/productCard';
+import ProductCard from "./../common/productCard";
+
+//style
+import styles from "./../../pages/home/home.module.css";
 
 // React multi-carousel breakpoints
 const responsive = {
@@ -47,17 +45,17 @@ const responsive = {
 
 const Trending = () => {
   let [product, setProduct] = useState([]);
-
+  const cart = useSelector((state) => state.cart.cart);
   useEffect(() => {
     axiosInstance
       .get("/products", {
-        params: {
-          page: 1,
-          brand: "all",
-          category: "all",
-          sort: 0,
-          price: 0,
-        },
+        // params: {
+        //   page: 1,
+        //   brand: "all",
+        //   category: "all",
+        //   sort: 0,
+        //   price: 0,
+        // },
       })
       .then((response) => {
         setProduct(response.data.data);
@@ -92,11 +90,21 @@ const Trending = () => {
               customLeftArrow={<LeftArrow />}
             >
               {product.map((product) => {
+                const inCart = cart.items
+                  ? cart.items.findIndex(
+                      (ele) => ele.product_id === product._id
+                    ) === -1
+                    ? false
+                    : true
+                  : false;
 
-                
                 return (
                   <div key={product._id} className="pe-4">
-                  <ProductCard product={product} />
+                    <ProductCard
+                      product={product}
+                      inCart={inCart}
+                      cart={cart}
+                    />
                   </div>
                 );
               })}
