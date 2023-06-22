@@ -274,7 +274,7 @@ footer {
 
 /* start header */
 .header {
-  z-index: 1000;
+  z-index: 1040;
 }
 
 .header .nav-link.active {
