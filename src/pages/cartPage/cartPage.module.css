@@ -1,12 +1,21 @@
+.cart-container {
+  padding-top: 4rem;
+  min-height: 80vh;
+}
+.input-group{
+  flex-wrap: nowrap;
+}
 .input-text {
-    border: none;
-    text-align: center;
-    max-width: 40px;
-  }
-  .pointer {
-    cursor: pointer;
-  }
-  .cart-btn:hover {
-    background-color: #c7ab62;
-  }
-  
+  border: none;
+  text-align: center;
+  /* max-width: 40px; */
+}
+.pointer {
+  cursor: pointer;
+}
+.cart-btn:hover {
+  background-color: #c7ab62;
+}
+.item-img{
+  width: 6rem;
+}
