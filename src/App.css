@@ -469,3 +469,14 @@ footer {
   overflow: hidden;
 }
 /* disable body scroll */
+
+/* start dashboard */
+.dash-navlink.active {
+  color: var(--dash-active-text) !important;
+  background-color: var(--dash-active-bg) !important;
+}
+
+.dash-navlink.active::after {
+  background-color: var(--dash-btn-bg);
+}
+/* end dashboard */
