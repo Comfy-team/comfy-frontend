@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import axiosInstance from "../../apis/config";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+import axiosInstance from "../../apis/config";
+
 import styles from "./login-register.module.css";
 
-const Register = ({onRegistrationSuccess}) => {
+const Register = ({ onRegistrationSuccess }) => {
   const [user, setUser] = useState({
     fullName: "",
     email: "",
@@ -20,6 +23,7 @@ const Register = ({onRegistrationSuccess}) => {
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
+
   const handleSubmit = (user, { resetForm }) => {
     axiosInstance
       .post("/register", user)
@@ -27,9 +31,9 @@ const Register = ({onRegistrationSuccess}) => {
         // handle response data, e.g. show success message
         setIsSubmitted(true);
         resetForm();
-        setTimeout(()=>{
+        setTimeout(() => {
           onRegistrationSuccess();
-        },2000)
+        }, 2000);
       })
       .catch((error) => {
         // handle error, e.g. show error message
@@ -59,7 +63,7 @@ const Register = ({onRegistrationSuccess}) => {
             .max(50, "Full name must be less than 50 characters"),
           email: Yup.string()
             .required("Email is required")
-            .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, "Invalid email address"),
+            .matches(/^[a-z0-9.]{3,}@gmail\.com$/, "Invalid email address"),
           password: Yup.string()
             .required("Password is required")
             .min(8, "Password must be at least 8 characters long")
