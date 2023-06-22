@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookF,
-  faTwitter,
+  faInstagram,
   faLinkedin,
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
@@ -89,9 +89,9 @@ const Footer = () => {
             >
               <h6 className="text-light d-none d-sm-block ">Follow Us</h6>
               <div className="social-icons">
-                <Link to="/" className="me-4 link-light  hover-color-yellow">
+                <Link to="https://instagram.com/comfy_store4?igshid=MzNlNGNkZWQ4Mg==" className="me-4 link-light  hover-color-yellow">
                   <FontAwesomeIcon
-                    icon={faTwitter}
+                    icon={faInstagram}
                     size="lg"
                     className="pt-2"
                   />
