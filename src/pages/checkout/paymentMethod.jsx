@@ -1,71 +1,76 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import axiosInstance from "./../../apis/config";
 import style from "./checkout.module.css";
 import "../../App.css";
-import axiosInstance from "./../../apis/config";
-import jwtDecode from "jwt-decode";
 
-export default function PaymentMethod({ data }) {
+export default function PaymentMethod({
+  formData,
+  // userinfomation,
+  token,
+  // Cartitems,
+}) {
   // console.log(cartSlice(true));
-  console.log("data---------", data);
-  // console.log("data---", data.address.apartment);
-  // const shippingvalue = 20.0;
-  const [orderinfo, setOrderinfo] = useState(data);
+  const [orderinfo, setOrderinfo] = useState(formData);
   const [shippingvalue, setShippingvalue] = useState(20.0);
-
-  console.log("Rendering PaymentMethod...");
-  // rest of the component code
+  const [isAddingOrder, setIsAddingOrder] = useState(false);
+  // console.log("p      userinfomation");
+  const cart = useSelector(state => state.cart.cart);
+  // console.log(cart);
 
   const handleSubmit = orderinfo => {
-    const token = localStorage.getItem("userToken");
+    let theitems = cart.items;
+    const allitemIds =
+      theitems && theitems.length > 0
+        ? theitems.map(item => ({
+            product_id: item.product_id._id,
+            color: item.color,
+            price: item.price,
+            quantity: item.quantity,
+          }))
+        : [];
+    // console.log("allitemIds", allitemIds);
 
-    if (token) {
-      let decodedtoken = jwtDecode(localStorage.getItem("userToken"));
-      let { id, email, role } = decodedtoken;
-      console.log(token);
-      console.log(id);
-      axiosInstance
-        .get(`/users/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            "x-access-token": token,
-          },
-        })
-        .then(res => {
-          let cartId = res.data.cart_id;
-          console.log(cartId);
-          const additionalinfo = { cartId: cartId, userId: id };
-          const newobjectdata = { ...orderinfo, ...additionalinfo };
-          console.log(newobjectdata);
-          axiosInstance
-            .post(`/orders`, newobjectdata, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-                "x-access-token": token,
-              },
-            })
-            .then(res => {
-              console.log(res);
-              console.log("res");
-              // store.dispatch(setCart(res.data));
-            })
-            .catch(error => console.log(error.response));
-        })
-        .catch(error => console.log(error));
-    }
+    const additionalinfo = {
+      totalPrice: cart.totalPrice,
+      items: cart.items,
+      userId: cart.user_id,
+    };
+    const newobjectdata = { ...orderinfo, ...additionalinfo };
+    // console.log("newobjectdata");
+    // console.log(newobjectdata);
+    axiosInstance
+      .post(`/orders`, newobjectdata, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "x-access-token": token,
+        },
+      })
+      .then(res => {
+        // console.log(res);
+        // console.log("order Done ");
+        setIsAddingOrder(true);
+
+        // store.dispatch(setCart(res.data));
+      })
+      .catch(error => {
+        console.log(error.response);
+      });
   };
-  return data ? (
+  return formData ? (
     <div>
       <div className={`${style.PaymentMethod} ml-5 ml-md-3 container `}>
         <div className="container">
+          {/**=========================================== */}
+
+          {/**=========================================== */}
+
           <div className="form-control mr-5">
             <div className={`${style.first} row mr-5`}>
               <div className={`${style.gray} col-3`}> Contact</div>
-              <div className="col-6"> {data.phone}</div>
+              <div className="col-6"> {formData.phone}</div>
               <div className="col-3">
                 <Link to="/checkout/information "> change </Link>
               </div>
@@ -75,9 +80,9 @@ export default function PaymentMethod({ data }) {
               <div className={`${style.gray} col-3`}> Ship to</div>
               <div className="col-6">
                 {" "}
-                {data.address.apartment} ,{data.address.street},
-                {data.address.city},{data.address.governorate},
-                {data.address.country}
+                {formData.address.apartment} ,{formData.address.street},
+                {formData.address.city},{formData.address.governorate},
+                {formData.address.country}
               </div>
               <div className="col-3">
                 <Link to="/checkout/information "> change </Link>
@@ -101,20 +106,19 @@ export default function PaymentMethod({ data }) {
               {`<  `} return to information{" "}
             </Link>
             <div className="col-1 col-md-4"></div>
+            <div className={`col-5 col-md-3 mr-5 `}>
+              <button
+                className={`${style.orderbtn}  btn btn-primary `}
+                onClick={event => {
+                  handleSubmit(orderinfo);
+                  setIsAddingOrder(true);
 
-            <div
-              onClick={event => {
-                handleSubmit(orderinfo);
-                event.target.disabled = true;
-                event.target.style.backgroundColor = "green";
-                event.target.style.borderColor = "green";
-                event.target.style.color = "white";
-                event.target.textContent = "order Done ";
-                // event.target.style.cursor = "not-allowed";
-              }}
-              className={`${style.orderbtn}  btn btn-primary col-5 col-md-3 mr-5 `}
-            >
-              Confirm order
+                  event.target.textContent = "order Done ";
+                }}
+                disabled={isAddingOrder}
+              >
+                Confirm order
+              </button>
             </div>
           </div>
           <hr className="border" />
