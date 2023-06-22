@@ -1,17 +1,25 @@
 import { useLayoutEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // components
 import Header from "../common/header";
 import Footer from "../common/footer";
 import Modal from "../login-register/modal";
 import BottomNav from "../common/bottomNav";
+import CartModal from "./../cartModal/cartModal";
+import { showCartModal } from "../../store/slices/cartModalSlice";
 
 const LayoutWithNav = () => {
   const [isMediumScreen, setIsMediumScreen] = useState(false);
   const showLoginModal = useSelector((state) => state.loginModal.show);
+  const showCart = useSelector((state) => state.cartModal.show);
   const cart = useSelector((state) => state.cart.cart);
+  const dispatch = useDispatch();
+
+  const handleCloseCart = () => {
+    dispatch(showCartModal(false));
+  };
 
   useLayoutEffect(() => {
     function updateSize() {
@@ -26,6 +34,17 @@ const LayoutWithNav = () => {
     <>
       <Header cart={cart} isMediumScreen={isMediumScreen} />
       {showLoginModal && <Modal />}
+      <div className="shopping-cart-container">
+        {showCart && (
+          <>
+            <div
+              className="modal-backdrop cartmodal-backdrop"
+              onClick={handleCloseCart}
+            ></div>
+            <CartModal showModal={showCart} hideModal={handleCloseCart} />
+          </>
+        )}
+      </div>
       <Outlet />
       <Footer />
       {isMediumScreen && <BottomNav cart={cart} />}
