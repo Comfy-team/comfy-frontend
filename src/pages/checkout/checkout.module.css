@@ -83,7 +83,9 @@
 }
 
 .productInfo p {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-left: 5px;
 }
 
 .spanColor {
@@ -99,7 +101,8 @@
 
 .quantitCircle {
   position: absolute;
-  background-color: var(--yellow);
+  background-color: #7f7f7f;
+  color: #f7ffea;
   top: -4px;
   left: 38px;
   width: 20px !important;
@@ -128,6 +131,7 @@
   background-color: #d0e9f7;
   border: 1px solid #04397a81;
 }
+/* shipping btn  3C535E */
 
 /* ----------------- */
 .gray {

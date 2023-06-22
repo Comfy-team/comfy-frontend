@@ -33,7 +33,7 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
   }),
 });
 
-export default function FormComonent({ onFormSubmit, history }) {
+export default function FormComonent({ onFormSubmit, history, userinfo }) {
   const [saveInfo, setSaveInfo] = useState(Boolean(true.toString()));
   const [formData, setFormData] = useState("");
 
@@ -55,13 +55,12 @@ export default function FormComonent({ onFormSubmit, history }) {
       };
 
   const updateUserSubmit = submitdata => {
-    console.log("submitdata");
-    console.log(submitdata);
     setFormData(submitdata);
     onFormSubmit(submitdata);
+    localStorage.setItem("userInfo", JSON.stringify(submitdata));
   };
   useEffect(() => {}, [formData]);
-  console.log(formData);
+  // console.log(formData);
   return (
     <div>
       <Formik
@@ -160,7 +159,7 @@ export default function FormComonent({ onFormSubmit, history }) {
               )}
             </div>
 
-            <div className="form-group col-4 ">
+            <div className={`${style.formGroup} form-group`}>
               <Field
                 className={`form-control ${style.input}`}
                 name="address.country"
@@ -258,7 +257,6 @@ export default function FormComonent({ onFormSubmit, history }) {
                       );
                     }
                     return null;
-                    // return formData?.address.governorate;
                   })}
                 </Field>
                 {errors.address?.city && touched.address.city ? (
@@ -270,7 +268,6 @@ export default function FormComonent({ onFormSubmit, history }) {
               {/*====================*/}
             </div>
 
-            {/*==========checkbox==========*/}
             <div className="form-check">
               <input
                 type="checkbox"
