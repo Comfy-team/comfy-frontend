@@ -88,7 +88,7 @@ const AccountOrders = ({ token }) => {
                     return (
                       <div
                         className={`card-body text-center ${styles.cartBody}`}
-                        key={item._id}
+                        key={order._id}
                       >
                         <div className={`d-flex py-4`}>
                           <div
