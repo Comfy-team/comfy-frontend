@@ -41,7 +41,7 @@ const Header = ({ isMediumScreen, cart }) => {
       setIsLoggedIn(false);
       setDecodedToken(null);
     }
-  }, []);
+  }, [cart]);
 
   return (
     <header className="header sticky-lg-top bg-white">
