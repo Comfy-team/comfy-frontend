@@ -33,7 +33,7 @@ function CartPage(cartId) {
             <div className="col-2">
               <strong>PRICE</strong>
             </div>
-            <div className="col-3">
+            <div className="col-lg-3 col-md-4 col-sm-4 col-3">
               <strong>QUANTITY</strong>
             </div>
             <div className="col-2">
@@ -64,7 +64,7 @@ function CartPage(cartId) {
             })}
             <div className="container-fluid ">
               <div className="row pb-3">
-                <div className="col-4 text-start">
+                <div className="col-12 col-md-4 text-center mb-3 mb-md-0">
                   <button
                     type="button"
                     className={`btn btn-dark w-40 px-3 rounded-1 py-2 border-0 ${style["cart-btn"]}`}
@@ -79,7 +79,7 @@ function CartPage(cartId) {
                     </strong>
                   </button>
                 </div>
-                <div className="col-4 text-end">
+                <div className="col-12 col-md-4 text-center mb-3 mb-md-0">
                   <button
                     type="button"
                     className={`btn btn-dark w-40 px-5 rounded-1 py-2 border-0 ${style["cart-btn"]}`}
@@ -91,19 +91,21 @@ function CartPage(cartId) {
                     </strong>
                   </button>
                 </div>
-                <div className="col-4 text-end px-4 ">
-                  <div className="d-flex border-0 fs-6 px-4  ">
-                    <p className="px-2 w-100">CART TOTALS : </p>
-                    <strong>${cart?.totalPrice}</strong>
+                <div className="col-12 col-md-4 text-center mb-3 mb-md-0">
+                  <div className=" border-0 fs-6">
+                    <span  >
+                      CART TOTALS: 
+                      <strong className="color-yellow px-2">${cart?.totalPrice}</strong>
+                    </span>
                   </div>
                 </div>
               </div>
               <hr />
             </div>
-            <div className="container-fluid py-5">
+            <div className="row py-5 justify-content-center">
               <button
                 type="button"
-                className={`${style["cart-btn"]} border-0 btn btn-dark w-50 rounded-1 py-2 px-4 my-2 fs-6`}
+                className={`${style["cart-btn"]} col-8  border-0 btn btn-dark w-60 rounded-1 py-2 px-4 my-2 fs-6`}
                 onClick={handleCheckout}
               >
                 <strong>Checkout</strong>
