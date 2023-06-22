@@ -1,7 +1,8 @@
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import jwtDecode from "jwt-decode";
-import React, { useState, useEffect } from "react";
+
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,26 +13,19 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // components
-import logo from "../../assets/logos/logo-header.png";
 import { showLoginModal } from "../../store/slices/loginModalSlice";
-import CartModal from "../cartModal/cartModal";
+import { showCartModal } from "../../store/slices/cartModalSlice";
+
+// assets
+import logo from "../../assets/logos/logo-header.png";
 
 const Header = ({ isMediumScreen, cart }) => {
-  const dispatch = useDispatch();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [decodedToken, setDecodedToken] = useState(null);
-  const [showCartModal, setShowCartModal] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleCartClose = () => {
-    setShowCartModal(false);
-  };
-  const handleCartIconClick = () => {
-    setShowCartModal(!showCartModal);
-  };
-
-  const token = localStorage.getItem("userToken");
   useEffect(() => {
-    console.log("Token:", token);
+    const token = localStorage.getItem("userToken");
     if (token) {
       const decoded = jwtDecode(token);
       const currentTime = Date.now() / 1000;
@@ -47,7 +41,8 @@ const Header = ({ isMediumScreen, cart }) => {
       setIsLoggedIn(false);
       setDecodedToken(null);
     }
-  }, [token]);
+  }, []);
+
   return (
     <header className="header sticky-lg-top bg-white">
       <nav
@@ -141,12 +136,13 @@ const Header = ({ isMediumScreen, cart }) => {
                 <button
                   type="button"
                   className="cart-btn btn p-0 fs-5 hover-color-yellow position-relative"
+                  onClick={() =>
+                    decodedToken
+                      ? dispatch(showCartModal(true))
+                      : dispatch(showLoginModal(true))
+                  }
                 >
-                  <FontAwesomeIcon
-                    icon={faCartShopping}
-                    className="outlined-icon pointer"
-                    onClick={handleCartIconClick}
-                  />
+                  <FontAwesomeIcon icon={faCartShopping} />
                   <span className="visually-hidden">cart</span>
                   <span className="position-absolute bg-yellow top-0 start-0 translate-middle badge rounded-pill">
                     {cart.items
@@ -162,17 +158,6 @@ const Header = ({ isMediumScreen, cart }) => {
           </div>
         </div>
       </nav>
-      <div className="shopping-cart-container">
-        {showCartModal && (
-          <React.Fragment>
-            <div className="modal-backdrop cartmodal-backdrop" onClick={handleCartClose}></div>{" "}
-            <CartModal
-              showModal={showCartModal}
-              hideModal={() => setShowCartModal(false)}
-            />
-          </React.Fragment>
-        )}
-      </div>
     </header>
   );
 };

@@ -12,6 +12,7 @@ import {
 
 // components
 import { showLoginModal } from "../../store/slices/loginModalSlice";
+import { showCartModal } from "../../store/slices/cartModalSlice";
 
 const BottomNav = ({ cart }) => {
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ const BottomNav = ({ cart }) => {
               type="button"
               className="cart-btn btn lh-1 p-0 fs-5 hover-color-yellow position-relative"
               onClick={() =>
-                cart.user_id ? "" : dispatch(showLoginModal(true))
+                cart.user_id ? dispatch(showCartModal(true)) : dispatch(showLoginModal(true))
               }
             >
               <FontAwesomeIcon icon={faCartShopping} />
