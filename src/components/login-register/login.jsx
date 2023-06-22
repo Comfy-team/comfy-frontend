@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 
+import jwtDecode from "jwt-decode";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
@@ -38,10 +39,10 @@ const Login = ({ closeModal, saveUserData }) => {
         saveUserData();
         resetForm();
         closeModal();
-        // const {role}=jwtDecode(response.data.token)
-        // if(role === "admin") {
-        //   navigate("")
-        // } 
+        const {role}=jwtDecode(response.data.token)
+        if(role === "admin") {
+          navigate("/dashboard")
+        } 
 
       })
       .catch((error) => {
