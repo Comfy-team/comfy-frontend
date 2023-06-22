@@ -432,7 +432,7 @@ footer {
   right: 2.5rem;
   width: 2.5rem;
   height: 2.5rem;
-  z-index: 12;
+  z-index: 1200;
   box-shadow: 1px 0px 6px rgb(203, 202, 202);
 }
 /* ===== end scroll to top button ======= */
