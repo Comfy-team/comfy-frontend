@@ -22,7 +22,6 @@ const Categories = () => {
     axiosInstance
       .get("/categories")
       .then((response) => {
-        console.log(response.data);
         setCategories(response.data);
       })
       .catch((error) => console.log(error));
