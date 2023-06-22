@@ -1,14 +1,20 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
+
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import axiosInstance from "../../apis/config";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import styles from "./login-register.module.css";
+
 import { getCart } from "./../../functions/cart";
+import axiosInstance from "../../apis/config";
+
+import styles from "./login-register.module.css";
 
 const Login = ({ closeModal, saveUserData }) => {
+  const navigate =useNavigate();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -32,6 +38,11 @@ const Login = ({ closeModal, saveUserData }) => {
         saveUserData();
         resetForm();
         closeModal();
+        // const {role}=jwtDecode(response.data.token)
+        // if(role === "admin") {
+        //   navigate("")
+        // } 
+
       })
       .catch((error) => {
         // handle error, e.g. show error message
