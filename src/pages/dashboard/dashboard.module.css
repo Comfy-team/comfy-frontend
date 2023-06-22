@@ -1,0 +1,122 @@
+#dashboard {
+  --dash-bg: #f5f5f9;
+  --dash-white: rgba(255, 255, 255, 0.95);
+  --dash-main-text: #697a8d;
+  --dash-secondary-text: #a1acb8;
+  --dash-active-text: #696cff;
+  --dash-active-bg: rgba(67, 89, 113, 0.04);
+  --dash-btn-bg: #696cff;
+  --dash-btn-hover: #4f50bd;
+}
+
+/* start global */
+#dashboard {
+  color: var(--dash-main-text);
+  background-color: var(--dash-bg);
+  height: 100svh;
+}
+
+#dashboard .col {
+  transition: width 0.7s ease;
+}
+/* end global */
+
+/* start custom classes */
+.dash-btn {
+  background-color: var(--dash-btn-bg) !important;
+  color: white !important;
+  transition: background-color 0.5s ease;
+}
+
+.dash-btn:hover {
+  background-color: var(--dash-btn-hover) !important;
+}
+
+.dash-secondary-text {
+  color: var(--dash-secondary-text);
+}
+/* end custom classes */
+
+/* start layout */
+/* start aside */
+.logo {
+  width: 6rem;
+  max-width: 100%;
+  filter: hue-rotate(224deg);
+}
+
+@media (min-width: 992px) {
+  .aside {
+    height: 100svh;
+  }
+}
+
+.dash-navlink {
+  transition: color 0.5s ease, background-color 0.5s ease,
+    justify-content 0.5s ease, gap 0.5s ease;
+  color: var(--dash-main-text) !important;
+}
+
+.dash-navlink:hover {
+  color: var(--dash-active-text) !important;
+}
+
+.dash-navlink::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: transparent;
+  width: 3px;
+  height: 100%;
+  border-radius: 5px 0 0 5px;
+  transition: background-color 0.5s ease;
+}
+
+.title {
+  width: 6.5rem;
+  transition: width 0.4s ease;
+  overflow: hidden;
+}
+
+.title.collpase {
+  width: 0;
+}
+
+@media (min-width: 992px) {
+  .h-lg-100 {
+    height: 100%;
+  }
+}
+
+/* start toggle btn */
+.toggle-aside-btn {
+  width: 1.6rem;
+  height: 1.6rem;
+  font-size: 0.95rem;
+  transform: translateX(-25%);
+  top: 3.5rem;
+  outline: 6px solid var(--dash-bg) !important;
+}
+/* end toggle btn */
+/* end aside */
+
+/* start main content */
+
+/* start users */
+/* end users */
+
+/* start categories */
+/* end categories */
+
+/* start products */
+/* end products */
+
+/* start brands */
+/* end brands */
+
+/* start orders */
+/* end orders */
+
+/* end main content */
+/* end layout */
