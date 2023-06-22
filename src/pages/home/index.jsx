@@ -11,7 +11,6 @@ import ScrollToTopBtn from "../../components/common/scrollToTopBtn";
 const Home = () => {
   return (
     <div id="home">
-      <ScrollToTopBtn />
       <MainCarousel/>
       <Trending/>
       <BrandCategories/>
