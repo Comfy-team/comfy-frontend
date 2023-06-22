@@ -9,6 +9,7 @@ import Modal from "../login-register/modal";
 import BottomNav from "../common/bottomNav";
 import CartModal from "./../cartModal/cartModal";
 import { showCartModal } from "../../store/slices/cartModalSlice";
+import ScrollToTopBtn from "../common/scrollToTopBtn";
 
 const LayoutWithNav = () => {
   const [isMediumScreen, setIsMediumScreen] = useState(false);
@@ -47,6 +48,7 @@ const LayoutWithNav = () => {
       </div>
       <Outlet />
       <Footer />
+      <ScrollToTopBtn />
       {isMediumScreen && <BottomNav cart={cart} />}
     </>
   );
