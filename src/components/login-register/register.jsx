@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import axiosInstance from "../../apis/config";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+import axiosInstance from "../../apis/config";
+import axios from "axios";
+
 import styles from "./login-register.module.css";
 
-const Register = ({onRegistrationSuccess}) => {
+const Register = ({ onRegistrationSuccess }) => {
   const [user, setUser] = useState({
     fullName: "",
     email: "",
@@ -20,6 +24,7 @@ const Register = ({onRegistrationSuccess}) => {
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
+
   const handleSubmit = (user, { resetForm }) => {
     axiosInstance
       .post("/register", user)
@@ -27,9 +32,9 @@ const Register = ({onRegistrationSuccess}) => {
         // handle response data, e.g. show success message
         setIsSubmitted(true);
         resetForm();
-        setTimeout(()=>{
+        setTimeout(() => {
           onRegistrationSuccess();
-        },2000)
+        }, 2000);
       })
       .catch((error) => {
         // handle error, e.g. show error message
@@ -38,6 +43,27 @@ const Register = ({onRegistrationSuccess}) => {
         );
       });
   };
+
+  const handleEmailVerification = async (email) => {
+    try {
+      const response = await axios.get(
+        `https://api.zerobounce.net/v2/validate?api_key=1223a74fb03544f2887fa5d8428f84d3&email=${email}`
+      );
+      if (response.data.status === "valid") {
+        // email address is valid, proceed with registration
+        handleSubmit(user);
+      } else {
+        // email address is invalid, show error message
+        setErrorMessage(
+          "Invalid email address. Please enter a valid email address."
+        );
+      }
+    } catch (error) {
+      // handle error, e.g. show error message
+      setErrorMessage("Email verification failed. Please try again later.");
+    }
+  };
+
   return (
     <>
       {errorMessage && !isSubmitted ? (
@@ -72,7 +98,7 @@ const Register = ({onRegistrationSuccess}) => {
             .oneOf([Yup.ref("password")], "Password do not match")
             .label("Confirm Password"),
         })}
-        onSubmit={handleSubmit}
+        onSubmit={handleEmailVerification}
       >
         {({ errors, touched }) => (
           <Form className={styles.label}>
