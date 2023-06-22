@@ -6,7 +6,7 @@ import {
   faTrashCan,
 } from "@fortawesome/free-regular-svg-icons";
 import CartItem from "../../components/cartPage/cartItem";
-// import { emptyCart } from "../../functions/cart.js";
+import { emptyCart } from "../../functions/cart";
 import style from "./cartPage.module.css";
 function CartPage(cartId) {
   const navigate = useNavigate();
@@ -21,36 +21,40 @@ function CartPage(cartId) {
     return <div>Loading...</div>;
   }
   return (
-    <div>
-      <div className="container-fluid text-center py-4">
-        <div className="row">
-          <div className="col-6">
-            <strong>PRODUCT</strong>
+    <div className={`${style["cart-container"]}`}>
+      <div
+        className={`container-fluid text-center py-4 ${style["cart-container"]}`}
+      >
+        {cart.items.length > 0 && (
+          <div className="row">
+            <div className="col-4">
+              <strong>PRODUCT</strong>
+            </div>
+            <div className="col-2">
+              <strong>PRICE</strong>
+            </div>
+            <div className="col-3">
+              <strong>QUANTITY</strong>
+            </div>
+            <div className="col-2">
+              <strong>TOTAL</strong>
+            </div>
+            <hr />
           </div>
-          <div className="col-2">
-            <strong>PRICE</strong>
-          </div>
-          <div className="col-2">
-            <strong>QUANTITY</strong>
-          </div>
-          <div className="col-2">
-            <strong>TOTAL</strong>
-          </div>
-        </div>
-        <hr />
+        )}
         {cart.items.length === 0 ? (
-          <div className="text-center pt-4">
+          <div className="text-center pt-3">
             <strong className="d-block py-3">Your cart is empty.</strong>
             <button
               type="button"
-              className={`btn btn-dark rounded-0 border-0 px-2 mb-5 ${style["cart-btn"]}`}
+              className={`btn btn-dark rounded-0 border-0 px-2 mb-5 ${style["cart-btn"]} pr-2`}
               onClick={handleReturnToShop}
             >
               CONTINUE SHOPPING
             </button>
           </div>
         ) : (
-          <>
+          <div>
             {cart.items.map((item, index) => {
               return (
                 <div key={item.product_id}>
@@ -70,7 +74,7 @@ function CartPage(cartId) {
                       <FontAwesomeIcon
                         icon={faArrowAltCircleLeft}
                         className="px-1"
-                      />{" "}
+                      />
                       Continue Shopping
                     </strong>
                   </button>
@@ -79,10 +83,10 @@ function CartPage(cartId) {
                   <button
                     type="button"
                     className={`btn btn-dark w-40 px-5 rounded-1 py-2 border-0 ${style["cart-btn"]}`}
-                    // onClick={() => emptyCart(cartId)}
+                    onClick={() => emptyCart(cart._id)}
                   >
                     <strong>
-                      <FontAwesomeIcon icon={faTrashCan} className="px-1" />{" "}
+                      <FontAwesomeIcon icon={faTrashCan} className="px-1" />
                       Empty Cart
                     </strong>
                   </button>
@@ -105,7 +109,7 @@ function CartPage(cartId) {
                 <strong>Checkout</strong>
               </button>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

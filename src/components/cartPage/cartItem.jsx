@@ -8,60 +8,68 @@ import style from "../../pages/cartPage/cartPage.module.css";
 
 const CartItem = ({ item, cartId }) => {
   return (
-    <div className="container-fluid text-center py-4">
+    <div className="container-fluid text-center py-2">
       <div className="row">
-        <div className="col-6">
-          <div className="raw">
-            <div className="col-3">
-              <strong>
-                <FontAwesomeIcon
-                  icon={faClose}
-                  onClick={() => deleteItemFromCart(cartId, item.product_id)}
-                  type="button"
-                  className="hover-color-yellow"
-                />
-              </strong>
-            </div>
-            <div className="col-4">
-              <strong>
-                {/* <img src={process.env.REACT_APP_BASE_URL + "/" + product?.images[0].src} alt={item.name} /> */}
-              </strong>
-            </div>
-            <div className="col-5">
-              <strong>{item.name}</strong>
-            </div>
-          </div>
-          <strong className="d-block">color: {item.color}</strong>
+        <div className="col-4">
+        <div className="row">
+  <strong className="col-12 col-md-12 col-lg-2">
+    <FontAwesomeIcon
+      icon={faClose}
+      onClick={() => deleteItemFromCart(cartId, item?.product_id._id)}
+      type="button"
+      className="hover-color-yellow "
+    />
+  </strong>
+  <strong className="col-12 col-md-12 col-lg-4 text-center">
+  <img
+    src={
+      item.product_id?.images?.[0]?.src
+        ? process.env.REACT_APP_BASE_URL +
+          "/" +
+          item.product_id.images[0].src
+        : ""
+    }
+    alt={item.name}
+    className={`${style["item-img"]}`}
+  />
+  </strong>
+  <div className="col-12 col-md-12 col-lg-4">
+    <p className="hover-color-yellow text-truncate">
+      {item.product_id.name}
+    </p>
+    <p>
+      <strong>color:</strong> {item.color}
+    </p>
+  </div>
+</div>
         </div>
         <div className="col-2">
           <strong>${item.price}</strong>
         </div>
-        <div className="col-2 text-center">
-          <div className="input-group px-5">
+        <div className="col-lg-3 col-md-4 col-sm-4 col-3  text-center ">
+          <div className={`${style["input-group"]} justify-content-center`} >
             <button
-              className="btn  rounded-0 border-0"
               type="button"
+              className={`btn btn-dark rounded-circle border-0 text-center ${style["cart-btn"]} ${style["quantity-btn"]}`}
               onClick={() =>
-                updateItemQuantity(cartId, item.product_id, item.quantity - 1)
+                updateItemQuantity(cartId, item?.product_id._id, item.quantity + 1)
               }
-              disabled={item.quantity === 1}
             >
-              <FontAwesomeIcon icon={faMinus} size="sm" className="text-secondary"/>
+              <FontAwesomeIcon icon={faPlus} size="xs" />
             </button>
-            <input
-              type="text"
-              className={`${style["input-text"]}  form-control text-center border-light`}
-              value={item.quantity}
-              readOnly
-            />
+            
+            <p className={`m-0 mx-3 ${style["cart-quantity"]}`}>
+              {item.quantity}
+            </p>
             <button
-              className="btn rounded-0 border-0"
               type="button"
+              className={`btn btn-dark rounded-circle border-0 ${style["cart-btn"]} ${style["quantity-btn"]}`}
               onClick={() =>
-                updateItemQuantity(cartId, item.product_id, item.quantity + 1)
+                updateItemQuantity(cartId, item?.product_id._id, item.quantity - 1)
               }
+              disabled={item.quantity === 1 ? true : false}
             >
-              <FontAwesomeIcon icon={faPlus} size="sm" className="text-secondary"/>
+              <FontAwesomeIcon icon={faMinus} size="xs" />
             </button>
           </div>
         </div>
