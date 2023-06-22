@@ -88,9 +88,9 @@ function CartModal({ showModal, hideModal }) {
                         className={`${style["product-container"]} container-fluid  w-100`}
                       >
                         {cart.items.map((item, index) => (
-                          <>
+                          <div key={item.product_id._id}>
                             <Item
-                              key={item.product_id}
+                              
                               item={item}
                               cartId={cart._id}
                             />
@@ -98,7 +98,7 @@ function CartModal({ showModal, hideModal }) {
                             {index !== cart.items.length - 1 && (
                               <hr className="text-secondary" />
                             )}
-                          </>
+                          </div>
                         ))}
                       </div>
                       <div className="container pr-4"></div>
