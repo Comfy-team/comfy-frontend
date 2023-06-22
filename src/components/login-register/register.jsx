@@ -63,7 +63,7 @@ const Register = ({ onRegistrationSuccess }) => {
             .max(50, "Full name must be less than 50 characters"),
           email: Yup.string()
             .required("Email is required")
-            .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, "Invalid email address"),
+            .matches(/^[a-z0-9.]{3,}@gmail\.com$/, "Invalid email address"),
           password: Yup.string()
             .required("Password is required")
             .min(8, "Password must be at least 8 characters long")
