@@ -50,7 +50,7 @@ const CartItem = ({ item, cartId }) => {
           <div className={`${style["input-group"]} justify-content-center`} >
             <button
               type="button"
-              className={`btn btn-dark rounded-circle border-0 text-center ${style["cart-btn"]} ${style["quantity-btn"]}`}
+              className={`btn btn-light rounded-circle border-0 text-center ${style["cart-btn"]} ${style["quantity-btn"]}`}
               onClick={() =>
                 updateItemQuantity(cartId, item?.product_id._id, item.quantity + 1)
               }
@@ -63,7 +63,7 @@ const CartItem = ({ item, cartId }) => {
             </p>
             <button
               type="button"
-              className={`btn btn-dark rounded-circle border-0 ${style["cart-btn"]} ${style["quantity-btn"]}`}
+              className={`btn btn-light rounded-circle border-0 ${style["cart-btn"]} ${style["quantity-btn"]}`}
               onClick={() =>
                 updateItemQuantity(cartId, item?.product_id._id, item.quantity - 1)
               }
