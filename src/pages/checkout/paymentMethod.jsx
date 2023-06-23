@@ -98,7 +98,7 @@ export default function PaymentMethod({ formData, token }) {
           <div className="row mb-5  w-100 m-auto">
             <Link
               className="text-decoration-none col-6  col-md-5 mt-2"
-              onClick={() => window.history.go(-1)}
+              onClick={() => navigate("/information")}
             >
               {" "}
               {`<  `} return to information{" "}
