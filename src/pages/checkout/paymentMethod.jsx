@@ -1,24 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "./../../apis/config";
+import { emptyCart } from "../../functions/cart";
 import style from "./checkout.module.css";
 import "../../App.css";
 
-export default function PaymentMethod({
-  formData,
-  // userinfomation,
-  token,
-  // Cartitems,
-}) {
+export default function PaymentMethod({ formData, token }) {
   // console.log(cartSlice(true));
   const [orderinfo, setOrderinfo] = useState(formData);
   const [shippingvalue, setShippingvalue] = useState(20.0);
   const [isAddingOrder, setIsAddingOrder] = useState(false);
-  // console.log("p      userinfomation");
-  const cart = useSelector(state => state.cart.cart);
-  // console.log(cart);
+  const navigate = useNavigate();
 
+  const cart = useSelector(state => state.cart.cart);
   const handleSubmit = orderinfo => {
     let theitems = cart.items;
     const allitemIds =
@@ -52,6 +47,9 @@ export default function PaymentMethod({
         // console.log(res);
         // console.log("order Done ");
         setIsAddingOrder(true);
+        setTimeout(() => {
+          navigate("/shop");
+        }, 2000);
 
         // store.dispatch(setCart(res.data));
       })
@@ -112,6 +110,7 @@ export default function PaymentMethod({
                 onClick={event => {
                   handleSubmit(orderinfo);
                   setIsAddingOrder(true);
+                  emptyCart(cart._id);
 
                   event.target.textContent = "order Done ";
                 }}

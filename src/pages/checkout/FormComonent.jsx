@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import * as Yup from "yup";
-import "../../App.css";
 import { Formik, Form, Field } from "formik";
-import style from "./checkout.module.css";
-import { governoratesData } from "../../apis/governorates";
+import * as Yup from "yup";
 import { cities } from "../../apis/cities";
+import { governoratesData } from "../../apis/governorates";
+import style from "./checkout.module.css";
+import "../../App.css";
+import jwtDecode from "jwt-decode";
+import axiosInstance from "./../../apis/config";
 
 const DisplayingErrorMessagesSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -27,40 +29,89 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
     apartment: Yup.string().label("Apartment").required("Required"),
     postalCode: Yup.number()
       .required("Required")
-      .integer()
+      .integer("enter only number please")
+      .nullable()
       .label("Postal Code"),
     country: Yup.string().required("Required"),
   }),
 });
-
 export default function FormComonent({ onFormSubmit, history, userinfo }) {
   const [saveInfo, setSaveInfo] = useState(Boolean(true.toString()));
   const [formData, setFormData] = useState("");
-
-  const initialValues = localStorage.getItem("userInfo")
-    ? JSON.parse(localStorage.getItem("userInfo"))
-    : {
-        firstName: "",
-        lastName: "",
-        phone: "",
-        address: {
-          postalCode: "",
-          apartment: "",
-          street: "",
-          building: "",
-          city: "",
-          governorate: "",
-          country: "",
+  const [user, setUser] = useState("");
+  const token = localStorage.getItem("userToken");
+  const decoded = jwtDecode(token);
+  useEffect(() => {
+    axiosInstance
+      .get(`/users/${decoded.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "x-access-token": token,
         },
-      };
+      })
+      .then(res => {
+        setUser(res.data);
+      })
+      .catch(err => console.log(err));
+  }, []);
 
-  const updateUserSubmit = submitdata => {
+  useEffect(() => {}, [formData]);
+  // console.log("formData   ", formData);
+
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    phone: "",
+    address: {
+      postalCode: user?.address?.postalCode ?? "",
+      apartment: user?.address?.apartment ?? "",
+      street: user?.address?.street ?? "",
+      building: user?.address?.building ?? "",
+      city: user?.address?.city ?? "",
+      governorate: user?.address?.governorate ?? "",
+      country: "",
+    },
+  };
+
+  const formSubmit = submitdata => {
+    // console.log(submitdata);
     setFormData(submitdata);
     onFormSubmit(submitdata);
-    localStorage.setItem("userInfo", JSON.stringify(submitdata));
+    // if (saveInfo) {
+    //   localStorage.setItem("userInfo", JSON.stringify(submitdata));
+    // }
+    let theSendData = {
+      id: decoded.id,
+      fullName: submitdata.firstName + submitdata.lastName,
+      password: submitdata.password,
+      email: submitdata.email,
+      phone: submitdata.phone,
+      city: submitdata.address.city,
+      street: submitdata.address.street,
+      building: submitdata.address.building,
+      governorate: submitdata.address.governorate,
+      apartment: submitdata.address.apartment,
+      postalCode: submitdata.address.postalCode,
+    };
+    // console.log(theSendData);
+    if (saveInfo) {
+      axiosInstance
+        .patch("/users", theSendData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "x-access-token": token,
+          },
+        })
+        .then(res => {
+          // console.log(res);
+        })
+        .catch(err => console.log(err));
+    }
   };
-  useEffect(() => {}, [formData]);
-  // console.log(formData);
+
+  // console.log("formData   ", formData);
+
   return (
     <div>
       <Formik
@@ -69,7 +120,7 @@ export default function FormComonent({ onFormSubmit, history, userinfo }) {
         // onSubmit={values => {
         //   console.log(values);
         // }}
-        onSubmit={updateUserSubmit}
+        onSubmit={formSubmit}
       >
         {({ errors, touched }) => (
           <Form>
@@ -267,12 +318,11 @@ export default function FormComonent({ onFormSubmit, history, userinfo }) {
               </div>
               {/*====================*/}
             </div>
-
             <div className="form-check">
               <input
                 type="checkbox"
                 className="form-check-input"
-                id="exampleCheck1"
+                // id="exampleCheck1"
                 checked={saveInfo}
                 onChange={e => setSaveInfo(e.target.checked)}
               />
@@ -284,7 +334,6 @@ export default function FormComonent({ onFormSubmit, history, userinfo }) {
                 save this information for next time{" "}
               </label>
             </div>
-
             <button type="submit" className="btn btn-dark mb-3">
               {" "}
               Continue to Shipping

@@ -56,12 +56,14 @@ const Checkout = () => {
   return (
     <div className={`${style.checkout} ml-5 ml-md-3 `}>
       <div className={`${style.checkoutContainer}  mt-2 `}>
-        <img
-          src={logoimg}
-          alt=""
-          style={{ width: "6rem", marginLeft: "15px" }}
-          className={`{} mb-3 `}
-        />
+        <a href="/home" className="logo">
+          <img
+            src={logoimg}
+            alt=""
+            style={{ width: "6rem", marginLeft: "15px" }}
+            className={`{} mb-3 `}
+          />{" "}
+        </a>
         <div
           className={`${style[("checkoutSmalContainer", "firstrow")]} row  `}
         >
