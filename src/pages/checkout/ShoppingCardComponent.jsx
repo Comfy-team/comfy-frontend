@@ -8,7 +8,7 @@ export default function ShoppingCardComponent({ cartdatafunc }) {
   let [itemsfeomcard, Setitemsfeomcard] = useState([]);
 
   const cart = useSelector(state => state.cart.cart);
-
+  // console.log(cart?.items[0]?.product_id?.images[0]?.src);
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -48,13 +48,11 @@ export default function ShoppingCardComponent({ cartdatafunc }) {
                 className={`${style.imgcontainer} row mb-2 p-0 m-0`}
               >
                 <img
-                  src={
-                    item.images && item.images.length > 0
-                      ? process.env.REACT_APP_BASE_URL +
-                        "/" +
-                        item.images[0].src
-                      : "https://via.placeholder.com/150"
-                  }
+                  src={`${
+                    process.env.REACT_APP_BASE_URL +
+                    "/" +
+                    item?.product_id?.images[0]?.src
+                  }`}
                   alt={item.name}
                   className={`${style.productImg}  col-4`}
                 />
