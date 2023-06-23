@@ -38,7 +38,7 @@ const UsersDash = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [allUsers, currentPage]);
+  }, [currentPage]);
 
   // delete user
   function deleteUser(id) {
