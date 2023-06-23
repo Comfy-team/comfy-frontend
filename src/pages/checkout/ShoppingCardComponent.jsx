@@ -8,7 +8,6 @@ export default function ShoppingCardComponent({ cartdatafunc }) {
   let [itemsfeomcard, Setitemsfeomcard] = useState([]);
 
   const cart = useSelector(state => state.cart.cart);
-  // console.log(cart?.items[0]?.product_id?.images[0]?.src);
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -27,13 +26,9 @@ export default function ShoppingCardComponent({ cartdatafunc }) {
     theitems && theitems.length > 0
       ? theitems.map(item => item.product_id._id)
       : [];
-  // console.log("allitemIds", allitemIds);
 
-  // cartdatafunc(allitemIds);
   useEffect(() => {
     cartdatafunc(allitemIds);
-    // console.log(allitemIds);
-    // console.log(itemsfeomcard);
   }, [itemsfeomcard]);
 
   return (

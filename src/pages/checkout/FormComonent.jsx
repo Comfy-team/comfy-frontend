@@ -3,10 +3,10 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { cities } from "../../apis/cities";
 import { governoratesData } from "../../apis/governorates";
-import style from "./checkout.module.css";
-import "../../App.css";
 import jwtDecode from "jwt-decode";
 import axiosInstance from "./../../apis/config";
+import "../../App.css";
+import style from "./checkout.module.css";
 
 const DisplayingErrorMessagesSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -30,12 +30,11 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
     postalCode: Yup.number()
       .required("Required")
       .integer("enter only number please")
-      .nullable()
       .label("Postal Code"),
     country: Yup.string().required("Required"),
   }),
 });
-export default function FormComonent({ onFormSubmit, history, userinfo }) {
+export default function FormComonent({ onFormSubmit, userinfo }) {
   const [saveInfo, setSaveInfo] = useState(Boolean(true.toString()));
   const [formData, setFormData] = useState("");
   const [user, setUser] = useState("");
@@ -56,8 +55,6 @@ export default function FormComonent({ onFormSubmit, history, userinfo }) {
   }, []);
 
   useEffect(() => {}, [formData]);
-  // console.log("formData   ", formData);
-
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -74,26 +71,24 @@ export default function FormComonent({ onFormSubmit, history, userinfo }) {
   };
 
   const formSubmit = submitdata => {
-    // console.log(submitdata);
     setFormData(submitdata);
     onFormSubmit(submitdata);
-    // if (saveInfo) {
-    //   localStorage.setItem("userInfo", JSON.stringify(submitdata));
-    // }
+
     let theSendData = {
       id: decoded.id,
-      fullName: submitdata.firstName + submitdata.lastName,
-      password: submitdata.password,
-      email: submitdata.email,
-      phone: submitdata.phone,
-      city: submitdata.address.city,
-      street: submitdata.address.street,
-      building: submitdata.address.building,
-      governorate: submitdata.address.governorate,
-      apartment: submitdata.address.apartment,
-      postalCode: submitdata.address.postalCode,
+      fullName: submitdata?.firstName + submitdata?.lastName,
+      password: submitdata?.password,
+      email: submitdata?.email,
+      phone: submitdata?.phone,
+      address: {
+        city: submitdata?.address?.city,
+        street: submitdata?.address?.street,
+        building: submitdata?.address?.building,
+        governorate: submitdata?.address?.governorate,
+        apartment: submitdata?.address?.apartment,
+        postalCode: submitdata?.address?.postalCode,
+      },
     };
-    // console.log(theSendData);
     if (saveInfo) {
       axiosInstance
         .patch("/users", theSendData, {
@@ -110,16 +105,11 @@ export default function FormComonent({ onFormSubmit, history, userinfo }) {
     }
   };
 
-  // console.log("formData   ", formData);
-
   return (
     <div>
       <Formik
         initialValues={initialValues}
         validationSchema={DisplayingErrorMessagesSchema}
-        // onSubmit={values => {
-        //   console.log(values);
-        // }}
         onSubmit={formSubmit}
       >
         {({ errors, touched }) => (
@@ -137,7 +127,6 @@ export default function FormComonent({ onFormSubmit, history, userinfo }) {
                 <div className="text-danger ms-2">{errors.phone}</div>
               )}
             </div>
-
             <h6 className={`{} mb-0 mt-4 `}> Shipping address </h6>
             <div className="row">
               <div className="form-group col-6">
@@ -222,13 +211,11 @@ export default function FormComonent({ onFormSubmit, history, userinfo }) {
                   select a country
                 </option>
                 <option value="Egypt">Egypt </option>
-
                 {touched.country && errors.country ? (
                   <small className="text-danger">{errors.country}</small>
                 ) : null}
               </Field>
             </div>
-
             <div className="row mb-3 mt-0">
               <div className="form-group col-4 ">
                 <Field
