@@ -77,7 +77,7 @@ export default function FormComonent({ onFormSubmit }) {
       .catch(err => console.log(err));
   }, [decoded.id, token]);
 
-  console.log("user,", user);
+  // console.log("user,", user);
 
   const formSubmit = submitdata => {
     onFormSubmit(submitdata);
@@ -109,7 +109,7 @@ export default function FormComonent({ onFormSubmit }) {
         .catch(err => console.log(err));
     }
   };
-  console.log(theintialvalue);
+  // console.log(theintialvalue);
   return (
     <div>
       <Formik
