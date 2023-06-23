@@ -7,30 +7,17 @@ import style from "./checkout.module.css";
 import "../../App.css";
 
 export default function PaymentMethod({ formData, token }) {
-  const [orderinfo, setOrderinfo] = useState(formData);
-  const [shippingvalue, setShippingvalue] = useState(20.0);
   const [isAddingOrder, setIsAddingOrder] = useState(false);
   const navigate = useNavigate();
-
+  const shippingvalue = 20.0;
   const cart = useSelector(state => state.cart.cart);
-  const handleSubmit = orderinfo => {
-    let theitems = cart.items;
-    const allitemIds =
-      theitems && theitems.length > 0
-        ? theitems.map(item => ({
-            product_id: item.product_id._id,
-            color: item.color,
-            price: item.price,
-            quantity: item.quantity,
-          }))
-        : [];
-
+  const handleSubmit = formData => {
     const additionalinfo = {
       totalPrice: cart.totalPrice,
       items: cart.items,
       userId: cart.user_id,
     };
-    const newobjectdata = { ...orderinfo, ...additionalinfo };
+    const newobjectdata = { ...formData, ...additionalinfo };
     console.log(newobjectdata);
     axiosInstance
       .post(`/orders`, newobjectdata, {
@@ -97,7 +84,7 @@ export default function PaymentMethod({ formData, token }) {
               <button
                 className={`${style.orderbtn}  btn btn-primary `}
                 onClick={event => {
-                  handleSubmit(orderinfo);
+                  handleSubmit(formData);
                   setIsAddingOrder(true);
                   emptyCart(cart._id);
                   event.target.textContent = "order Done ";

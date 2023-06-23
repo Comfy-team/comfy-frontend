@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { cities } from "../../apis/cities";
-import { governoratesData } from "../../apis/governorates";
 import jwtDecode from "jwt-decode";
 import axiosInstance from "./../../apis/config";
+import { cities } from "../../apis/cities";
+import { governoratesData } from "../../apis/governorates";
 import "../../App.css";
 import style from "./checkout.module.css";
 
@@ -30,6 +30,8 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
     postalCode: Yup.number()
       .required("Required")
       .integer("enter only number please")
+      .max(5, "Must be 5 number")
+
       .label("Postal Code"),
     country: Yup.string().required("Required"),
   }),
@@ -52,7 +54,7 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
         setUser(res.data);
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [decoded.id, token]);
 
   useEffect(() => {}, [formData]);
   const initialValues = {

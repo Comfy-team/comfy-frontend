@@ -2,16 +2,13 @@ import React, { useState, useEffect } from "react";
 import style from "./checkout.module.css";
 import { useSelector } from "react-redux";
 
-export default function ShoppingCardComponent({ cartdatafunc }) {
-  let [thetotalprice, SetTotalprice] = useState(0);
+export default function ShoppingCardComponent() {
   let [theitems, SetItems] = useState([]);
-  let [itemsfeomcard, Setitemsfeomcard] = useState([]);
 
   const cart = useSelector(state => state.cart.cart);
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        SetTotalprice(cart.totalPrice);
         SetItems(cart.items);
       } catch (error) {
         console.log(error);
@@ -21,15 +18,6 @@ export default function ShoppingCardComponent({ cartdatafunc }) {
   }, [cart]);
   const shipping = 15;
   const priceWithShapping = cart.totalPrice + shipping;
-
-  const allitemIds =
-    theitems && theitems.length > 0
-      ? theitems.map(item => item.product_id._id)
-      : [];
-
-  useEffect(() => {
-    cartdatafunc(allitemIds);
-  }, [itemsfeomcard]);
 
   return (
     <div>

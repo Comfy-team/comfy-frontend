@@ -10,17 +10,13 @@ import style from "./checkout.module.css";
 const Checkout = () => {
   const [activeComponent, setActiveComponent] = useState("form");
   const [formData, setFormData] = useState("");
-  const [userinfomation, setUserinfo] = useState({});
-  const [Cartitems, SetCartitems] = useState({});
   const navigate = useNavigate();
 
   const handleFormData = thedata => {
     setActiveComponent("shipping");
     setFormData(thedata);
   };
-  const handleCartData = data => {
-    SetCartitems(data);
-  };
+
   const location = useLocation();
   useEffect(() => {
     // set the active component based on the current location
@@ -32,12 +28,10 @@ const Checkout = () => {
       navigate("/checkout/information");
       setActiveComponent("form");
     }
-  }, [location]);
+  }, [location, navigate]);
   const token = localStorage.getItem("userToken");
 
   useEffect(() => {}, [formData]);
-
-  // ------------------------------------
 
   return (
     <div className={`${style.checkout} ml-5 ml-md-3 `}>
@@ -90,11 +84,7 @@ const Checkout = () => {
               </nav>
             </div>
             {activeComponent === "form" && (
-              <FormComonent
-                onFormSubmit={handleFormData}
-                userinfomation={userinfomation}
-                token={token}
-              />
+              <FormComonent onFormSubmit={handleFormData} />
             )}
             {activeComponent === "shipping" && (
               <PaymentMethod formData={formData} token={token} />
@@ -103,7 +93,7 @@ const Checkout = () => {
           <div
             className={`${style.rightorderColumn} col-12 col-md-6 col-lg-6  bg-primary `}
           >
-            <ShoppingCardComponent cartdatafunc={handleCartData} />
+            <ShoppingCardComponent />
           </div>
         </div>
       </div>
