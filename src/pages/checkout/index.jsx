@@ -44,12 +44,14 @@ const Checkout = () => {
           />{" "}
         </a>
         <div
-          className={`${style[("checkoutSmalContainer", "firstrow")]} row  `}
+          className={`${
+            style[("checkoutSmalContainer", "firstrow")]
+          } row   mt-5 `}
         >
           <div
             className={`${style.leftFormColum} col-12 col-md-6 col-lg-6 mr-3  mb-3 ml-5 `}
           >
-            <div className="ml-5  mt-5 mb-4">
+            <div className="ml-5 mb-4">
               <nav
                 className={`${style.breadcrumb} ${
                   activeComponent === "form" ? "active" : ""
