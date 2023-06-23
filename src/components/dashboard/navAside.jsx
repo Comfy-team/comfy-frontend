@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +19,7 @@ import style from "../../pages/dashboard/dashboard.module.css";
 
 // assets
 import fullLogo from "../../assets/logos/logo-header.png";
+import { showLoginModal } from "../../store/slices/loginModalSlice";
 // import small from "";
 
 const navLinks = [
@@ -62,6 +63,11 @@ const navLinks = [
 
 const NavAside = ({ isSmallScreen, collapsed }) => {
   const [active, setActive] = useState("Home");
+  const navigate = useNavigate();
+  function handleLogout() {
+    localStorage.removeItem("userToken");
+    navigate("/");
+  }
 
   return (
     <aside
@@ -132,6 +138,7 @@ const NavAside = ({ isSmallScreen, collapsed }) => {
             </ul>
           </nav>
           <button
+            onClick={handleLogout}
             className={`btn ${style["dash-btn"]} ${
               collapsed ? "mx-auto" : "ms-3"
             } align-self-start lh-1  rounded-2 px-2 py-2 d-flex align-items-center gap-2`}
