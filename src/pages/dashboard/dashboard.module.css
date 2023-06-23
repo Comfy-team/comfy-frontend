@@ -50,16 +50,6 @@ table caption {
 .dash-heading {
   color: var(--dash-heading) !important;
 }
-
-.pagination-btn {
-  background-color: var(--dash-pagination-bg) !important;
-  color: var(--dash-main-text) !important;
-}
-
-.pagination-btn.active {
-  background-color: var(--dash-btn-bg) !important;
-  color: white !important;
-}
 /* end custom classes */
 
 /* start layout */
@@ -144,4 +134,33 @@ table caption {
 /* end orders */
 
 /* end main content */
+
+/* start pagination */
+.pagination-btn {
+  font-size: 0.8rem;
+  background-color: var(--dash-pagination-bg) !important;
+  color: var(--dash-main-text) !important;
+  transition: opacity 0.5 ease, color 0.5 ease;
+}
+
+.pagination-btn:not(.active):hover {
+  opacity: 0.8;
+  color: var(--dash-active-text)!important;
+}
+
+.pagination-page {
+  width: 2rem;
+  height: 2rem;
+}
+
+.pagination-btn.active {
+  background-color: var(--dash-btn-bg) !important;
+  color: white !important;
+  box-shadow: 0px 3px 5px -2px var(--dash-btn-bg);
+}
+
+.pagination-btn.disabled {
+  color: var(--dash-secondary-text)!important;
+}
+/* end pagination */
 /* end layout */
