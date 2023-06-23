@@ -3,10 +3,12 @@
   --dash-white: rgba(255, 255, 255, 0.95);
   --dash-main-text: #697a8d;
   --dash-secondary-text: #a1acb8;
+  --dash-heading: #566a7f;
   --dash-active-text: #696cff;
   --dash-active-bg: rgba(67, 89, 113, 0.04);
   --dash-btn-bg: #696cff;
   --dash-btn-hover: #4f50bd;
+  --dash-pagination-bg: #f0f2f4;
 }
 
 /* start global */
@@ -18,6 +20,15 @@
 
 #dashboard .col {
   transition: width 0.7s ease;
+}
+
+table th {
+  color: var(--dash-heading) !important;
+}
+
+table td,
+table caption {
+  color: var(--dash-main-text) !important;
 }
 /* end global */
 
@@ -33,7 +44,21 @@
 }
 
 .dash-secondary-text {
-  color: var(--dash-secondary-text);
+  color: var(--dash-secondary-text) !important;
+}
+
+.dash-heading {
+  color: var(--dash-heading) !important;
+}
+
+.pagination-btn {
+  background-color: var(--dash-pagination-bg) !important;
+  color: var(--dash-main-text) !important;
+}
+
+.pagination-btn.active {
+  background-color: var(--dash-btn-bg) !important;
+  color: white !important;
 }
 /* end custom classes */
 
