@@ -119,6 +119,9 @@ table caption {
 /* start main content */
 
 /* start users */
+.fw-bold{
+  font-weight: 700 ;
+}
 /* end users */
 
 /* start categories */
