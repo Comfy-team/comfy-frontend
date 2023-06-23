@@ -24,15 +24,17 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
   address: Yup.object({
     city: Yup.string().label("City"),
     street: Yup.string().label("Street").required("Required"),
-    building: Yup.number().required("Required").integer().label("Building"),
+    building: Yup.number()
+      .typeError("Building must be a number")
+      .required("Required")
+      .label("Building"),
     governorate: Yup.string().label("Governorate").required("Required"),
     apartment: Yup.string().label("Apartment").required("Required"),
-    postalCode: Yup.number()
+    postalCode: Yup.string()
       .required("Required")
-      .integer("enter only number please")
-      .max(5, "Must be 5 number")
-
-      .label("Postal Code"),
+      .label("Postal Code")
+      .length(5)
+      .matches(/^[0-9]{5}/),
     country: Yup.string().required("Required"),
   }),
 });
@@ -194,10 +196,8 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
                 type="text"
                 id="street"
               />
-              {touched.address?.building && errors.address?.street && (
-                <div className="text-danger ms-2">
-                  {errors.address?.building}
-                </div>
+              {touched.address?.street && errors.address?.street && (
+                <div className="text-danger ms-2">{errors.address?.street}</div>
               )}
             </div>
 
