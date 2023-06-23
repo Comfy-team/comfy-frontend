@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import jwtDecode from "jwt-decode";
@@ -7,12 +9,15 @@ import { cities } from "../../apis/cities";
 import { governoratesData } from "../../apis/governorates";
 import "../../App.css";
 import style from "./checkout.module.css";
-
 const DisplayingErrorMessagesSchema = Yup.object().shape({
   firstName: Yup.string()
     .max(15, "Must be 15 characters or less")
+    .matches(/^[a-zA-Z]+$/, "First name must contain only letters")
+
     .required("Required"),
   lastName: Yup.string()
+    .matches(/^[a-zA-Z]+$/, "lastName must contain only letters")
+
     .max(20, "Must be 20 characters or less")
     .required("Required"),
   phone: Yup.string()
@@ -22,7 +27,7 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
       "Invalid phone number. Must be an Egyptian phone number"
     ),
   address: Yup.object({
-    city: Yup.string().label("City"),
+    city: Yup.string().required("Required").label("City"),
     street: Yup.string().label("Street").required("Required"),
     building: Yup.number()
       .typeError("Building must be a number")
@@ -38,12 +43,25 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
     country: Yup.string().required("Required"),
   }),
 });
-export default function FormComonent({ onFormSubmit, userinfo }) {
+export default function FormComonent({ onFormSubmit }) {
   const [saveInfo, setSaveInfo] = useState(Boolean(true.toString()));
-  const [formData, setFormData] = useState("");
   const [user, setUser] = useState("");
   const token = localStorage.getItem("userToken");
   const decoded = jwtDecode(token);
+  const [theintialvalue, settheIntialvalue] = useState({
+    firstName: "",
+    lastName: "",
+    phone: user?.phone || "",
+    address: {
+      postalCode: user?.address?.postalCode || "",
+      apartment: user?.address?.apartment || "",
+      street: user?.address?.street || "",
+      building: user?.address?.building || "",
+      city: user?.address?.city || "",
+      governorate: user?.address?.governorate || "",
+      country: "",
+    },
+  });
   useEffect(() => {
     axiosInstance
       .get(`/users/${decoded.id}`, {
@@ -54,35 +72,18 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
       })
       .then(res => {
         setUser(res.data);
+        settheIntialvalue(res.data);
       })
       .catch(err => console.log(err));
   }, [decoded.id, token]);
 
-  useEffect(() => {}, [formData]);
-  const initialValues = {
-    firstName: "",
-    lastName: "",
-    phone: "",
-    address: {
-      postalCode: user?.address?.postalCode ?? "",
-      apartment: user?.address?.apartment ?? "",
-      street: user?.address?.street ?? "",
-      building: user?.address?.building ?? "",
-      city: user?.address?.city ?? "",
-      governorate: user?.address?.governorate ?? "",
-      country: "",
-    },
-  };
+  console.log("user,", user);
 
   const formSubmit = submitdata => {
-    setFormData(submitdata);
     onFormSubmit(submitdata);
-
     let theSendData = {
       id: decoded.id,
-      fullName: submitdata?.firstName + submitdata?.lastName,
-      password: submitdata?.password,
-      email: submitdata?.email,
+      fullName: submitdata?.firstName + " " + submitdata?.lastName,
       phone: submitdata?.phone,
       address: {
         city: submitdata?.address?.city,
@@ -108,11 +109,11 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
         .catch(err => console.log(err));
     }
   };
-
+  console.log(theintialvalue);
   return (
     <div>
       <Formik
-        initialValues={initialValues}
+        initialValues={theintialvalue}
         validationSchema={DisplayingErrorMessagesSchema}
         onSubmit={formSubmit}
       >
@@ -136,7 +137,7 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
               <div className="form-group col-6">
                 <Field
                   name="firstName"
-                  placeholder="firstName"
+                  placeholder="first name"
                   className="form-control"
                   type="text"
                   id="firstName"
@@ -148,7 +149,7 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
               <div className="form-group col-6 m-0">
                 <Field
                   name="lastName"
-                  placeholder="lastName"
+                  placeholder="last name"
                   className="form-control"
                   type="text"
                   id="lastName"
@@ -162,7 +163,7 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
             <div className="form-group">
               <Field
                 name="address.apartment"
-                placeholder="apartment"
+                placeholder="Apartment"
                 className="form-control"
                 type="text"
                 id="apartment"
@@ -177,7 +178,7 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
             <div className={`${style.formGroup} form-group`}>
               <Field
                 name="address.building"
-                placeholder="building"
+                placeholder="Building"
                 className="form-control"
                 type="text"
                 id="building"
@@ -191,7 +192,7 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
             <div className={`${style.formGroup} form-group`}>
               <Field
                 name="address.street"
-                placeholder="street"
+                placeholder="Street"
                 className="form-control"
                 type="text"
                 id="street"
@@ -201,28 +202,31 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
               )}
             </div>
 
-            <div className={`${style.formGroup} form-group`}>
+            <div className={`${style.formGroup} ${style.gray} form-group`}>
               <Field
-                className={`form-control ${style.input}`}
+                className={`form-control ${style.gray}  ${style.input}`}
                 name="address.country"
                 id="country"
                 as="select"
                 type="text"
               >
-                <option value="" id="0">
-                  select a country
+                <option value="" id="0" disabled className={`${style.gray} `}>
+                  Country
                 </option>
                 <option value="Egypt">Egypt </option>
-                {touched.country && errors.country ? (
-                  <small className="text-danger">{errors.country}</small>
-                ) : null}
               </Field>
+
+              {touched.address?.country && errors.address?.country && (
+                <div className="text-danger ms-2">
+                  {errors.address?.country}
+                </div>
+              )}
             </div>
             <div className="row mb-3 mt-0">
               <div className="form-group col-4 ">
                 <Field
                   name="address.postalCode"
-                  placeholder="postalCode"
+                  placeholder="postal Code"
                   className="form-control"
                   type="text"
                   id="aparpostalCodetment"
@@ -236,14 +240,14 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
 
               <div className="form-group col-4 ">
                 <Field
-                  className={`form-control ${style.input}`}
+                  className={`form-control ${style.input} ${style.gray} `}
                   name="address.governorate"
                   id="governorate"
                   as="select"
                   type="text"
                 >
-                  <option value="" id="0">
-                    select a governorate
+                  <option value="" id="0" disabled>
+                    Governorate
                   </option>
 
                   {governoratesData.map(governorate => (
@@ -267,14 +271,14 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
 
               <div className="form-group col-4 ">
                 <Field
-                  className={`form-control ${style.input}`}
+                  className={`form-control ${style.input} ${style.gray} `}
                   name="address.city"
                   type="text"
                   id="city"
                   as="select"
                 >
-                  <option value="" id="0">
-                    Select a city
+                  <option value="" id="0" disabled>
+                    City
                   </option>
                   {cities.map(city => {
                     const selectedGovernorateValue =
@@ -285,7 +289,7 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
                     const selectedGovernorateId = selectedGovernorateOption
                       ? selectedGovernorateOption.id
                       : null;
-                    if (city.governorate_id === selectedGovernorateId) {
+                    if (city?.governorate_id === selectedGovernorateId) {
                       return (
                         <option
                           key={city.id}
@@ -299,12 +303,13 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
                     return null;
                   })}
                 </Field>
-                {errors.address?.city && touched.address.city ? (
+                {errors.address?.city && touched.address?.city ? (
                   <span className="text-danger ms-2">
-                    {errors.address.city}
+                    {errors.address?.city}
                   </span>
                 ) : null}
               </div>
+
               {/*====================*/}
             </div>
             <div className="form-check">
@@ -317,16 +322,29 @@ export default function FormComonent({ onFormSubmit, userinfo }) {
               />
 
               <label
-                className={`${style.checklabal} form-check-label`}
+                className={`${style.checklabal} form-check-label mb-4`}
                 htmlFor="exampleCheck1"
               >
                 save this information for next time{" "}
               </label>
             </div>
-            <button type="submit" className="btn btn-dark mb-3">
-              {" "}
-              Continue to Shipping
-            </button>
+
+            <div className="row mb-4  w-100 m-auto">
+              <Link
+                className={`col-12 col-sm-12  col-md-5  col-lg-6 mt-2 mb-3 mt-4 ${style.returnLink} text-decoration-none `}
+                to="/cart"
+              >
+                {" "}
+                {`<  `} return to Cart{" "}
+              </Link>
+
+              <button
+                type="submit"
+                className={`${style.formbtn}  col-12 col-sm-12  col-md-3 col-lg-6  btn  h-100  ws-100 me-0  bg-primary`}
+              >
+                Continue to Shipping
+              </button>
+            </div>
           </Form>
         )}
       </Formik>

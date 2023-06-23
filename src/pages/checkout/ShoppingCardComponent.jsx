@@ -22,7 +22,7 @@ export default function ShoppingCardComponent() {
   return (
     <div>
       {" "}
-      <div>
+      <div className="ps-4 pt-2">
         {theitems && theitems.length > 0 ? (
           <div className="container ">
             {theitems.map((item, index) => (
@@ -31,16 +31,16 @@ export default function ShoppingCardComponent() {
                 className={`${style.imgcontainer} row mb-2 p-0 m-0`}
               >
                 <img
+                  className={`${style.productImg}  col-2`}
+                  alt={item.name}
                   src={`${
                     process.env.REACT_APP_BASE_URL +
                     "/" +
                     item?.product_id?.images[0]?.src
                   }`}
-                  alt={item.name}
-                  className={`${style.productImg}  col-4`}
                 />
 
-                <div className={`${style.productInfo} col-7  `}>
+                <div className={`${style.productInfo} col-8  `}>
                   <p className="mb-0 ml-3">{item.product_id.name}</p>
                   <div className={`${style.quantitCircle} mb-1"`}>
                     {item.quantity}
@@ -52,7 +52,7 @@ export default function ShoppingCardComponent() {
                     style={{ backgroundColor: `${item.color}` }}
                   ></div>
                 </div>
-                <div className="col-2 mt-3 fw-bold ">
+                <div className="col-2 mt-3  ">
                   <p className="mb"> ${item.quantity * item.price}</p>
                 </div>
               </div>
@@ -66,18 +66,18 @@ export default function ShoppingCardComponent() {
               </div>
             </div>
             <div className={`${style.Shipping}  mb-1 row`}>
-              <div className="col-4 f-6">Shipping</div>
+              <div className="col-4">Shipping</div>
               <div className="col-5"></div>
               <div className="col-3 ">
-                <h5>${shipping}</h5>
+                <p className="">${shipping}</p>
               </div>
             </div>
             <hr className="hr" />
             <div className="mb-1 row">
-              <div className="col-2 f-bold">Total</div>
-              <div className="col-7"></div>
-              <div className="col-2">
-                <p>
+              <div className="col-4 fs-5">Total</div>
+              <div className="col-4"></div>
+              <div className="col-4">
+                <p className=" fs-5">
                   <span className={`${style.currency}`}> USD</span>$
                   {priceWithShapping}
                 </p>

@@ -30,7 +30,6 @@ const Checkout = () => {
     }
   }, [location, navigate]);
   const token = localStorage.getItem("userToken");
-
   useEffect(() => {}, [formData]);
 
   return (
@@ -50,7 +49,7 @@ const Checkout = () => {
           <div
             className={`${style.leftFormColum} col-12 col-md-6 col-lg-6 mr-3  mb-3 ml-5 `}
           >
-            <div className="ml-5 bg-body">
+            <div className="ml-5  mt-5 mb-4">
               <nav
                 className={`${style.breadcrumb} ${
                   activeComponent === "form" ? "active" : ""
@@ -59,16 +58,15 @@ const Checkout = () => {
               >
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <a href="/cart" className="breadlink">
+                    <a href="/cart" className={` ${style.none} breadlink`}>
                       Cart
                     </a>
                   </li>
                   <li className="breadcrumb-item">
                     <a
                       href="/checkout/information"
-                      className={`breadcrumb-item ${
-                        activeComponent === "form" ? "active" : ""
-                      }`}
+                      className={`breadcrumb-item ${style.none}
+                      ${activeComponent === "form" ? "active" : ""}`}
                     >
                       information
                     </a>

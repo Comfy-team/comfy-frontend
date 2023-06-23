@@ -1,3 +1,6 @@
+:root {
+  --bright-blue: #8bc1e8;
+}
 * {
   box-sizing: border-box;
 }
@@ -12,14 +15,8 @@
     margin-top: 2rem;
   }
 }
-@media only screen and (min-width: 576px) and (max-width: 768px) {
-  .checkout {
-    margin-left: 4rem !important;
-  }
-}
 
 .checkout .container {
-  background-color: blue !important;
   margin-left: 40px !important;
 }
 
@@ -39,14 +36,11 @@
 .rightorderColumn {
   padding-top: 20px;
   background-color: #f1f1f1 !important;
-  height: 100lvh;
 }
 .leftFormColum .form-group {
   width: 50%;
 }
-.leftFormColum {
-  /* background-color: red; */
-}
+
 /* large screen */
 @media screen and (min-width: 992px) {
   .leftFormColum {
@@ -60,6 +54,13 @@
     margin-right: 0px;
   }
 }
+@media (max-width: 768px) {
+  .rightorderColumn {
+    margin: 0;
+    padding-bottom: 200px;
+  }
+}
+
 @media (max-width: 1024px) {
 }
 .checklabal {
@@ -76,7 +77,6 @@
   border-radius: 15px;
   padding: 0px;
   border: 0.5px solid #d9d9d9;
-
   position: relative;
 }
 .productImg img {
@@ -85,7 +85,6 @@
 
 .productInfo p {
   font-size: 0.9rem;
-  font-weight: 500;
   margin-left: 5px;
 }
 
@@ -117,34 +116,50 @@
 
 .currency {
   color: var(--secondary-gray);
-  font-size: 11px;
   margin-right: 7px;
 }
 .Subtotal {
-  font-weight: 600;
   margin-bottom: 0;
 }
+.shippingMethod {
+  background-color: #f1f7fc;
+  border: 1px solid var(--bright-blue);
+}
+
 .Shipping {
-  font-size: 11;
   margin-top: -10px;
 }
 .blue {
   background-color: #d0e9f7;
-  border: 1px solid #04397a81;
 }
-/* shipping btn  3C535E */
-
 /* ----------------- */
 .gray {
-  color: var(--secondary-gray);
+  color: var(--secondary-gray) !important;
 }
-.orderbtn {
-  /* margin-right: 1px; */
+.returnLink {
+  color: var(--bright-blue);
 }
 .PaymentMethod {
   height: 100%;
   height: 80lvh;
 }
 .orderbtn {
-  /* margin-right: 1px; */
+  background-color: #3c535e !important;
+  color: white;
+}
+.orderbtn:hover {
+  background-color: #3c535e !important;
+  color: white;
+}
+
+.linkclass {
+  color: var(--bright-blue);
+}
+.formbtn {
+  background-color: #3c535e !important;
+  color: white;
+}
+
+.none {
+  text-decoration: none;
 }

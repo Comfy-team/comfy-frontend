@@ -41,12 +41,18 @@ export default function PaymentMethod({ formData, token }) {
     <div>
       <div className={`${style.PaymentMethod} ml-5 ml-md-3 container `}>
         <div className="container">
-          <div className="form-control mr-5">
-            <div className={`${style.first} row mr-5`}>
-              <div className={`${style.gray} col-3`}> Contact</div>
-              <div className="col-6"> {formData.phone}</div>
+          <div className="form-control mr-5 ps-4">
+            <div className={`${style.first} row mr-5 `}>
+              <div className={`${style.gray} col-3 mt-3`}> Contact</div>
+              <div className="col-6 mt-3"> {formData.phone}</div>
               <div className="col-3">
-                <Link to="/checkout/information "> change </Link>
+                <Link
+                  to="/checkout/information "
+                  className={`${style.linkclass}`}
+                >
+                  {" "}
+                  change{" "}
+                </Link>
               </div>
             </div>
             <hr className="border" />
@@ -59,44 +65,52 @@ export default function PaymentMethod({ formData, token }) {
                 {formData.address.country}
               </div>
               <div className="col-3">
-                <Link to="/checkout/information "> change </Link>
+                <Link
+                  to="/checkout/information"
+                  className={`${style.linkclass}`}
+                >
+                  {" "}
+                  change{" "}
+                </Link>
               </div>{" "}
             </div>
           </div>
-          <h3 className="mt-5"> Shipping method</h3>
-          <div className={`${style.blue} form-control active-input mb-5`}>
+          <p className="mt-5 ms-1"> Shipping method</p>
+          <div
+            className={`${style.shippingMethod}   form-control active-input mb-5`}
+          >
             <div className="row">
-              <div className="col-4"> standard</div>
+              <div className="col-4 "> standard</div>
               <div className="col-5"> </div>
               <div className="col-2"> ${shippingvalue}</div>
             </div>
           </div>
-          <div className="row mb-5  w-100 m-auto">
+          <div className="row mb-4  w-100 m-auto">
             <Link
-              className="text-decoration-none col-6  col-md-5 mt-2"
-              onClick={() => navigate("/information")}
+              className={`col-12 col-sm-12  col-md-5  col-lg-6 mt-2 mb-3 ${style.returnLink} text-decoration-none `}
+              to="information "
             >
               {" "}
               {`<  `} return to information{" "}
             </Link>
-            <div className="col-1 col-md-4"></div>
-            <div className={`col-5 col-md-3 mr-5 `}>
-              <button
-                className={`${style.orderbtn}  btn btn-primary `}
-                onClick={event => {
-                  handleSubmit(formData);
-                  setIsAddingOrder(true);
-                  emptyCart(cart._id);
-                  event.target.textContent = "order Done ";
-                }}
-                disabled={isAddingOrder}
-              >
-                Confirm order
-              </button>
+            <div
+              className={`${style.orderbtn}  col-12 col-sm-12  col-md-3 col-lg-6  btn  h-100  ws-100 me-0  bg-primary`}
+              onClick={event => {
+                handleSubmit(formData);
+                setIsAddingOrder(true);
+                emptyCart(cart._id);
+                event.target.textContent = "order Done ";
+              }}
+              disabled={isAddingOrder}
+            >
+              Confirm order
             </div>
           </div>
           <hr className="border" />
-          <p className={`${style.gray}`}> All Rights Reserved to comfy team</p>
+          <small className={`${style.gray} `}>
+            {" "}
+            All Rights Reserved to comfy team
+          </small>
         </div>
       </div>
     </div>
