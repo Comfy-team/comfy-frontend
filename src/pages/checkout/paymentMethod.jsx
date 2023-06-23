@@ -1,40 +1,24 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import axiosInstance from "./../../apis/config";
 import { emptyCart } from "../../functions/cart";
 import style from "./checkout.module.css";
 import "../../App.css";
 
 export default function PaymentMethod({ formData, token }) {
-  // console.log(cartSlice(true));
-  const [orderinfo, setOrderinfo] = useState(formData);
-  const [shippingvalue, setShippingvalue] = useState(20.0);
   const [isAddingOrder, setIsAddingOrder] = useState(false);
   const navigate = useNavigate();
-
+  const shippingvalue = 20.0;
   const cart = useSelector(state => state.cart.cart);
-  const handleSubmit = orderinfo => {
-    let theitems = cart.items;
-    const allitemIds =
-      theitems && theitems.length > 0
-        ? theitems.map(item => ({
-            product_id: item.product_id._id,
-            color: item.color,
-            price: item.price,
-            quantity: item.quantity,
-          }))
-        : [];
-    // console.log("allitemIds", allitemIds);
-
+  const handleSubmit = formData => {
     const additionalinfo = {
       totalPrice: cart.totalPrice,
       items: cart.items,
       userId: cart.user_id,
     };
-    const newobjectdata = { ...orderinfo, ...additionalinfo };
-    // console.log("newobjectdata");
-    // console.log(newobjectdata);
+    const newobjectdata = { ...formData, ...additionalinfo };
+    console.log(newobjectdata);
     axiosInstance
       .post(`/orders`, newobjectdata, {
         headers: {
@@ -44,14 +28,10 @@ export default function PaymentMethod({ formData, token }) {
         },
       })
       .then(res => {
-        // console.log(res);
         // console.log("order Done ");
-        setIsAddingOrder(true);
         setTimeout(() => {
           navigate("/shop");
         }, 2000);
-
-        // store.dispatch(setCart(res.data));
       })
       .catch(error => {
         console.log(error.response);
@@ -61,10 +41,6 @@ export default function PaymentMethod({ formData, token }) {
     <div>
       <div className={`${style.PaymentMethod} ml-5 ml-md-3 container `}>
         <div className="container">
-          {/**=========================================== */}
-
-          {/**=========================================== */}
-
           <div className="form-control mr-5">
             <div className={`${style.first} row mr-5`}>
               <div className={`${style.gray} col-3`}> Contact</div>
@@ -108,10 +84,9 @@ export default function PaymentMethod({ formData, token }) {
               <button
                 className={`${style.orderbtn}  btn btn-primary `}
                 onClick={event => {
-                  handleSubmit(orderinfo);
+                  handleSubmit(formData);
                   setIsAddingOrder(true);
                   emptyCart(cart._id);
-
                   event.target.textContent = "order Done ";
                 }}
                 disabled={isAddingOrder}

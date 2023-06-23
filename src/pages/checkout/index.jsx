@@ -1,41 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
-import style from "./checkout.module.css";
-import "../../App.css";
-import logoimg from "../../assets/logos/logo-header.png";
-import FormComonent from "./FormComonent";
-import { useNavigate } from "react-router-dom";
-import axiosInstance from "./../../apis/config";
-import jwtDecode from "jwt-decode";
-
+import { useLocation, useNavigate } from "react-router-dom";
 import ShoppingCardComponent from "./ShoppingCardComponent";
-import PaymentMethod from "./paymentMethod"; // import the component
-import { useSelector } from "react-redux";
+import FormComonent from "./FormComonent";
+import PaymentMethod from "./paymentMethod";
+import logoimg from "../../assets/logos/logo-header.png";
+import "../../App.css";
+import style from "./checkout.module.css";
 
 const Checkout = () => {
   const [activeComponent, setActiveComponent] = useState("form");
   const [formData, setFormData] = useState("");
-  const [userinfomation, setUserinfo] = useState({});
-  // const [OrderDetails, SetorderDetails] = useState({});
-  const [Cartitems, SetCartitems] = useState({});
   const navigate = useNavigate();
 
   const handleFormData = thedata => {
-    // console.log("thedata");
-    // console.log(thedata);
     setActiveComponent("shipping");
     setFormData(thedata);
   };
-  const handleCartData = data => {
-    SetCartitems(data);
-  };
+
   const location = useLocation();
-
-  const cart = useSelector(state => state.cart.cart);
-  // console.log(cart.items);
-  // console.log(cart.totalPrice);
-  // console.log("cart");
-
   useEffect(() => {
     // set the active component based on the current location
     if (location.pathname.includes("information")) {
@@ -46,12 +28,10 @@ const Checkout = () => {
       navigate("/checkout/information");
       setActiveComponent("form");
     }
-  }, [location]);
+  }, [location, navigate]);
   const token = localStorage.getItem("userToken");
 
   useEffect(() => {}, [formData]);
-
-  // ------------------------------------
 
   return (
     <div className={`${style.checkout} ml-5 ml-md-3 `}>
@@ -93,7 +73,6 @@ const Checkout = () => {
                       information
                     </a>
                   </li>
-
                   <li
                     className={`breadcrumb-item "
                     }`}
@@ -104,27 +83,17 @@ const Checkout = () => {
                 </ol>
               </nav>
             </div>
-
             {activeComponent === "form" && (
-              <FormComonent
-                onFormSubmit={handleFormData}
-                userinfomation={userinfomation}
-                token={token}
-              />
+              <FormComonent onFormSubmit={handleFormData} />
             )}
             {activeComponent === "shipping" && (
-              <PaymentMethod
-                formData={formData}
-                token={token}
-                userinfomation={userinfomation}
-                Cartitems={Cartitems}
-              />
+              <PaymentMethod formData={formData} token={token} />
             )}
           </div>
           <div
             className={`${style.rightorderColumn} col-12 col-md-6 col-lg-6  bg-primary `}
           >
-            <ShoppingCardComponent cartdatafunc={handleCartData} />
+            <ShoppingCardComponent />
           </div>
         </div>
       </div>
