@@ -3,12 +3,14 @@ import { useParams } from "react-router";
 
 import styles from "../../pages/account/account.module.css";
 import axiosInstance from "../../apis/config";
+import jwtDecode from "jwt-decode";
 
 const AccountOrders = ({ token }) => {
   const [isCollapsed, setIsCollapsed] = useState({});
   const [userOrder, setUserOrder] = useState([]);
   const { id } = useParams();
   useEffect(() => {
+    if (jwtDecode(token).role === "user"){
     axiosInstance
       .get(`/users/${id}/orders`, {
         headers: {
@@ -29,6 +31,7 @@ const AccountOrders = ({ token }) => {
         });
       })
       .catch((error) => console.log(error));
+    }
   }, []);
 
   const handleToggleCollapse = (orderId) => {
