@@ -95,11 +95,12 @@ const AccountInfo = ({ user, token }) => {
         validationSchema={Yup.object({
           fullName: Yup.string()
             .required("Full name is required")
+            .matches(/^[a-zA-Z ]+$/, "Full name shouldn't have numbers")
             .min(3, "Full name must be at least 3 characters")
             .max(50, "Full name must be less than 50 characters"),
           email: Yup.string()
             .required("Email is required")
-            .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, "Invalid email address"),
+            .matches(/^[a-z0-9.]{3,}@gmail\.com$/, "Invalid email address"),
           phone: Yup.string()
             .matches(
               /^(\+2)?01[0-2]{1}[0-9]{8}$/,
@@ -113,7 +114,7 @@ const AccountInfo = ({ user, token }) => {
             building: Yup.number()
               .optional()
               .nullable()
-              .integer()
+              .integer("Building must be an integer number.")
               .label("Building"),
             governorate: Yup.string()
               .optional()
@@ -219,21 +220,24 @@ const AccountInfo = ({ user, token }) => {
                 type="text"
                 id="city"
                 as="select"
-
               >
                 <option value="">Select a city</option>
                 {cities.map((city) => {
-                const selectedGovernorateValue =
-                  document.querySelector("#governorate")?.value;
-                const selectedGovernorateOption = document.querySelector(
-                  `#governorate option[value="${selectedGovernorateValue}"]`
-                );
-                const selectedGovernorateId = selectedGovernorateOption
-                  ? selectedGovernorateOption.id 
-                  : null;
+                  const selectedGovernorateValue =
+                    document.querySelector("#governorate")?.value;
+                  const selectedGovernorateOption = document.querySelector(
+                    `#governorate option[value="${selectedGovernorateValue}"]`
+                  );
+                  const selectedGovernorateId = selectedGovernorateOption
+                    ? selectedGovernorateOption.id
+                    : null;
                   if (city.governorate_id === selectedGovernorateId) {
                     return (
-                      <option key={city.id} id={city.id} value={city.city_name_en}>
+                      <option
+                        key={city.id}
+                        id={city.id}
+                        value={city.city_name_en}
+                      >
                         {city.city_name_en}
                       </option>
                     );
