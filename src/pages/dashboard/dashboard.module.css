@@ -15,7 +15,7 @@
 #dashboard {
   color: var(--dash-main-text);
   background-color: var(--dash-bg);
-  height: 100svh;
+  min-height: 100svh;
 }
 
 #dashboard .col {
@@ -49,6 +49,10 @@ table caption {
 
 .dash-heading {
   color: var(--dash-heading) !important;
+}
+
+table{
+  width:80vh
 }
 /* end custom classes */
 
@@ -112,6 +116,7 @@ table caption {
   transform: translateX(-25%);
   top: 3.5rem;
   outline: 6px solid var(--dash-bg) !important;
+  z-index: 1030;
 }
 /* end toggle btn */
 /* end aside */
@@ -119,8 +124,8 @@ table caption {
 /* start main content */
 
 /* start users */
-.fw-bold{
-  font-weight: 700 ;
+.fw-bold {
+  font-weight: 700;
 }
 /* end users */
 
@@ -128,6 +133,34 @@ table caption {
 /* end categories */
 
 /* start products */
+.description {
+  line-clamp: 3;
+  -webkit-line-clamp: 6;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.dash-prod-id {
+  width: 5rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  transition: width 0.5s ease;
+}
+
+.dash-prod-id-holder:hover .dash-prod-id {
+  width: 100%;
+}
+
+.dash-prod-clr {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.dash-prod-img {
+  width: 2.2rem;
+  height: 2.2rem;
+}
 /* end products */
 
 /* start brands */
@@ -148,7 +181,7 @@ table caption {
 
 .pagination-btn:not(.active):hover {
   opacity: 0.8;
-  color: var(--dash-active-text)!important;
+  color: var(--dash-active-text) !important;
 }
 
 .pagination-page {
@@ -163,7 +196,7 @@ table caption {
 }
 
 .pagination-btn.disabled {
-  color: var(--dash-secondary-text)!important;
+  color: var(--dash-secondary-text) !important;
 }
 /* end pagination */
 /* end layout */
