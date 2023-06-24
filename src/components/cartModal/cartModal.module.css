@@ -21,9 +21,7 @@
 .yellow-bar {
   background-color: var(--yellow) !important;
 }
-.red-bar {
-  background-color: #dc3545;
-}
+
 .d-none {
   display: none;
 }
@@ -48,16 +46,29 @@
   transform: translate(-50%, -50%);
 }
 .product-container {
-  height: calc(
-    85vh - 150px
-  );
+  height: calc(80vh - 150px);
   overflow-y: auto;
   max-height: 26rem;
 }
 .pointer {
   cursor: pointer;
 }
+.spanColor {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  border: solid black;
+}
 
-.product-img{
-  width: 2rem;
+
+@media (min-width: 320px) and (max-width: 425px) {
+  .modal {
+    max-width: 20rem; /* adjust the modal's width for smaller screens */
+  }
+  .modal-content{
+    font-size: 0.8rem;
+  }
+  .spanColor {
+    width: 1rem !important;
+    height: 1rem !important;
+  }
 }

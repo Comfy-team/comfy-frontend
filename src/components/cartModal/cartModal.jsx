@@ -11,7 +11,7 @@ import Item from "./item";
 function CartModal({ showModal, hideModal }) {
   const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (showModal) {
       document.body.classList.add(`${style["no-scroll"]}`);
@@ -42,7 +42,7 @@ function CartModal({ showModal, hideModal }) {
   return (
     <>
       {showModal && (
-        <div className="container ">
+        <div className="container">
           <div
             className={`${style["modal"]} modal fade show d-block justify-content-end fs-6`}
             tabIndex="-1"
@@ -54,15 +54,14 @@ function CartModal({ showModal, hideModal }) {
             >
               <div className={`${style["modal-content"]} border-0 rounded-0`}>
                 <div className="modal-header  bg-dark rounded-0 text-light ">
-                  <p className="modal-title px-4" id="cartModalLabel">
-                    Shopping Cart
-                  </p>
+                  <strong className="modal-title px-4" id="cartModalLabel">
+                    SHOPPING CART
+                  </strong>
 
-                  <span aria-hidden="true" className="pointer">
+                  <span aria-hidden="true" className={`${style["pointer"]}`}>
                     <FontAwesomeIcon
                       icon={faClose}
                       size="lg"
-                      className="close pointer"
                       data-dismiss="modal"
                       aria-label="Close"
                       onClick={hideModal}
@@ -89,11 +88,7 @@ function CartModal({ showModal, hideModal }) {
                       >
                         {cart.items.map((item, index) => (
                           <div key={item.product_id._id}>
-                            <Item
-                              
-                              item={item}
-                              cartId={cart._id}
-                            />
+                            <Item item={item} cartId={cart._id} />
 
                             {index !== cart.items.length - 1 && (
                               <hr className="text-secondary" />
@@ -101,7 +96,6 @@ function CartModal({ showModal, hideModal }) {
                           </div>
                         ))}
                       </div>
-                      <div className="container pr-4"></div>
                     </>
                   )}
                 </div>
@@ -163,8 +157,8 @@ function CartModal({ showModal, hideModal }) {
                         </div>
                       </div>
 
-                      <div className="justify-content-between d-flex border-0 fs-6 w-100">
-                        <strong> Price: </strong>
+                      <div className="justify-content-between d-flex py-2 fs-6 w-100">
+                        <strong> Total Price </strong>
                         <strong>${cart.totalPrice}</strong>
                       </div>
 
@@ -179,7 +173,7 @@ function CartModal({ showModal, hideModal }) {
 
                         <Link
                           to="/cart"
-                          className="text-dark fs-6 "
+                          className="text-dark fs-6"
                           onClick={handleViewCart}
                         >
                           View cart
