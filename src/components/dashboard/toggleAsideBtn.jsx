@@ -8,7 +8,7 @@ import style from "../../pages/dashboard/dashboard.module.css";
 const ToggleAsideBtn = ({ onToggleAside }) => {
   return (
     <button
-      className={`${style["toggle-aside-btn"]} btn ${style["dash-btn"]} rounded-circle p-0 text-white position-absolute end-0 z-3`}
+      className={`${style["toggle-aside-btn"]} btn ${style["dash-btn"]} rounded-circle p-0 text-white position-absolute end-0`}
       onClick={onToggleAside}
     >
       <FontAwesomeIcon icon={faAngleLeft} />

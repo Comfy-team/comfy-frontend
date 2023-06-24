@@ -47,7 +47,7 @@ const Dashboard = () => {
           } ps-lg-0 px-3 py-3 flex-fill`}
         >
           <div
-            className="bg-white h-100 rounded-3 container-fluid m-0"
+            className="bg-white h-100 rounded-3 py-3 container-fluid m-0"
           >
             <Outlet />
           </div>
