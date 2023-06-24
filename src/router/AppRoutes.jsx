@@ -19,8 +19,9 @@ import BrandsData from "./../components/dashboard/brands/brandsData";
 import BrandsUpdate from "./../components/dashboard/brands/brandsUpdate";
 import CategoriesData from "../components/dashboard/categories/categoriesData";
 import CategoriesUpdate from "../components/dashboard/categories/categoriesUpdate";
-import OrdersData from "../components/dashboard/orders/ordersData";
-import OrdersUpdate from "../components/dashboard/orders/ordersUpdate";
+import ProductsAdd from "../components/dashboard/products/productsAdd";
+import BrandsAdd from "./../components/dashboard/brands/brandsAdd";
+import CategoriesAdd from "./../components/dashboard/categories/categoriesAdd";
 
 // pages
 const Home = React.lazy(() => import("./../pages/home"));
@@ -139,20 +140,20 @@ const AppRoutes = () => {
         <Route path="users" element={<UsersDash />} />
         <Route path="products" element={<ProductsDash />}>
           <Route path="" element={<ProductsData />} />
+          <Route path="add" element={<ProductsAdd />} />
           <Route path="update/:id" element={<ProductsUpdate />} />
         </Route>
         <Route path="brands" element={<BrandsDash />}>
           <Route path="" element={<BrandsData />} />
+          <Route path="add" element={<BrandsAdd />} />
           <Route path="update/:id" element={<BrandsUpdate />} />
         </Route>
         <Route path="categories" element={<CategoriesDash />}>
           <Route path="" element={<CategoriesData />} />
+          <Route path="add" element={<CategoriesAdd />} />
           <Route path="update/:id" element={<CategoriesUpdate />} />
         </Route>
-        <Route path="orders" element={<OrdersDash />}>
-          <Route path="" element={<OrdersData />} />
-          <Route path="update/:id" element={<OrdersUpdate />} />
-        </Route>
+        <Route path="orders" element={<OrdersDash />} />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>
