@@ -51,8 +51,9 @@ table caption {
   color: var(--dash-heading) !important;
 }
 
-table{
-  width:80vh
+table {
+  width: 80vw;
+  overflow-x: auto;
 }
 /* end custom classes */
 
