@@ -84,8 +84,7 @@ const Account = () => {
             Logout
           </button>
         </div>
-
-        <p className="h5">
+        <p className="h5 mt-2 mt-md-0">
           <span>{user.fullName}</span>,{" "}
           <span className="text-secondary">{user.email}</span>
         </p>

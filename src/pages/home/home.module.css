@@ -319,7 +319,12 @@
 .overlay h6:hover {
   color: var(--yellow);
 }
-
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Styles for viewport width between 768px and 991px */
+  .overlay p{
+    min-width: 120px
+  }
+}
 @media (max-width: 768px) {
   .imageContainer img {
     width: 100%;
@@ -341,6 +346,7 @@
   }
   .overlay p ,.overlay h2 ,.overlay h6{
     font-size: 1.25rem;
+    min-width: 150px
   }
   .overlay h2{
     margin-bottom: 10px;
