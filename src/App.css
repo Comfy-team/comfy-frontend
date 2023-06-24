@@ -387,6 +387,9 @@ footer {
 #home .carousel-inner {
   height: 100%;
 }
+#home .carousel .carousel-control-next ,#home .carousel-control-prev{
+  filter: invert(1);
+ }
 /* ====== end  home carousel ========= */
 
 /* for cartModal*/
