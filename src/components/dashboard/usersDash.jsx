@@ -8,7 +8,6 @@ import DashPagination from "./dashPagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
-
 //style
 import dashStyle from "./../../pages/dashboard/dashboard.module.css";
 import axiosInstance from "../../apis/config";
@@ -21,24 +20,43 @@ const UsersDash = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const token = localStorage.getItem("userToken");
   useEffect(() => {
-    axiosInstance
-      .get(`/users`, {
-        params: {
-          page: currentPage,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "x-access-token": token,
-        },
-      })
-      .then((res) => {
-        setAllUsersInPage(res.data);
-        setAllUsers(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [currentPage]);
+    if (searchQuery === "") {
+        // If search query is empty, show all users
+      axiosInstance
+        .get(`/users`, {
+          params: {
+            page: currentPage,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "x-access-token": token,
+          },
+        })
+        .then((res) => {
+          setAllUsersInPage(res.data);
+          setAllUsers(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      // If search query is not empty, fetch search results
+      axiosInstance
+        .get(`/users/search`, {
+          params: {
+            search: searchQuery,
+            page: currentPage,
+          },
+        })
+        .then((res) => {
+          setAllUsersInPage(res.data);
+          setAllUsers(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [currentPage, searchQuery]);
 
   // delete user
   function deleteUser(id) {
@@ -55,6 +73,22 @@ const UsersDash = () => {
         })
         .then((res) => {
           setDeleteStatus(`User ${id} deleted successfully.`);
+          axiosInstance.get(`/users`, {
+            params: {
+              page: currentPage,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "x-access-token": token,
+            },
+          })
+          .then((res) => {
+            setAllUsersInPage(res.data);
+            setAllUsers(res.data.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -73,14 +107,17 @@ const UsersDash = () => {
 
   // search for id or email
   function handleSearch(event) {
-    setSearchQuery(event.target.value);
+    const query = event.target.value.trim().toLowerCase();
+    setCurrentPage(1);
+    setSearchQuery(query);
+    if (query === "") {
+      // If search query is empty, show all users
+      setAllUsersInPage(allUsers);
+    } else {
+      // If search query is not empty, fetch search results
+      setAllUsersInPage(allUsers);
+    }
   }
-  const filteredUsers = allUsers.filter(
-    (user) =>
-      user._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   return (
     <div className={`py-4`}>
       <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
@@ -133,8 +170,8 @@ const UsersDash = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredUsers.length > 0 ? (
-              filteredUsers.map((user) => {
+            {allUsers.length > 0 ? (
+              allUsers.map((user) => {
                 return (
                   <tr key={user._id}>
                     <td
