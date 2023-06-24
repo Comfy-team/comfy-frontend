@@ -39,6 +39,7 @@ function Item({ item, cartId }) {
             to={`/product-details/${item?.product_id._id}`}
             className="text-decoration-none text-dark"
             onClick={handleCloseCart}
+            title={`Click to show details for ${item?.product_id.name}`}
           >
             <strong className="d-block text-truncate hover-color-yellow">
               {item?.product_id.name}
