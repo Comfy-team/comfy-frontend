@@ -62,7 +62,7 @@ const Login = ({ closeModal, saveUserData }) => {
         validationSchema={Yup.object({
           email: Yup.string()
             .required("Email is required")
-            .email("Invalid email address"),
+            .matches(/^[a-z0-9.]{3,}@gmail\.com$/, "Invalid email address"),
           password: Yup.string().required("Password is required"),
         })}
         onSubmit={handleSubmit}
