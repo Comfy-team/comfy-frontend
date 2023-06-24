@@ -19,8 +19,6 @@ import style from "../../pages/dashboard/dashboard.module.css";
 
 // assets
 import fullLogo from "../../assets/logos/logo-header.png";
-import { showLoginModal } from "../../store/slices/loginModalSlice";
-// import small from "";
 
 const navLinks = [
   {
@@ -64,6 +62,7 @@ const navLinks = [
 const NavAside = ({ isSmallScreen, collapsed }) => {
   const [active, setActive] = useState("Home");
   const navigate = useNavigate();
+
   function handleLogout() {
     localStorage.removeItem("userToken");
     navigate("/");
@@ -71,7 +70,7 @@ const NavAside = ({ isSmallScreen, collapsed }) => {
 
   return (
     <aside
-      className={`${style.aside} bg-white py-lg-4 pe-3 pe-lg-0 d-flex flex-column`}
+      className={`${style.aside} sticky-top bg-white py-lg-4 pe-3 pe-lg-0 d-flex flex-column`}
     >
       <div className="d-flex justify-content-between py-2 py-lg-0 align-items-center d-lg-block">
         <Link
