@@ -22,12 +22,12 @@ const responsive = {
     items: 4,
   },
   medium: {
-    breakpoint: { max: 1023, min: 768 },
+    breakpoint: { max: 1023, min: 992 },
     items: 3,
     partialVisibilityGutter: 40,
   },
-  small: {
-    breakpoint: { max: 767, min: 481 },
+  tablet: {
+    breakpoint: { max: 991, min: 481 },
     items: 2,
     partialVisibilityGutter: 40,
   },
@@ -49,13 +49,6 @@ const Trending = () => {
   useEffect(() => {
     axiosInstance
       .get("/products", {
-        // params: {
-        //   page: 1,
-        //   brand: "all",
-        //   category: "all",
-        //   sort: 0,
-        //   price: 0,
-        // },
       })
       .then((response) => {
         setProduct(response.data.data);
@@ -82,7 +75,7 @@ const Trending = () => {
               minimumTouchDrag={80}
               removeArrowOnDeviceType={[
                 "medium",
-                "small",
+                "tablet",
                 "extraSmall",
                 "extraExtraSmall",
               ]}
