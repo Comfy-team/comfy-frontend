@@ -1,8 +1,6 @@
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-
 import styles from "./about.module.css";
-
 import img from "../../assets/about.jpg";
 
 const About = () => {
@@ -10,11 +8,11 @@ const About = () => {
     <>
       <div
         id="about"
-        className={`container  my-5 aboutContainer${styles.aboutContainer} `}
+        className={`container  mb-5 aboutContainer${styles.aboutContainer}  p-5`}
       >
-        <div className="row ">
+        <div className={` row `}>
           <div
-            className={`${styles.imgContainer} imgContainer col-sm-12 col-md-6 `}
+            className={`${styles.imgContainer} imgContainer col-sm-12 col-md-6 mb-5`}
           >
             <img
               src={img}
@@ -64,18 +62,20 @@ const About = () => {
           </div>
         </div>
       </div>
-      <div className="whatTellContainer">
-        <div className="thecontent container row">
-          <h1> what they're saying</h1>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a
+      <div className={`${styles.whatTellContainer} py-5 `}>
+        <div className={`${styles.thecontent} container row`}>
+          <h1 className={`pt-5 `}> what they're saying</h1>
+          <p className={`pb-3 pt-5`}>
+            " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a
             aliquet libero. Sed id sodales massa. Nullam vel sapien ac enim
             lacinia fermentum. Fusce accumsan ultricies velit, eu fermentum sem
             vehicula a. Donec vel nulla vitae ipsum sodales molestie. Curabitur
-            aliquet justo et est vehicula, id eleifend eros aliquet. Praesent
+            aliquet justo et est vehicula, id eleifend eros aliquet. Praesent "
           </p>
           <h5> mohamad ali</h5>
-          <h6> analyst</h6>
+          <div>
+            <h6 className=" mb-5 pb-5"> analyst</h6>
+          </div>
         </div>
       </div>
     </>
