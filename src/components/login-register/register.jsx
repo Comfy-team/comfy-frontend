@@ -59,6 +59,7 @@ const Register = ({ onRegistrationSuccess }) => {
         validationSchema={Yup.object({
           fullName: Yup.string()
             .required("Full name is required")
+            .matches(/^[a-zA-Z ]+$/,"Full name shouldn't have numbers")
             .min(3, "Full name must be at least 3 characters")
             .max(50, "Full name must be less than 50 characters"),
           email: Yup.string()
