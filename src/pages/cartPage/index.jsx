@@ -21,50 +21,46 @@ function CartPage(cartId) {
     return <div>Loading...</div>;
   }
   return (
-    <div className={`${style["cart-container"]}`}>
-      <div
-        className={`container-fluid text-center py-4 ${style["cart-container"]}`}
-      >
+    <div className="table-responsive container-fluid">
+      <table className="table text-center">
         {cart.items.length > 0 && (
-          <div className="row">
-            <div className="col-4">
-              <strong>PRODUCT</strong>
-            </div>
-            <div className="col-2">
-              <strong>PRICE</strong>
-            </div>
-            <div className="col-lg-3 col-md-4 col-sm-4 col-3">
-              <strong>QUANTITY</strong>
-            </div>
-            <div className="col-2">
-              <strong>TOTAL</strong>
-            </div>
-            <hr />
-          </div>
+          <thead>
+            <tr>
+              <th scope="col">PRODUCT</th>
+              <th scope="col">PRICE</th>
+              <th scope="col">QUANTITY</th>
+              <th scope="col">TOTAL</th>
+            </tr>
+          </thead>
         )}
-        {cart.items.length === 0 ? (
-          <div className="text-center pt-3">
-            <strong className="d-block py-3">Your cart is empty.</strong>
-            <button
-              type="button"
-              className={`btn btn-dark rounded-0 border-0 px-2 mb-5 ${style["cart-btn"]} pr-2`}
-              onClick={handleReturnToShop}
-            >
-              CONTINUE SHOPPING
-            </button>
-          </div>
-        ) : (
-          <div>
-            {cart.items.map((item, index) => {
-              return (
-                <div key={item.product_id}>
-                  <CartItem item={item} cartId={cart._id} index={index} />
-                </div>
-              );
-            })}
-            <div className="container-fluid ">
-              <div className="row pb-3">
-                <div className="col-12 col-md-4 text-center mb-3 mb-md-0">
+        <tbody>
+          {cart.items.length === 0 ? (
+            <tr>
+              <td colSpan="4" className="text-center pt-3">
+                <strong className="d-block py-3">Your cart is empty.</strong>
+                <button
+                  type="button"
+                  className={`btn btn-dark rounded-0 border-0 px-2 mb-5 ${style["cart-btn"]} pr-2`}
+                  onClick={handleReturnToShop}
+                >
+                  CONTINUE SHOPPING
+                </button>
+              </td>
+            </tr>
+          ) : (
+            <>
+              {cart.items.map((item, index) => (
+                <>
+                  <CartItem
+                    key={item.product_id}
+                    item={item}
+                    cartId={cart._id}
+                    index={index}
+                  />
+                </>
+              ))}
+              <tr>
+                <td className="justify-content-start">
                   <button
                     type="button"
                     className={`btn btn-dark w-40 px-3 rounded-1 py-2 border-0 ${style["cart-btn"]}`}
@@ -78,11 +74,11 @@ function CartPage(cartId) {
                       Continue Shopping
                     </strong>
                   </button>
-                </div>
-                <div className="col-12 col-md-4 text-center mb-3 mb-md-0">
+                </td>
+                <td className="justify-content-start">
                   <button
                     type="button"
-                    className={`btn btn-dark w-40 px-5 rounded-1 py-2 border-0 ${style["cart-btn"]}`}
+                    className={`btn btn-dark w-40 px-5 rounded-1 py-2 border-0 ${style["cart-btn"]} `}
                     onClick={() => emptyCart(cart._id)}
                   >
                     <strong>
@@ -90,32 +86,34 @@ function CartPage(cartId) {
                       Empty Cart
                     </strong>
                   </button>
-                </div>
-                <div className="col-12 col-md-4 text-center mb-3 mb-md-0">
-                  <div className=" border-0 fs-6">
-                    <span  >
-                      CART TOTALS: 
-                      <strong className="color-yellow px-2">${cart?.totalPrice}</strong>
+                </td>
+                <td colSpan={2}>
+                  <div className="border-0 fs-6">
+                    <span>
+                      TOTAL PRICE:
+                      <strong className="color-yellow px-2">
+                        ${cart?.totalPrice}
+                      </strong>
                     </span>
                   </div>
-                </div>
-              </div>
-              <hr />
-            </div>
-            <div className="row py-5 justify-content-center">
-              <button
-                type="button"
-                className={`${style["cart-btn"]} col-8  border-0 btn btn-dark w-60 rounded-1 py-2 px-4 my-2 fs-6`}
-                onClick={handleCheckout}
-              >
-                <strong>Checkout</strong>
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan={4}>
+                  <button
+                    type="button"
+                    className={`${style["cart-btn"]} col-8 border-0 btn btn-dark w-50 rounded-1 py-2 px-4 my-2 fs-6`}
+                    onClick={handleCheckout}
+                  >
+                    <strong>Checkout</strong>
+                  </button>
+                </td>
+              </tr>
+            </>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 }
-
 export default CartPage;
