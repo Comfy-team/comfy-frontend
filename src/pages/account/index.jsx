@@ -10,6 +10,7 @@ import { showLoginModal } from "../../store/slices/loginModalSlice";
 
 import axiosInstance from "./../../apis/config";
 import style from "./account.module.css";
+import jwtDecode from "jwt-decode";
 
 const Account = () => {
   const { id } = useParams();
@@ -39,6 +40,7 @@ const Account = () => {
     setActiveComponent(<AccountOrders user={user} token={token} />);
   };
 
+  
   useEffect(() => {
     const token = localStorage.getItem("userToken");
     if (!token) {
@@ -52,6 +54,9 @@ const Account = () => {
   }, [token]);
 
   useEffect(() => {
+    if(jwtDecode(token).role === "admin"){
+      navigate("/dashboard");
+    }else{
     axiosInstance
       .get(`/users/${id}`, {
         headers: {
@@ -63,6 +68,7 @@ const Account = () => {
         setUser(res.data);
       })
       .catch((err) => console.log(err));
+    }
   }, []);
   function handelLogout() {
     localStorage.removeItem("userToken");
