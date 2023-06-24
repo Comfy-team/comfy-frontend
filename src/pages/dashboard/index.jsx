@@ -31,8 +31,8 @@ const Dashboard = () => {
   };
 
   return (
-    <div id={style.dashboard}>
-      <div className="d-flex flex-lg-row flex-column flex-wrap m-0 h-100">
+    <div id={style.dashboard} className="position-relative">
+      <div className="d-flex flex-lg-row flex-column flex-wrap h-100">
         <div
           className={`${collapseAside ? "col-lg-1" : "col-lg-3"} ${
             style.col
