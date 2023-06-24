@@ -1,3 +1,5 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -5,80 +7,111 @@ import {
   updateItemQuantity,
 } from "../../functions/cart.js";
 import style from "../../pages/cartPage/cartPage.module.css";
+import { showCartModal } from "../../store/slices/cartModalSlice.js";
+const CartItem = ({ item, cartId, product }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-const CartItem = ({ item, cartId }) => {
+  const handleCloseCart = () => {
+    navigate(`/product-details/${item?.product_id._id}`);
+    dispatch(showCartModal(false));
+  };
   return (
-    <div className="container-fluid text-center py-2">
-      <div className="row">
-        <div className="col-4">
-        <div className="row">
-  <strong className="col-12 col-md-12 col-lg-2">
-    <FontAwesomeIcon
-      icon={faClose}
-      onClick={() => deleteItemFromCart(cartId, item?.product_id._id)}
-      type="button"
-      className="hover-color-yellow "
-    />
-  </strong>
-  <strong className="col-12 col-md-12 col-lg-4 text-center">
-  <img
-    src={
-      item.product_id?.images?.[0]?.src
-        ? process.env.REACT_APP_BASE_URL +
-          "/" +
-          item.product_id.images[0].src
-        : ""
-    }
-    alt={item.name}
-    className={`${style["item-img"]}`}
-  />
-  </strong>
-  <div className="col-12 col-md-12 col-lg-4">
-    <p className="hover-color-yellow text-truncate">
-      {item.product_id.name}
-    </p>
-    <p>
-      <strong>color:</strong> {item.color}
-    </p>
-  </div>
-</div>
+    <tr className="w-100">
+      <td>
+        <div>
+          <table className="text-center">
+            <tbody>
+              <tr>
+                <td colSpan={2}>
+                  <FontAwesomeIcon
+                    icon={faClose}
+                    onClick={() =>
+                      deleteItemFromCart(cartId, item?.product_id._id)
+                    }
+                    type="button"
+                    className="hover-color-yellow pe-4"
+                  />
+                </td>
+                <td>
+                  <img
+                    src={
+                      item.product_id?.images?.[0]?.src
+                        ? process.env.REACT_APP_BASE_URL +
+                          "/" +
+                          item.product_id.images[0].src
+                        : ""
+                    }
+                    alt={item.name}
+                    className={`${style["item-img"]} `}
+                  />
+                </td>
+                <td className="ps-4">
+                  <Link
+                    to={`/product-details/${item?.product_id._id}`}
+                    className="text-decoration-none text-dark"
+                    onClick={handleCloseCart}
+                    title={`Click to show details for ${item?.product_id.name}`}
+                  >
+                    <strong className="d-block text-truncate hover-color-yellow">
+                      {item?.product_id.name}
+                    </strong>
+                  </Link>
+                  {item?.color && (
+                    <h6 className="d-flex">
+                      Color:{" "}
+                      <div
+                        style={{ backgroundColor: `${item.color}` }}
+                        className={`${style.spanColor} rounded-circle ms-2 border-dark border-1`}
+                      ></div>
+                    </h6>
+                  )}
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div className="col-2">
-          <strong>${item.price}</strong>
+      </td>
+      <td>
+        <strong>${item.price}</strong>
+      </td>
+      <td>
+        <div className="input-group justify-content-center w-100">
+          <button
+            className="btn  rounded-0 border-light"
+            type="button"
+            onClick={() =>
+              updateItemQuantity(
+                cartId,
+                item?.product_id._id,
+                item.quantity - 1
+              )
+            }
+            disabled={item.quantity === 1}
+          >
+            <FontAwesomeIcon icon={faMinus} size="xs" />
+          </button>
+          <p className={`m-0 p-2`}>{item?.quantity}</p>
+          <button
+            className="btn rounded-0 border-light"
+            type="button"
+            onClick={() =>
+              updateItemQuantity(
+                cartId,
+                item?.product_id._id,
+                item.quantity + 1
+              )
+            }
+          >
+            <FontAwesomeIcon icon={faPlus} size="xs" />
+          </button>
         </div>
-        <div className="col-lg-3 col-md-4 col-sm-4 col-3  text-center ">
-          <div className={`${style["input-group"]} justify-content-center`} >
-            <button
-              type="button"
-              className={`btn btn-light rounded-circle border-0 text-center ${style["cart-btn"]} ${style["quantity-btn"]}`}
-              onClick={() =>
-                updateItemQuantity(cartId, item?.product_id._id, item.quantity + 1)
-              }
-            >
-              <FontAwesomeIcon icon={faPlus} size="xs" />
-            </button>
-            
-            <p className={`m-0 mx-3 ${style["cart-quantity"]}`}>
-              {item.quantity}
-            </p>
-            <button
-              type="button"
-              className={`btn btn-light rounded-circle border-0 ${style["cart-btn"]} ${style["quantity-btn"]}`}
-              onClick={() =>
-                updateItemQuantity(cartId, item?.product_id._id, item.quantity - 1)
-              }
-              disabled={item.quantity === 1 ? true : false}
-            >
-              <FontAwesomeIcon icon={faMinus} size="xs" />
-            </button>
-          </div>
-        </div>
-        <div className="col-2">
-          <strong>${(item.price * item.quantity).toFixed(2)}</strong>
-        </div>
-      </div>
-      <hr className="text-secondary" />
-    </div>
+      </td>
+      <td>
+        <strong>${(item.price * item.quantity).toFixed(2)}</strong>
+      </td>
+    </tr>
   );
 };
 
