@@ -102,9 +102,9 @@ const Login = ({ closeModal, saveUserData }) => {
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? (
-                    <FontAwesomeIcon icon={faEyeSlash} />
-                  ) : (
                     <FontAwesomeIcon icon={faEye} />
+                    ) : (
+                    <FontAwesomeIcon icon={faEyeSlash} />
                   )}
                 </span>
               </div>
