@@ -165,6 +165,12 @@ body {
   width: 2.2rem;
   height: 2.2rem;
 }
+
+/* start search from */
+#dash-search input {
+  width: 20rem;
+}
+/* end search form */
 /* end products */
 
 /* start brands */
