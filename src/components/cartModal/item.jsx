@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,10 +15,20 @@ import { showCartModal } from "../../store/slices/cartModalSlice.js";
 function Item({ item, cartId }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleCloseCart = () => {
     navigate(`/product-details/${item?.product_id._id}`);
     dispatch(showCartModal(false));
+  };
+  const handleDelete = () => {
+    setIsDeleting(true);
+    const deletePromise = deleteItemFromCart(cartId, item?.product_id?._id);
+    if (deletePromise && typeof deletePromise.then === "function") {
+      deletePromise.then(() => {
+        setIsDeleting(false);
+      });
+    }
   };
   return (
     <div className="py-2">
@@ -58,15 +68,24 @@ function Item({ item, cartId }) {
               )}
 
               <strong className="d-block">${item?.price}</strong>
-              <FontAwesomeIcon
-                icon={faTrashCan}
-                onClick={() =>
-                  deleteItemFromCart(cartId, item?.product_id?._id)
-                }
-                type="button"
-                className="p-2"
-                size="sm"
-              />
+              <div className="d-flex pt-2">
+                <div>{/* display item details here */}</div>
+                {isDeleting ? (
+                  <div
+                    className="spinner-border spinner-border-sm text-dark"
+                    role="status"
+                  >
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    onClick={handleDelete}
+                    type="button"
+                    size="sm"
+                  />
+                )}
+              </div>
             </div>
             <div className="col-6">
               <div className="input-group justify-content-center w-100">
