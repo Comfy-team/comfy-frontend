@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import jwtDecode from "jwt-decode";
 
@@ -23,6 +23,7 @@ const Header = ({ isMediumScreen, cart }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [decodedToken, setDecodedToken] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -138,7 +139,9 @@ const Header = ({ isMediumScreen, cart }) => {
                   className="cart-btn btn p-0 fs-5 hover-color-yellow position-relative"
                   onClick={() =>
                     decodedToken
-                      ? dispatch(showCartModal(true))
+                      ? decodedToken.role === "admin"
+                        ? navigate("/dashboard")
+                        : dispatch(showCartModal(true))
                       : dispatch(showLoginModal(true))
                   }
                 >
