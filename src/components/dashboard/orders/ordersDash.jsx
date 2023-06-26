@@ -165,6 +165,10 @@ const OrdersDash = () => {
                     <th scope="col" className="ps-4">
                       #ID
                     </th>
+                    <th scope="col" className="ps-4">
+                      User ID
+                    </th>
+
                     <th scope="col">Data</th>
                     <th scope="col">Time</th>
                     <th scope="col">TotalPrice</th>
@@ -188,6 +192,13 @@ const OrdersDash = () => {
                             onClick={showAllId}
                           >
                             {order?._id.substring(0, 8) + "..."}
+                          </td>
+                          <td
+                            className={`ps-4`}
+                            data-id={order?.userId}
+                            onClick={showAllId}
+                          >
+                            {order?.userId.substring(0, 8) + "..."}
                           </td>
                           <td>{new Date(order.date).toLocaleDateString()}</td>
                           <td>{new Date(order.date).toLocaleTimeString()}</td>
