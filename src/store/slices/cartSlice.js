@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  cart: {},
-  role: "user",
+  cart: { role: "user" },
 };
 
 const cartSlice = createSlice({
