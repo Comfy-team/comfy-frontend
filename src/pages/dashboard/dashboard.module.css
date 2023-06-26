@@ -48,7 +48,7 @@ table caption {
 }
 
 .dash-purple {
-  color: var(--dash-active-text)!important;
+  color: var(--dash-active-text) !important;
 }
 
 .dash-secondary-text {
@@ -164,6 +164,26 @@ table caption {
 .dash-prod-img {
   width: 2.2rem;
   height: 2.2rem;
+}
+
+.dash-prod-form-clr {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
+.dash-prod-form-clr + button {
+  font-size: 0.8rem;
+  transform: translateY(-25%);
+}
+
+.dash-prod-form-img {
+  width: 2.7rem;
+  height: 2.7rem;
+}
+
+.dash-prod-form-img+button {
+  font-size: 0.8rem;
+transform: translate(50%, -45%);
 }
 
 /* start search from */

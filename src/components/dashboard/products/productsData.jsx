@@ -20,9 +20,35 @@ const ProductsData = () => {
   const [totalProducts, setTotalProducts] = useState(0);
   const [data, setData] = useState(null);
   const [showSpinner, setShowSpinner] = useState(true);
+  const [productToDelete, setProductToDelete] = useState("");
 
   const handlePageChange = (page) => {
     setPage(page);
+  };
+
+  const handleDelete = (id, brand, category) => {
+    setProductToDelete(id);
+    const token = localStorage.getItem("userToken");
+    axiosInstance
+      .delete("/products", {
+        params: {
+          _id: id,
+          brand,
+          category,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "x-access-token": token,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        let newData = [...data].filter((ele) => ele._id !== id);
+        setData(newData);
+        setProductToDelete("");
+      })
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
@@ -123,18 +149,30 @@ const ProductsData = () => {
                       <Link
                         to={`/dashboard/products/update/${product._id}`}
                         className={`btn p-0 border-0 outline-0 ${style["dash-purple"]}`}
-
                       >
                         <FontAwesomeIcon icon={faPenToSquare} />
                         <span className="visually-hidden">update</span>
                       </Link>
-                      <button
-                        type="button"
-                        className="btn p-0 border-0 outline-0 text-danger"
-                      >
-                        <FontAwesomeIcon icon={faTrashCan} />
-                        <span className="visually-hidden">delete</span>
-                      </button>
+                      {productToDelete === product._id ? (
+                        <div className="spinner-border" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          className="btn p-0 border-0 outline-0 text-danger"
+                          onClick={() =>
+                            handleDelete(
+                              product._id,
+                              product.brand,
+                              product.category
+                            )
+                          }
+                        >
+                          <FontAwesomeIcon icon={faTrashCan} />
+                          <span className="visually-hidden">delete</span>
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>
