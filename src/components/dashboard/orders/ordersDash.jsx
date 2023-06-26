@@ -123,10 +123,9 @@ const OrdersDash = () => {
     <div>
       <div>
         <div>
-          <h1>orders</h1>
           <div className={`py-4`}>
             <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
-              Users (total: {allorders.length})
+              Orders (total: {allorders.length})
             </h4>
             {deleteStatus ? (
               <div
@@ -165,6 +164,10 @@ const OrdersDash = () => {
                     <th scope="col" className="ps-4">
                       #ID
                     </th>
+                    <th scope="col" className="ps-4">
+                      User ID
+                    </th>
+
                     <th scope="col">Data</th>
                     <th scope="col">Time</th>
                     <th scope="col">TotalPrice</th>
@@ -188,6 +191,13 @@ const OrdersDash = () => {
                             onClick={showAllId}
                           >
                             {order?._id.substring(0, 8) + "..."}
+                          </td>
+                          <td
+                            className={`ps-4`}
+                            data-id={order?.userId}
+                            onClick={showAllId}
+                          >
+                            {order?.userId.substring(0, 8) + "..."}
                           </td>
                           <td>{new Date(order.date).toLocaleDateString()}</td>
                           <td>{new Date(order.date).toLocaleTimeString()}</td>
