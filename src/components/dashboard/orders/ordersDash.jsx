@@ -33,7 +33,6 @@ const OrdersDash = () => {
           },
         })
         .then(res => {
-          console.log(res);
           setAllordersInPage(res.data);
           setAllorders(res.data.data);
         })
@@ -73,7 +72,6 @@ const OrdersDash = () => {
           },
         })
         .then(res => {
-          console.log(res);
           setDeleteStatus(`order ${id} deleted successfully.`);
           axiosInstance
             .get(`/orders`, {
@@ -86,8 +84,6 @@ const OrdersDash = () => {
               },
             })
             .then(res => {
-              console.log(res);
-
               setAllordersInPage(res.data);
               setAllorders(res.data.data);
             })
