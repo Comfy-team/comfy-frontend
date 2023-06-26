@@ -15,6 +15,7 @@ import axiosInstance from "../../apis/config";
 const UsersDash = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [allUsersInPage, setAllUsersInPage] = useState([]);
+  const [totalUsers, setTotaUsers] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteStatus, setDeleteStatus] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,6 +36,7 @@ const UsersDash = () => {
         .then((res) => {
           setAllUsersInPage(res.data);
           setAllUsers(res.data.data);
+          setTotaUsers(res.data.totalUsers)
         })
         .catch((err) => {
           console.log(err);
@@ -51,6 +53,7 @@ const UsersDash = () => {
         .then((res) => {
           setAllUsersInPage(res.data);
           setAllUsers(res.data.data);
+          setTotaUsers(res.data.totalUsers)
         })
         .catch((err) => {
           console.log(err);
@@ -85,6 +88,7 @@ const UsersDash = () => {
           .then((res) => {
             setAllUsersInPage(res.data);
             setAllUsers(res.data.data);
+            setTotaUsers(res.data.totalUsers)
           })
           .catch((err) => {
             console.log(err);
@@ -121,7 +125,7 @@ const UsersDash = () => {
   return (
     <div className={`py-4`}>
       <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
-        Users (total: {allUsers.length})
+        Users (total: {totalUsers})
       </h4>
       {deleteStatus ? (
         <div
