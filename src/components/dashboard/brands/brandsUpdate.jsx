@@ -28,7 +28,6 @@ const BrandsUpdate = () => {
     axiosInstance
       .get(`/brands/${id}`)
       .then((res) => {
-        console.log(res.data);
         setBrandById(res.data);
       })
       .catch((err) => {
@@ -53,7 +52,6 @@ const BrandsUpdate = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setIsSubmitted(true);
         setTimeout(()=>{
           navigate("/dashboard/brands")
@@ -92,7 +90,7 @@ const BrandsUpdate = () => {
           className="alert alert-success alert-dismissible fade show"
           role="alert"
         >
-          Account Updated successfully!
+        Brand Updated successfully!
           <FontAwesomeIcon icon={faCheckCircle} className="ms-2" />
           <button
             type="button"

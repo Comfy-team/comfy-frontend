@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -23,10 +23,9 @@ const BrandsAdd = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const token = localStorage.getItem("userToken");
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const addBrandSubmit = () => {
     if (!image) {
-      setErrorMessage("Image is required");
       return;
     }
     const formData = new FormData();
@@ -47,10 +46,10 @@ const BrandsAdd = () => {
         setIsSubmitted(true);
         setName("");
         setCategory("");
-        setImage(null);
-        setTimeout(()=>{
-          navigate("/dashboard/brands")
-        },2000)
+        setTimeout(() => {
+          setImage(null);
+          navigate("/dashboard/brands");
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);
@@ -96,7 +95,7 @@ const BrandsAdd = () => {
 
       <div>
         <Formik
-          initialValues={{ name:name,category:category,image:image }}
+          initialValues={{ name: name, category: category, image: image }}
           validationSchema={Yup.object({
             name: Yup.string().required("brand name is required"),
             category: Yup.string().required("Category is required"),
@@ -114,8 +113,10 @@ const BrandsAdd = () => {
                   name="name"
                   type="text"
                   value={name}
-                  onChange={(event) => {setName(event.target.value);
-                    setFieldValue("name", event.target.value);}}
+                  onChange={(event) => {
+                    setName(event.target.value);
+                    setFieldValue("name", event.target.value);
+                  }}
                   placeholder="Please enter a Brand Name"
                 />
                 {errors.name && touched.name ? (
@@ -131,7 +132,10 @@ const BrandsAdd = () => {
                   className={`form-control me-2`}
                   name="category"
                   value={category}
-                  onChange={(event) =>{ setCategory(event.target.value); setFieldValue("category", event.target.value);}}
+                  onChange={(event) => {
+                    setCategory(event.target.value);
+                    setFieldValue("category", event.target.value);
+                  }}
                   placeholder="Please enter a Brand Category"
                 />
                 {errors.category && touched.category ? (
@@ -142,12 +146,30 @@ const BrandsAdd = () => {
                 <label className="mb-1" htmlFor="image">
                   Image
                 </label>
+                <div>
+                  {image !== null ? (
+                    <img
+                      alt="brand image"
+                      src={URL.createObjectURL(image)}
+                      className="img-thumbnail mb-2"
+                      width="100"
+                      name="image"
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
                 <Field
                   type="file"
                   className={`form-control`}
                   name="image"
-                  onChange={(event) => {setImage(event.target.files[0]);}}
+                  onChange={(event) => {
+                    setImage(event.target.files[0]);
+                  }}
                 />
+                {image === null ? (
+                  <span className="text-danger ms-2"> Image is required</span>
+                ) : null}
                 {errors.image && touched.image ? (
                   <span className="text-danger ms-2">{errors.image}</span>
                 ) : null}

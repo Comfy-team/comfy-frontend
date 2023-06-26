@@ -133,7 +133,7 @@ const BrandsData = () => {
               <input
                 className="form-control"
                 type="search"
-                placeholder="Search by brand id or brrand name"
+                placeholder="Search by brand id or brand name"
                 value={searchQuery}
                 onChange={handleSearch}
               />
@@ -147,9 +147,6 @@ const BrandsData = () => {
             </Link>
             </div>
           </div>
-          {/* <div className="col-6"> */}
-
-          {/* </div> */}
         </div>
         <table className="table border-top">
           <thead>
