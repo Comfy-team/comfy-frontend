@@ -123,7 +123,6 @@ const OrdersDash = () => {
     <div>
       <div>
         <div>
-          <h1>orders</h1>
           <div className={`py-4`}>
             <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
               Orders (total: {allorders.length})
