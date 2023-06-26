@@ -17,6 +17,7 @@ import style from "./brands.module.css";
 const BrandsData = () => {
   const [allBrands, setAllBrands] = useState([]);
   const [allBrandsInPage, setAllBrandsInPage] = useState([]);
+  const [totalBrands, setTotalBrands] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [deleteStatus, setDeleteStatus] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -33,6 +34,7 @@ const BrandsData = () => {
       .then((res) => {
         setAllBrandsInPage(res.data);
         setAllBrands(res.data.data);
+        setTotalBrands(res.data.totalBrands)
       })
       .catch((err) => {
         console.log(err);
@@ -48,6 +50,7 @@ const BrandsData = () => {
         }).then((res) => {
           setAllBrandsInPage(res.data);
           setAllBrands(res.data.data);
+          setTotalBrands(res.data.totalBrands)
         }).catch((err) => {
           console.log(err);
         });
@@ -95,6 +98,7 @@ const BrandsData = () => {
         .then((res) => {
           setAllBrandsInPage(res.data);
           setAllBrands(res.data.data);
+          setTotalBrands(res.data.totalBrands)
         })
         .catch((err) => {
           console.log(err);
@@ -107,9 +111,9 @@ const BrandsData = () => {
   };
   return (
     <>
-      <h1 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
-        Brands (total: {allBrands?.length} )
-      </h1>
+      <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
+        Brands (total: {totalBrands} )
+      </h4>
       {deleteStatus ? (
         <div
           className={`alert alert-success alert-dismissible fade show ms-4 w-50`}
@@ -133,7 +137,7 @@ const BrandsData = () => {
               <input
                 className="form-control"
                 type="search"
-                placeholder="Search by brand id or brrand name"
+                placeholder="Search by brand id or brand name"
                 value={searchQuery}
                 onChange={handleSearch}
               />
@@ -147,9 +151,6 @@ const BrandsData = () => {
             </Link>
             </div>
           </div>
-          {/* <div className="col-6"> */}
-
-          {/* </div> */}
         </div>
         <table className="table border-top">
           <thead>
