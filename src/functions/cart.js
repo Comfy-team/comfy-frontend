@@ -9,7 +9,7 @@ import { showLoginModal } from "../store/slices/loginModalSlice";
 export const getCart = (token) => {
   let decoded = jwt_decode(token);
   if (decoded.role === "admin") {
-    store.dispatch(setCart({ cart: {}, role: "admin" }));
+    store.dispatch(setCart({ role: "admin" }));
     return;
   }
   axiosInstance
@@ -19,7 +19,7 @@ export const getCart = (token) => {
         "x-access-token": token,
       },
     })
-    .then((res) => store.dispatch(setCart({ cart: res.data, role: "user" })))
+    .then((res) => store.dispatch(setCart({ ...res.data, role: "user" })))
     .catch((error) => console.log(error));
 };
 
