@@ -31,9 +31,9 @@ table caption {
   color: var(--dash-main-text) !important;
 }
 
-body {
+/* body {
   overflow-x: hidden;
-}
+} */
 /* end global */
 
 /* start custom classes */
