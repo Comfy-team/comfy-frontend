@@ -162,7 +162,7 @@ const BrandsData = () => {
               <th scope="col">Image</th>
               <th scope="col">Category</th>
               <th scope="col">Products</th>
-              <th scope="col">Actions</th>
+              <th scope="col" className="text-center">Actions</th>
             </tr>
           </thead>
 
@@ -182,11 +182,11 @@ const BrandsData = () => {
                     </td>
                     <td>{brand.category}</td>
                     <td className="text-center">{brand.products.length}</td>
-                    <td className="">
-                        <div className="d-flex">
+                    <td className="text-center">
+                        {/* <div className="d-flex"> */}
                       <Link
                         to={`update/${brand._id}`}
-                        className={`btn ${dashStyle["dash-purple"]}`}
+                        className={`btn p-0 ${dashStyle["dash-purple"]}`}
                       >
                         <FontAwesomeIcon
                           icon={faPenToSquare}
@@ -195,10 +195,10 @@ const BrandsData = () => {
                       </Link>
                       <FontAwesomeIcon
                         icon={faTrashCan}
-                        className="btn text-danger mt-1"
+                        className="btn p-0 ms-2 text-danger"
                         onClick={() => deleteBrand(brand._id)}
                       />
-                      </div>
+                      {/* </div> */}
                     </td>
                   </tr>
                 );
