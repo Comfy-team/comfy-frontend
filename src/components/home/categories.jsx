@@ -22,7 +22,7 @@ const Categories = () => {
     axiosInstance
       .get("/categories")
       .then((response) => {
-        setCategories(response.data);
+        setCategories(response.data.data);
       })
       .catch((error) => console.log(error));
   }, []);
