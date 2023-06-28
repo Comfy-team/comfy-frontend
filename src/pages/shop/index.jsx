@@ -38,7 +38,6 @@ const Shop = () => {
   });
   const [searchParams, setSearchParams] = useSearchParams({});
   const brands = useSelector((state) => state.brands.brands);
-  const cart = useSelector((state) => state.cart.cart);
   const [animationParent] = useAutoAnimate();
   const content = useRef();
 
@@ -138,7 +137,7 @@ const Shop = () => {
     axiosInstance
       .get("/categories")
       .then((res) => {
-        setCategories(res.data);
+        setCategories(res.data.data);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -212,24 +211,11 @@ const Shop = () => {
                       ref={animationParent}
                       className={`row ${style["products-grid"]}`}
                     >
-                      {products.map((product) => {
-                        const inCart = cart.items
-                          ? cart.items.findIndex(
-                              (ele) => ele.product_id === product._id
-                            ) === -1
-                            ? false
-                            : true
-                          : false;
-                        return (
-                          <div key={product._id} className="col-lg-4 col-sm-6">
-                            <ProductCard
-                              product={product}
-                              inCart={inCart}
-                              cart={cart}
-                            />
-                          </div>
-                        );
-                      })}
+                      {products.map((product) => (
+                        <div key={product._id} className="col-lg-4 col-sm-6">
+                          <ProductCard product={product} />
+                        </div>
+                      ))}
                     </div>
                   </div>
                   <PagePagination
