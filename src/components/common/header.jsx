@@ -80,7 +80,7 @@ const Header = ({ isMediumScreen, cart }) => {
                   to="/shop"
                   className="nav-link color-main-gray hover-color-yellow fs-5"
                 >
-                  shop
+                  Shop
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -88,7 +88,7 @@ const Header = ({ isMediumScreen, cart }) => {
                   to="/about"
                   className="nav-link color-main-gray hover-color-yellow fs-5"
                 >
-                  about
+                  About
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -96,7 +96,7 @@ const Header = ({ isMediumScreen, cart }) => {
                   className="nav-link color-main-gray hover-color-yellow fs-5"
                   to="/contact"
                 >
-                  contact
+                  Contact
                 </NavLink>
               </li>
               <li className="nav-item">
