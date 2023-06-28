@@ -1,25 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-// functions
-import { deleteItemFromCart, addItemToCart } from "../../functions/cart";
+// components
 import RemoveProductWarning from "./removeProductWarning";
 
-const ProductCard = ({ product, inCart, cart }) => {
+// functions
+import { deleteItemFromCart, addItemToCart } from "../../functions/cart";
+
+const ProductCard = ({ product }) => {
   const [showWarning, setShowWarning] = useState(false);
+  const [inCart, setInCart] = useState(false);
+  const [showBtnSpinner, setShowBtnSpinner] = useState(false);
+  const cart = useSelector((state) => state.cart.cart);
 
   const handleDeleteFromCart = () => {
+    setShowBtnSpinner(true);
     deleteItemFromCart(cart._id, product._id);
     setShowWarning(false);
   };
 
   const handleAddToCart = (id, color, price) => {
+    setShowBtnSpinner(true);
     addItemToCart(cart._id, id, color, price);
   };
+
+  useEffect(() => {
+    setShowBtnSpinner(false);
+    const productIndx = cart.items?.findIndex(
+      (ele) => ele.product_id._id === product._id
+    );
+    setInCart(productIndx === -1 ? false : true);
+  }, [cart, product]);
 
   return (
     <>
@@ -48,7 +64,13 @@ const ProductCard = ({ product, inCart, cart }) => {
               className="img-fluid card-img-top rounded-0 hover-img position-absolute w-100 h-100 top-0 start-0"
             />
           </Link>
-          {inCart ? (
+          {showBtnSpinner ? (
+            <button className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2">
+              <div className="spinner-border spinner-border-sm" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </button>
+          ) : inCart ? (
             <button
               className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2"
               onClick={() => setShowWarning(true)}
