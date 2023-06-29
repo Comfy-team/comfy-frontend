@@ -1,14 +1,18 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import jwtDecode from "jwt-decode";
 import axiosInstance from "./../../apis/config";
 import { cities } from "../../apis/cities";
 import { governoratesData } from "../../apis/governorates";
+import { saveFormData } from "../../store/slices/formSlice";
+
+//style
 import "../../App.css";
 import style from "./checkout.module.css";
+//yup validation
 const DisplayingErrorMessagesSchema = Yup.object().shape({
   firstName: Yup.string()
     .max(15, "Must be 15 characters or less")
@@ -43,11 +47,13 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
     country: Yup.string().required("Required"),
   }),
 });
-export default function FormComonent({ onFormSubmit }) {
+export default function FormComonent() {
   const [saveInfo, setSaveInfo] = useState(Boolean(true.toString()));
   const [user, setUser] = useState("");
   const token = localStorage.getItem("userToken");
   const decoded = jwtDecode(token);
+  const navigate = useNavigate();
+  //intial value
   const [theintialvalue, settheIntialvalue] = useState({
     firstName: "",
     lastName: "",
@@ -76,11 +82,13 @@ export default function FormComonent({ onFormSubmit }) {
       })
       .catch(err => console.log(err));
   }, [decoded.id, token]);
-
-  // console.log("user,", user);
+  const dispatch = useDispatch();
 
   const formSubmit = submitdata => {
-    onFormSubmit(submitdata);
+    navigate(`/checkout/shipping`);
+    dispatch(saveFormData(submitdata));
+
+    //data send to database
     let theSendData = {
       id: decoded.id,
       fullName: submitdata?.firstName + " " + submitdata?.lastName,
@@ -109,9 +117,28 @@ export default function FormComonent({ onFormSubmit }) {
         .catch(err => console.log(err));
     }
   };
-  // console.log(theintialvalue);
+
+  useEffect(() => {
+    if (user) {
+      settheIntialvalue({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone: user.phone || "xxxxxx",
+        address: {
+          postalCode: user.address?.postalCode || "",
+          apartment: user.address?.apartment || "",
+          street: user.address?.street || "",
+          building: user.address?.building || "",
+          city: user.address?.city || "",
+          governorate: user.address?.governorate || "",
+          country: "",
+        },
+      });
+    }
+  }, [user]);
+
   return (
-    <div>
+    <div className="p-4">
       <Formik
         initialValues={theintialvalue}
         validationSchema={DisplayingErrorMessagesSchema}
@@ -331,7 +358,7 @@ export default function FormComonent({ onFormSubmit }) {
 
             <div className="row mb-4  w-100 m-auto">
               <Link
-                className={`col-12 col-sm-12  col-md-5  col-lg-6 mt-2 mb-3 mt-4 ${style.returnLink} text-decoration-none `}
+                className={`col-lg-6  col-md-6 col-sm-12  col-12  mt-2 mb-3 mt-4 ${style.returnLink} text-decoration-none `}
                 to="/cart"
               >
                 {" "}
@@ -340,7 +367,8 @@ export default function FormComonent({ onFormSubmit }) {
 
               <button
                 type="submit"
-                className={`${style.formbtn}  col-12 col-sm-12  col-md-3 col-lg-6  btn  h-100  ws-100 me-0  bg-primary`}
+                className={`${style.formbtn} 
+                 col-lg-6  col-md-6 col-sm-12  col-12  btn  h-100  ws-100 me-0 `}
               >
                 Continue to Shipping
               </button>

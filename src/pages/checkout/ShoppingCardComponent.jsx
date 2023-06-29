@@ -17,7 +17,7 @@ export default function ShoppingCardComponent() {
     fetchCartItems();
   }, [cart]);
   const shipping = 15;
-  const priceWithShapping = cart.totalPrice + shipping;
+  const priceWithShapping = cart?.totalPrice + shipping;
 
   return (
     <div>
@@ -62,7 +62,8 @@ export default function ShoppingCardComponent() {
               <div className="col-2 ">Subtotal</div>
               <div className="col-7"></div>
               <div className="col-2">
-                <p>${cart.totalPrice}</p>
+                {" "}
+                <p>${cart?.totalPrice}</p>
               </div>
             </div>
             <div className={`${style.Shipping}  mb-1 row`}>
@@ -85,7 +86,7 @@ export default function ShoppingCardComponent() {
             </div>
           </div>
         ) : (
-          <div>Loading...</div>
+          <div> Cart is Empty</div>
         )}{" "}
       </div>
     </div>
