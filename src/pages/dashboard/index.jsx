@@ -1,9 +1,12 @@
 import { useLayoutEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 // components
 import NavAside from "../../components/dashboard/navAside";
 import ToggleAsideBtn from "../../components/dashboard/toggleAsideBtn";
+import ToastInfo from "../../components/common/toast";
+import { showToast } from "../../store/slices/toastSlice";
 
 // style
 import style from "./dashboard.module.css";
@@ -11,6 +14,8 @@ import style from "./dashboard.module.css";
 const Dashboard = () => {
   const [collapseAside, setCollapseAside] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const toastMsg = useSelector((state) => state.toastInfo.msg);
+  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     function updateSize() {
@@ -18,7 +23,7 @@ const Dashboard = () => {
         setIsSmallScreen(true);
         setCollapseAside(false);
       } else {
-        setIsSmallScreen(false)
+        setIsSmallScreen(false);
       }
     }
     window.addEventListener("resize", updateSize);
@@ -38,7 +43,9 @@ const Dashboard = () => {
             style.col
           } px-0 pe-lg-3 position-relative`}
         >
-          {!isSmallScreen && <ToggleAsideBtn onToggleAside={handleToggleAside} />}
+          {!isSmallScreen && (
+            <ToggleAsideBtn onToggleAside={handleToggleAside} />
+          )}
           <NavAside isSmallScreen={isSmallScreen} collapsed={collapseAside} />
         </div>
         <div
@@ -46,13 +53,18 @@ const Dashboard = () => {
             style.col
           } ps-lg-0 px-3 py-3 flex-fill`}
         >
-          <div
-            className="bg-white h-100 rounded-3 py-3 container-fluid m-0"
-          >
+          <div className="bg-white h-100 rounded-3 py-3 container-fluid m-0">
             <Outlet />
           </div>
         </div>
       </div>
+      {toastMsg && (
+        <ToastInfo
+          msg={toastMsg}
+          show={toastMsg ? true : false}
+          onDismissToast={() => dispatch(showToast(""))}
+        />
+      )}
     </div>
   );
 };

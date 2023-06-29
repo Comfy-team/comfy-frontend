@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 // form validation
 import { Form, Formik } from "formik";
@@ -7,6 +8,7 @@ import * as Yup from "yup";
 // components
 import axiosInstance from "../../../apis/config";
 import ProductForm from "./productForm";
+import { showToast } from "../../../store/slices/toastSlice";
 
 // style
 import style from "../../../pages/dashboard/dashboard.module.css";
@@ -14,6 +16,7 @@ import style from "../../../pages/dashboard/dashboard.module.css";
 const ProductsAdd = () => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [imageError, setImageError] = useState("");
+  const dispatch = useDispatch();
 
   const formSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -57,6 +60,7 @@ const ProductsAdd = () => {
         },
       })
       .then((res) => {
+        dispatch(showToast("Product was added successfully!"));
         console.log(res);
       })
       .catch((error) => console.log(error));

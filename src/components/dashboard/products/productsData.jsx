@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,24 +11,32 @@ import DashPagination from "../dashPagination";
 import axiosInstance from "../../../apis/config";
 import Spinner from "../../common/spinner";
 import ProductsSearch from "./productsSearch";
+import RemoveProductWarning from "../../common/removeProductWarning";
+import { showToast } from "../../../store/slices/toastSlice";
 
 // style
 import style from "../../../pages/dashboard/dashboard.module.css";
 
 const ProductsData = () => {
   const [page, setPage] = useState(1);
+  const [data, setData] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
-  const [data, setData] = useState(null);
   const [showSpinner, setShowSpinner] = useState(true);
-  const [productToDelete, setProductToDelete] = useState("");
+  const [productToDelete, setProductToDelete] = useState(null);
+  const [showWarning, setShowWarning] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams({
+    page: 1,
+    query: "",
+  });
+  const dispatch = useDispatch();
 
   const handlePageChange = (page) => {
     setPage(page);
+    setSearchParams({ page, query: searchParams.get("query") });
   };
 
-  const handleDelete = (id, brand, category) => {
-    setProductToDelete(id);
+  const handleRemoveProduct = (id, brand, category) => {
     const token = localStorage.getItem("userToken");
     axiosInstance
       .delete("/products", {
@@ -46,17 +55,26 @@ const ProductsData = () => {
         console.log(res);
         let newData = [...data].filter((ele) => ele._id !== id);
         setData(newData);
-        setProductToDelete("");
+        dispatch(showToast("Product was deleted successfully!"));
+        setProductToDelete(null);
       })
       .catch((error) => console.log(error));
   };
 
+  const handleSearch = (values, { setSubmitting }) => {
+    setSubmitting(false);
+    // setSearchParams({ page: 1, query: values.searchValue });
+  };
+
   useEffect(() => {
     setShowSpinner(true);
+    if (searchParams.get("page")) {
+      setPage(+searchParams.get("page"));
+    }
     axiosInstance
       .get("/products/dashboard", {
         params: {
-          page,
+          page: searchParams.get("page") ? +searchParams.get("page") : page,
         },
       })
       .then((res) => {
@@ -66,14 +84,14 @@ const ProductsData = () => {
         setShowSpinner(false);
       })
       .catch((error) => console.log(error));
-  }, [page]);
+  }, [searchParams]);
 
   return !showSpinner ? (
     data.length > 0 ? (
       <>
         <h1 className="h4 mb-4 py-3">Products (total: {totalProducts})</h1>
         <div className="d-flex align-items-start justify-content-between">
-          <ProductsSearch />
+          <ProductsSearch onSearch={handleSearch} />
           <Link
             to="/dashboard/products/add"
             className={`text-capitalize btn ${style["dash-btn"]} d-block`}
@@ -161,13 +179,10 @@ const ProductsData = () => {
                         <button
                           type="button"
                           className="btn p-0 border-0 outline-0 text-danger"
-                          onClick={() =>
-                            handleDelete(
-                              product._id,
-                              product.brand,
-                              product.category
-                            )
-                          }
+                          onClick={() => {
+                            setProductToDelete(product);
+                            setShowWarning(true);
+                          }}
                         >
                           <FontAwesomeIcon icon={faTrashCan} />
                           <span className="visually-hidden">delete</span>
@@ -185,6 +200,21 @@ const ProductsData = () => {
           totalPages={totalPages}
           onPageChange={handlePageChange}
         />
+        {showWarning && productToDelete && (
+          <RemoveProductWarning
+            onRemove={() =>
+              handleRemoveProduct(
+                productToDelete._id,
+                productToDelete.brand,
+                productToDelete.category
+              )
+            }
+            onCancel={() => {
+              setShowWarning(false);
+              setProductToDelete(null);
+            }}
+          />
+        )}
       </>
     ) : (
       <p>No products to show</p>

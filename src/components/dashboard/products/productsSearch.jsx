@@ -18,7 +18,7 @@ const ProductsSearch = ({ onSearch }) => {
       validationSchema={searchSchema}
       onSubmit={onSearch}
     >
-      {({ errors, touched, isValidating }) => (
+      {({ errors, touched }) => (
         <Form
           id={style["dash-search"]}
           className="m-0 mb-4"
