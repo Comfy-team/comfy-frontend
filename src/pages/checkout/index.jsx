@@ -1,40 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import React from "react";
+//components
 import ShoppingCardComponent from "./ShoppingCardComponent";
-import FormComonent from "./FormComonent";
-import PaymentMethod from "./paymentMethod";
 import logoimg from "../../assets/logos/logo-header.png";
+//style
 import "../../App.css";
 import style from "./checkout.module.css";
 
 const Checkout = () => {
-  const [activeComponent, setActiveComponent] = useState("form");
-  const [formData, setFormData] = useState("");
-  const navigate = useNavigate();
-
-  const handleFormData = thedata => {
-    setActiveComponent("shipping");
-    setFormData(thedata);
-  };
-
-  const location = useLocation();
-  useEffect(() => {
-    // set the active component based on the current location
-    if (location.pathname.includes("information")) {
-      setActiveComponent("form");
-    } else if (location.pathname.includes("shipping")) {
-      setActiveComponent("shipping");
-    } else if (location.pathname.includes("checkout")) {
-      navigate("/checkout/information");
-      setActiveComponent("form");
-    }
-  }, [location, navigate]);
-  const token = localStorage.getItem("userToken");
-  useEffect(() => {}, [formData]);
-
   return (
     <div className={`${style.checkout} ml-5 ml-md-3 `}>
-      <div className={`${style.checkoutContainer}  mt-2 `}>
+      <div className={`${style.checkoutContainer}  mt-2  ms-0  `}>
         <a href="/home" className="logo">
           <img
             src={logoimg}
@@ -43,19 +19,13 @@ const Checkout = () => {
             className={`{} mb-3 `}
           />{" "}
         </a>
-        <div
-          className={`${
-            style[("checkoutSmalContainer", "firstrow")]
-          } row   mt-5 `}
-        >
+        <div className={`${style.checkoutSmalContainer} row mt-5 `}>
           <div
-            className={`${style.leftFormColum} col-12 col-md-6 col-lg-6 mr-3  mb-3 ml-5 `}
+            className={`${style.leftFormColum}  col-lg-6 col-md-6  col-12 mr-3  mb-3 ml-5 `}
           >
-            <div className="ml-5 mb-4">
+            <div className="ms-4 mb-4">
               <nav
-                className={`${style.breadcrumb} ${
-                  activeComponent === "form" ? "active" : ""
-                } --bs-breadcrumb-divider: >`}
+                className={`${style.breadcrumb}  --bs-breadcrumb-divider: >`}
                 aria-label="breadcrumb"
               >
                 <ol className="breadcrumb">
@@ -68,7 +38,7 @@ const Checkout = () => {
                     <a
                       href="/checkout/information"
                       className={`breadcrumb-item ${style.none}
-                      ${activeComponent === "form" ? "active" : ""}`}
+                  `}
                     >
                       information
                     </a>
@@ -83,15 +53,11 @@ const Checkout = () => {
                 </ol>
               </nav>
             </div>
-            {activeComponent === "form" && (
-              <FormComonent onFormSubmit={handleFormData} />
-            )}
-            {activeComponent === "shipping" && (
-              <PaymentMethod formData={formData} token={token} />
-            )}
+
+            <Outlet> </Outlet>
           </div>
           <div
-            className={`${style.rightorderColumn} col-12 col-md-6 col-lg-6  bg-primary `}
+            className={`${style.rightorderColumn} col-lg-6 col-md-6 col-12 `}
           >
             <ShoppingCardComponent />
           </div>

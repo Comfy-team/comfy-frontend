@@ -1,26 +1,31 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+//
 import axiosInstance from "./../../apis/config";
 import { emptyCart } from "../../functions/cart";
+//style
 import style from "./checkout.module.css";
 import "../../App.css";
 
-export default function PaymentMethod({ formData, token }) {
-  const [isAddingOrder, setIsAddingOrder] = useState(false);
+export default function PaymentMethod() {
   const navigate = useNavigate();
-  const shippingvalue = 20.0;
+
+  const token = localStorage.getItem("userToken");
+  const [isAddingOrder, setIsAddingOrder] = useState(false);
+  const shippingValue = 20.0;
   const cart = useSelector(state => state.cart.cart);
-  const handleSubmit = formData => {
-    const additionalinfo = {
-      totalPrice: cart.totalPrice,
-      items: cart.items,
-      userId: cart.user_id,
-    };
-    const newobjectdata = { ...formData, ...additionalinfo };
-    console.log(newobjectdata);
+
+  const formData = useSelector(state => state.CheckoutForm.form);
+  const additionalInfo = {
+    totalPrice: cart.totalPrice,
+    items: cart.items,
+    userId: cart.user_id,
+  };
+  const newObjectData = { ...formData, ...additionalInfo };
+  const onConfirmClick = event => {
     axiosInstance
-      .post(`/orders`, newobjectdata, {
+      .post(`/orders`, newObjectData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -28,7 +33,9 @@ export default function PaymentMethod({ formData, token }) {
         },
       })
       .then(res => {
-        // console.log("order Done ");
+        emptyCart(cart._id);
+        event.target.textContent = "order Done ";
+        setIsAddingOrder(true);
         setTimeout(() => {
           navigate("/shop");
         }, 2000);
@@ -44,7 +51,7 @@ export default function PaymentMethod({ formData, token }) {
           <div className="form-control mr-5 ps-4">
             <div className={`${style.first} row mr-5 `}>
               <div className={`${style.gray} col-3 mt-3`}> Contact</div>
-              <div className="col-6 mt-3"> {formData.phone}</div>
+              <div className="col-6 mt-3"> {formData?.phone}</div>
               <div className="col-3">
                 <Link
                   to="/checkout/information "
@@ -60,9 +67,9 @@ export default function PaymentMethod({ formData, token }) {
               <div className={`${style.gray} col-3`}> Ship to</div>
               <div className="col-6">
                 {" "}
-                {formData.address.apartment} ,{formData.address.street},
-                {formData.address.city},{formData.address.governorate},
-                {formData.address.country}
+                {formData?.address?.apartment} ,{formData?.address?.street},
+                {formData?.address?.city},{formData?.address?.governorate},
+                {formData?.address?.country}
               </div>
               <div className="col-3">
                 <Link
@@ -82,29 +89,24 @@ export default function PaymentMethod({ formData, token }) {
             <div className="row">
               <div className="col-4 "> standard</div>
               <div className="col-5"> </div>
-              <div className="col-2"> ${shippingvalue}</div>
+              <div className="col-2"> ${shippingValue}</div>
             </div>
           </div>
           <div className="row mb-4  w-100 m-auto">
             <Link
-              className={`col-12 col-sm-12  col-md-5  col-lg-6 mt-2 mb-3 ${style.returnLink} text-decoration-none `}
-              to="information "
+              className={` col-lg-6  col-md-6 col-sm-12  col-12  mt-2 mb-3 ${style.returnLink} text-decoration-none `}
+              onClick={() => navigate(-1)}
             >
               {" "}
               {`<  `} return to information{" "}
             </Link>
-            <div
-              className={`${style.orderbtn}  col-12 col-sm-12  col-md-3 col-lg-6  btn  h-100  ws-100 me-0  bg-primary`}
-              onClick={event => {
-                handleSubmit(formData);
-                setIsAddingOrder(true);
-                emptyCart(cart._id);
-                event.target.textContent = "order Done ";
-              }}
+            <button
+              className={`${style.orderbtn} col-lg-6  col-md-6 col-sm-12  col-12  btn  h-100  ws-100 me-0 `}
+              onClick={onConfirmClick}
               disabled={isAddingOrder}
             >
               Confirm order
-            </div>
+            </button>
           </div>
           <hr className="border" />
           <small className={`${style.gray} `}>
@@ -115,6 +117,6 @@ export default function PaymentMethod({ formData, token }) {
       </div>
     </div>
   ) : (
-    "loading"
+    "loading---"
   );
 }
