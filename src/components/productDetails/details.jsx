@@ -34,6 +34,7 @@ const Details = ({ product }) => {
 
   const handleColorChange = (color) => {
     setActiveColor(color);
+    if (!cart.items) return;
     const item = cart.items.find(
       (ele) => ele.product_id._id === product._id && color === ele.color
     );
@@ -79,11 +80,11 @@ const Details = ({ product }) => {
           setActiveQuantity(item.quantity);
           setActiveColor(item.color);
           setInCart(true);
-        } else {
-          setActiveColor(product.colors[0]);
-          setInCart(false);
+          return;
         }
       }
+      setActiveColor(product.colors[0]);
+      setInCart(false);
     }
   }, [product, cart]);
 
@@ -100,7 +101,9 @@ const Details = ({ product }) => {
       <div className="border-top border-bottom py-4">
         <div className="d-flex align-items-center gap-2 mb-4">
           <span className="fw-semibold">Stock:</span>
-          <span>{product.stock > 0 ? product.stock : "Out Of Stcok"}</span>
+          <span className={product.stock === 0 && "text-danger"}>
+            {product.stock > 0 ? product.stock : "Out Of Stock"}
+          </span>
         </div>
         <div className="d-flex align-items-center gap-3 mb-4">
           <h3 className="h6 mb-0 fw-semibold">Colors:</h3>
