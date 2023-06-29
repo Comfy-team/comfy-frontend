@@ -19,22 +19,22 @@ const ProductForm = ({
   setFieldValue,
   setSelectedImages,
 }) => {
-  const [categories, setCategories] = useState([]);
-  const [brands, setBrands] = useState([]);
+  const [categories, setCategories] = useState(null);
+  const [brands, setBrands] = useState(null);
   const [selectedColor, setSelectedColor] = useState("#000000");
 
   useEffect(() => {
     axiosInstance
       .get("/brands")
       .then((res) => {
-        setBrands(res.data.data);
+        setBrands(res.data.allData);
       })
       .catch((error) => console.log(error));
 
     axiosInstance
       .get("/categories")
       .then((res) => {
-        setCategories(res.data);
+        setCategories(res.data.allData);
       })
       .catch((error) => console.log(error));
   }, []);
