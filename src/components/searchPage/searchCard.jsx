@@ -46,7 +46,9 @@ const SearchCard = ({ product, query }) => {
   };
 
   const handleAddToCart = (id, color, price) => {
-    setShowBtnSpinner(true);
+    if (cart.items) {
+      setShowBtnSpinner(true);
+    }
     addItemToCart(cart._id, id, color, price);
   };
 
@@ -75,7 +77,11 @@ const SearchCard = ({ product, query }) => {
 
   useEffect(() => {
     setShowBtnSpinner(false);
-    const productIndx = cart.items?.findIndex(
+    if (!cart.items) {
+      setInCart(false);
+      return;
+    }
+    const productIndx = cart.items.findIndex(
       (ele) => ele.product_id._id === product._id
     );
     setInCart(productIndx === -1 ? false : true);
@@ -110,35 +116,38 @@ const SearchCard = ({ product, query }) => {
               className="img-fluid card-img-top rounded-0 hover-img position-absolute w-100 h-100 top-0 start-0"
             />
           </Link>
-          {showBtnSpinner ? (
-            <button className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2">
-              <div className="spinner-border spinner-border-sm" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            </button>
+          {product.stock > 0 ? (
+            showBtnSpinner ? (
+              <button className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2">
+                <div className="spinner-border spinner-border-sm" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </button>
+            ) : (
+              <button
+                type="button"
+                className={`${style["add-to-cart-btn"]} btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2`}
+                onClick={() =>
+                  !inCart
+                    ? handleAddToCart(
+                        product._id,
+                        product.colors[0],
+                        product.price
+                      )
+                    : setShowWarning(true)
+                }
+              >
+                {inCart ? (
+                  "remove from cart"
+                ) : (
+                  <>
+                    <FontAwesomeIcon icon={faPlus} /> <span>add to cart</span>
+                  </>
+                )}
+              </button>
+            )
           ) : (
-            <button
-              type="button"
-              className={`${style["add-to-cart-btn"]} btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2`}
-              onClick={() =>
-                !inCart
-                  ? handleAddToCart(
-                      product._id,
-                      product.colors[0],
-                      product.price
-                    )
-                  : setShowWarning(true)
-              }
-              disabled={product.stock > 0 ? false : true}
-            >
-              {inCart ? (
-                "remove from cart"
-              ) : (
-                <>
-                  <FontAwesomeIcon icon={faPlus} /> <span>add to cart</span>
-                </>
-              )}
-            </button>
+            ""
           )}
         </div>
         <div className="card-body text-center">
