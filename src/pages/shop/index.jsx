@@ -17,6 +17,9 @@ import PagePagination from "../../components/shop/pagePagination";
 import Aside from "../../components/shop/aside";
 import Spinner from "../../components/common/spinner";
 
+// functions
+import { disableBodyScroll, enableBodyScroll } from "../../functions/global";
+
 // style
 import style from "./shop.module.css";
 
@@ -48,6 +51,7 @@ const Shop = () => {
     sort = searchObj.sort,
     price = 0
   ) => {
+    setProducts(null);
     axiosInstance
       .get("/products", {
         params: {
@@ -60,7 +64,6 @@ const Shop = () => {
       })
       .then((res) => {
         setProducts(res.data.data);
-
         setTotalPages(res.data.totalPages);
         const pages = [];
         for (let i = 1; i <= res.data.totalPages; i++) {
@@ -70,7 +73,6 @@ const Shop = () => {
         if (sort === searchObj.sort && price === 0) {
           setMinPrice(res.data.minPrice);
           setMaxPrice(res.data.maxPrice);
-
           setSearchObj({
             page,
             brand,
@@ -122,6 +124,16 @@ const Shop = () => {
     getData(1, searchObj.brand, searchObj.category, searchObj.sort, value);
   };
 
+  const handleCloseFilterModal = () => {
+    setShowFilterModal(false);
+    enableBodyScroll();
+  };
+
+  const handleOpenFilterModal = () => {
+    disableBodyScroll();
+    setShowFilterModal(true);
+  };
+
   useEffect(() => {
     if (searchParams.get("page")) {
       const page = +searchParams.get("page");
@@ -130,7 +142,7 @@ const Shop = () => {
       const sort = Number(searchParams.get("sort")) || searchObj.sort;
       const price = +searchParams.get("price") || searchObj.price;
       setSearchObj({ page, brand, category, sort, price });
-      getData(page, brand, category, sort, price);
+      getData(page, brand, category, sort);
     } else {
       getData();
     }
@@ -160,7 +172,7 @@ const Shop = () => {
           <Aside
             showFilterModal={showFilterModal}
             isSmallScreen={isSmallScreen}
-            onFilterModalToggle={setShowFilterModal}
+            closeFilterModal={handleCloseFilterModal}
             categories={categories}
             brands={brands}
             minPrice={minPrice}
@@ -190,7 +202,7 @@ const Shop = () => {
                             className="btn border"
                             type="button"
                             aria-expanded="false"
-                            onClick={() => setShowFilterModal(true)}
+                            onClick={handleOpenFilterModal}
                             aria-label="show filter modal"
                           >
                             <FontAwesomeIcon icon={faFilter} /> Filters
@@ -219,7 +231,6 @@ const Shop = () => {
                     </div>
                   </div>
                   <PagePagination
-                    pages={pagesArr}
                     currentPage={searchObj.page}
                     totalPages={totalPages}
                     onPageChange={handlePageChange}

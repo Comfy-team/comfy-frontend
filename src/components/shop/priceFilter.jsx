@@ -55,7 +55,7 @@ const PriceFilter = ({ min, max, value, onFilter }) => {
         max={max}
         value={value}
         step={step}
-        onChange={(e) => onFilter(e.target.value)}
+        onChange={(e) => onFilter(+e.target.value)}
         style={{
           backgroundSize: `${Math.floor(((value - min) * 100) / (max - min))}%`,
         }}
