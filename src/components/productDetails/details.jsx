@@ -22,7 +22,7 @@ import {
 import style from "../../pages/productDetails/productDetails.module.css";
 
 const Details = ({ product }) => {
-  const [activeColor, setActiveColor] = useState();
+  const [activeColor, setActiveColor] = useState("");
   const [activeQuantity, setActiveQuantity] = useState(1);
   const [inCart, setInCart] = useState(false);
   const [terms, setTerms] = useState(false);
@@ -34,6 +34,15 @@ const Details = ({ product }) => {
 
   const handleColorChange = (color) => {
     setActiveColor(color);
+    const item = cart.items.find(
+      (ele) => ele.product_id._id === product._id && color === ele.color
+    );
+    if (item) {
+      setActiveQuantity(item.quantity);
+      setInCart(true);
+    } else {
+      setInCart(false);
+    }
   };
 
   const handleQuantityChange = (id, quantity) => {
@@ -60,15 +69,18 @@ const Details = ({ product }) => {
   useEffect(() => {
     setBtnSpinner(false);
     if (product) {
-      setActiveColor(product.colors[0]);
       if (cart.items?.length > 0) {
-        const item = cart.items.find(
-          (ele) => ele.product_id._id === product._id
+        const item = cart.items.find((ele) =>
+          activeColor
+            ? ele.product_id._id === product._id && ele.color === activeColor
+            : ele.product_id._id === product._id
         );
         if (item) {
           setActiveQuantity(item.quantity);
+          setActiveColor(item.color);
           setInCart(true);
         } else {
+          setActiveColor(product.colors[0]);
           setInCart(false);
         }
       }
