@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 // style
 import style from "../../pages/shop/shop.module.css";
 
-const PagePagination = ({ totalPages, currentPage, pages, onPageChange }) => {
+const PagePagination = ({ totalPages, currentPage, onPageChange }) => {
   return (
-    <nav aria-label="Page navigation example">
+    <nav aria-label="Shop pagination">
       <ul className="pagination justify-content-center mb-0">
         <li
           className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
@@ -22,25 +22,26 @@ const PagePagination = ({ totalPages, currentPage, pages, onPageChange }) => {
             <span aria-hidden="true">&laquo;</span>
           </Link>
         </li>
-        {pages?.map((page) => (
-          <li
-            key={page}
-            className="page-item"
-            onClick={() => onPageChange(page)}
-          >
-            <Link
-              className={`page-link ${
-                style["page-link"]
-              } bg-transparent border ${
-                page === currentPage
-                  ? `active ${style.active}`
-                  : "text-secondary"
-              }`}
+        {totalPages &&
+          [...Array(totalPages + 1).keys()].slice(1).map((page) => (
+            <li
+              key={page}
+              className="page-item"
+              onClick={() => onPageChange(page)}
             >
-              {page}
-            </Link>
-          </li>
-        ))}
+              <Link
+                className={`page-link ${
+                  style["page-link"]
+                } bg-transparent border ${
+                  page === currentPage
+                    ? `active ${style.active}`
+                    : "text-secondary"
+                }`}
+              >
+                {page}
+              </Link>
+            </li>
+          ))}
         <li
           className={`page-item ${
             currentPage === totalPages ? "disabled" : ""

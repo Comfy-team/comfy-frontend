@@ -12,7 +12,7 @@ import style from "../../pages/shop/shop.module.css";
 const Aside = ({
   showFilterModal,
   isSmallScreen,
-  onFilterModalToggle,
+  closeFilterModal,
   categories,
   brands,
   minPrice,
@@ -35,7 +35,7 @@ const Aside = ({
             <button
               type="button"
               className="btn outline-0 text-white border-0 p-0"
-              onClick={() => onFilterModalToggle(false)}
+              onClick={closeFilterModal}
               aria-label="close filter modal"
             >
               <FontAwesomeIcon icon={faXmark} />
