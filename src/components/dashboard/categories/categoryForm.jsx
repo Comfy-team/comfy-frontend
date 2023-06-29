@@ -62,7 +62,7 @@ const CategoryForm = ({ initialValues, onSubmit }) => {
             ) : null}
           </div>
           <button type="submit" className="btn btn-primary mt-4">
-            {initialValues.image ? "Update" : "Add"} Category
+            {initialValues.name ? "Update" : "Add"} Category
           </button>
         </Form>
       )}
