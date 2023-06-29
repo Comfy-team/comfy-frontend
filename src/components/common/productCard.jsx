@@ -25,13 +25,19 @@ const ProductCard = ({ product }) => {
   };
 
   const handleAddToCart = (id, color, price) => {
-    setShowBtnSpinner(true);
+    if (cart.items) {
+      setShowBtnSpinner(true);
+    }
     addItemToCart(cart._id, id, color, price);
   };
 
   useEffect(() => {
     setShowBtnSpinner(false);
-    const productIndx = cart.items?.findIndex(
+    if (!cart.items) {
+      setInCart(false);
+      return;
+    }
+    const productIndx = cart.items.findIndex(
       (ele) => ele.product_id._id === product._id
     );
     setInCart(productIndx === -1 ? false : true);
@@ -64,29 +70,32 @@ const ProductCard = ({ product }) => {
               className="img-fluid card-img-top rounded-0 hover-img position-absolute w-100 h-100 top-0 start-0"
             />
           </Link>
-          {showBtnSpinner ? (
-            <button className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2">
-              <div className="spinner-border spinner-border-sm" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            </button>
-          ) : inCart ? (
-            <button
-              className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2"
-              onClick={() => setShowWarning(true)}
-            >
-              Remove from Cart
-            </button>
+          {product.stock > 0 ? (
+            showBtnSpinner ? (
+              <button className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2">
+                <div className="spinner-border spinner-border-sm" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </button>
+            ) : inCart ? (
+              <button
+                className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2"
+                onClick={() => setShowWarning(true)}
+              >
+                Remove from Cart
+              </button>
+            ) : (
+              <button
+                className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2"
+                onClick={() =>
+                  handleAddToCart(product._id, product.colors[0], product.price)
+                }
+              >
+                <FontAwesomeIcon icon={faPlus} /> Add to Cart
+              </button>
+            )
           ) : (
-            <button
-              className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2"
-              onClick={() =>
-                handleAddToCart(product._id, product.colors[0], product.price)
-              }
-              disabled={product.stock > 0 ? false : true}
-            >
-              <FontAwesomeIcon icon={faPlus} /> Add to Cart
-            </button>
+            ""
           )}
         </div>
         <div className="card-body text-center">
