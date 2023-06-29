@@ -134,8 +134,10 @@ const SearchPage = () => {
               Sorry, can't find matching products
             </h2>
           )
-        ) : (
+        ) : query ? (
           <Spinner />
+        ) : (
+          ""
         )}
       </div>
     </div>
