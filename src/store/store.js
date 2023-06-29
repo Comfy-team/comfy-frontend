@@ -6,6 +6,7 @@ import cartSlice from "./slices/cartSlice";
 import loginModalSlice from "./slices/loginModalSlice";
 import cartModalSlice from "./slices/cartModalSlice";
 import toastSlice from "./slices/toastSlice";
+import formSlice from "./slices/formSlice";
 
 export default configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
     loginModal: loginModalSlice,
     cartModal: cartModalSlice,
     toastInfo: toastSlice,
+    CheckoutForm: formSlice,
   },
 });

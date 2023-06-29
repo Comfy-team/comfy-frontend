@@ -118,6 +118,10 @@ const AppRoutes = () => {
         </Route>
       </Route>
       <Route
+        path="/Checkout"
+        element={<Navigate to="/Checkout/information" replace />}
+      />
+      <Route
         path="/checkout"
         element={
           <Suspense fallback={<Spinner />}>
