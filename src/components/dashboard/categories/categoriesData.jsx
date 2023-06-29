@@ -181,6 +181,8 @@ const CategoriesData = () => {
                       icon={faTrashCan}
                       type="button"
                       className="btn text-danger p-0 ms-2"
+                      // onClick={() => handleDeleteCategory(category._id)}
+
                     />
                   </td>
                 </tr>
