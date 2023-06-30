@@ -7,7 +7,7 @@ import LayoutWithPageHeader from "../components/layouts/layoutWithPageHeader";
 import Spinner from "../components/common/spinner";
 import PaymentMethod from "./../pages/checkout/paymentMethod";
 import FormComonent from "./../pages/checkout/FormComonent";
-import HomeDash from "../components/dashboard/homeDash";
+import HomeDash from "../components/dashboard/home/homeDash";
 import UsersDash from "../components/dashboard/usersDash";
 import OrdersDash from "../components/dashboard/orders/ordersDash";
 import ProductsDash from "../components/dashboard/products/productsDash";
