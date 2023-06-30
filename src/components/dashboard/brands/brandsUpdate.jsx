@@ -1,10 +1,12 @@
 import { useState ,useEffect} from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 // component
 import axiosInstance from "../../../apis/config";
+import { showToast } from "../../../store/slices/toastSlice";
 
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,7 +25,8 @@ const BrandsUpdate = () => {
   const [image, setImage] = useState(null);
   const token = localStorage.getItem("userToken");
   const { id } = useParams();
-  const navigate=useNavigate();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     axiosInstance
       .get(`/brands/${id}`)
@@ -52,10 +55,8 @@ const BrandsUpdate = () => {
         },
       })
       .then((res) => {
-        setIsSubmitted(true);
-        setTimeout(()=>{
-          navigate("/dashboard/brands")
-        },2000)
+        // setIsSubmitted(true);
+        dispatch(showToast("brand updated successfully!"));
       })
       .catch((error) => {
         console.log(error)
