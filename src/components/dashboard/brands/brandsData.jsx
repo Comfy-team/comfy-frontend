@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,10 +11,13 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 // components
 import DashPagination from "../dashPagination";
 import axiosInstance from "../../../apis/config";
+import RemoveProductWarning from "../../common/removeProductWarning";
+import { showToast } from "../../../store/slices/toastSlice";
 
 // style
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
 import style from "./brands.module.css";
+
 const BrandsData = () => {
   const [allBrands, setAllBrands] = useState([]);
   const [allBrandsInPage, setAllBrandsInPage] = useState([]);
@@ -21,8 +25,12 @@ const BrandsData = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [deleteStatus, setDeleteStatus] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [brandIdToDelete, setBrandIdToDelete] = useState(""); 
+  const [showWarning, setShowWarning] = useState(false);
   const token = localStorage.getItem("userToken");
-  useEffect(() => {
+  const dispatch = useDispatch();
+
+    useEffect(() => {
     if (searchQuery === "") {
       // If search query is empty, show all users
     axiosInstance
@@ -77,10 +85,8 @@ const BrandsData = () => {
 
   // delete brand by name
   function deleteBrand (id)  {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this brand?"
-    )
-    if (confirmDelete) {
+
+      setShowWarning(false);
       axiosInstance.delete(`/brands/${id}`,
        {
         headers: {
@@ -88,7 +94,7 @@ const BrandsData = () => {
           "x-access-token": token,
         },
       }).then(res=>{
-        setDeleteStatus(`Brand ${id} deleted successfully.`)
+        // setDeleteStatus(`Brand ${id} deleted successfully.`)
         axiosInstance
         .get(`/brands`, {
           params: {
@@ -99,6 +105,8 @@ const BrandsData = () => {
           setAllBrandsInPage(res.data);
           setAllBrands(res.data.data);
           setTotalBrands(res.data.totalBrands)
+          dispatch(showToast("brand was deleted successfully!"));
+          setBrandIdToDelete("")
         })
         .catch((err) => {
           console.log(err);
@@ -107,7 +115,6 @@ const BrandsData = () => {
       .catch((err) => {
         console.log(err);
       });
-    }
   };
   return (
     <>
@@ -196,7 +203,10 @@ const BrandsData = () => {
                       <FontAwesomeIcon
                         icon={faTrashCan}
                         className="btn p-0 ms-2 text-danger"
-                        onClick={() => deleteBrand(brand._id)}
+                        onClick={() => {
+                          setBrandIdToDelete(brand._id);
+                          setShowWarning(true);
+                        }}
                       />
                       {/* </div> */}
                     </td>
@@ -218,6 +228,15 @@ const BrandsData = () => {
           currentPage={currentPage}
           onPageChange={onPageChange}
         />
+        {showWarning && brandIdToDelete && (
+          <RemoveProductWarning
+            onRemove={() => deleteBrand(brandIdToDelete)}
+            onCancel={() => {
+              setShowWarning(false);
+              setBrandIdToDelete("");
+            }}
+          />
+        )}
       </div>
     </>
   );

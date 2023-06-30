@@ -1,10 +1,12 @@
 import { useState ,useEffect} from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 // component
 import axiosInstance from "../../../apis/config";
+import { showToast } from "../../../store/slices/toastSlice";
 
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,6 +26,8 @@ const BrandsUpdate = () => {
   const token = localStorage.getItem("userToken");
   const { id } = useParams();
   const navigate=useNavigate();
+  const dispatch = useDispatch();
+  
   useEffect(() => {
     axiosInstance
       .get(`/brands/${id}`)
@@ -52,7 +56,8 @@ const BrandsUpdate = () => {
         },
       })
       .then((res) => {
-        setIsSubmitted(true);
+        // setIsSubmitted(true);
+        dispatch(showToast("brand updated successfully!"));
         setTimeout(()=>{
           navigate("/dashboard/brands")
         },2000)

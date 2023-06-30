@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
 // component
 import axiosInstance from "../../../apis/config";
+import { showToast } from "../../../store/slices/toastSlice";
 
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,15 +20,18 @@ import style from "./brands.module.css";
 const BrandsAdd = () => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [imageError, setImageError] = useState(null);
   const token = localStorage.getItem("userToken");
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const addBrandSubmit = () => {
-    if (!image) {
+    if (image === "") {
+      setImageError("Image is reqiured")
       return;
     }
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("category", category);
@@ -43,13 +47,11 @@ const BrandsAdd = () => {
         },
       })
       .then((res) => {
-        setIsSubmitted(true);
+        // setIsSubmitted(true);
+        dispatch(showToast("brand added successfully!"));
         setName("");
         setCategory("");
-        setTimeout(() => {
-          setImage(null);
-          navigate("/dashboard/brands");
-        }, 2000);
+        setImage("");
       })
       .catch((err) => {
         console.log(err);
@@ -147,7 +149,7 @@ const BrandsAdd = () => {
                   Image
                 </label>
                 <div>
-                  {image !== null ? (
+                  {image !== "" ? (
                     <img
                       alt="brand image"
                       src={URL.createObjectURL(image)}
@@ -167,12 +169,10 @@ const BrandsAdd = () => {
                     setImage(event.target.files[0]);
                   }}
                 />
-                {image === null ? (
-                  <span className="text-danger ms-2"> Image is required</span>
+                {image === "" ? (
+                  <span className="text-danger ms-2">Image is reqiured</span>
                 ) : null}
-                {errors.image && touched.image ? (
-                  <span className="text-danger ms-2">{errors.image}</span>
-                ) : null}
+
               </div>
 
               <div>
