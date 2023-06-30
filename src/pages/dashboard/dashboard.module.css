@@ -9,6 +9,9 @@
   --dash-btn-bg: #696cff;
   --dash-btn-hover: #4f50bd;
   --dash-pagination-bg: #f0f2f4;
+  --dash-sky-blue: #03c3ecd9;
+  --dash-light-blue: #d7f5fc;
+  --dash-light-purple: #e7e7ff;
 }
 
 /* start global */
@@ -31,9 +34,9 @@ table caption {
   color: var(--dash-main-text) !important;
 }
 
-/* body {
+body {
   overflow-x: hidden;
-} */
+}
 /* end global */
 
 /* start custom classes */
@@ -57,6 +60,10 @@ table caption {
 
 .dash-heading {
   color: var(--dash-heading) !important;
+}
+
+.dash-bg-gray {
+  background-color: var(--dash-bg) !important;
 }
 /* end custom classes */
 
@@ -127,6 +134,41 @@ table caption {
 
 /* start main content */
 
+/* start home */
+#dash-home .dash-home-btn {
+  font-size: 0.85rem;
+}
+
+#dash-home .dash-home-btn:hover {
+  background-color: var(--dash-btn-hover) !important;
+  color: white !important;
+}
+
+@media (max-width: 767.5px) {
+  #dash-home .dash-welcome-img {
+    width: 10rem;
+  }
+}
+
+#dash-home .dash-total-revenue-wallet {
+  color: var(--dash-sky-blue) !important;
+  background-color: var(--dash-light-blue);
+}
+
+#dash-home .dash-total-revenue-dollar {
+  background-color: var(--dash-light-purple);
+}
+
+#dash-home .dash-total-revenue-stats {
+  font-size: 0.85rem;
+}
+
+#dash-home .dash-sales-stats-sub-heading {
+  font-size: 0.85rem;
+  color: var(--dash-secondary-text);
+}
+/* end home */
+
 /* start users */
 .fw-bold {
   font-weight: 700;
@@ -134,7 +176,7 @@ table caption {
 /* end users */
 
 /* start categories */
-.categories-img{
+.categories-img {
   width: 3rem;
   height: 3rem;
 }
@@ -185,9 +227,9 @@ table caption {
   height: 2.7rem;
 }
 
-.dash-prod-form-img+button {
+.dash-prod-form-img + button {
   font-size: 0.8rem;
-transform: translate(50%, -45%);
+  transform: translate(50%, -45%);
 }
 
 /* start search from */
