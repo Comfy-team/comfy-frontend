@@ -1,5 +1,5 @@
 import { useState ,useEffect} from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { Formik, Form, Field } from "formik";
@@ -25,9 +25,8 @@ const BrandsUpdate = () => {
   const [image, setImage] = useState(null);
   const token = localStorage.getItem("userToken");
   const { id } = useParams();
-  const navigate=useNavigate();
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     axiosInstance
       .get(`/brands/${id}`)
@@ -58,9 +57,6 @@ const BrandsUpdate = () => {
       .then((res) => {
         // setIsSubmitted(true);
         dispatch(showToast("brand updated successfully!"));
-        setTimeout(()=>{
-          navigate("/dashboard/brands")
-        },2000)
       })
       .catch((error) => {
         console.log(error)
