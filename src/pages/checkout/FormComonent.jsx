@@ -78,7 +78,16 @@ export default function FormComonent() {
       })
       .then(res => {
         setUser(res.data);
-        settheIntialvalue(res.data);
+        // settheIntialvalue(res.data);
+        const theData = res.data;
+
+        const [firstName, lastName] = theData.fullName.split(" ");
+        settheIntialvalue({
+          ...theData,
+          firstName,
+          lastName,
+        });
+        console.log(theintialvalue);
       })
       .catch(err => console.log(err));
   }, [decoded.id, token]);
@@ -91,7 +100,6 @@ export default function FormComonent() {
     //data send to database
     let theSendData = {
       id: decoded.id,
-      fullName: submitdata?.firstName + " " + submitdata?.lastName,
       phone: submitdata?.phone,
       address: {
         city: submitdata?.address?.city,
@@ -118,24 +126,13 @@ export default function FormComonent() {
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      settheIntialvalue({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        phone: user.phone || "xxxxxx",
-        address: {
-          postalCode: user.address?.postalCode || "",
-          apartment: user.address?.apartment || "",
-          street: user.address?.street || "",
-          building: user.address?.building || "",
-          city: user.address?.city || "",
-          governorate: user.address?.governorate || "",
-          country: "",
-        },
-      });
-    }
-  }, [user]);
+  //     {user &&(
+  //   return <div>loading.....</div>
+  //   )
+  // }
+  if (user === "") {
+    return <div>loading.....</div>;
+  }
 
   return (
     <div className="p-4">

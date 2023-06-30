@@ -1,8 +1,8 @@
 import { useNavigate, Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 //
-import axiosInstance from "./../../apis/config";
+import axiosInstance from "../../apis/config";
 import { emptyCart } from "../../functions/cart";
 //style
 import style from "./checkout.module.css";
@@ -15,8 +15,17 @@ export default function PaymentMethod() {
   const [isAddingOrder, setIsAddingOrder] = useState(false);
   const shippingValue = 20.0;
   const cart = useSelector(state => state.cart.cart);
-
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+  // ===========
+  const confirmOrder = confirmOrderFunc;
+  // console.log(shouldNavigate);
+  function confirmOrderFunc(event) {
+    // event?.preventDefault();
+    // return window.confirm("Are you sure you want to make this order?");
+  }
+  // ===========
   const formData = useSelector(state => state.CheckoutForm.form);
+  console.log("formData", formData);
   const additionalInfo = {
     totalPrice: cart.totalPrice,
     items: cart.items,
@@ -33,17 +42,30 @@ export default function PaymentMethod() {
         },
       })
       .then(res => {
+        confirmOrderFunc();
+        console.log("confirmOrder", confirmOrder);
+        if (!confirmOrder) return;
+        setShouldNavigate(true);
         emptyCart(cart._id);
         event.target.textContent = "order Done ";
         setIsAddingOrder(true);
-        setTimeout(() => {
-          navigate("/shop");
-        }, 2000);
+        // setTimeout(() => {
+        //   navigate("/shop");
+        // }, 2000);
       })
       .catch(error => {
         console.log(error.response);
       });
   };
+  // useEffect(() => {
+  //   // if (shouldNavigate) {
+  //   //   setTimeout(() => {
+  //   //     navigate("/shop");
+  //   //     setShouldNavigate(false);
+  //   //   }, 2000);
+  //   // }
+  // }, [shouldNavigate, navigate]);
+  // console.log("$$$$$$$$$$$4");
   return formData ? (
     <div>
       <div className={`${style.PaymentMethod} ml-5 ml-md-3 container `}>
