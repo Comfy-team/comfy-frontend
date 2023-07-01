@@ -58,7 +58,7 @@ const Details = ({ product }) => {
 
   const handleDeleteFromCart = () => {
     setBtnSpinner(true);
-    deleteItemFromCart(cart._id, product._id);
+    deleteItemFromCart(cart._id, product._id, activeColor);
     setShowWarning(false);
   };
 
