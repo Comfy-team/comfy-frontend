@@ -2,7 +2,7 @@
   "name": "comfy",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://comfy-frontend.vercel.app",
+  "homepage": "",
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.6",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
