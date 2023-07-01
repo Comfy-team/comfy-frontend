@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faEdit } from "@fortawesome/free-regular-svg-icons";
 import axiosInstance from "../../../apis/config";
 import DashPagination from "./../dashPagination";
+import { showToast } from "../../../store/slices/toastSlice";
 import dashStyle from "../../../pages/dashboard/dashboard.module.css";
-
+import RemoveProductWarning from "../../common/removeProductWarning";
 const CategoriesData = () => {
   const [categories, setCategories] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
@@ -14,41 +16,50 @@ const CategoriesData = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
+  const [categoryToDelete, setCategoryToDelete] = useState(null);
+  const [showWarning, setShowWarning] = useState(false);
+
   const token = localStorage.getItem("userToken");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      try {
-        let response;
-        if (searchQuery === "") {
-          // If search query is empty, show all categories
-          response = await axiosInstance.get(`/categories`, {
-            params: {
-              page: currentPage,
-            },
-          });
-        } else {
-          // If search query is not empty, fetch search results
-          response = await axiosInstance.get(`/categories/search`, {
-            params: {
-              search: searchQuery,
-              page: currentPage,
-            },
-          });
-        }
-        console.log("Categories fetched successfully:", response.data);
-        setDisplayedCategories(response.data.data);
-        setAllCategories(response.data.data);
-        setTotalCategories(response.data.totalCategories);
-        setLoading(false);
-      } catch (error) {
-        console.log("Error fetching categories:", error);
-        setLoading(false);
-      }
+    if (searchQuery === "") {
+      // If search query is empty, show all categories
+      axiosInstance
+        .get(`/categories`, {
+          params: {
+            page: currentPage,
+          },
+        })
+        .then((res) => {
+          setDisplayedCategories(res.data.data);
+          setAllCategories(res.data);
+          setTotalCategories(res.data.totalCategories);
+          setLoading(false);
+          console.log(displayedCategories.totalPages)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      // If search query is not empty, fetch search results
+      axiosInstance
+        .get(`/categories/search`, {
+          params: {
+            search: searchQuery,
+            page: currentPage,
+          },
+        })
+        .then((res) => {
+          setDisplayedCategories(res.data.data);
+          setAllCategories(res.data);
+          setTotalCategories(res.data.totalCategories);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-    fetchData();
   }, [currentPage, searchQuery]);
 
   function handleSearch(event) {
@@ -63,7 +74,6 @@ const CategoriesData = () => {
       const filteredCategories = categories.filter((category) =>
         category.name.toLowerCase().includes(query)
       );
-      console.log("Filtered categories:", filteredCategories);
       setDisplayedCategories(filteredCategories.slice(0, 10));
     }
   }
@@ -71,7 +81,6 @@ const CategoriesData = () => {
   function handleAddCategory(newCategory) {
     setCategories([...categories, newCategory]); // update categories state
     navigate("/dashboard/categories/add");
-    console.log("Add category button clicked");
   }
 
   function handleUpdateCategory(id) {
@@ -83,19 +92,23 @@ const CategoriesData = () => {
       .delete("/categories", {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "x-access-token": token,
         },
         data: {
           id: id,
         },
       })
       .then((response) => {
-        console.log("Category deleted successfully:", response.data);
+        console.log(response);
         // Remove the deleted category from the displayed categories
         setDisplayedCategories(
           displayedCategories.filter((category) => category._id !== id)
         );
         // decrement the total categories count
         setTotalCategories(totalCategories - 1);
+        dispatch(showToast("Product was deleted successfully!"));
+        setCategoryToDelete(null);
       })
       .catch((error) => {
         console.log("Error deleting category:", error);
@@ -182,7 +195,10 @@ const CategoriesData = () => {
                       type="button"
                       className="btn text-danger p-0 ms-2"
                       // onClick={() => handleDeleteCategory(category._id)}
-
+                      onClick={() => {
+                        setCategoryToDelete(category);
+                        setShowWarning(true);
+                      }}
                     />
                   </td>
                 </tr>
@@ -190,13 +206,23 @@ const CategoriesData = () => {
             )}
           </tbody>
         </table>
+       
       </div>
 
       <DashPagination
-        totalPages={allCategories.totalPages}
         currentPage={currentPage}
+        totalPages={allCategories.totalPages}
         onPageChange={onPageChange}
       />
+      {showWarning && categoryToDelete && (
+        <RemoveProductWarning
+          onRemove={() => handleDeleteCategory(categoryToDelete._id)}
+          onCancel={() => {
+            setShowWarning(false);
+            setCategoryToDelete(null);
+          }}
+        />
+      )}
     </>
   );
 };
