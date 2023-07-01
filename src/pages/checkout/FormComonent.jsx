@@ -48,11 +48,12 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
   }),
 });
 export default function FormComonent() {
-  const [saveInfo, setSaveInfo] = useState(Boolean(true.toString()));
+  const [saveInfo, setSaveInfo] = useState(true);
   const [user, setUser] = useState("");
   const token = localStorage.getItem("userToken");
   const decoded = jwtDecode(token);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   //intial value
   const [theintialvalue, settheIntialvalue] = useState({
     firstName: "",
@@ -68,6 +69,7 @@ export default function FormComonent() {
       country: "",
     },
   });
+
   useEffect(() => {
     axiosInstance
       .get(`/users/${decoded.id}`, {
@@ -78,7 +80,7 @@ export default function FormComonent() {
       })
       .then(res => {
         setUser(res.data);
-        // settheIntialvalue(res.data);
+        settheIntialvalue(res.data);
         const theData = res.data;
 
         const [firstName, lastName] = theData.fullName.split(" ");
@@ -87,11 +89,9 @@ export default function FormComonent() {
           firstName,
           lastName,
         });
-        console.log(theintialvalue);
       })
       .catch(err => console.log(err));
   }, [decoded.id, token]);
-  const dispatch = useDispatch();
 
   const formSubmit = submitdata => {
     navigate(`/checkout/shipping`);
@@ -125,14 +125,10 @@ export default function FormComonent() {
         .catch(err => console.log(err));
     }
   };
-
   //     {user &&(
   //   return <div>loading.....</div>
   //   )
   // }
-  if (user === "") {
-    return <div>loading.....</div>;
-  }
 
   return (
     <div className="p-4">
@@ -253,7 +249,7 @@ export default function FormComonent() {
                   placeholder="postal Code"
                   className="form-control"
                   type="text"
-                  id="aparpostalCodetment"
+                  id="postalCode"
                 />
                 {touched.address?.postalCode && errors.address?.postalCode && (
                   <div className="text-danger ms-2">
@@ -292,7 +288,6 @@ export default function FormComonent() {
                   )}
               </div>
               {/**=========city===========*/}
-
               <div className="form-group col-4 ">
                 <Field
                   className={`form-control ${style.input} ${style.gray} `}
@@ -340,7 +335,7 @@ export default function FormComonent() {
               <input
                 type="checkbox"
                 className="form-check-input"
-                // id="exampleCheck1"
+                id="exampleCheck1"
                 checked={saveInfo}
                 onChange={e => setSaveInfo(e.target.checked)}
               />

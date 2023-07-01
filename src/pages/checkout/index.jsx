@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import React from "react";
 //components
 import ShoppingCardComponent from "./ShoppingCardComponent";
@@ -11,14 +11,14 @@ const Checkout = () => {
   return (
     <div className={`${style.checkout} ml-5 ml-md-3 `}>
       <div className={`${style.checkoutContainer}  mt-2  ms-0  `}>
-        <a href="/home" className="logo">
+        <Link to="/home" className="logo">
           <img
             src={logoimg}
             alt=""
             style={{ width: "6rem", marginLeft: "15px" }}
             className={`{} mb-3 `}
           />{" "}
-        </a>
+        </Link>
         <div className={`${style.checkoutSmalContainer} row mt-5 `}>
           <div
             className={`${style.leftFormColum}  col-lg-6 col-md-6  col-12 mr-3  mb-3 ml-5 `}
@@ -30,18 +30,18 @@ const Checkout = () => {
               >
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <a href="/cart" className={` ${style.none} breadlink`}>
+                    <Link to="/cart" className={` ${style.none} breadlink`}>
                       Cart
-                    </a>
+                    </Link>
                   </li>
                   <li className="breadcrumb-item">
-                    <a
-                      href="/checkout/information"
+                    <Link
+                      to="/checkout/information"
                       className={`breadcrumb-item ${style.none}
                   `}
                     >
                       information
-                    </a>
+                    </Link>
                   </li>
                   <li
                     className={`breadcrumb-item "

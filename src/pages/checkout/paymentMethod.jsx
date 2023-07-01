@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 //
 import axiosInstance from "../../apis/config";
@@ -9,23 +9,19 @@ import style from "./checkout.module.css";
 import "../../App.css";
 
 export default function PaymentMethod() {
-  const navigate = useNavigate();
-
-  const token = localStorage.getItem("userToken");
   const [isAddingOrder, setIsAddingOrder] = useState(false);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("userToken");
   const shippingValue = 20.0;
+  // ===========
   const cart = useSelector(state => state.cart.cart);
-  const [shouldNavigate, setShouldNavigate] = useState(false);
-  // ===========
-  const confirmOrder = confirmOrderFunc;
-  // console.log(shouldNavigate);
-  function confirmOrderFunc(event) {
-    // event?.preventDefault();
-    // return window.confirm("Are you sure you want to make this order?");
-  }
-  // ===========
   const formData = useSelector(state => state.CheckoutForm.form);
-  console.log("formData", formData);
+
+  const confirmOrder = event => {
+    let msg = window.confirm("Are you sure you want to make this order?");
+    return msg;
+  };
+  // ===========
   const additionalInfo = {
     totalPrice: cart.totalPrice,
     items: cart.items,
@@ -42,30 +38,20 @@ export default function PaymentMethod() {
         },
       })
       .then(res => {
-        confirmOrderFunc();
-        console.log("confirmOrder", confirmOrder);
-        if (!confirmOrder) return;
-        setShouldNavigate(true);
+        const the_msg = confirmOrder();
+        if (the_msg === false) return;
         emptyCart(cart._id);
         event.target.textContent = "order Done ";
         setIsAddingOrder(true);
-        // setTimeout(() => {
-        //   navigate("/shop");
-        // }, 2000);
+        setTimeout(() => {
+          navigate("/shop");
+        }, 3000);
       })
       .catch(error => {
         console.log(error.response);
       });
   };
-  // useEffect(() => {
-  //   // if (shouldNavigate) {
-  //   //   setTimeout(() => {
-  //   //     navigate("/shop");
-  //   //     setShouldNavigate(false);
-  //   //   }, 2000);
-  //   // }
-  // }, [shouldNavigate, navigate]);
-  // console.log("$$$$$$$$$$$4");
+
   return formData ? (
     <div>
       <div className={`${style.PaymentMethod} ml-5 ml-md-3 container `}>
@@ -116,8 +102,8 @@ export default function PaymentMethod() {
           </div>
           <div className="row mb-4  w-100 m-auto">
             <Link
+              to="/checkout/information"
               className={` col-lg-6  col-md-6 col-sm-12  col-12  mt-2 mb-3 ${style.returnLink} text-decoration-none `}
-              onClick={() => navigate(-1)}
             >
               {" "}
               {`<  `} return to information{" "}
