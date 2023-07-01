@@ -16,6 +16,7 @@ import style from "../../../pages/dashboard/dashboard.module.css";
 const ProductsAdd = () => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [imageError, setImageError] = useState("");
+  const [showBtnSpinner, SetShowBtnSpinner] = useState(false);
   const dispatch = useDispatch();
 
   const formSchema = Yup.object().shape({
@@ -34,6 +35,7 @@ const ProductsAdd = () => {
   });
 
   const handleAddProduct = (values, { setSubmitting }) => {
+    SetShowBtnSpinner(true);
     setSubmitting(false);
     if (imageError) return;
     if (selectedImages.length === 0) {
@@ -60,8 +62,12 @@ const ProductsAdd = () => {
         },
       })
       .then((res) => {
-        dispatch(showToast("Product was added successfully!"));
-        console.log(res);
+        if (res.status === 200) {
+          dispatch(showToast("Product was added successfully!"));
+        } else {
+          dispatch(showToast("Failed to add product! Please try again later!"));
+        }
+        SetShowBtnSpinner(false);
       })
       .catch((error) => console.log(error));
   };
@@ -77,9 +83,9 @@ const ProductsAdd = () => {
     }
     setSelectedImages([...selectedImages, ...files]);
   };
-  
+
   return (
-    <>
+    <div className="px-4">
       <h1 className="h4 mb-4 py-3">Add Product</h1>
       <Formik
         initialValues={{
@@ -108,13 +114,24 @@ const ProductsAdd = () => {
               setFieldValue={setFieldValue}
               setSelectedImages={setSelectedImages}
             />
-            <button type="submit" className={`btn ${style["dash-btn"]}`}>
-              Add
-            </button>
+            {!showBtnSpinner ? (
+              <button type="submit" className={`btn ${style["dash-btn"]}`}>
+                Add
+              </button>
+            ) : (
+              <button
+                type="button"
+                className={`btn ${style["dash-btn"]} text-center`}
+              >
+                <div className="spinner-border spinner-border-sm" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </button>
+            )}
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 };
 

@@ -19,6 +19,7 @@ const ProductsUpdate = () => {
   const [data, setData] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
   const [imageError, setImageError] = useState("");
+  const [showBtnSpinner, SetShowBtnSpinner] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -38,6 +39,7 @@ const ProductsUpdate = () => {
   });
 
   const handleUpdateProduct = (values, { setSubmitting }) => {
+    SetShowBtnSpinner(true);
     setSubmitting(false);
     if (imageError) return;
     if (selectedImages.length === 0) {
@@ -74,8 +76,14 @@ const ProductsUpdate = () => {
         },
       })
       .then((res) => {
-        dispatch(showToast("Product was updated successfully!"));
-        console.log(res);
+        if (res.status === 200) {
+          dispatch(showToast("Product was updated successfully!"));
+        } else {
+          dispatch(
+            showToast("Failed to update product! Please try again later!")
+          );
+        }
+        SetShowBtnSpinner(false);
       })
       .catch((error) => console.log(error));
   };
@@ -111,7 +119,7 @@ const ProductsUpdate = () => {
   }, [id]);
 
   return data ? (
-    <>
+    <div className="px-4">
       <h1 className="h4 mb-4 py-3">Edit Product</h1>
       <Formik
         initialValues={{
@@ -140,13 +148,24 @@ const ProductsUpdate = () => {
               setFieldValue={setFieldValue}
               setSelectedImages={setSelectedImages}
             />
-            <button type="submit" className={`btn ${style["dash-btn"]}`}>
-              Update
-            </button>
+            {!showBtnSpinner ? (
+              <button type="submit" className={`btn ${style["dash-btn"]}`}>
+                Update
+              </button>
+            ) : (
+              <button
+                type="button"
+                className={`btn ${style["dash-btn"]} text-center`}
+              >
+                <div className="spinner-border spinner-border-sm" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </button>
+            )}
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   ) : (
     <Spinner />
   );
