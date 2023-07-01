@@ -15,14 +15,13 @@ export default function PaymentMethod() {
   const [isAddingOrder, setIsAddingOrder] = useState(false);
   const shippingValue = 20.0;
   const cart = useSelector(state => state.cart.cart);
-  const [shouldNavigate, setShouldNavigate] = useState(false);
-  // ===========
-  const confirmOrder = confirmOrderFunc;
-  // console.log(shouldNavigate);
-  function confirmOrderFunc(event) {
+
+  const confirmOrder = event => {
     // event?.preventDefault();
-    // return window.confirm("Are you sure you want to make this order?");
-  }
+    let msg = window.confirm("Are you sure you want to make this order?");
+    return msg;
+  };
+
   // ===========
   const formData = useSelector(state => state.CheckoutForm.form);
   console.log("formData", formData);
@@ -42,10 +41,8 @@ export default function PaymentMethod() {
         },
       })
       .then(res => {
-        confirmOrderFunc();
-        console.log("confirmOrder", confirmOrder);
-        if (!confirmOrder) return;
-        setShouldNavigate(true);
+        const the_msg = confirmOrder();
+        if (the_msg === false) return;
         emptyCart(cart._id);
         event.target.textContent = "order Done ";
         setIsAddingOrder(true);
@@ -57,15 +54,7 @@ export default function PaymentMethod() {
         console.log(error.response);
       });
   };
-  // useEffect(() => {
-  //   // if (shouldNavigate) {
-  //   //   setTimeout(() => {
-  //   //     navigate("/shop");
-  //   //     setShouldNavigate(false);
-  //   //   }, 2000);
-  //   // }
-  // }, [shouldNavigate, navigate]);
-  // console.log("$$$$$$$$$$$4");
+
   return formData ? (
     <div>
       <div className={`${style.PaymentMethod} ml-5 ml-md-3 container `}>
@@ -116,8 +105,8 @@ export default function PaymentMethod() {
           </div>
           <div className="row mb-4  w-100 m-auto">
             <Link
+              to="/checkout/information"
               className={` col-lg-6  col-md-6 col-sm-12  col-12  mt-2 mb-3 ${style.returnLink} text-decoration-none `}
-              onClick={() => navigate(-1)}
             >
               {" "}
               {`<  `} return to information{" "}
