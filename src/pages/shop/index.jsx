@@ -27,7 +27,6 @@ const Shop = () => {
   const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
-  const [pagesArr, setPagesArr] = useState(null);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(50);
   const [isSmallScreen, SetIsSmallScreen] = useState(false);
@@ -65,11 +64,6 @@ const Shop = () => {
       .then((res) => {
         setProducts(res.data.data);
         setTotalPages(res.data.totalPages);
-        const pages = [];
-        for (let i = 1; i <= res.data.totalPages; i++) {
-          pages.push(i);
-        }
-        setPagesArr(pages);
         if (sort === searchObj.sort && price === 0) {
           setMinPrice(res.data.minPrice);
           setMaxPrice(res.data.maxPrice);
