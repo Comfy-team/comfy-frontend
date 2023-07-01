@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 //
 import axiosInstance from "../../apis/config";
@@ -9,22 +9,19 @@ import style from "./checkout.module.css";
 import "../../App.css";
 
 export default function PaymentMethod() {
-  const navigate = useNavigate();
-
-  const token = localStorage.getItem("userToken");
   const [isAddingOrder, setIsAddingOrder] = useState(false);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("userToken");
   const shippingValue = 20.0;
+  // ===========
   const cart = useSelector(state => state.cart.cart);
+  const formData = useSelector(state => state.CheckoutForm.form);
 
   const confirmOrder = event => {
-    // event?.preventDefault();
     let msg = window.confirm("Are you sure you want to make this order?");
     return msg;
   };
-
   // ===========
-  const formData = useSelector(state => state.CheckoutForm.form);
-  console.log("formData", formData);
   const additionalInfo = {
     totalPrice: cart.totalPrice,
     items: cart.items,
@@ -46,9 +43,9 @@ export default function PaymentMethod() {
         emptyCart(cart._id);
         event.target.textContent = "order Done ";
         setIsAddingOrder(true);
-        // setTimeout(() => {
-        //   navigate("/shop");
-        // }, 2000);
+        setTimeout(() => {
+          navigate("/shop");
+        }, 3000);
       })
       .catch(error => {
         console.log(error.response);

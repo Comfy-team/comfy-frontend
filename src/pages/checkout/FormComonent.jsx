@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import jwtDecode from "jwt-decode";
@@ -120,7 +120,7 @@ export default function FormComonent() {
           },
         })
         .then(res => {
-          console.log(res);
+          // console.log(res);
         })
         .catch(err => console.log(err));
     }
