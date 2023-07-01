@@ -62,7 +62,7 @@ const ProductsAdd = () => {
         },
       })
       .then((res) => {
-        if (res.status === 200) {
+        if (res.status === 201) {
           dispatch(showToast("Product was added successfully!"));
         } else {
           dispatch(showToast("Failed to add product! Please try again later!"));
