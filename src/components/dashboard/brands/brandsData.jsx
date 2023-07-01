@@ -178,7 +178,7 @@ const BrandsData = () => {
               allBrands?.map((brand) => {
                 return (
                   <tr key={brand._id}>
-                    <td>{brand._id}</td>
+                    <td className={`ps-4`}>{brand._id}</td>
                     <td>{brand.name}</td>
                     <td>
                       <img
