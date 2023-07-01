@@ -61,22 +61,22 @@ const Categories = () => {
           <div className={`col-md-8 col-12 d-flex flex-column ${styles.gapColumn}`}>
             <div className={`row ${styles.gapColumn}`}>
               <div className={`col-md-5 col-12 ${styles.thirdItem}`}>
-                {fifthCategory && (
+                {forthCategory && (
                   <div className={styles.categoryItem}>
                     <img
                       src={
                         process.env.REACT_APP_BASE_URL +
                         "/" +
-                        fifthCategory.image
+                        forthCategory.image
                       }
-                      alt={fifthCategory.name}
+                      alt={forthCategory.name}
                     />
                     <div className={styles.overlay}>
-                      <p>{fifthCategory.products_id.length} products</p>
-                      <Link to={`/shop?category=${fifthCategory._id}`} className={styles.categoryLink}>
-                        <h2>{fifthCategory.name}</h2>
+                      <p>{forthCategory.products_id.length} products</p>
+                      <Link to={`/shop?category=${forthCategory._id}`} className={styles.categoryLink}>
+                        <h2>{forthCategory.name}</h2>
                       </Link>
-                      <Link to={`/shop?category=${fifthCategory._id}`} className={styles.categoryLink}>
+                      <Link to={`/shop?category=${forthCategory._id}`} className={styles.categoryLink}>
                         <h6>
                           Go Shopping{" "}
                           <span className="ms-2">
@@ -119,22 +119,22 @@ const Categories = () => {
             </div>
             <div className={`row ${styles.gapColumn}`}>
               <div className={`col-md-7 col-12 ${styles.thirdItem}`}>
-                {forthCategory && (
+                {fifthCategory && (
                   <div className={styles.categoryItem}>
                     <img
                       src={
                         process.env.REACT_APP_BASE_URL +
                         "/" +
-                        forthCategory.image
+                        fifthCategory.image
                       }
-                      alt={forthCategory.name}
+                      alt={fifthCategory.name}
                     />
                     <div className={styles.overlay}>
-                      <p>{forthCategory.products_id.length} products</p>
-                      <Link to={`/shop?category=${forthCategory._id}`} className={styles.categoryLink}>
-                        <h2>{forthCategory.name}</h2>
+                      <p>{fifthCategory.products_id.length} products</p>
+                      <Link to={`/shop?category=${fifthCategory._id}`} className={styles.categoryLink}>
+                        <h2>{fifthCategory.name}</h2>
                       </Link>
-                      <Link to={`/shop?category=${forthCategory._id}`} className={styles.categoryLink}>
+                      <Link to={`/shop?category=${fifthCategory._id}`} className={styles.categoryLink}>
                         <h6>
                           Go Shopping{" "}
                           <span className="ms-2">
