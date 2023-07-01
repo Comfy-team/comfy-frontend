@@ -124,6 +124,18 @@ img {
 .bg-yellow {
   background-color: var(--yellow);
 }
+
+.disable-scroll {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.disable-scroll .react-multi-carousel-track,
+.disable-scroll .react-multi-carousel-item {
+  transform: unset !important;
+  transform-style: unset !important;
+  will-change: unset !important;
+}
 /* end custom classes */
 
 /* start main layout */
@@ -375,11 +387,11 @@ footer {
   z-index: 1000;
   box-shadow: 1px 0px 6px rgb(203, 202, 202);
 }
-@media (max-width:767px){
+@media (max-width: 767px) {
   .flow-button {
     right: 1.7rem;
     bottom: 4.5rem;
-  } 
+  }
 }
 /* ===== end scroll to top button ======= */
 
@@ -387,9 +399,10 @@ footer {
 #home .carousel-inner {
   height: 100%;
 }
-#home .carousel .carousel-control-next ,#home .carousel-control-prev{
+#home .carousel .carousel-control-next,
+#home .carousel-control-prev {
   filter: invert(1);
- }
+}
 /* ====== end  home carousel ========= */
 
 /* for cartModal*/
@@ -411,13 +424,6 @@ footer {
   font-size: 0.9rem;
 }
 /* end delete alert */
-
-/* disable body scroll */
-.disable-scroll {
-  height: 100vh;
-  overflow: hidden;
-}
-/* disable body scroll */
 
 /* start dashboard */
 .dash-navlink.active {
