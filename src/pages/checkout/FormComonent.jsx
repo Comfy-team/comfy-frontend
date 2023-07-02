@@ -39,12 +39,16 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
       .label("Building"),
     governorate: Yup.string().label("Governorate").required("Required"),
     apartment: Yup.string().label("Apartment").required("Required"),
-    postalCode: Yup.string()
+    postalCode: Yup.number()
       .required("Required")
-      .label("Postal Code")
-      .length(5)
-      .matches(/^[0-9]{5}/),
-
+      .typeError("postalCode must be a number")
+      .required("Required")
+      .min(1, "postal code  can't be 0")
+      .max(99999, "postal code  can't be more than 5 digits")
+      .label("Postal Code"),
+    // .label("Postal Code")
+    // .length(5),
+    // .matches(/^[0-9]{5}/),
     country: Yup.string(),
   }),
 });
