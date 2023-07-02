@@ -111,6 +111,7 @@ const NavAside = ({ isSmallScreen, collapsed }) => {
                   key={ele.id}
                   className={`nav-item position-relative ${style["nav-item"]} pe-2 ps-3 ps-lg-2 mb-2 mb-lg-3`}
                   onClick={() => setActive(ele.name)}
+                  title={ele.name}
                 >
                   <NavLink
                     className={`${style["dash-navlink"]} ${

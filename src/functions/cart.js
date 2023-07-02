@@ -8,6 +8,10 @@ import { showLoginModal } from "../store/slices/loginModalSlice";
 
 export const getCart = (token) => {
   let decoded = jwt_decode(token);
+  if (decoded.role === "admin") {
+    store.dispatch(setCart({ role: "admin" }));
+    return;
+  }
   axiosInstance
     .get(`/users/${decoded.id}/cart`, {
       headers: {
@@ -15,17 +19,17 @@ export const getCart = (token) => {
         "x-access-token": token,
       },
     })
-    .then((res) => store.dispatch(setCart(res.data)))
+    .then((res) => store.dispatch(setCart({ ...res.data, role: "user" })))
     .catch((error) => console.log(error));
 };
 
-export const deleteItemFromCart = (cartId, id) => {
+export const deleteItemFromCart = (cartId, id, color) => {
   const token = localStorage.getItem("userToken");
   if (token) {
     axiosInstance
       .patch(
         `/cart/${cartId}/delete`,
-        { itemId: id },
+        { itemId: id, color },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -45,13 +49,13 @@ export const deleteItemFromCart = (cartId, id) => {
   }
 };
 
-export const updateItemQuantity = (cartId, id, quantity) => {
+export const updateItemQuantity = (cartId, id, quantity, color) => {
   const token = localStorage.getItem("userToken");
   if (token) {
     axiosInstance
       .patch(
         `/cart/${cartId}/update`,
-        { itemId: id, quantity },
+        { itemId: id, quantity, color },
         {
           headers: {
             Authorization: `Bearer ${token}`,

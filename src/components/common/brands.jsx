@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 // react multi carousel
 import Carousel from "react-multi-carousel";
@@ -6,7 +7,6 @@ import "react-multi-carousel/lib/styles.css";
 
 // components
 import { LeftArrow, RightArrow } from "./customSliderArrows";
-import { useSelector } from "react-redux";
 
 // React multi-carousel breakpoints
 const responsive = {
@@ -24,16 +24,10 @@ const responsive = {
     partialVisibilityGutter: 40,
   },
   small: {
-    breakpoint: { max: 767, min: 481 },
-    items: 2,
-    partialVisibilityGutter: 40,
+    breakpoint: { max: 767, min: 375 },
+    items: 5,
   },
   extraSmall: {
-    breakpoint: { max: 480, min: 375 },
-    items: 2,
-    partialVisibilityGutter: 40,
-  },
-  extraExtraSmall: {
     breakpoint: { max: 374, min: 0 },
     items: 2,
     partialVisibilityGutter: 30,
@@ -70,7 +64,7 @@ const Brands = () => {
           infinite
           keyBoardControl
           minimumTouchDrag={80}
-          removeArrowOnDeviceType={["medium", "small", "extraSmall","extraExtraSmall"]}
+          removeArrowOnDeviceType={["medium", "small", "extraSmall"]}
           customRightArrow={<RightArrow />}
           customLeftArrow={<LeftArrow />}
         >

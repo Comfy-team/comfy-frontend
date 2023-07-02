@@ -1,7 +1,10 @@
 :root {
-  --bright-blue: #8bc1e8;
+  --bright-blue: rgb(117 193 228);
+  --btn-blue: rgb(60 83 94);
+  --btnHover-blue: rgb(41 57 65);
 }
 * {
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -23,11 +26,11 @@
 .checkoutContainer .formGroup input {
   height: 50%;
 }
-.firstrow {
-  margin: 0;
-  height: 80%;
-}
 
+.checkoutSmalContainer {
+  margin-left: 0 !important;
+  width: 100%;
+}
 .checkout input,
 .checkout select,
 .checkout button {
@@ -36,6 +39,10 @@
 .rightorderColumn {
   padding-top: 20px;
   background-color: #f1f1f1 !important;
+  width: 100%;
+}
+.leftFormColum {
+  padding-right: 12px !important;
 }
 .leftFormColum .form-group {
   width: 50%;
@@ -54,6 +61,7 @@
     margin-right: 0px;
   }
 }
+/* meduim screen */
 @media (max-width: 768px) {
   .rightorderColumn {
     margin: 0;
@@ -72,7 +80,7 @@
   position: relative;
 }
 .productImg {
-  width: 50px;
+  width: 50px !important;
   height: 50px;
   border-radius: 15px;
   padding: 0px;
@@ -81,6 +89,12 @@
 }
 .productImg img {
   background-color: var(--footer-links);
+  background-attachment: fixed;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  width: 100%;
+  text-align: center;
 }
 
 .productInfo p {
@@ -108,8 +122,14 @@
   width: 20px !important;
   height: 20px !important;
   border-radius: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   font-weight: 500;
 }
@@ -144,22 +164,23 @@
   height: 80lvh;
 }
 .orderbtn {
-  background-color: #3c535e !important;
-  color: white;
+  background-color: var(--btn-blue) !important;
+  color: white !important;
 }
 .orderbtn:hover {
-  background-color: #3c535e !important;
-  color: white;
+  background-color: var(--btnHover-blue) !important;
 }
 
 .linkclass {
   color: var(--bright-blue);
 }
 .formbtn {
-  background-color: #3c535e !important;
-  color: white;
+  background-color: var(--btn-blue) !important;
+  color: rgb(255, 255, 255) !important;
 }
-
+.formbtn:hover {
+  background-color: var(--btnHover-blue) !important;
+}
 .none {
   text-decoration: none;
 }

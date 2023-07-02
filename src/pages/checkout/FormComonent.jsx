@@ -1,23 +1,26 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import jwtDecode from "jwt-decode";
 import axiosInstance from "./../../apis/config";
 import { cities } from "../../apis/cities";
 import { governoratesData } from "../../apis/governorates";
+import { saveFormData } from "../../store/slices/formSlice";
+
+//style
 import "../../App.css";
 import style from "./checkout.module.css";
+import Spinner from "./../../components/common/spinner";
+//yup validation
 const DisplayingErrorMessagesSchema = Yup.object().shape({
   firstName: Yup.string()
     .max(15, "Must be 15 characters or less")
     .matches(/^[a-zA-Z]+$/, "First name must contain only letters")
-
     .required("Required"),
   lastName: Yup.string()
     .matches(/^[a-zA-Z]+$/, "lastName must contain only letters")
-
     .max(20, "Must be 20 characters or less")
     .required("Required"),
   phone: Yup.string()
@@ -32,22 +35,31 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
     building: Yup.number()
       .typeError("Building must be a number")
       .required("Required")
+      .min(1, "Building  can't be 0")
       .label("Building"),
     governorate: Yup.string().label("Governorate").required("Required"),
     apartment: Yup.string().label("Apartment").required("Required"),
-    postalCode: Yup.string()
+    postalCode: Yup.number()
       .required("Required")
-      .label("Postal Code")
-      .length(5)
-      .matches(/^[0-9]{5}/),
-    country: Yup.string().required("Required"),
+      .typeError("postalCode must be a number")
+      .required("Required")
+      .min(1, "postal code  can't be 0")
+      .max(99999, "postal code  can't be more than 5 digits")
+      .label("Postal Code"),
+    // .label("Postal Code")
+    // .length(5),
+    // .matches(/^[0-9]{5}/),
+    country: Yup.string(),
   }),
 });
-export default function FormComonent({ onFormSubmit }) {
-  const [saveInfo, setSaveInfo] = useState(Boolean(true.toString()));
+export default function FormComonent() {
+  const [saveInfo, setSaveInfo] = useState(true);
   const [user, setUser] = useState("");
   const token = localStorage.getItem("userToken");
   const decoded = jwtDecode(token);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  //intial value
   const [theintialvalue, settheIntialvalue] = useState({
     firstName: "",
     lastName: "",
@@ -59,9 +71,10 @@ export default function FormComonent({ onFormSubmit }) {
       building: user?.address?.building || "",
       city: user?.address?.city || "",
       governorate: user?.address?.governorate || "",
-      country: "",
+      country: "Egypt",
     },
   });
+
   useEffect(() => {
     axiosInstance
       .get(`/users/${decoded.id}`, {
@@ -73,17 +86,25 @@ export default function FormComonent({ onFormSubmit }) {
       .then(res => {
         setUser(res.data);
         settheIntialvalue(res.data);
+        const theData = res.data;
+
+        const [firstName, lastName] = theData.fullName.split(" ");
+        settheIntialvalue({
+          ...theData,
+          firstName,
+          lastName,
+        });
       })
       .catch(err => console.log(err));
   }, [decoded.id, token]);
 
-  // console.log("user,", user);
-
   const formSubmit = submitdata => {
-    onFormSubmit(submitdata);
+    navigate(`/checkout/shipping`);
+    dispatch(saveFormData(submitdata));
+
+    //data send to database
     let theSendData = {
       id: decoded.id,
-      fullName: submitdata?.firstName + " " + submitdata?.lastName,
       phone: submitdata?.phone,
       address: {
         city: submitdata?.address?.city,
@@ -109,9 +130,18 @@ export default function FormComonent({ onFormSubmit }) {
         .catch(err => console.log(err));
     }
   };
-  // console.log(theintialvalue);
+
+  if (!user) {
+    return (
+      <div>
+        {" "}
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div className="p-4">
       <Formik
         initialValues={theintialvalue}
         validationSchema={DisplayingErrorMessagesSchema}
@@ -229,7 +259,7 @@ export default function FormComonent({ onFormSubmit }) {
                   placeholder="postal Code"
                   className="form-control"
                   type="text"
-                  id="aparpostalCodetment"
+                  id="postalCode"
                 />
                 {touched.address?.postalCode && errors.address?.postalCode && (
                   <div className="text-danger ms-2">
@@ -268,7 +298,6 @@ export default function FormComonent({ onFormSubmit }) {
                   )}
               </div>
               {/**=========city===========*/}
-
               <div className="form-group col-4 ">
                 <Field
                   className={`form-control ${style.input} ${style.gray} `}
@@ -316,7 +345,7 @@ export default function FormComonent({ onFormSubmit }) {
               <input
                 type="checkbox"
                 className="form-check-input"
-                // id="exampleCheck1"
+                id="exampleCheck1"
                 checked={saveInfo}
                 onChange={e => setSaveInfo(e.target.checked)}
               />
@@ -331,7 +360,7 @@ export default function FormComonent({ onFormSubmit }) {
 
             <div className="row mb-4  w-100 m-auto">
               <Link
-                className={`col-12 col-sm-12  col-md-5  col-lg-6 mt-2 mb-3 mt-4 ${style.returnLink} text-decoration-none `}
+                className={`col-lg-6  col-md-6 col-sm-12  col-12  mt-2 mb-3 mt-4 ${style.returnLink} text-decoration-none `}
                 to="/cart"
               >
                 {" "}
@@ -340,7 +369,8 @@ export default function FormComonent({ onFormSubmit }) {
 
               <button
                 type="submit"
-                className={`${style.formbtn}  col-12 col-sm-12  col-md-3 col-lg-6  btn  h-100  ws-100 me-0  bg-primary`}
+                className={`${style.formbtn} 
+                 col-lg-6  col-md-6 col-sm-12  col-12  btn  h-100  ws-100 me-0 `}
               >
                 Continue to Shipping
               </button>

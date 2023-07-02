@@ -7,7 +7,6 @@ import "react-multi-carousel/lib/styles.css";
 // components
 import { LeftArrow, RightArrow } from "../common/customSliderArrows";
 import ProductCard from "../common/productCard";
-import { useSelector } from "react-redux";
 
 // React multi-carousel breakpoints
 const responsive = {
@@ -35,7 +34,6 @@ const responsive = {
 const RelatedProducts = ({ data }) => {
   const [isDragged, setIsdragged] = useState(false);
   const [isMouseDown, setIsMouseDown] = useState(false);
-  const cart = useSelector((state) => state.cart.cart);
 
   // Disable link pointer events if it's being dragged
   const handleDrag = () => {
@@ -67,23 +65,16 @@ const RelatedProducts = ({ data }) => {
           customRightArrow={<RightArrow />}
           customLeftArrow={<LeftArrow />}
         >
-          {data.map((product) => {
-            const inCart = cart.items
-              ? cart.items.findIndex((ele) => ele.product_id === product._id) === -1
-                ? false
-                : true
-              : false;
-            return (
-              <div
-                key={product._id}
-                className="pe-3"
-                onMouseDown={() => setIsMouseDown(true)}
-                onMouseMove={handleDrag}
-              >
-                <ProductCard product={product} inCart={inCart} />
-              </div>
-            );
-          })}
+          {data.map((product) => (
+            <div
+              key={product._id}
+              className="pe-3"
+              onMouseDown={() => setIsMouseDown(true)}
+              onMouseMove={handleDrag}
+            >
+              <ProductCard product={product} />
+            </div>
+          ))}
         </Carousel>
       </div>
     </div>

@@ -1,9 +1,11 @@
-/* that style convert to app.js */
-
-/* =====================================================  */
+/* that tab style are in  app.js */
 .whatTellContainer {
   background-color: #f8f5ec;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
 }
 .whatTellContainer .thecontent {
@@ -24,7 +26,6 @@
   margin: 0;
   line-height: 35px;
   font-weight: 400;
-
   margin-bottom: 50px;
 }
 .whatTellContainer h5 {

@@ -1,9 +1,8 @@
 * {
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
-.mainFaqContainer {
-}
 .mainFaqContainer p {
   color: var(--secondary-gray);
 }
@@ -12,10 +11,14 @@
   margin-bottom: 50px;
   letter-spacing: 3px;
   margin-right: 20px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
 }
 .mainFaqContainer .faqcontainer .smallcolumn > p {
   margin-bottom: 70px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
   margin-right: 20px;
   color: var(--footer-links);

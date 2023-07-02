@@ -1,8 +1,10 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 // component
 import DashPagination from "./dashPagination";
+import RemoveProductWarning from "../common/removeProductWarning";
+import { showToast } from "../../store/slices/toastSlice";
 
 //icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,13 +17,18 @@ import axiosInstance from "../../apis/config";
 const UsersDash = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [allUsersInPage, setAllUsersInPage] = useState([]);
+  const [totalUsers, setTotaUsers] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteStatus, setDeleteStatus] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [userIdToDelete, setUserIdToDelete] = useState("");
+  const [showWarning, setShowWarning] = useState(false);
   const token = localStorage.getItem("userToken");
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (searchQuery === "") {
-        // If search query is empty, show all users
+      // If search query is empty, show all users
       axiosInstance
         .get(`/users`, {
           params: {
@@ -35,6 +42,7 @@ const UsersDash = () => {
         .then((res) => {
           setAllUsersInPage(res.data);
           setAllUsers(res.data.data);
+          setTotaUsers(res.data.totalUsers)
         })
         .catch((err) => {
           console.log(err);
@@ -51,6 +59,7 @@ const UsersDash = () => {
         .then((res) => {
           setAllUsersInPage(res.data);
           setAllUsers(res.data.data);
+          setTotaUsers(res.data.totalUsers)
         })
         .catch((err) => {
           console.log(err);
@@ -60,20 +69,19 @@ const UsersDash = () => {
 
   // delete user
   function deleteUser(id) {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this user?"
-    );
-    if (confirmDelete) {
-      axiosInstance
-        .delete(`/users/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "x-access-token": token,
-          },
-        })
-        .then((res) => {
-          setDeleteStatus(`User ${id} deleted successfully.`);
-          axiosInstance.get(`/users`, {
+    setShowWarning(false);
+
+    axiosInstance
+      .delete(`/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "x-access-token": token,
+        },
+      })
+      .then((res) => {
+        // setDeleteStatus(`User ${id} deleted successfully.`);
+        axiosInstance
+          .get(`/users`, {
             params: {
               page: currentPage,
             },
@@ -85,15 +93,17 @@ const UsersDash = () => {
           .then((res) => {
             setAllUsersInPage(res.data);
             setAllUsers(res.data.data);
+            setTotaUsers(res.data.totalUsers);
+            dispatch(showToast("User was deleted successfully!"));
+            setUserIdToDelete("")
           })
           .catch((err) => {
             console.log(err);
           });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   // expand object id
   function showAllId(event) {
@@ -121,7 +131,7 @@ const UsersDash = () => {
   return (
     <div className={`py-4`}>
       <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
-        Users (total: {allUsers.length})
+        Users (total: {totalUsers})
       </h4>
       {deleteStatus ? (
         <div
@@ -203,7 +213,10 @@ const UsersDash = () => {
                       <FontAwesomeIcon
                         icon={faTrashCan}
                         type="button"
-                        onClick={() => deleteUser(user._id)}
+                        onClick={() => {
+                          setUserIdToDelete(user._id);
+                          setShowWarning(true);
+                        }}
                         className="text-danger"
                       />
                     </td>
@@ -224,6 +237,15 @@ const UsersDash = () => {
           currentPage={currentPage}
           onPageChange={onPageChange}
         />
+        {showWarning && userIdToDelete && (
+          <RemoveProductWarning
+            onRemove={() => deleteUser(userIdToDelete)}
+            onCancel={() => {
+              setShowWarning(false);
+              setUserIdToDelete("");
+            }}
+          />
+        )}
       </div>
     </div>
   );

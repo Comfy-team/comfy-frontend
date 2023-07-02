@@ -2,8 +2,7 @@ import { Outlet } from "react-router-dom";
 
 const ProductsDash = () => {
   return (
-    <div>
-      <h1>products</h1>
+    <div className="py-4">
       <Outlet />
     </div>
   );

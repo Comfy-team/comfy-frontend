@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+
 //components
 import { LeftArrow, RightArrow } from "./../common/customSliderArrows";
 import axiosInstance from "../../apis/config";
@@ -45,11 +45,10 @@ const responsive = {
 
 const Trending = () => {
   let [product, setProduct] = useState([]);
-  const cart = useSelector((state) => state.cart.cart);
+
   useEffect(() => {
     axiosInstance
-      .get("/products", {
-      })
+      .get("/products", {})
       .then((response) => {
         setProduct(response.data.data);
       })
@@ -82,25 +81,11 @@ const Trending = () => {
               customRightArrow={<RightArrow />}
               customLeftArrow={<LeftArrow />}
             >
-              {product.map((product) => {
-                const inCart = cart.items
-                  ? cart.items.findIndex(
-                      (ele) => ele.product_id === product._id
-                    ) === -1
-                    ? false
-                    : true
-                  : false;
-
-                return (
-                  <div key={product._id} className="pe-4">
-                    <ProductCard
-                      product={product}
-                      inCart={inCart}
-                      cart={cart}
-                    />
-                  </div>
-                );
-              })}
+              {product.map((product) => (
+                <div key={product._id} className="pe-4">
+                  <ProductCard product={product} />
+                </div>
+              ))}
             </Carousel>
           </div>
         </div>

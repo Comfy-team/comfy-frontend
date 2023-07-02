@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import style from "./checkout.module.css";
 import { useSelector } from "react-redux";
+import ProductCardCompnant from "./../../components/checkout/ProductCardCompnant";
 
 export default function ShoppingCardComponent() {
   let [theitems, SetItems] = useState([]);
@@ -17,7 +18,7 @@ export default function ShoppingCardComponent() {
     fetchCartItems();
   }, [cart]);
   const shipping = 15;
-  const priceWithShapping = cart.totalPrice + shipping;
+  const priceWithShapping = cart?.totalPrice + shipping;
 
   return (
     <div>
@@ -26,43 +27,19 @@ export default function ShoppingCardComponent() {
         {theitems && theitems.length > 0 ? (
           <div className="container ">
             {theitems.map((item, index) => (
-              <div
-                key={index}
-                className={`${style.imgcontainer} row mb-2 p-0 m-0`}
-              >
-                <img
-                  className={`${style.productImg}  col-2`}
-                  alt={item.name}
-                  src={`${
-                    process.env.REACT_APP_BASE_URL +
-                    "/" +
-                    item?.product_id?.images[0]?.src
-                  }`}
-                />
-
-                <div className={`${style.productInfo} col-8  `}>
-                  <p className="mb-0 ml-3">{item.product_id.name}</p>
-                  <div className={`${style.quantitCircle} mb-1"`}>
-                    {item.quantity}
-                  </div>
-
-                  <div
-                    key={index}
-                    className={`${style.spanColor} `}
-                    style={{ backgroundColor: `${item.color}` }}
-                  ></div>
-                </div>
-                <div className="col-2 mt-3  ">
-                  <p className="mb"> ${item.quantity * item.price}</p>
-                </div>
-              </div>
+              <ProductCardCompnant
+                index={index}
+                item={item}
+                key={index + item}
+              />
             ))}
 
             <div className={`${style.Subtotal} mb-1 row mt-5`}>
               <div className="col-2 ">Subtotal</div>
               <div className="col-7"></div>
               <div className="col-2">
-                <p>${cart.totalPrice}</p>
+                {" "}
+                <p>${cart?.totalPrice}</p>
               </div>
             </div>
             <div className={`${style.Shipping}  mb-1 row`}>
@@ -85,7 +62,7 @@ export default function ShoppingCardComponent() {
             </div>
           </div>
         ) : (
-          <div>Loading...</div>
+          <div> Cart is Empty</div>
         )}{" "}
       </div>
     </div>

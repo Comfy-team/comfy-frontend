@@ -22,32 +22,44 @@ import {
 import style from "../../pages/productDetails/productDetails.module.css";
 
 const Details = ({ product }) => {
-  const [activeColor, setActiveColor] = useState();
+  const [activeColor, setActiveColor] = useState("");
   const [activeQuantity, setActiveQuantity] = useState(1);
   const [inCart, setInCart] = useState(false);
   const [terms, setTerms] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const [showBtnSpinner, setBtnSpinner] = useState(false);
   const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleColorChange = (color) => {
     setActiveColor(color);
+    if (!cart.items) return;
+    const item = cart.items.find(
+      (ele) => ele.product_id._id === product._id && color === ele.color
+    );
+    if (item) {
+      setActiveQuantity(item.quantity);
+      setInCart(true);
+    } else {
+      setInCart(false);
+    }
   };
 
   const handleQuantityChange = (id, quantity) => {
     setActiveQuantity(quantity);
-    updateItemQuantity(cart._id, id, quantity);
+    updateItemQuantity(cart._id, id, quantity, activeColor);
   };
 
   const handleAddToCart = (id, color, price) => {
+    setBtnSpinner(true);
     addItemToCart(cart._id, id, color, price);
   };
 
   const handleDeleteFromCart = () => {
-    deleteItemFromCart(cart._id, product._id);
+    setBtnSpinner(true);
+    deleteItemFromCart(cart._id, product._id, activeColor);
     setShowWarning(false);
-    setInCart(false);
   };
 
   const handleBuyProduct = (id, color, price) => {
@@ -56,17 +68,23 @@ const Details = ({ product }) => {
   };
 
   useEffect(() => {
+    setBtnSpinner(false);
     if (product) {
-      setActiveColor(product.colors[0]);
       if (cart.items?.length > 0) {
-        const item = cart.items.find((ele) => ele.product_id === product._id);
+        const item = cart.items.find((ele) =>
+          activeColor
+            ? ele.product_id._id === product._id && ele.color === activeColor
+            : ele.product_id._id === product._id
+        );
         if (item) {
           setActiveQuantity(item.quantity);
+          setActiveColor(item.color);
           setInCart(true);
-        } else {
-          setInCart(false);
+          return;
         }
       }
+      setActiveColor(product.colors[0]);
+      setInCart(false);
     }
   }, [product, cart]);
 
@@ -83,7 +101,9 @@ const Details = ({ product }) => {
       <div className="border-top border-bottom py-4">
         <div className="d-flex align-items-center gap-2 mb-4">
           <span className="fw-semibold">Stock:</span>
-          <span>{product.stock > 0 ? product.stock : "Out Of Stcok"}</span>
+          <span className={product.stock === 0 ? "text-danger" : ""}>
+            {product.stock > 0 ? product.stock : "Out Of Stock"}
+          </span>
         </div>
         <div className="d-flex align-items-center gap-3 mb-4">
           <h3 className="h6 mb-0 fw-semibold">Colors:</h3>
@@ -94,13 +114,27 @@ const Details = ({ product }) => {
           />
         </div>
         {inCart ? (
-          <Quantity
-            id={product._id}
-            active={activeQuantity}
-            stock={product.stock}
-            onQuantityChange={handleQuantityChange}
-            onDeleteItem={() => setShowWarning(true)}
-          />
+          showBtnSpinner ? (
+            <div className="text-center">
+              <div className="spinner-border spinner-border-sm" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          ) : (
+            <Quantity
+              id={product._id}
+              active={activeQuantity}
+              stock={product.stock}
+              onQuantityChange={handleQuantityChange}
+              onDeleteItem={() => setShowWarning(true)}
+            />
+          )
+        ) : showBtnSpinner ? (
+          <button className="btn btn-bg-dark text-white text-capitalize px-5 rounded-2 d-block mx-auto">
+            <div className="spinner-border spinner-border-sm" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </button>
         ) : (
           <button
             onClick={() =>

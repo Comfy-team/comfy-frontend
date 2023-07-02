@@ -17,6 +17,9 @@ import PagePagination from "../../components/shop/pagePagination";
 import Aside from "../../components/shop/aside";
 import Spinner from "../../components/common/spinner";
 
+// functions
+import { disableBodyScroll, enableBodyScroll } from "../../functions/global";
+
 // style
 import style from "./shop.module.css";
 
@@ -24,7 +27,6 @@ const Shop = () => {
   const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
-  const [pagesArr, setPagesArr] = useState(null);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(50);
   const [isSmallScreen, SetIsSmallScreen] = useState(false);
@@ -38,7 +40,6 @@ const Shop = () => {
   });
   const [searchParams, setSearchParams] = useSearchParams({});
   const brands = useSelector((state) => state.brands.brands);
-  const cart = useSelector((state) => state.cart.cart);
   const [animationParent] = useAutoAnimate();
   const content = useRef();
 
@@ -49,6 +50,7 @@ const Shop = () => {
     sort = searchObj.sort,
     price = 0
   ) => {
+    setProducts(null);
     axiosInstance
       .get("/products", {
         params: {
@@ -61,17 +63,10 @@ const Shop = () => {
       })
       .then((res) => {
         setProducts(res.data.data);
-
         setTotalPages(res.data.totalPages);
-        const pages = [];
-        for (let i = 1; i <= res.data.totalPages; i++) {
-          pages.push(i);
-        }
-        setPagesArr(pages);
         if (sort === searchObj.sort && price === 0) {
           setMinPrice(res.data.minPrice);
           setMaxPrice(res.data.maxPrice);
-
           setSearchObj({
             page,
             brand,
@@ -123,6 +118,16 @@ const Shop = () => {
     getData(1, searchObj.brand, searchObj.category, searchObj.sort, value);
   };
 
+  const handleCloseFilterModal = () => {
+    setShowFilterModal(false);
+    enableBodyScroll();
+  };
+
+  const handleOpenFilterModal = () => {
+    disableBodyScroll();
+    setShowFilterModal(true);
+  };
+
   useEffect(() => {
     if (searchParams.get("page")) {
       const page = +searchParams.get("page");
@@ -131,14 +136,14 @@ const Shop = () => {
       const sort = Number(searchParams.get("sort")) || searchObj.sort;
       const price = +searchParams.get("price") || searchObj.price;
       setSearchObj({ page, brand, category, sort, price });
-      getData(page, brand, category, sort, price);
+      getData(page, brand, category, sort);
     } else {
       getData();
     }
     axiosInstance
       .get("/categories")
       .then((res) => {
-        setCategories(res.data);
+        setCategories(res.data.data);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -161,7 +166,7 @@ const Shop = () => {
           <Aside
             showFilterModal={showFilterModal}
             isSmallScreen={isSmallScreen}
-            onFilterModalToggle={setShowFilterModal}
+            closeFilterModal={handleCloseFilterModal}
             categories={categories}
             brands={brands}
             minPrice={minPrice}
@@ -191,7 +196,7 @@ const Shop = () => {
                             className="btn border"
                             type="button"
                             aria-expanded="false"
-                            onClick={() => setShowFilterModal(true)}
+                            onClick={handleOpenFilterModal}
                             aria-label="show filter modal"
                           >
                             <FontAwesomeIcon icon={faFilter} /> Filters
@@ -212,28 +217,14 @@ const Shop = () => {
                       ref={animationParent}
                       className={`row ${style["products-grid"]}`}
                     >
-                      {products.map((product) => {
-                        const inCart = cart.items
-                          ? cart.items.findIndex(
-                              (ele) => ele.product_id === product._id
-                            ) === -1
-                            ? false
-                            : true
-                          : false;
-                        return (
-                          <div key={product._id} className="col-lg-4 col-sm-6">
-                            <ProductCard
-                              product={product}
-                              inCart={inCart}
-                              cart={cart}
-                            />
-                          </div>
-                        );
-                      })}
+                      {products.map((product) => (
+                        <div key={product._id} className="col-lg-4 col-sm-6">
+                          <ProductCard product={product} />
+                        </div>
+                      ))}
                     </div>
                   </div>
                   <PagePagination
-                    pages={pagesArr}
                     currentPage={searchObj.page}
                     totalPages={totalPages}
                     onPageChange={handlePageChange}

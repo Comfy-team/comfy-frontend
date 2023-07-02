@@ -5,7 +5,7 @@ import style from "../../pages/dashboard/dashboard.module.css";
 
 const DashPagination = ({ totalPages, currentPage, onPageChange }) => {
   return (
-    <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+    <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center px-4">
       <p className={`mb-3 mb-md-0 ${style["dash-secondary-text"]}`}>
         Showing {currentPage} of {totalPages} pages
       </p>

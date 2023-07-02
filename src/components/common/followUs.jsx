@@ -22,13 +22,37 @@ import post6 from "../../assets/instagram/insta-6.jpg";
 import post7 from "../../assets/instagram/insta-7.jpg";
 
 const posts = [
-  { id: 0, src: post1 },
-  { id: 1, src: post2 },
-  { id: 2, src: post3 },
-  { id: 3, src: post4 },
-  { id: 4, src: post5 },
-  { id: 5, src: post6 },
-  { id: 6, src: post7 },
+  { id: 0, src: post1, link: "https://www.instagram.com/comfy_store4/" },
+  {
+    id: 1,
+    src: post2,
+    link: "https://www.instagram.com/p/CtzFxFTIrsG/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==",
+  },
+  {
+    id: 2,
+    src: post3,
+    link: "https://www.instagram.com/p/CtzFkJMoQST/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==",
+  },
+  {
+    id: 3,
+    src: post4,
+    link: "https://www.instagram.com/p/CtzGEPAocCz/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==",
+  },
+  {
+    id: 4,
+    src: post5,
+    link: "https://www.instagram.com/p/CtzFWORo-Yx/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==",
+  },
+  {
+    id: 5,
+    src: post6,
+    link: "https://www.instagram.com/p/CtzFFLroLTA/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==",
+  },
+  {
+    id: 6,
+    src: post7,
+    link: "https://www.instagram.com/p/CtzE_D0Ir9g/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==",
+  },
 ];
 
 // React multi-carousel breakpoints
@@ -101,7 +125,7 @@ const FollowUs = () => {
               onMouseMove={handleDrag}
             >
               <NavLink
-                to="#"
+                to={post.link}
                 className={`post ${
                   isDragged && isMouseDown ? "dragged" : ""
                 } d-block text-decoration-none overflow-hidden position-relative`}

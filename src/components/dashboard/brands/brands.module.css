@@ -1,0 +1,16 @@
+.brand-image{
+    width: 80px;
+    height: 60px;
+}
+@media (max-width: 767px) {
+    .brand-image {
+      width: 100% !important;
+      height: 100% !important;
+    }
+}
+.max-w-xl {
+    max-width: 36rem;
+}
+.label label {
+    font-weight: 550;
+}
