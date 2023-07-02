@@ -7,6 +7,7 @@ import { emptyCart } from "../../functions/cart";
 //style
 import style from "./checkout.module.css";
 import "../../App.css";
+import OrderInfo from "./../../components/checkout/orderInfo";
 
 export default function PaymentMethod() {
   const [isAddingOrder, setIsAddingOrder] = useState(false);
@@ -57,38 +58,7 @@ export default function PaymentMethod() {
       <div className={`${style.PaymentMethod} ml-5 ml-md-3 container `}>
         <div className="container">
           <div className="form-control mr-5 ps-4">
-            <div className={`${style.first} row mr-5 `}>
-              <div className={`${style.gray} col-3 mt-3`}> Contact</div>
-              <div className="col-6 mt-3"> {formData?.phone}</div>
-              <div className="col-3">
-                <Link
-                  to="/checkout/information "
-                  className={`${style.linkclass}`}
-                >
-                  {" "}
-                  change{" "}
-                </Link>
-              </div>
-            </div>
-            <hr className="border" />
-            <div className={`${style.last} row `}>
-              <div className={`${style.gray} col-3`}> Ship to</div>
-              <div className="col-6">
-                {" "}
-                {formData?.address?.apartment} ,{formData?.address?.street},
-                {formData?.address?.city},{formData?.address?.governorate},
-                {formData?.address?.country}
-              </div>
-              <div className="col-3">
-                <Link
-                  to="/checkout/information"
-                  className={`${style.linkclass}`}
-                >
-                  {" "}
-                  change{" "}
-                </Link>
-              </div>{" "}
-            </div>
+            <OrderInfo formData={formData} />
           </div>
           <p className="mt-5 ms-1"> Shipping method</p>
           <div

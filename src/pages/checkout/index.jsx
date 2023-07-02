@@ -6,6 +6,7 @@ import logoimg from "../../assets/logos/logo-header.png";
 //style
 import "../../App.css";
 import style from "./checkout.module.css";
+import Breadcrumbcomponant from "../../components/checkout/Breadcrumbcomponant";
 
 const Checkout = () => {
   return (
@@ -24,34 +25,7 @@ const Checkout = () => {
             className={`${style.leftFormColum}  col-lg-6 col-md-6  col-12 mr-3  mb-3 ml-5 `}
           >
             <div className="ms-4 mb-4">
-              <nav
-                className={`${style.breadcrumb}  --bs-breadcrumb-divider: >`}
-                aria-label="breadcrumb"
-              >
-                <ol className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to="/cart" className={` ${style.none} breadlink`}>
-                      Cart
-                    </Link>
-                  </li>
-                  <li className="breadcrumb-item">
-                    <Link
-                      to="/checkout/information"
-                      className={`breadcrumb-item ${style.none}
-                  `}
-                    >
-                      information
-                    </Link>
-                  </li>
-                  <li
-                    className={`breadcrumb-item "
-                    }`}
-                    aria-current="page"
-                  >
-                    shipping
-                  </li>
-                </ol>
-              </nav>
+              <Breadcrumbcomponant />
             </div>
 
             <Outlet> </Outlet>
