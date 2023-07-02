@@ -21,13 +21,16 @@ function CartPage(cartId) {
     return <div>Loading...</div>;
   }
   return (
-    <div className="table-responsive container-fluid">
-      <table className="table text-center">
+    <div
+      className={` table-responsive container-fluid ${style["cart-container"]}`}
+    >
+      <table className="table text-center ">
         {cart.items.length > 0 && (
           <thead>
             <tr>
               <th scope="col">PRODUCT</th>
               <th scope="col">PRICE</th>
+              <th scope="col">STOCK</th>
               <th scope="col">QUANTITY</th>
               <th scope="col">TOTAL</th>
             </tr>
@@ -35,8 +38,8 @@ function CartPage(cartId) {
         )}
         <tbody>
           {cart.items.length === 0 ? (
-            <tr>
-              <td colSpan="4" className="text-center pt-3">
+            <tr className="border mt-4">
+              <td colSpan="4" className="text-center pt-4 mt-4">
                 <strong className="d-block py-3">Your cart is empty.</strong>
                 <button
                   type="button"
@@ -52,7 +55,7 @@ function CartPage(cartId) {
               {cart.items.map((item, index) => (
                 <>
                   <CartItem
-                    key={item.product_id}
+                    key={item._id}
                     item={item}
                     cartId={cart._id}
                     index={index}
@@ -60,49 +63,53 @@ function CartPage(cartId) {
                 </>
               ))}
               <tr>
-                <td className="justify-content-start">
-                  <button
-                    type="button"
-                    className={`btn btn-dark w-40 px-3 rounded-1 py-2 border-0 ${style["cart-btn"]}`}
-                    onClick={handleReturnToShop}
-                  >
-                    <strong>
-                      <FontAwesomeIcon
-                        icon={faArrowAltCircleLeft}
-                        className="px-1"
-                      />
-                      Continue Shopping
-                    </strong>
-                  </button>
-                </td>
-                <td className="justify-content-start">
-                  <button
-                    type="button"
-                    className={`btn btn-dark w-40 px-5 rounded-1 py-2 border-0 ${style["cart-btn"]} `}
-                    onClick={() => emptyCart(cart._id)}
-                  >
-                    <strong>
-                      <FontAwesomeIcon icon={faTrashCan} className="px-1" />
-                      Empty Cart
-                    </strong>
-                  </button>
-                </td>
-                <td colSpan={2}>
-                  <div className="border-0 fs-6">
-                    <span>
-                      TOTAL PRICE:
-                      <strong className="color-yellow px-2">
-                        ${cart?.totalPrice}
-                      </strong>
-                    </span>
+                <td colSpan={5}>
+                  <div className="row justify-content-between align-items-center">
+                    <div className="col-4 mb-2">
+                      <button
+                        type="button"
+                        className={`btn btn-dark rounded-1 py-2 border-0  ${style["cart-btn"]}`}
+                        onClick={handleReturnToShop}
+                      >
+                        <strong>
+                          <FontAwesomeIcon
+                            icon={faArrowAltCircleLeft}
+                            className="me-2"
+                          />
+                          Continue Shopping
+                        </strong>
+                      </button>
+                    </div>
+                    <div className="col-5 mb-2 ms-5">
+                      <button
+                        type="button"
+                        className={`btn btn-dark rounded-1 py-2 border-0 ${style["cart-btn"]}`}
+                        onClick={() => emptyCart(cart._id)}
+                      >
+                        <strong>
+                          <FontAwesomeIcon icon={faTrashCan} className="me-2" />
+                          Empty Shopping Cart
+                        </strong>
+                      </button>
+                    </div>
+                    <div className="col-2">
+                      <div
+                        className={`border-0 fs-6 pe-4  ${style["cart-total-price"]}`}
+                      >
+                        <span>TOTAL PRICE:</span>
+                        <strong className="color-yellow ps-2">
+                          ${cart?.totalPrice}
+                        </strong>
+                      </div>
+                    </div>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td colSpan={4}>
+                <td colSpan={5}>
                   <button
                     type="button"
-                    className={`${style["cart-btn"]} col-8 border-0 btn btn-dark w-50 rounded-1 py-2 px-4 my-2 fs-6`}
+                    className={`${style["cart-btn"]}  border-0 btn btn-dark w-50 rounded-1 py-2 px-4 my-2 fs-6`}
                     onClick={handleCheckout}
                   >
                     <strong>Checkout</strong>
