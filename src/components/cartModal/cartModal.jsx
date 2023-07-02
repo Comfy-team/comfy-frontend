@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Local imports
 import Item from "./item";
 import "../../functions/cart";
+
+//style
 import style from "./cartModal.module.css";
 
 function CartModal({ showModal, hideModal }) {
@@ -46,12 +48,11 @@ function CartModal({ showModal, hideModal }) {
   return (
     <>
       {showModal && (
-        <div className="container" >
+        <div className="container">
           <div
-            className={`${style["cart-modal"]} modal fade show d-block justify-content-end fs-6`}
+            className={`${style["cart-modal"]} modal show d-block justify-content-end fs-6`}
             tabIndex="-1"
             role="dialog"
-            
           >
             <div
               className={`${style["modal-dialog"]} modal-lg h-100`}
