@@ -27,7 +27,11 @@ export default function ShoppingCardComponent() {
         {theitems && theitems.length > 0 ? (
           <div className="container ">
             {theitems.map((item, index) => (
-              <ProductCardCompnant index={index} item={item} />
+              <ProductCardCompnant
+                index={index}
+                item={item}
+                key={index + item}
+              />
             ))}
 
             <div className={`${style.Subtotal} mb-1 row mt-5`}>

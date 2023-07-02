@@ -12,16 +12,15 @@ import { saveFormData } from "../../store/slices/formSlice";
 //style
 import "../../App.css";
 import style from "./checkout.module.css";
+import Spinner from "./../../components/common/spinner";
 //yup validation
 const DisplayingErrorMessagesSchema = Yup.object().shape({
   firstName: Yup.string()
     .max(15, "Must be 15 characters or less")
     .matches(/^[a-zA-Z]+$/, "First name must contain only letters")
-
     .required("Required"),
   lastName: Yup.string()
     .matches(/^[a-zA-Z]+$/, "lastName must contain only letters")
-
     .max(20, "Must be 20 characters or less")
     .required("Required"),
   phone: Yup.string()
@@ -36,6 +35,7 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
     building: Yup.number()
       .typeError("Building must be a number")
       .required("Required")
+      .min(1, "Building  can't be 0")
       .label("Building"),
     governorate: Yup.string().label("Governorate").required("Required"),
     apartment: Yup.string().label("Apartment").required("Required"),
@@ -44,7 +44,8 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
       .label("Postal Code")
       .length(5)
       .matches(/^[0-9]{5}/),
-    country: Yup.string().required("Required"),
+
+    country: Yup.string(),
   }),
 });
 export default function FormComonent() {
@@ -66,7 +67,7 @@ export default function FormComonent() {
       building: user?.address?.building || "",
       city: user?.address?.city || "",
       governorate: user?.address?.governorate || "",
-      country: "",
+      country: "Egypt",
     },
   });
 
@@ -125,10 +126,15 @@ export default function FormComonent() {
         .catch(err => console.log(err));
     }
   };
-  //     {user &&(
-  //   return <div>loading.....</div>
-  //   )
-  // }
+
+  if (!user) {
+    return (
+      <div>
+        {" "}
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">
