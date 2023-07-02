@@ -1,4 +1,10 @@
+:root {
+  --bright-blue: rgb(117 193 228);
+  --btn-blue: rgb(60 83 94);
+  --btnHover-blue: rgb(41 57 65);
+}
 * {
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -12,25 +18,19 @@
     margin-top: 2rem;
   }
 }
-@media only screen and (min-width: 576px) and (max-width: 768px) {
-  .checkout {
-    margin-left: 4rem !important;
-  }
-}
 
 .checkout .container {
-  background-color: blue !important;
   margin-left: 40px !important;
 }
 
 .checkoutContainer .formGroup input {
   height: 50%;
 }
-.firstrow {
-  margin: 0;
-  height: 80%;
-}
 
+.checkoutSmalContainer {
+  margin-left: 0 !important;
+  width: 100%;
+}
 .checkout input,
 .checkout select,
 .checkout button {
@@ -39,14 +39,15 @@
 .rightorderColumn {
   padding-top: 20px;
   background-color: #f1f1f1 !important;
-  height: 100lvh;
+  width: 100%;
+}
+.leftFormColum {
+  padding-right: 12px !important;
 }
 .leftFormColum .form-group {
   width: 50%;
 }
-.leftFormColum {
-  /* background-color: red; */
-}
+
 /* large screen */
 @media screen and (min-width: 992px) {
   .leftFormColum {
@@ -60,6 +61,14 @@
     margin-right: 0px;
   }
 }
+/* meduim screen */
+@media (max-width: 768px) {
+  .rightorderColumn {
+    margin: 0;
+    padding-bottom: 200px;
+  }
+}
+
 @media (max-width: 1024px) {
 }
 .checklabal {
@@ -71,19 +80,26 @@
   position: relative;
 }
 .productImg {
-  width: 50px;
+  width: 50px !important;
   height: 50px;
   border-radius: 15px;
   padding: 0px;
-  border: 2px solid #eee;
+  border: 0.5px solid #d9d9d9;
   position: relative;
 }
 .productImg img {
   background-color: var(--footer-links);
+  background-attachment: fixed;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  width: 100%;
+  text-align: center;
 }
 
 .productInfo p {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
+  margin-left: 5px;
 }
 
 .spanColor {
@@ -99,47 +115,72 @@
 
 .quantitCircle {
   position: absolute;
-  background-color: var(--yellow);
+  background-color: #7f7f7f;
+  color: #f7ffea;
   top: -4px;
   left: 38px;
   width: 20px !important;
   height: 20px !important;
   border-radius: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   font-weight: 500;
 }
 
 .currency {
   color: var(--secondary-gray);
-  font-size: 11px;
   margin-right: 7px;
 }
 .Subtotal {
-  font-weight: 600;
   margin-bottom: 0;
 }
+.shippingMethod {
+  background-color: #f1f7fc;
+  border: 1px solid var(--bright-blue);
+}
+
 .Shipping {
-  font-size: 11;
   margin-top: -10px;
 }
 .blue {
   background-color: #d0e9f7;
-  border: 1px solid #04397a81;
 }
-
 /* ----------------- */
 .gray {
-  color: var(--secondary-gray);
+  color: var(--secondary-gray) !important;
 }
-.orderbtn {
-  /* margin-right: 1px; */
+.returnLink {
+  color: var(--bright-blue);
 }
 .PaymentMethod {
   height: 100%;
   height: 80lvh;
 }
 .orderbtn {
-  /* margin-right: 1px; */
+  background-color: var(--btn-blue) !important;
+  color: white !important;
+}
+.orderbtn:hover {
+  background-color: var(--btnHover-blue) !important;
+}
+
+.linkclass {
+  color: var(--bright-blue);
+}
+.formbtn {
+  background-color: var(--btn-blue) !important;
+  color: rgb(255, 255, 255) !important;
+}
+.formbtn:hover {
+  background-color: var(--btnHover-blue) !important;
+}
+.none {
+  text-decoration: none;
 }

@@ -99,10 +99,8 @@ const ChangePasswords = ({ user, token}) => {
             .min(8, "Password must be at least 8 characters long")
             .matches(
               /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              "Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol."
+              "Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol from (@$!%*?&)."
             ),
-
-
           confirmPassword: Yup.string()
             .required("Confirm Password is required")
             .oneOf([Yup.ref("password")], "Password doesn't match")
@@ -129,9 +127,9 @@ const ChangePasswords = ({ user, token}) => {
                   onClick={() => togglePasswordVisibility("currentPassword")}
                 >
                   {showCurrentPassword ? (
-                    <FontAwesomeIcon icon={faEyeSlash} />
-                  ) : (
                     <FontAwesomeIcon icon={faEye} />
+                    ) : (
+                    <FontAwesomeIcon icon={faEyeSlash} />
                   )}
                 </span>
               </div>
@@ -156,9 +154,9 @@ const ChangePasswords = ({ user, token}) => {
                   onClick={() => togglePasswordVisibility("password")}
                 >
                   {showNewPassword ? (
-                    <FontAwesomeIcon icon={faEyeSlash} />
-                  ) : (
                     <FontAwesomeIcon icon={faEye} />
+                    ) : (
+                    <FontAwesomeIcon icon={faEyeSlash} />
                   )}
                 </span>
               </div>

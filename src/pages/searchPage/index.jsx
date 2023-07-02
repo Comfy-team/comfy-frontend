@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
 // auto animate
@@ -16,12 +15,13 @@ import PagePagination from "../../components/shop/pagePagination";
 
 // style
 import style from "./searchPage.module.css";
+import Spinner from "../../components/common/spinner";
 
 const SearchPage = () => {
   const [data, setData] = useState(null);
   const [query, setQuery] = useState("");
   const [totalPages, setTotalPages] = useState(1);
-  const [pagesArr, setPagesArr] = useState([1]);
+  const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(1);
   const [animationParent] = useAutoAnimate();
   const [searchParams, setSearchParams] = useSearchParams({
@@ -29,7 +29,6 @@ const SearchPage = () => {
     query: "",
   });
   const searchContent = useRef();
-  const cart = useSelector((state) => state.cart.cart);
   const searchSchema = Yup.object().shape({
     searchValue: Yup.string().required("Search value is required"),
   });
@@ -46,21 +45,19 @@ const SearchPage = () => {
       .then((res) => {
         setData(res.data.data);
         setTotalPages(res.data.totalPages);
-        const pages = [];
-        for (let i = 1; i <= res.data.totalPages; i++) {
-          pages.push(i);
-          setPagesArr(pages);
-        }
+        setTotalResults(res.data.totalResults);
       })
       .catch((error) => console.log(error));
   };
 
   const handlePageChange = (page) => {
+    setData(null);
     setSearchParams({ page, query: searchParams.get("query") });
     searchContent.current.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
+    setData(null);
     const searchQuery = searchParams.get("query");
     if (searchQuery) {
       getData(searchQuery, searchParams.get("page"));
@@ -84,7 +81,7 @@ const SearchPage = () => {
           validationSchema={searchSchema}
           onSubmit={handleSubmit}
         >
-          {({ errors, touched, isValidating }) => (
+          {({ errors, touched }) => (
             <Form className="row justify-content-center m-0 mb-5">
               <div className="form-group col-sm-9 col-lg-6 mb-3 mb-sm-0">
                 <Field
@@ -118,29 +115,17 @@ const SearchPage = () => {
         {data ? (
           data.length > 0 ? (
             <div ref={searchContent}>
+              <h1 className="h4 mb-4 px-2">Total Results: {totalResults}</h1>
               <div ref={animationParent} className="row m-0 row-gap-3 mb-5">
-                {data.map((product) => {
-                  const inCart = cart.items
-                    ? cart.items.findIndex(
-                        (ele) => ele.product_id === product._id
-                      )
-                    : -1;
-                  return (
-                    <div key={product._id} className="sol-sm-6 col-md-4">
-                      <SearchCard
-                        product={product}
-                        cartId={cart._id}
-                        inCart={inCart !== -1 ? true : false}
-                        query={query}
-                      />
-                    </div>
-                  );
-                })}
+                {data.map((product) => (
+                  <div key={product._id} className="sol-sm-6 col-md-4">
+                    <SearchCard product={product} query={query} />
+                  </div>
+                ))}
               </div>
               <PagePagination
                 totalPages={totalPages}
                 currentPage={page}
-                pages={pagesArr}
                 onPageChange={handlePageChange}
               />
             </div>
@@ -149,6 +134,8 @@ const SearchPage = () => {
               Sorry, can't find matching products
             </h2>
           )
+        ) : query ? (
+          <Spinner />
         ) : (
           ""
         )}

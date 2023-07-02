@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
-import { NavLink} from "react-router-dom";
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+
 //components
 import { LeftArrow, RightArrow } from "./../common/customSliderArrows";
-//icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-
-import styles from "./../../pages/home/home.module.css";
 import axiosInstance from "../../apis/config";
-import ProductCard from './../common/productCard';
+import ProductCard from "./../common/productCard";
+
+//style
+import styles from "./../../pages/home/home.module.css";
 
 // React multi-carousel breakpoints
 const responsive = {
@@ -24,12 +22,12 @@ const responsive = {
     items: 4,
   },
   medium: {
-    breakpoint: { max: 1023, min: 768 },
+    breakpoint: { max: 1023, min: 992 },
     items: 3,
     partialVisibilityGutter: 40,
   },
-  small: {
-    breakpoint: { max: 767, min: 481 },
+  tablet: {
+    breakpoint: { max: 991, min: 481 },
     items: 2,
     partialVisibilityGutter: 40,
   },
@@ -50,15 +48,7 @@ const Trending = () => {
 
   useEffect(() => {
     axiosInstance
-      .get("/products", {
-        params: {
-          page: 1,
-          brand: "all",
-          category: "all",
-          sort: 0,
-          price: 0,
-        },
-      })
+      .get("/products", {})
       .then((response) => {
         setProduct(response.data.data);
       })
@@ -84,22 +74,18 @@ const Trending = () => {
               minimumTouchDrag={80}
               removeArrowOnDeviceType={[
                 "medium",
-                "small",
+                "tablet",
                 "extraSmall",
                 "extraExtraSmall",
               ]}
               customRightArrow={<RightArrow />}
               customLeftArrow={<LeftArrow />}
             >
-              {product.map((product) => {
-
-                
-                return (
-                  <div key={product._id} className="pe-4">
+              {product.map((product) => (
+                <div key={product._id} className="pe-4">
                   <ProductCard product={product} />
-                  </div>
-                );
-              })}
+                </div>
+              ))}
             </Carousel>
           </div>
         </div>

@@ -50,24 +50,24 @@ img {
 }
 
 .btn-bg-dark {
-  background-color: var(--main-black)!important;
+  background-color: var(--main-black) !important;
 }
 
 .btn-bg-dark:hover {
-  background-color: var(--yellow)!important;
+  background-color: var(--yellow) !important;
 }
 
 .btn-bg-gray {
-  background-color: var(--light-gray)!important;
+  background-color: var(--light-gray) !important;
 }
 
 .btn-bg-white {
-  background-color: var(--white)!important;
+  background-color: var(--white) !important;
 }
 
 .btn-bg-gray:hover,
 .btn-bg-white:hover {
-  background-color: var(--yellow)!important;
+  background-color: var(--yellow) !important;
   color: white !important;
 }
 
@@ -124,6 +124,18 @@ img {
 .bg-yellow {
   background-color: var(--yellow);
 }
+
+.disable-scroll {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.disable-scroll .react-multi-carousel-track,
+.disable-scroll .react-multi-carousel-item {
+  transform: unset !important;
+  transform-style: unset !important;
+  will-change: unset !important;
+}
 /* end custom classes */
 
 /* start main layout */
@@ -174,8 +186,28 @@ img {
   transition: opacity ease 0.5s, transform ease 0.7s;
 }
 
-.product-card:hover .holder .hover-img {
+.product-card:hover .hover-img {
   opacity: 1;
+}
+
+.product-card .add-to-cart-btn {
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  width: 86%;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 992px) {
+  .product-card .add-to-cart-btn {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .product-card .holder:hover .add-to-cart-btn {
+    opacity: 1;
+  }
 }
 
 .product-card .holder:hover .hover-img {
@@ -254,7 +286,7 @@ footer {
 
 /* start header */
 .header {
-  z-index: 10;
+  z-index: 1040;
 }
 
 .header .nav-link.active {
@@ -343,83 +375,33 @@ footer {
   margin-top: 0;
 }
 /* =====================================================  */
-.whatTellContainer {
-  height: 70vh;
-  background-color: #f5f5f5;
-  display: flex;
-  justify-content: center;
-}
-.whatTellContainer .thecontent {
-  height: 60%;
-  width: 60%;
-  margin: auto;
-  padding-top: 45px;
-  position: relative;
-  text-align: center;
-}
-.whatTellContainer h1 {
-  position: absolute;
-  top: -50px;
-  text-align: center;
-  text-transform: uppercase;
-  width: 100%;
-}
-.whatTellContainer p {
-  text-align: center;
-  font-size: 1rem;
-  line-height: 40px;
-}
-.whatTellContainer h5 {
-  position: absolute;
-  bottom: 20px;
-  text-transform: uppercase;
-  text-align: center;
-}
-.whatTellContainer h6 {
-  position: absolute;
-  text-align: center;
-  bottom: 0px;
-}
-
-@media (max-width: 1024px) {
-  .whatTellContainer .thecontent {
-    height: 60%;
-    width: 100%;
-    margin: auto;
-    padding-top: 45px;
-    position: relative;
-    text-align: center;
-  }
-  .whatTellContainer .thecontent h1 {
-    width: 100%;
-    font-size: 1.5rem;
-    top: -30px;
-    text-align: center;
-  }
-  .whatTellContainer .thecontent p {
-    width: 100%;
-    font-size: 1rem;
-    line-height: 20px;
-  }
-}
-
 /* =====  end about page =============== */
 
 /* ===== start scroll to top button ======= */
 .flow-button {
   display: flex;
-  bottom: 2.5rem;
+  bottom: 4rem;
   right: 2.5rem;
   width: 2.5rem;
   height: 2.5rem;
-  z-index: 12;
+  z-index: 1000;
   box-shadow: 1px 0px 6px rgb(203, 202, 202);
+}
+@media (max-width: 767px) {
+  .flow-button {
+    right: 1.7rem;
+    bottom: 4.5rem;
+  }
 }
 /* ===== end scroll to top button ======= */
 
 /* ===== start  home carousel  =======*/
 #home .carousel-inner {
   height: 100%;
+}
+#home .carousel .carousel-control-next,
+#home .carousel-control-prev {
+  filter: invert(1);
 }
 /* ====== end  home carousel ========= */
 
@@ -435,17 +417,21 @@ footer {
 }
 
 .delete-alert .close-btn {
-  display: block!important;
-  position: relative!important;
-  margin-left: auto!important;
-  padding: 0.5rem!important;
+  display: block !important;
+  position: relative !important;
+  margin-left: auto !important;
+  padding: 0.5rem !important;
   font-size: 0.9rem;
 }
 /* end delete alert */
 
-/* disable body scroll */
-.disable-scroll {
-  height: 100vh;
-  overflow: hidden;
+/* start dashboard */
+.dash-navlink.active {
+  color: var(--dash-active-text) !important;
+  background-color: var(--dash-active-bg) !important;
 }
-/* disable body scroll */
+
+.dash-navlink.active::after {
+  background-color: var(--dash-btn-bg);
+}
+/* end dashboard */

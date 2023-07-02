@@ -1,0 +1,278 @@
+#dashboard {
+  --dash-bg: #f5f5f9;
+  --dash-white: rgba(255, 255, 255, 0.95);
+  --dash-main-text: #697a8d;
+  --dash-secondary-text: #a1acb8;
+  --dash-heading: #566a7f;
+  --dash-active-text: #696cff;
+  --dash-active-bg: rgba(67, 89, 113, 0.04);
+  --dash-btn-bg: #696cff;
+  --dash-btn-hover: #4f50bd;
+  --dash-pagination-bg: #f0f2f4;
+  --dash-sky-blue: #03c3ecd9;
+  --dash-light-blue: #d7f5fc;
+  --dash-light-purple: #e7e7ff;
+}
+
+/* start global */
+#dashboard {
+  color: var(--dash-main-text);
+  background-color: var(--dash-bg);
+  min-height: 100svh;
+}
+
+#dashboard .col {
+  transition: width 0.7s ease;
+}
+
+table th {
+  color: var(--dash-heading) !important;
+}
+
+table td,
+table caption {
+  color: var(--dash-main-text) !important;
+}
+
+body {
+  overflow-x: hidden;
+}
+/* end global */
+
+/* start custom classes */
+.dash-btn {
+  background-color: var(--dash-btn-bg) !important;
+  color: white !important;
+  transition: background-color 0.5s ease;
+}
+
+.dash-btn:hover {
+  background-color: var(--dash-btn-hover) !important;
+}
+
+.dash-purple {
+  color: var(--dash-active-text) !important;
+}
+
+.dash-secondary-text {
+  color: var(--dash-secondary-text) !important;
+}
+
+.dash-heading {
+  color: var(--dash-heading) !important;
+}
+
+.dash-bg-gray {
+  background-color: var(--dash-bg) !important;
+}
+/* end custom classes */
+
+/* start layout */
+/* start aside */
+.logo {
+  width: 6rem;
+  max-width: 100%;
+  filter: hue-rotate(224deg);
+}
+
+@media (min-width: 992px) {
+  .aside {
+    height: 100svh;
+  }
+}
+
+.dash-navlink {
+  transition: color 0.5s ease, background-color 0.5s ease,
+    justify-content 0.5s ease, gap 0.5s ease;
+  color: var(--dash-main-text) !important;
+}
+
+.dash-navlink:hover {
+  color: var(--dash-active-text) !important;
+}
+
+.dash-navlink::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: transparent;
+  width: 3px;
+  height: 100%;
+  border-radius: 5px 0 0 5px;
+  transition: background-color 0.5s ease;
+}
+
+.title {
+  width: 6.5rem;
+  transition: width 0.4s ease;
+  overflow: hidden;
+}
+
+.title.collpase {
+  width: 0;
+}
+
+@media (min-width: 992px) {
+  .h-lg-100 {
+    height: 100%;
+  }
+}
+
+/* start toggle btn */
+.toggle-aside-btn {
+  width: 1.6rem;
+  height: 1.6rem;
+  font-size: 0.95rem;
+  transform: translateX(-25%);
+  top: 3.5rem;
+  outline: 6px solid var(--dash-bg) !important;
+  z-index: 1030;
+}
+/* end toggle btn */
+/* end aside */
+
+/* start main content */
+
+/* start home */
+#dash-home .dash-home-btn {
+  font-size: 0.85rem;
+}
+
+#dash-home .dash-home-btn:hover {
+  background-color: var(--dash-btn-hover) !important;
+  color: white !important;
+}
+
+@media (max-width: 767.5px) {
+  #dash-home .dash-welcome-img {
+    width: 10rem;
+  }
+}
+
+#dash-home .dash-total-revenue-wallet {
+  color: var(--dash-sky-blue) !important;
+  background-color: var(--dash-light-blue);
+}
+
+#dash-home .dash-total-revenue-dollar {
+  background-color: var(--dash-light-purple);
+}
+
+#dash-home .dash-total-revenue-stats {
+  font-size: 0.85rem;
+}
+
+#dash-home .dash-sales-stats-sub-heading {
+  font-size: 0.85rem;
+  color: var(--dash-secondary-text);
+}
+/* end home */
+
+/* start users */
+.fw-bold {
+  font-weight: 700;
+}
+/* end users */
+
+/* start categories */
+.categories-img {
+  width: 3rem;
+  height: 3rem;
+}
+/* end categories */
+
+/* start products */
+.description {
+  line-clamp: 3;
+  -webkit-line-clamp: 6;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.dash-prod-id {
+  width: 5rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  transition: width 0.5s ease;
+}
+
+.dash-prod-id-holder:hover .dash-prod-id {
+  width: 100%;
+}
+
+.dash-prod-clr {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.dash-prod-img {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.dash-prod-form-clr {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
+.dash-prod-form-clr + button {
+  font-size: 0.8rem;
+  transform: translateY(-25%);
+}
+
+.dash-prod-form-img {
+  width: 2.7rem;
+  height: 2.7rem;
+}
+
+.dash-prod-form-img + button {
+  font-size: 0.8rem;
+  transform: translate(50%, -45%);
+}
+
+/* start search from */
+#dash-search input {
+  width: 20rem;
+}
+/* end search form */
+/* end products */
+
+/* start brands */
+/* end brands */
+
+/* start orders */
+/* end orders */
+
+/* end main content */
+
+/* start pagination */
+.pagination-btn {
+  font-size: 0.8rem;
+  background-color: var(--dash-pagination-bg) !important;
+  color: var(--dash-main-text) !important;
+  transition: opacity 0.5 ease, color 0.5 ease;
+}
+
+.pagination-btn:not(.active):hover {
+  opacity: 0.8;
+  color: var(--dash-active-text) !important;
+}
+
+.pagination-page {
+  width: 2rem;
+  height: 2rem;
+}
+
+.pagination-btn.active {
+  background-color: var(--dash-btn-bg) !important;
+  color: white !important;
+  box-shadow: 0px 3px 5px -2px var(--dash-btn-bg);
+}
+
+.pagination-btn.disabled {
+  color: var(--dash-secondary-text) !important;
+}
+/* end pagination */
+/* end layout */

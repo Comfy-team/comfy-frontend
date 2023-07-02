@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 // font awesome
@@ -12,9 +12,11 @@ import {
 
 // components
 import { showLoginModal } from "../../store/slices/loginModalSlice";
+import { showCartModal } from "../../store/slices/cartModalSlice";
 
 const BottomNav = ({ cart }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <nav className="bg-white sticky-bottom border-top">
@@ -25,6 +27,14 @@ const BottomNav = ({ cart }) => {
               <Link
                 className="btn p-0 lh-1 color-main-gray fs-5 hover-color-yellow"
                 to={`/account/${cart.user_id}`}
+              >
+                <FontAwesomeIcon icon={faUser} />
+                <span className="visually-hidden">account</span>
+              </Link>
+            ) : cart.role === "admin" ? (
+              <Link
+                className="btn p-0 lh-1 color-main-gray fs-5 hover-color-yellow"
+                to={`/dashboard`}
               >
                 <FontAwesomeIcon icon={faUser} />
                 <span className="visually-hidden">account</span>
@@ -68,7 +78,11 @@ const BottomNav = ({ cart }) => {
               type="button"
               className="cart-btn btn lh-1 p-0 fs-5 hover-color-yellow position-relative"
               onClick={() =>
-                cart.user_id ? "" : dispatch(showLoginModal(true))
+                cart.user_id
+                  ? dispatch(showCartModal(true))
+                  : cart.role === "admin"
+                  ? navigate("/dashboard")
+                  : dispatch(showLoginModal(true))
               }
             >
               <FontAwesomeIcon icon={faCartShopping} />

@@ -1,14 +1,21 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
+
+import jwtDecode from "jwt-decode";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import axiosInstance from "../../apis/config";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import styles from "./login-register.module.css";
+
 import { getCart } from "./../../functions/cart";
+import axiosInstance from "../../apis/config";
+
+import styles from "./login-register.module.css";
 
 const Login = ({ closeModal, saveUserData }) => {
+  const navigate =useNavigate();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -32,6 +39,11 @@ const Login = ({ closeModal, saveUserData }) => {
         saveUserData();
         resetForm();
         closeModal();
+        const {role}=jwtDecode(response.data.token)
+        if(role === "admin") {
+          navigate("/dashboard")
+        } 
+
       })
       .catch((error) => {
         // handle error, e.g. show error message
@@ -50,7 +62,7 @@ const Login = ({ closeModal, saveUserData }) => {
         validationSchema={Yup.object({
           email: Yup.string()
             .required("Email is required")
-            .email("Invalid email address"),
+            .matches(/^[a-z0-9.]{3,}@gmail\.com$/, "Invalid email address"),
           password: Yup.string().required("Password is required"),
         })}
         onSubmit={handleSubmit}
@@ -90,9 +102,9 @@ const Login = ({ closeModal, saveUserData }) => {
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? (
-                    <FontAwesomeIcon icon={faEyeSlash} />
-                  ) : (
                     <FontAwesomeIcon icon={faEye} />
+                    ) : (
+                    <FontAwesomeIcon icon={faEyeSlash} />
                   )}
                 </span>
               </div>

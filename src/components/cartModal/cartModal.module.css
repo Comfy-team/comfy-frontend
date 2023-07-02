@@ -1,19 +1,20 @@
 .modal-backdrop {
   background-color: rgba(0, 0, 0, 0.5);
 }
-.modal {
+.cart-modal {
   background-color: white;
   top: 0;
   right: 0;
   bottom: 0;
-  left: auto;
-  width: 27rem;
+  left: auto !important;
+  width: 27rem !important;
 }
 .modal-content {
   height: 100vh !important;
 }
+
 .progress {
-  height: 2rem;
+  height: 1.6rem !important;
 }
 .dark-bar {
   background-color: rgb(5, 5, 74) !important;
@@ -21,12 +22,11 @@
 .yellow-bar {
   background-color: var(--yellow) !important;
 }
-.red-bar {
-  background-color: #dc3545;
-}
+
 .d-none {
   display: none;
 }
+
 .input-text {
   display: block;
   font-size: 14px;
@@ -47,12 +47,29 @@
   transform: translate(-50%, -50%);
 }
 .product-container {
-  height: calc(
-    85vh - 150px
-  );
+  height: calc(80vh - 150px);
   overflow-y: auto;
   max-height: 26rem;
 }
 .pointer {
   cursor: pointer;
+}
+.spanColor {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  border: solid black;
+}
+
+
+@media (min-width: 320px) and (max-width: 425px) {
+  .modal {
+    max-width: 20rem; /* adjust the modal's width for smaller screens */
+  }
+  .modal-content{
+    font-size: 0.8rem;
+  }
+  .spanColor {
+    width: 1rem !important;
+    height: 1rem !important;
+  }
 }

@@ -3,12 +3,14 @@ import { useParams } from "react-router";
 
 import styles from "../../pages/account/account.module.css";
 import axiosInstance from "../../apis/config";
+import jwtDecode from "jwt-decode";
 
 const AccountOrders = ({ token }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState({});
   const [userOrder, setUserOrder] = useState([]);
   const { id } = useParams();
   useEffect(() => {
+    if (jwtDecode(token).role === "user"){
     axiosInstance
       .get(`/users/${id}/orders`, {
         headers: {
@@ -19,12 +21,24 @@ const AccountOrders = ({ token }) => {
       })
       .then((res) => {
         setUserOrder(res.data);
+        setIsCollapsed((prevState) => {
+          // Set the first order ID to false (expanded) and the rest to true (collapsed)
+          const newState = {};
+          res.data.forEach((order, index) => {
+            newState[order._id] = index === 0 ? false : true;
+          });
+          return { ...prevState, ...newState };
+        });
       })
       .catch((error) => console.log(error));
+    }
   }, []);
 
-  const handleToggleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
+  const handleToggleCollapse = (orderId) => {
+    setIsCollapsed((prevState) => ({
+      ...prevState,
+      [orderId]: !prevState[orderId],
+    }));
   };
   return (
     <div>
@@ -34,6 +48,7 @@ const AccountOrders = ({ token }) => {
 
       {userOrder.length > 0 ? (
         userOrder.map((order) => {
+          const collapseId = `collapse-${order._id}`;
           return (
             <div id="accordion" key={order._id} className="container mb-5">
               <div className="card row col-12 col-lg-9">
@@ -56,9 +71,11 @@ const AccountOrders = ({ token }) => {
                       <button
                         className={`btn rounded-pill px-3 py-2 bg-white ${styles["btn-show-order"]}`}
                         data-toggle="collapse"
-                        data-target="#cardone"
-                        aria-expanded={isCollapsed ? "true" : "false"}
-                        onClick={handleToggleCollapse}
+                        data-target={`${collapseId}`}
+                        aria-expanded={
+                          isCollapsed[order._id] ? "false" : "true"
+                        }
+                        onClick={() => handleToggleCollapse(order._id)}
                       >
                         View Order
                       </button>
@@ -66,15 +83,15 @@ const AccountOrders = ({ token }) => {
                   </div>
                 </div>
                 <div
-                  id="cardone"
+                  id={collapseId}
                   data-parent="#accordion"
-                  className={`collapse ${isCollapsed ? "show" : ""}`}
+                  className={`collapse ${isCollapsed[order._id] ? "" : "show"}`}
                 >
-                  {order.cartId.items.map((item) => {
+                  {order.items.map((item) => {
                     return (
                       <div
                         className={`card-body text-center ${styles.cartBody}`}
-                        key={item._id}
+                        key={order._id}
                       >
                         <div className={`d-flex py-4`}>
                           <div
@@ -90,26 +107,26 @@ const AccountOrders = ({ token }) => {
                               alt="image"
                             />
                           </div>
-                          <div className="d-flex flex-grow-1 flex-column ml-4">
+                          <div className="d-flex flex-grow-1 flex-column ms-4">
                             <div className="d-flex justify-content-between">
-                              <div className="ms-4">
+                              <div className="text-start">
                                 <h3 className={styles.productName}>
                                   {item?.product_id?.name}
                                 </h3>
                                 <p className={`text-start text-secondary`}>
-                                  {item?.product_id?.brand}
+                                  {item?.product_id?.brand?.name}
                                 </p>
                               </div>
                               <div className="ml-2 mt-1">
                                 <p
                                   className={`${styles.price} py-1 px-2 text-center`}
                                 >
-                                  $ {item.price}
+                                  ${item.price}
                                 </p>
                               </div>
                             </div>
 
-                            <div className="ms-4">
+                            <div className="">
                               <p className="text-start text-secondary">
                                 Qty {item.quantity}
                               </p>
@@ -127,7 +144,7 @@ const AccountOrders = ({ token }) => {
                     </div>
                     <div>
                       <p className={`h5 ${styles.price} py-1 px-2 text-center`}>
-                        $ {order.cartId.totalPrice}
+                        ${order.totalPrice}
                       </p>
                     </div>
                   </div>

@@ -79,7 +79,7 @@ const RelatedProducts = ({ data }) => {
       </div>
     </div>
   ) : (
-    "loading"
+    ""
   );
 };
 

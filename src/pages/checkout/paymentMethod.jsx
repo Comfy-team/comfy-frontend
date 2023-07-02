@@ -1,128 +1,100 @@
-import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+//
+import axiosInstance from "../../apis/config";
+import { emptyCart } from "../../functions/cart";
+//style
 import style from "./checkout.module.css";
 import "../../App.css";
-import axiosInstance from "./../../apis/config";
-import jwtDecode from "jwt-decode";
+import OrderInfo from "./../../components/checkout/orderInfo";
 
-export default function PaymentMethod({ data }) {
-  // console.log(cartSlice(true));
-  console.log("data---------", data);
-  // console.log("data---", data.address.apartment);
-  // const shippingvalue = 20.0;
-  const [orderinfo, setOrderinfo] = useState(data);
-  const [shippingvalue, setShippingvalue] = useState(20.0);
+export default function PaymentMethod() {
+  const [isAddingOrder, setIsAddingOrder] = useState(false);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("userToken");
+  const shippingValue = 20.0;
+  // ===========
+  const cart = useSelector(state => state.cart.cart);
+  const formData = useSelector(state => state.CheckoutForm.form);
 
-  console.log("Rendering PaymentMethod...");
-  // rest of the component code
-
-  const handleSubmit = orderinfo => {
-    const token = localStorage.getItem("userToken");
-
-    if (token) {
-      let decodedtoken = jwtDecode(localStorage.getItem("userToken"));
-      let { id, email, role } = decodedtoken;
-      console.log(token);
-      console.log(id);
-      axiosInstance
-        .get(`/users/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            "x-access-token": token,
-          },
-        })
-        .then(res => {
-          let cartId = res.data.cart_id;
-          console.log(cartId);
-          const additionalinfo = { cartId: cartId, userId: id };
-          const newobjectdata = { ...orderinfo, ...additionalinfo };
-          console.log(newobjectdata);
-          axiosInstance
-            .post(`/orders`, newobjectdata, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-                "x-access-token": token,
-              },
-            })
-            .then(res => {
-              console.log(res);
-              console.log("res");
-              // store.dispatch(setCart(res.data));
-            })
-            .catch(error => console.log(error.response));
-        })
-        .catch(error => console.log(error));
-    }
+  const confirmOrder = event => {
+    let msg = window.confirm("Are you sure you want to make this order?");
+    return msg;
   };
-  return data ? (
+  // ===========
+  const additionalInfo = {
+    totalPrice: cart.totalPrice,
+    items: cart.items,
+    userId: cart.user_id,
+  };
+  const newObjectData = { ...formData, ...additionalInfo };
+  const onConfirmClick = event => {
+    axiosInstance
+      .post(`/orders`, newObjectData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "x-access-token": token,
+        },
+      })
+      .then(res => {
+        const the_msg = confirmOrder();
+        if (the_msg === false) return;
+        emptyCart(cart._id);
+        event.target.textContent = "order Done ";
+        setIsAddingOrder(true);
+        setTimeout(() => {
+          navigate("/shop");
+        }, 3000);
+      })
+      .catch(error => {
+        console.log(error.response);
+      });
+  };
+
+  return formData ? (
     <div>
       <div className={`${style.PaymentMethod} ml-5 ml-md-3 container `}>
         <div className="container">
-          <div className="form-control mr-5">
-            <div className={`${style.first} row mr-5`}>
-              <div className={`${style.gray} col-3`}> Contact</div>
-              <div className="col-6"> {data.phone}</div>
-              <div className="col-3">
-                <Link to="/checkout/information "> change </Link>
-              </div>
-            </div>
-            <hr className="border" />
-            <div className={`${style.last} row `}>
-              <div className={`${style.gray} col-3`}> Ship to</div>
-              <div className="col-6">
-                {" "}
-                {data.address.apartment} ,{data.address.street},
-                {data.address.city},{data.address.governorate},
-                {data.address.country}
-              </div>
-              <div className="col-3">
-                <Link to="/checkout/information "> change </Link>
-              </div>{" "}
-            </div>
+          <div className="form-control mr-5 ps-4">
+            <OrderInfo formData={formData} />
           </div>
-          <h3 className="mt-5"> Shipping method</h3>
-          <div className={`${style.blue} form-control active-input mb-5`}>
+          <p className="mt-5 ms-1"> Shipping method</p>
+          <div
+            className={`${style.shippingMethod}   form-control active-input mb-5`}
+          >
             <div className="row">
-              <div className="col-4"> standard</div>
+              <div className="col-4 "> standard</div>
               <div className="col-5"> </div>
-              <div className="col-2"> ${shippingvalue}</div>
+              <div className="col-2"> ${shippingValue}</div>
             </div>
           </div>
-          <div className="row mb-5  w-100 m-auto">
+          <div className="row mb-4  w-100 m-auto">
             <Link
-              className="text-decoration-none col-6  col-md-5 mt-2"
-              onClick={() => window.history.go(-1)}
+              to="/checkout/information"
+              className={` col-lg-6  col-md-6 col-sm-12  col-12  mt-2 mb-3 ${style.returnLink} text-decoration-none `}
             >
               {" "}
               {`<  `} return to information{" "}
             </Link>
-            <div className="col-1 col-md-4"></div>
-
-            <div
-              onClick={event => {
-                handleSubmit(orderinfo);
-                event.target.disabled = true;
-                event.target.style.backgroundColor = "green";
-                event.target.style.borderColor = "green";
-                event.target.style.color = "white";
-                event.target.textContent = "order Done ";
-                // event.target.style.cursor = "not-allowed";
-              }}
-              className={`${style.orderbtn}  btn btn-primary col-5 col-md-3 mr-5 `}
+            <button
+              className={`${style.orderbtn} col-lg-6  col-md-6 col-sm-12  col-12  btn  h-100  ws-100 me-0 `}
+              onClick={onConfirmClick}
+              disabled={isAddingOrder}
             >
               Confirm order
-            </div>
+            </button>
           </div>
           <hr className="border" />
-          <p className={`${style.gray}`}> All Rights Reserved to comfy team</p>
+          <small className={`${style.gray} `}>
+            {" "}
+            All Rights Reserved to comfy team
+          </small>
         </div>
       </div>
     </div>
   ) : (
-    "loading"
+    "loading---"
   );
 }

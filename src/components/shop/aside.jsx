@@ -12,14 +12,12 @@ import style from "../../pages/shop/shop.module.css";
 const Aside = ({
   showFilterModal,
   isSmallScreen,
-  onFilterModalToggle,
+  closeFilterModal,
   categories,
   brands,
   minPrice,
   maxPrice,
-  filterCategory,
-  filterBrand,
-  filterPrice,
+  filters,
   handleCategoryFilter,
   handleBrandFilter,
   handlePriceFilter,
@@ -37,7 +35,7 @@ const Aside = ({
             <button
               type="button"
               className="btn outline-0 text-white border-0 p-0"
-              onClick={() => onFilterModalToggle(false)}
+              onClick={closeFilterModal}
               aria-label="close filter modal"
             >
               <FontAwesomeIcon icon={faXmark} />
@@ -48,19 +46,19 @@ const Aside = ({
           <Filter
             data={categories}
             name="categories"
-            active={filterCategory}
+            active={filters.category}
             onFilter={handleCategoryFilter}
           />
           <Filter
             data={brands}
             name="brands"
-            active={filterBrand}
+            active={filters.brand}
             onFilter={handleBrandFilter}
           />
           <PriceFilter
             min={minPrice}
             max={maxPrice}
-            value={filterPrice}
+            value={filters.price}
             onFilter={handlePriceFilter}
           />
         </form>

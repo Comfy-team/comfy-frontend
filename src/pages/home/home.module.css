@@ -177,16 +177,6 @@
   display: flex;
 }
 .modifyImage {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: start;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
   height: 400px;
   margin-bottom: 30px;
 }
@@ -329,7 +319,12 @@
 .overlay h6:hover {
   color: var(--yellow);
 }
-
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Styles for viewport width between 768px and 991px */
+  .overlay p{
+    min-width: 120px
+  }
+}
 @media (max-width: 768px) {
   .imageContainer img {
     width: 100%;
@@ -351,6 +346,7 @@
   }
   .overlay p ,.overlay h2 ,.overlay h6{
     font-size: 1.25rem;
+    min-width: 150px
   }
   .overlay h2{
     margin-bottom: 10px;

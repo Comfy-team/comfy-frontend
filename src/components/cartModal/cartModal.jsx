@@ -1,17 +1,23 @@
+// React imports
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+// Font Awesome imports
 import { faClose, faTruck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import "../../functions/cart";
-import style from "./cartModal.module.css";
+// Local imports
 import Item from "./item";
+import "../../functions/cart";
+
+//style
+import style from "./cartModal.module.css";
 
 function CartModal({ showModal, hideModal }) {
   const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (showModal) {
       document.body.classList.add(`${style["no-scroll"]}`);
@@ -42,9 +48,9 @@ function CartModal({ showModal, hideModal }) {
   return (
     <>
       {showModal && (
-        <div className="container ">
+        <div className="container">
           <div
-            className={`${style["modal"]} modal fade show d-block justify-content-end fs-6`}
+            className={`${style["cart-modal"]} modal show d-block justify-content-end fs-6`}
             tabIndex="-1"
             role="dialog"
           >
@@ -54,15 +60,14 @@ function CartModal({ showModal, hideModal }) {
             >
               <div className={`${style["modal-content"]} border-0 rounded-0`}>
                 <div className="modal-header  bg-dark rounded-0 text-light ">
-                  <p className="modal-title px-4" id="cartModalLabel">
-                    Shopping Cart
-                  </p>
+                  <strong className="modal-title px-4" id="cartModalLabel">
+                    SHOPPING CART
+                  </strong>
 
-                  <span aria-hidden="true" className="pointer">
+                  <span aria-hidden="true" className={`${style["pointer"]}`}>
                     <FontAwesomeIcon
                       icon={faClose}
                       size="lg"
-                      className="close pointer"
                       data-dismiss="modal"
                       aria-label="Close"
                       onClick={hideModal}
@@ -88,20 +93,15 @@ function CartModal({ showModal, hideModal }) {
                         className={`${style["product-container"]} container-fluid  w-100`}
                       >
                         {cart.items.map((item, index) => (
-                          <>
-                            <Item
-                              key={item.product_id}
-                              item={item}
-                              cartId={cart._id}
-                            />
+                          <div key={item.product_id._id}>
+                            <Item item={item} cartId={cart._id} />
 
                             {index !== cart.items.length - 1 && (
                               <hr className="text-secondary" />
                             )}
-                          </>
+                          </div>
                         ))}
                       </div>
-                      <div className="container pr-4"></div>
                     </>
                   )}
                 </div>
@@ -163,8 +163,8 @@ function CartModal({ showModal, hideModal }) {
                         </div>
                       </div>
 
-                      <div className="justify-content-between d-flex border-0 fs-6 w-100">
-                        <strong> Price: </strong>
+                      <div className="justify-content-between d-flex py-2 fs-6 w-100">
+                        <strong> Total Price </strong>
                         <strong>${cart.totalPrice}</strong>
                       </div>
 
@@ -179,7 +179,7 @@ function CartModal({ showModal, hideModal }) {
 
                         <Link
                           to="/cart"
-                          className="text-dark fs-6 "
+                          className="text-dark fs-6"
                           onClick={handleViewCart}
                         >
                           View cart

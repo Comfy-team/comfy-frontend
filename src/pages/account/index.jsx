@@ -10,6 +10,7 @@ import { showLoginModal } from "../../store/slices/loginModalSlice";
 
 import axiosInstance from "./../../apis/config";
 import style from "./account.module.css";
+import jwtDecode from "jwt-decode";
 
 const Account = () => {
   const { id } = useParams();
@@ -26,32 +27,36 @@ const Account = () => {
 
   const handleAccountInfoClick = () => {
     setActiveTitle("accountInfo");
-    setActiveComponent(<AccountInfo user={user} token={token}/>);
+    setActiveComponent(<AccountInfo user={user} token={token} />);
   };
 
   const handleChangePasswordClick = () => {
     setActiveTitle("changePassword");
-    setActiveComponent(<ChangePasswords user={user} token={token}/>);
+    setActiveComponent(<ChangePasswords user={user} token={token} />);
   };
 
   const handleMyOrderClick = () => {
     setActiveTitle("myOrder");
-    setActiveComponent(<AccountOrders user={user} token={token}/>);
+    setActiveComponent(<AccountOrders user={user} token={token} />);
   };
 
+  
   useEffect(() => {
     const token = localStorage.getItem("userToken");
     if (!token) {
       setNotAuth(true);
 
       navigate("/");
-      dispatch(showLoginModal(true))
+      dispatch(showLoginModal(true));
     } else {
       setNotAuth(false);
     }
   }, [token]);
 
   useEffect(() => {
+    if(jwtDecode(token).role === "admin"){
+      navigate("/dashboard");
+    }else{
     axiosInstance
       .get(`/users/${id}`, {
         headers: {
@@ -63,12 +68,23 @@ const Account = () => {
         setUser(res.data);
       })
       .catch((err) => console.log(err));
+    }
   }, []);
+  function handelLogout() {
+    localStorage.removeItem("userToken");
+    navigate("/");
+  }
+
   return !notAuth ? (
     <div id={`${style.account}`} style={{}}>
       <div className="container">
-        <h1>Account</h1>
-        <p className="h5">
+        <div className="d-flex justify-content-between align-items-center col-12 col-lg-7">
+          <h1>Account</h1>
+          <button className={`text-danger btn btn-md`} onClick={handelLogout}>
+            Logout
+          </button>
+        </div>
+        <p className="h5 mt-2 mt-md-0">
           <span>{user.fullName}</span>,{" "}
           <span className="text-secondary">{user.email}</span>
         </p>

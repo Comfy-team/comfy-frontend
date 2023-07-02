@@ -7,6 +7,21 @@ import LayoutWithPageHeader from "../components/layouts/layoutWithPageHeader";
 import Spinner from "../components/common/spinner";
 import PaymentMethod from "./../pages/checkout/paymentMethod";
 import FormComonent from "./../pages/checkout/FormComonent";
+import HomeDash from "../components/dashboard/home/homeDash";
+import UsersDash from "../components/dashboard/usersDash";
+import OrdersDash from "../components/dashboard/orders/ordersDash";
+import ProductsDash from "../components/dashboard/products/productsDash";
+import BrandsDash from "../components/dashboard/brands/brandsDash";
+import CategoriesDash from "../components/dashboard/categories/categoriesDash";
+import ProductsData from "../components/dashboard/products/productsData";
+import ProductsUpdate from "../components/dashboard/products/productsUpdate";
+import BrandsData from "./../components/dashboard/brands/brandsData";
+import BrandsUpdate from "./../components/dashboard/brands/brandsUpdate";
+import CategoriesData from "../components/dashboard/categories/categoriesData";
+import CategoriesUpdate from "../components/dashboard/categories/categoriesUpdate";
+import ProductsAdd from "../components/dashboard/products/productsAdd";
+import BrandsAdd from "./../components/dashboard/brands/brandsAdd";
+import CategoriesAdd from "./../components/dashboard/categories/categoriesAdd";
 
 // pages
 const Home = React.lazy(() => import("./../pages/home"));
@@ -20,6 +35,7 @@ const CartPage = React.lazy(() => import("./../pages/cartPage"));
 const Page404 = React.lazy(() => import("./../pages/page404"));
 const SearchPage = React.lazy(() => import("./../pages/searchPage"));
 const Account = React.lazy(() => import("./../pages/account"));
+const Dashboard = React.lazy(() => import("./../pages/dashboard"));
 
 const AppRoutes = () => {
   return (
@@ -102,6 +118,10 @@ const AppRoutes = () => {
         </Route>
       </Route>
       <Route
+        path="/Checkout"
+        element={<Navigate to="/Checkout/information" replace />}
+      />
+      <Route
         path="/checkout"
         element={
           <Suspense fallback={<Spinner />}>
@@ -112,7 +132,33 @@ const AppRoutes = () => {
         <Route path="information" element={<FormComonent />} />
         <Route path="shipping" element={<PaymentMethod />} />
       </Route>
-
+      <Route
+        path="/dashboard"
+        element={
+          <Suspense fallback={<Spinner />}>
+            <Dashboard />
+          </Suspense>
+        }
+      >
+        <Route path="" element={<HomeDash />} />
+        <Route path="users" element={<UsersDash />} />
+        <Route path="products" element={<ProductsDash />}>
+          <Route path="" element={<ProductsData />} />
+          <Route path="add" element={<ProductsAdd />} />
+          <Route path="update/:id" element={<ProductsUpdate />} />
+        </Route>
+        <Route path="brands" element={<BrandsDash />}>
+          <Route path="" element={<BrandsData />} />
+          <Route path="add" element={<BrandsAdd />} />
+          <Route path="update/:id" element={<BrandsUpdate />} />
+        </Route>
+        <Route path="categories" element={<CategoriesDash />}>
+          <Route path="" element={<CategoriesData />} />
+          <Route path="add" element={<CategoriesAdd />} />
+          <Route path="update/:id" element={<CategoriesUpdate />} />
+        </Route>
+        <Route path="orders" element={<OrdersDash />} />
+      </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>
   );
