@@ -169,7 +169,6 @@
 }
 .orderbtn:hover {
   background-color: var(--btnHover-blue) !important;
-  color: white;
 }
 
 .linkclass {
@@ -177,12 +176,10 @@
 }
 .formbtn {
   background-color: var(--btn-blue) !important;
-  color: white !important;
   color: rgb(255, 255, 255) !important;
 }
 .formbtn:hover {
   background-color: var(--btnHover-blue) !important;
-  color: white;
 }
 .none {
   text-decoration: none;
