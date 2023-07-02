@@ -1,20 +1,39 @@
+// React imports
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+
+// Font Awesome imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+
+// Local imports
 import {
   deleteItemFromCart,
   updateItemQuantity,
 } from "../../functions/cart.js";
-import style from "../../pages/cartPage/cartPage.module.css";
+import RemoveProductWarning from "../common/removeProductWarning.jsx";
 import { showCartModal } from "../../store/slices/cartModalSlice.js";
+
+//style
+import style from "../../pages/cartPage/cartPage.module.css";
+
 const CartItem = ({ item, cartId, product }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showBtnSpinner, setBtnSpinner] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   const handleCloseCart = () => {
     navigate(`/product-details/${item?.product_id._id}`);
     dispatch(showCartModal(false));
+  };
+  const handleDelete = () => {
+    setBtnSpinner(true); // show spinner
+    deleteItemFromCart(cartId, item?.product_id?._id, item.color).then(() => {
+      setBtnSpinner(false); // hide spinner
+      setShowWarning(false);
+    });
   };
   return (
     <tr className="w-100">
@@ -24,14 +43,21 @@ const CartItem = ({ item, cartId, product }) => {
             <tbody>
               <tr>
                 <td colSpan={2}>
-                  <FontAwesomeIcon
-                    icon={faClose}
-                    onClick={() =>
-                      deleteItemFromCart(cartId, item?.product_id._id)
-                    }
-                    type="button"
-                    className="hover-color-yellow pe-4"
-                  />
+                  {showBtnSpinner ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-dark me-2"
+                      role="status"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faClose}
+                      onClick={() => setShowWarning(true)}
+                      type="button"
+                      className="hover-color-yellow pe-4"
+                    />
+                  )}
                 </td>
                 <td>
                   <img
@@ -85,7 +111,8 @@ const CartItem = ({ item, cartId, product }) => {
               updateItemQuantity(
                 cartId,
                 item?.product_id._id,
-                item.quantity - 1
+                item.quantity - 1,
+                item.color
               )
             }
             disabled={item.quantity === 1}
@@ -100,7 +127,8 @@ const CartItem = ({ item, cartId, product }) => {
               updateItemQuantity(
                 cartId,
                 item?.product_id._id,
-                item.quantity + 1
+                item.quantity + 1,
+                item.color
               )
             }
           >
@@ -111,6 +139,12 @@ const CartItem = ({ item, cartId, product }) => {
       <td>
         <strong>${(item.price * item.quantity).toFixed(2)}</strong>
       </td>
+      {showWarning && (
+        <RemoveProductWarning
+          onRemove={handleDelete}
+          onCancel={() => setShowWarning(false)}
+        />
+      )}
     </tr>
   );
 };

@@ -26,7 +26,7 @@ export const getCart = (token) => {
 export const deleteItemFromCart = (cartId, id, color) => {
   const token = localStorage.getItem("userToken");
   if (token) {
-    axiosInstance
+    return axiosInstance
       .patch(
         `/cart/${cartId}/delete`,
         { itemId: id, color },
