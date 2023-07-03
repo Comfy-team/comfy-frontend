@@ -8,6 +8,7 @@ import { emptyCart } from "../../functions/cart";
 import style from "./checkout.module.css";
 import "../../App.css";
 import OrderInfo from "./../../components/checkout/orderInfo";
+import Spinner from "../../components/common/spinner";
 
 export default function PaymentMethod() {
   const [isAddingOrder, setIsAddingOrder] = useState(false);
@@ -39,6 +40,7 @@ export default function PaymentMethod() {
         },
       })
       .then(res => {
+        // console.log(res);
         const the_msg = confirmOrder();
         if (the_msg === false) return;
         emptyCart(cart._id);
@@ -95,6 +97,6 @@ export default function PaymentMethod() {
       </div>
     </div>
   ) : (
-    "loading---"
+    <Spinner />
   );
 }

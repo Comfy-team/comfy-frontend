@@ -15,14 +15,11 @@ import style from "./checkout.module.css";
 import Spinner from "./../../components/common/spinner";
 //yup validation
 const DisplayingErrorMessagesSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .max(15, "Must be 15 characters or less")
-    .matches(/^[a-zA-Z]+$/, "First name must contain only letters")
-    .required("Required"),
-  lastName: Yup.string()
-    .matches(/^[a-zA-Z]+$/, "lastName must contain only letters")
-    .max(20, "Must be 20 characters or less")
-    .required("Required"),
+  fullName: Yup.string()
+    .required("Full name is required")
+    .matches(/^[a-zA-Z ]+$/, "Full name shouldn't have numbers")
+    .min(3, "Full name must be at least 3 characters")
+    .max(50, "Full name must be less than 50 characters"),
   phone: Yup.string()
     .required("Required")
     .matches(
@@ -39,16 +36,12 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
       .label("Building"),
     governorate: Yup.string().label("Governorate").required("Required"),
     apartment: Yup.string().label("Apartment").required("Required"),
-    postalCode: Yup.number()
+    postalCode: Yup.string()
       .required("Required")
       .typeError("postalCode must be a number")
-      .required("Required")
-      .min(1, "postal code  can't be 0")
-      .max(99999, "postal code  can't be more than 5 digits")
-      .label("Postal Code"),
-    // .label("Postal Code")
-    // .length(5),
-    // .matches(/^[0-9]{5}/),
+      .label("Postal Code")
+      .length(5, "Postal code must be exactly 5 digits")
+      .matches(/(?!0)[0-9]{5}/, "Postal code must not start with zero"),
     country: Yup.string(),
   }),
 });
@@ -61,8 +54,7 @@ export default function FormComonent() {
   const dispatch = useDispatch();
   //intial value
   const [theintialvalue, settheIntialvalue] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     phone: user?.phone || "",
     address: {
       postalCode: user?.address?.postalCode || "",
@@ -84,15 +76,15 @@ export default function FormComonent() {
         },
       })
       .then(res => {
+        // console.log(res);
         setUser(res.data);
         settheIntialvalue(res.data);
         const theData = res.data;
 
-        const [firstName, lastName] = theData.fullName.split(" ");
+        const fullName = theData.fullName;
         settheIntialvalue({
           ...theData,
-          firstName,
-          lastName,
+          fullName,
         });
       })
       .catch(err => console.log(err));
@@ -163,31 +155,18 @@ export default function FormComonent() {
               )}
             </div>
             <h6 className={`{} mb-0 mt-4 `}> Shipping address </h6>
-            <div className="row">
-              <div className="form-group col-6">
-                <Field
-                  name="firstName"
-                  placeholder="first name"
-                  className="form-control"
-                  type="text"
-                  id="firstName"
-                />
-                {touched.firstName && errors.firstName && (
-                  <div className="text-danger ms-2">{errors.firstName}</div>
-                )}
-              </div>
-              <div className="form-group col-6 m-0">
-                <Field
-                  name="lastName"
-                  placeholder="last name"
-                  className="form-control"
-                  type="text"
-                  id="lastName"
-                />
-                {touched.lastName && errors.lastName && (
-                  <div className="text-danger ms-2">{errors.lastName}</div>
-                )}
-              </div>
+
+            <div className="form-group ">
+              <Field
+                name="fullName"
+                placeholder="full name"
+                className="form-control"
+                type="text"
+                id="fullName"
+              />
+              {touched.fullName && errors.fullName && (
+                <div className="text-danger ms-2">{errors.fullName}</div>
+              )}
             </div>
 
             <div className="form-group">
