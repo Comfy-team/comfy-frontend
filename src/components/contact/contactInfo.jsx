@@ -73,6 +73,12 @@ const ContactForm = () => {
     >
       {({ errors, touched }) => (
         <Form ref={formRef}>
+          {isMessageSent && (
+            <div className="alert alert-success mt-3">
+              Thanks for contacting us. We'll get back to you as soon as
+              possible.
+            </div>
+          )}
           <div className="mb-3 pt-3">
             <Field
               type="text"
@@ -81,6 +87,7 @@ const ContactForm = () => {
                 touched.name && errors.name ? "is-invalid" : ""
               }`}
               placeholder="Name"
+              autoComplete="off"
             />
             <ErrorMessage
               name="name"
@@ -96,6 +103,7 @@ const ContactForm = () => {
                 touched.email && errors.email ? "is-invalid" : ""
               }`}
               placeholder="Email"
+              autoComplete="off"
             />
             <ErrorMessage
               name="email"
@@ -112,6 +120,7 @@ const ContactForm = () => {
               }`}
               rows="4"
               placeholder="Message"
+              autoComplete="off"
             />
             <ErrorMessage
               name="message"
@@ -135,12 +144,6 @@ const ContactForm = () => {
               )}
             </button>
           </div>
-          {isMessageSent && (
-            <div className="alert alert-success mt-3">
-              Thanks for contacting us. We'll get back to you as soon as
-              possible.
-            </div>
-          )}
         </Form>
       )}
     </Formik>
@@ -170,7 +173,7 @@ const ContactInfo = () => {
                 </div>
                 <div className="col-9 contact-info ">
                   <h5 className="d-block">Address</h5>
-                  <p>2168 S Archer Ave, Chicago, IL 60616, US</p>
+                  <p>19 El Galaa St ، El Dakahleya ، Masoura City</p>
                 </div>
               </div>
               <hr />
@@ -181,7 +184,7 @@ const ContactInfo = () => {
                 </div>
                 <div className="col-9 contact-info">
                   <h5 className="d-block">Phone</h5>
-                  <p>+1 312-791-9121 | +1 233-688-8999</p>
+                  <p>+20 1003533427 | +20 1003533478</p>
                 </div>
               </div>
               <hr />
@@ -191,7 +194,7 @@ const ContactInfo = () => {
                 </div>
                 <div className="col-9 contact-info">
                   <h5 className="d-block">Email</h5>
-                  <p>contact@company.com</p>
+                  <p>comfyproject20@gmail.com</p>
                 </div>
               </div>
               <hr />
