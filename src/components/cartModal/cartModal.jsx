@@ -1,12 +1,18 @@
+// React imports
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+// Font Awesome imports
 import { faClose, faTruck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import "../../functions/cart";
-import style from "./cartModal.module.css";
+// Local imports
 import Item from "./item";
+import "../../functions/cart";
+
+//style
+import style from "./cartModal.module.css";
 
 function CartModal({ showModal, hideModal }) {
   const cart = useSelector((state) => state.cart.cart);
@@ -44,7 +50,7 @@ function CartModal({ showModal, hideModal }) {
       {showModal && (
         <div className="container">
           <div
-            className={`${style["modal"]} modal fade show d-block justify-content-end fs-6`}
+            className={`${style["cart-modal"]} modal show d-block justify-content-end fs-6`}
             tabIndex="-1"
             role="dialog"
           >

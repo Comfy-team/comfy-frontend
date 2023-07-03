@@ -1,19 +1,17 @@
-.modal-backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.modal {
+.cart-modal {
   background-color: white;
   top: 0;
   right: 0;
   bottom: 0;
-  left: auto;
-  width: 27rem;
+  left: auto !important;
+  width: 27rem !important;
 }
 .modal-content {
   height: 100vh !important;
 }
+
 .progress {
-  height: 2rem;
+  height: 1.6rem !important;
 }
 .dark-bar {
   background-color: rgb(5, 5, 74) !important;
@@ -54,8 +52,8 @@
   cursor: pointer;
 }
 .spanColor {
-  width: 1.5rem !important;
-  height: 1.5rem !important;
+  width: 1rem !important;
+  height: 1rem !important;
   border: solid black;
 }
 

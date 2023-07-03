@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -9,13 +10,15 @@ import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import axiosInstance from "../../apis/config";
-import styles from "../../pages/account/account.module.css";
-
 import { governoratesData } from "../../apis/governorates";
 import { cities } from "../../apis/cities";
+import { showToast } from "../../store/slices/toastSlice";
+
+import styles from "../../pages/account/account.module.css";
 
 const AccountInfo = ({ user, token }) => {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const [updateUser, setUpdateUser] = useState({
     id: id,
     fullName: user?.fullName,
@@ -45,10 +48,12 @@ const AccountInfo = ({ user, token }) => {
       })
       .then((res) => {
         setIsSubmitted(true);
+        // dispatch(showToast("Account Updated successfully!"));
       })
       .catch((err) => {
         // handle error, e.g. show error message
         setErrorMessage("Unable to update, please try again.");
+        // dispatch(showToast("Unable to update, please try again."));
       });
   };
 
@@ -102,18 +107,19 @@ const AccountInfo = ({ user, token }) => {
             .required("Email is required")
             .matches(/^[a-z0-9.]{3,}@gmail\.com$/, "Invalid email address"),
           phone: Yup.string()
+            .optional()
+            .nullable()
             .matches(
               /^(\+2)?01[0-2]{1}[0-9]{8}$/,
               "Please enter a valid Egyptian phone number."
-            )
-            .nullable()
-            .optional(),
+            ),
           address: Yup.object({
             city: Yup.string().optional().nullable().label("City"),
             street: Yup.string().optional().nullable().label("Street"),
             building: Yup.number()
               .optional()
               .nullable()
+              .min(1, "Building can't be 0")
               .integer("Building must be an integer number.")
               .label("Building"),
             governorate: Yup.string()
@@ -121,10 +127,10 @@ const AccountInfo = ({ user, token }) => {
               .nullable()
               .label("Governorate"),
             apartment: Yup.string().optional().nullable().label("Apartment"),
-            postalCode: Yup.number()
+            postalCode: Yup.string()
               .optional()
-              .nullable()
-              .integer()
+              .length(5, "Postal code must be exactly 5 digits")
+              .matches(/(?!0)[0-9]{5}/, "Postal code must not start with zero")
               .label("Postal Code"),
           })
             .optional()
@@ -311,11 +317,11 @@ const AccountInfo = ({ user, token }) => {
               <Field
                 className={`form-control ${styles.input}`}
                 name="address.postalCode"
-                type="number"
+                type="text"
                 id="postalCode"
                 placeholder="Please enter your postal Code"
               />
-              {errors.address?.postalCode && touched.address.postalCode ? (
+              {errors.address?.postalCode && touched?.address?.postalCode ? (
                 <span className="text-danger ms-2">
                   {errors.address.postalCode}
                 </span>
