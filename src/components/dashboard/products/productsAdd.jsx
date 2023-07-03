@@ -34,14 +34,14 @@ const ProductsAdd = () => {
       .required("Color is required"),
   });
 
-  const handleAddProduct = (values, { setSubmitting }) => {
-    SetShowBtnSpinner(true);
+  const handleAddProduct = (values, { setSubmitting, resetForm }) => {
     setSubmitting(false);
     if (imageError) return;
     if (selectedImages.length === 0) {
       setImageError("Enter at least one image");
       return;
     }
+    SetShowBtnSpinner(true);
     const token = localStorage.getItem("userToken");
     const formData = new FormData();
     // append data
@@ -64,6 +64,8 @@ const ProductsAdd = () => {
       .then((res) => {
         if (res.status === 201) {
           dispatch(showToast("Product was added successfully!"));
+          resetForm();
+          setSelectedImages([]);
         } else {
           dispatch(showToast("Failed to add product! Please try again later!"));
         }

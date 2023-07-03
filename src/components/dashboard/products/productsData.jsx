@@ -121,7 +121,7 @@ const ProductsData = () => {
     <>
       <div className="px-4">
         <h1 className="h4 mb-4 py-3">Products (total: {totalProducts})</h1>
-        <div className="d-flex align-items-start justify-content-between px-md-2">
+        <div className="d-flex flex-md-row flex-column-reverse align-items-md-start justify-content-between px-md-2">
           <ProductsSearch
             onSearch={handleSearch}
             searchParams={searchParams}
@@ -129,7 +129,7 @@ const ProductsData = () => {
           />
           <Link
             to="/dashboard/products/add"
-            className={`text-capitalize btn ${style["dash-btn"]} d-block`}
+            className={`text-capitalize btn ${style["dash-btn"]} d-block align-self-center mb-md-0 mb-5`}
           >
             Add a product
           </Link>
@@ -139,7 +139,7 @@ const ProductsData = () => {
         <>
           <div className="table-responsive mb-5">
             {data.length > 0 ? (
-              <table className="table border-top">
+              <table className={`${style["dash-products-table"]} table border-top`}>
                 <thead>
                   <tr>
                     <th scope="col">#id</th>
@@ -159,7 +159,7 @@ const ProductsData = () => {
                 </thead>
                 <tbody>
                   {data.map((product) => (
-                    <tr key={product._id} className="overflow-hidden">
+                    <tr key={product._id}>
                       <th scope="row" className={style["dash-prod-id-holder"]}>
                         <span className={`d-block ${style["dash-prod-id"]}`}>
                           {product._id}
