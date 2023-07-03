@@ -139,7 +139,7 @@ const ProductsData = () => {
         <>
           <div className="table-responsive mb-5">
             {data.length > 0 ? (
-              <table className={`${style["dash-products-table"]} table border-top`}>
+              <table className="table border-top">
                 <thead>
                   <tr>
                     <th scope="col">#id</th>
