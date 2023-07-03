@@ -109,7 +109,7 @@ function Item({ item, cartId }) {
                   }
                   disabled={item.quantity === 1}
                 >
-                  <FontAwesomeIcon icon={faMinus} size="xs" />
+                  <FontAwesomeIcon icon={faMinus} size="xs" className="hover-color-yellow"/>
                 </button>
                 <p className={`m-0 py-2 px-1`}>{item?.quantity}</p>
                 <button
@@ -125,7 +125,7 @@ function Item({ item, cartId }) {
                   }
                   disabled={item.quantity === item.product_id.stock}
                 >
-                  <FontAwesomeIcon icon={faPlus} size="xs" />
+                  <FontAwesomeIcon icon={faPlus} size="xs"  className="hover-color-yellow" />
                 </button>
               </div>
               <div className="ps-4">
