@@ -21,11 +21,8 @@ const Footer = () => {
   const [showCustomerService, setShowCustomerService] = useState(false);
 
   useEffect(() => {
-    // Update state values based on screen size on component mount
     updateStates();
-    // Add event listener to update state values on window resize
     window.addEventListener("resize", updateStates);
-    // Remove event listener on component unmount
     return () => {
       window.removeEventListener("resize", updateStates);
     };
@@ -79,31 +76,42 @@ const Footer = () => {
               Follow Us{" "}
               <FontAwesomeIcon
                 icon={faAngleDown}
-                className={`icon ${showFollowUs ? "icon-rotate" : ""}`}
+                className={`icon ${showFollowUs ? "icon-rotate" : ""} hover-color-yellow`}
               />
             </h6>{" "}
-            <div
-              className={`footer-content ${
-                showFollowUs || window.innerWidth > 576 ? "show" : "hide"
-              }`}
-            >
+            <div className={`footer-content ${showFollowUs ? "show" : ""}`}>
               <h6 className="text-light d-none d-sm-block ">Follow Us</h6>
               <div className="social-icons">
-                <Link to="https://instagram.com/comfy_store4?igshid=MzNlNGNkZWQ4Mg==" className="me-4 link-light  hover-color-yellow">
+                <Link
+                  to="https://instagram.com/comfy_store4?igshid=MzNlNGNkZWQ4Mg=="
+                  className="me-4 link-light  hover-color-yellow"
+                >
                   <FontAwesomeIcon
                     icon={faInstagram}
                     size="lg"
-                    className="pt-2"
+                    className="pt-2 hover-color-yellow"
                   />
                 </Link>
-                <Link to="/" className="me-4 link-light  hover-color-yellow">
-                  <FontAwesomeIcon icon={faFacebookF} size="lg" />
+                <Link to="/" className="me-4 link-light">
+                  <FontAwesomeIcon
+                    icon={faFacebookF}
+                    size="lg"
+                    className="hover-color-yellow"
+                  />
                 </Link>
-                <Link to="/" className="me-4 link-light  hover-color-yellow">
-                  <FontAwesomeIcon icon={faLinkedin} size="lg" />
+                <Link to="/" className="me-4 link-light">
+                  <FontAwesomeIcon
+                    icon={faLinkedin}
+                    size="lg"
+                    className="hover-color-yellow"
+                  />
                 </Link>
-                <Link to="/" className="me-4 link-light  hover-color-yellow">
-                  <FontAwesomeIcon icon={faGithub} size="lg" />
+                <Link to="/" className="me-4 link-light">
+                  <FontAwesomeIcon
+                    icon={faGithub}
+                    size="lg"
+                    className="hover-color-yellow"
+                  />
                 </Link>
               </div>
             </div>
@@ -116,16 +124,12 @@ const Footer = () => {
               HERE TO HELP{" "}
               <FontAwesomeIcon
                 icon={faAngleDown}
-                className={`icon ${showHereToHelp ? "icon-rotate" : ""} `}
+                className={`icon ${showHereToHelp ? "icon-rotate" : ""} hover-color-yellow`}
               />
             </h6>
             <h6 className="text-light d-none d-sm-block">HERE TO HELP</h6>
 
-            <div
-              className={`footer-content ${
-                showHereToHelp || window.innerWidth > 576 ? "show" : "hide"
-              }`}
-            >
+            <div className={`footer-content ${showHereToHelp ? "show" : ""}`}>
               <div>
                 <p className="pt-3 footer-color">
                   Have a question? You may find an answer in our FAQs. But you
@@ -134,7 +138,7 @@ const Footer = () => {
               </div>
               <div>
                 <p>
-                  <Link to="tel:+39103525684593">
+                  <Link to="tel:+201003533427">
                     <FontAwesomeIcon
                       icon={faPhoneVolume}
                       className="text-light  pt-4 pb-2 d-block hover-color-yellow"
@@ -143,14 +147,16 @@ const Footer = () => {
                   </Link>
                   <span className="text-light d-block">Order by phone</span>
 
-                  <span className="d-block footer-color">Available everyday</span>
+                  <span className="d-block footer-color">
+                    Available everyday
+                  </span>
 
                   <span className="contacts">
                     <Link
-                      to="tel:+39103525684593"
+                      to="tel:+201003533427"
                       className=" hover-color-yellow footer-color"
                     >
-                      +391 (0)35 2568 4593
+                      (+20) 1003533427
                     </Link>
                   </span>
                 </p>
@@ -167,14 +173,16 @@ const Footer = () => {
 
                   <span className="text-light d-block">Email Us</span>
 
-                  <span className="d-block footer-color">Get in touch by email</span>
+                  <span className="d-block footer-color">
+                    Get in touch by email
+                  </span>
 
                   <span className="contacts">
                     <Link
-                      to="mailto:hello@domain.com"
+                      to="mailto:comfyproject20@gmail.com"
                       className=" hover-color-yellow footer-color"
                     >
-                      hello@domain.com
+                      comfyproject20@gmail.com
                     </Link>
                   </span>
                 </p>
@@ -189,15 +197,13 @@ const Footer = () => {
               Customer Service{" "}
               <FontAwesomeIcon
                 icon={faAngleDown}
-                className={`icon ${showCustomerService ? "icon-rotate" : ""}`}
+                className={`icon ${showCustomerService ? "icon-rotate" : ""} hover-color-yellow`}
               />
             </h6>
             <h6 className="text-light d-none d-sm-block ">Customer Service</h6>
 
             <div
-              className={`footer-content ${
-                showCustomerService || window.innerWidth > 576 ? "show" : "hide"
-              }`}
+              className={`footer-content ${showCustomerService ? "show" : ""}`}
             >
               <div>
                 <p className="menu-footer pt-3">
@@ -221,7 +227,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="raw">
         <hr className="footer-color" />
         <div className="col-12 col-sm pt-2 pb-3 d-flex justify-content-start justify-content-sm-center text-center footer-color">
