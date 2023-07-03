@@ -119,7 +119,7 @@ const BrandsData = () => {
       });
   }
   return (
-    <>
+    <div className="py-4">
       <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
         Brands (total: {totalBrands} )
       </h4>
@@ -247,7 +247,7 @@ const BrandsData = () => {
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
 
