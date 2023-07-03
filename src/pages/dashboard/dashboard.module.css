@@ -233,8 +233,10 @@ body {
 }
 
 /* start search from */
-#dash-search input {
-  width: 20rem;
+@media (min-width: 768px) {
+  #dash-search input {
+    width: 20rem;
+  }
 }
 /* end search form */
 /* end products */

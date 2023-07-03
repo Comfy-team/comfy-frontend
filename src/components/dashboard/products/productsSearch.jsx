@@ -23,7 +23,7 @@ const ProductsSearch = ({ onSearch, searchParams, onRemoveSearch }) => {
       {({ errors, touched, values, setFieldValue }) => (
         <Form id={style["dash-search"]} className="m-0 mb-4">
           <div className="form-group mb-3 mb-sm-0">
-            <div className="position-relative pe-4">
+            <div className="position-relative pe-md-4">
               {values.searchValue && (
                 <button
                   type="button"
