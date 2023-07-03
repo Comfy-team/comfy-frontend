@@ -52,8 +52,8 @@
   cursor: pointer;
 }
 .spanColor {
-  width: 1.5rem !important;
-  height: 1.5rem !important;
+  width: 1rem !important;
+  height: 1rem !important;
   border: solid black;
 }
 
