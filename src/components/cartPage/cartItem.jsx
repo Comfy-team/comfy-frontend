@@ -76,9 +76,8 @@ const CartItem = ({ item, cartId, product }) => {
                   to={`/product-details/${item?.product_id._id}`}
                   className="text-decoration-none text-dark"
                   onClick={handleCloseCart}
-                  title={`Click to show details for ${item?.product_id.name}`}
                 >
-                  <strong className="d-block text-truncate hover-color-yellow">
+                  <strong className={`${style["item-name"]} d-block text-truncate hover-color-yellow`}>
                     {item?.product_id.name}
                   </strong>
                 </Link>
@@ -119,9 +118,9 @@ const CartItem = ({ item, cartId, product }) => {
             }
             disabled={item.quantity === 1}
           >
-            <FontAwesomeIcon icon={faMinus} size="xs" />
+            <FontAwesomeIcon icon={faMinus} size="xs" className="hover-color-yellow"/>
           </button>
-          <p className={`${style["counter-value"]} m-0 p-2`}>{item?.quantity}</p>
+          <p className={`${style["counter-value"]} m-0  px-1`}>{item?.quantity}</p>
           <button
             className={`btn ${style["counter-btn"]} rounded-0 border-0`}
             type="button"
@@ -135,7 +134,7 @@ const CartItem = ({ item, cartId, product }) => {
             }
             disabled={item.quantity === item.product_id.stock}
           >
-            <FontAwesomeIcon icon={faPlus} size="xs" />
+            <FontAwesomeIcon icon={faPlus} size="xs" className="hover-color-yellow"/>
           </button>
         </div>
       </td>

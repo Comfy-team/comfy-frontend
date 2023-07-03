@@ -38,18 +38,18 @@ function CartPage(cartId) {
         )}
         <tbody>
           {cart.items.length === 0 ? (
-            <tr className="border mt-4">
-              <td colSpan="4" className="text-center pt-4 mt-4">
-                <strong className="d-block py-3">Your cart is empty.</strong>
+            <div className=" mt-4">
+              <div colSpan="4" className="text-center pt-4 mt-4">
+                <span className="d-block py-3 fw-semibold">Your cart is empty.</span>
                 <button
                   type="button"
-                  className={`btn btn-dark rounded-0 border-0 px-2 mb-5 ${style["cart-btn"]} pr-2`}
+                  className={`btn btn-dark rounded-1 border-0 px-4 mb-5 ${style["cart-btn"]} pr-2`}
                   onClick={handleReturnToShop}
                 >
                   CONTINUE SHOPPING
                 </button>
-              </td>
-            </tr>
+              </div>
+            </div>
           ) : (
             <>
               {cart.items.map((item, index) => (

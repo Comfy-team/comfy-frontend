@@ -8,9 +8,9 @@
 .cart-btn:hover {
   background-color: #c7ab62;
 }
-.item-img{
-  width: 6rem;
-  height: 6rem;
+.item-img {
+  width: 5rem;
+  height: 5rem;
 }
 .spanColor {
   width: 1rem !important;
@@ -22,14 +22,13 @@
   font-size: 0.875rem;
 }
 .counter-value {
-  display: inline-block;
-  font-size: 1rem;
-  font-weight: 400;
-  max-width: 2rem;
+  width: 2rem;
 }
 @media (max-width: 767.98px) {
   .counter-value {
     width: auto;
   }
 }
-
+.item-name{
+  margin-top: -2rem;
+}
