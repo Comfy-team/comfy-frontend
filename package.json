@@ -2,7 +2,7 @@
   "name": "comfy",
   "version": "0.1.0",
   "private": true,
-  "homepage": "",
+  "homepage": "https://Comfy-team.github.io/comfy-frontend",
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.6",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
@@ -36,6 +36,8 @@
     "yup": "^1.2.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "env-cmd -f .env.development.local react-scripts start",
     "build": "env-cmd -f .env.production.local react-scripts build",
     "test": "react-scripts test",
@@ -58,5 +60,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
   }
 }
