@@ -1,13 +1,20 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+// font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faEdit } from "@fortawesome/free-regular-svg-icons";
+
+// components
 import axiosInstance from "../../../apis/config";
 import DashPagination from "./../dashPagination";
 import { showToast } from "../../../store/slices/toastSlice";
-import dashStyle from "../../../pages/dashboard/dashboard.module.css";
 import RemoveProductWarning from "../../common/removeProductWarning";
+
+//style
+import dashStyle from "../../../pages/dashboard/dashboard.module.css";
+
 const CategoriesData = () => {
   const [categories, setCategories] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
@@ -37,7 +44,7 @@ const CategoriesData = () => {
           setAllCategories(res.data);
           setTotalCategories(res.data.totalCategories);
           setLoading(false);
-          console.log(displayedCategories.totalPages)
+          console.log(displayedCategories.totalPages);
         })
         .catch((err) => {
           console.log(err);
@@ -100,15 +107,18 @@ const CategoriesData = () => {
         },
       })
       .then((response) => {
-        console.log(response);
-        // Remove the deleted category from the displayed categories
-        setDisplayedCategories(
-          displayedCategories.filter((category) => category._id !== id)
-        );
-        // decrement the total categories count
-        setTotalCategories(totalCategories - 1);
-        dispatch(showToast("Product was deleted successfully!"));
-        setCategoryToDelete(null);
+        if (response.status === 200) {
+          dispatch(showToast("Category was deleted successfully!"));
+          setDisplayedCategories(
+            displayedCategories.filter((category) => category._id !== id)
+          );
+          setTotalCategories(totalCategories - 1);
+          setCategoryToDelete(null);
+        } else {
+          dispatch(
+            showToast("Failed to delete Category! Please try again later!")
+          );
+        }
       })
       .catch((error) => {
         console.log("Error deleting category:", error);
@@ -194,7 +204,6 @@ const CategoriesData = () => {
                       icon={faTrashCan}
                       type="button"
                       className="btn text-danger p-0 ms-2"
-                      // onClick={() => handleDeleteCategory(category._id)}
                       onClick={() => {
                         setCategoryToDelete(category);
                         setShowWarning(true);
@@ -206,7 +215,6 @@ const CategoriesData = () => {
             )}
           </tbody>
         </table>
-       
       </div>
 
       <DashPagination

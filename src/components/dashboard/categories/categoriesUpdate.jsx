@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
+
+//components
 import axiosInstance from "../../../apis/config";
 import CategoryForm from "./categoryForm";
+import { showToast } from "../../../store/slices/toastSlice";
 
 const CategoryUpdate = () => {
   const { id } = useParams();
   const [initialValues, setInitialValues] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const token = localStorage.getItem("userToken");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axiosInstance
@@ -24,7 +28,7 @@ const CategoryUpdate = () => {
         console.log(err);
         setErrorMessage("Unable to fetch category data, please try again.");
       });
-  }, [id]);
+  }, [dispatch, id]);
 
   const handleSubmit = (values) => {
     const formData = new FormData();
@@ -46,30 +50,28 @@ const CategoryUpdate = () => {
         },
       })
       .then(() => {
-        setIsSubmitted(true);
+        dispatch(showToast("Category was updated successfully!"));
         setTimeout(() => {
           navigate("/dashboard/categories");
-        }, 2000);
+        }, 4000);
       })
       .catch((err) => {
         console.log(err);
-       setErrorMessage("Unable to update category data, please try again.");
+        setErrorMessage("Unable to update category data, please try again.");
       });
   };
+
+  if (!initialValues) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="ps-4">
       <h1>Update Category</h1>
       {errorMessage ? (
         <div className="alert alert-danger">{errorMessage}</div>
-      ) : isSubmitted ? (
-        <div className="alert alert-success">Category updated successfully!</div>
       ) : null}
-      {initialValues ? (
-        <CategoryForm initialValues={initialValues} onSubmit={handleSubmit} />
-      ) : (
-        <div>Loading...</div>
-      )}
+      <CategoryForm initialValues={initialValues} onSubmit={handleSubmit} />
     </div>
   );
 };
