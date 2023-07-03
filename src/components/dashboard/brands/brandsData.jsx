@@ -161,6 +161,7 @@ const BrandsData = () => {
             </div>
           </div>
         </div>
+
         <div className="table-responsive mb-5">
           <table className="table border-top">
             <thead>
