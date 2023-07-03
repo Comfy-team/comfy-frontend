@@ -163,7 +163,7 @@ const UsersDash = () => {
             />
           </div>
         </div>
-
+        <div className="table-responsive mb-5">
         <table className="table border-top" id="DataTables_Table_0">
           <thead>
             <tr>
@@ -232,6 +232,7 @@ const UsersDash = () => {
             )}
           </tbody>
         </table>
+        </div>
         <DashPagination
           totalPages={allUsersInPage.totalPages}
           currentPage={currentPage}
