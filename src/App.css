@@ -228,57 +228,46 @@ img {
 footer {
   background-color: var(--main-black);
 }
-
 footer {
   padding-top: 6rem;
 }
-
 .footer-toggle {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 .footer-toggle .icon {
   transition: transform 0.3s ease-in-out;
   margin-left: 1rem;
 }
 .footer-content {
-  display: none;
+  max-height: 0;
+  overflow: hidden;
+  transition:0.5s ease-out;
 }
-
 .footer-content.show {
-  display: block;
+  max-height: 40rem;
+  transition: 0.5s ease-in-out;
 }
-
-.footer-content.hide {
-  display: none;
-}
-
 .menu-footer .link {
   text-decoration: none;
   transition: all 0.3s ease;
 }
-
 .menu-footer .link:hover {
   display: block;
   transform: translateX(10px);
 }
-
 .icon {
   transition: transform 0.3s ease-in-out;
   margin-left: 1rem;
 }
-
 .icon::before {
   transform: rotate(90deg);
 }
-
 .icon-rotate {
   transform: rotate(180deg);
 }
-
 .contacts {
   text-decoration: underline;
 }
