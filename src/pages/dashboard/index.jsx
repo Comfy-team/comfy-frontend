@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 // components
 import NavAside from "../../components/dashboard/navAside";
-import ToggleAsideBtn from "../../components/dashboard/toggleAsideBtn";
 import ToastInfo from "../../components/common/toast";
 import { showToast } from "../../store/slices/toastSlice";
 
@@ -43,10 +42,7 @@ const Dashboard = () => {
             style.col
           } px-0 pe-lg-3 position-relative`}
         >
-          {!isSmallScreen && (
-            <ToggleAsideBtn onToggleAside={handleToggleAside} />
-          )}
-          <NavAside isSmallScreen={isSmallScreen} collapsed={collapseAside} />
+          <NavAside isSmallScreen={isSmallScreen} collapsed={collapseAside} onToggleAside={handleToggleAside} />
         </div>
         <div
           className={`${collapseAside ? "col-lg-11" : "col-lg-9"} ${

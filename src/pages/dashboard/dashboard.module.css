@@ -124,8 +124,8 @@ body {
   width: 1.6rem;
   height: 1.6rem;
   font-size: 0.95rem;
-  transform: translateX(-25%);
-  top: 3.5rem;
+  transform: translateX(25%);
+  top: 4rem;
   outline: 6px solid var(--dash-bg) !important;
   z-index: 1030;
 }

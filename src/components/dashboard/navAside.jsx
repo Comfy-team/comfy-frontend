@@ -14,6 +14,9 @@ import {
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
 
+// components
+import ToggleAsideBtn from "./toggleAsideBtn";
+
 // style
 import style from "../../pages/dashboard/dashboard.module.css";
 
@@ -59,7 +62,7 @@ const navLinks = [
   },
 ];
 
-const NavAside = ({ isSmallScreen, collapsed }) => {
+const NavAside = ({ isSmallScreen, collapsed, onToggleAside }) => {
   const [active, setActive] = useState("Home");
   const navigate = useNavigate();
 
@@ -72,6 +75,7 @@ const NavAside = ({ isSmallScreen, collapsed }) => {
     <aside
       className={`${style.aside} sticky-top bg-white py-lg-4 pe-3 pe-lg-0 d-flex flex-column`}
     >
+      {!isSmallScreen && <ToggleAsideBtn onToggleAside={onToggleAside} />}
       <div className="d-flex justify-content-between py-2 py-lg-0 align-items-center d-lg-block">
         <Link
           className="navbar-brand d-inline-block align-self-start mx-3"
@@ -122,7 +126,7 @@ const NavAside = ({ isSmallScreen, collapsed }) => {
                         : "justify-content-start gap-2"
                     } align-items-center`}
                     to={ele.to}
-                    end 
+                    end
                   >
                     <FontAwesomeIcon icon={ele.icon} />
                     <span
