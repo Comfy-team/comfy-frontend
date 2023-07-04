@@ -44,10 +44,10 @@ const MainCarousel = () => {
           <Carousel.Caption className={`${styles["carousel-caption"]}`}>
             <div className={`${styles.captionCarouel}` }>
             <div className="row">
-            <p className={`col-5 col-md-2 ${styles.discount}`}>Up to {img.discount}% OFF</p>
+            <p className={`col-5 col-md-3 col-lg-2  ${styles.discount}`}>Up to {img.discount}% OFF</p>
             </div>
             <div className="row">
-            <h3 className="col-10 col-md-6 col-xl-4">{img.content}</h3>
+            <h3 className="col-10 col-md-6 col-xl-8">{img.content}</h3>
             </div>
             <Link to="/shop" className="text-decoration-none cursor-pointer">
              <p className={styles.explore}> Explore Now  <span className="ms-2 "><FontAwesomeIcon icon={faArrowRight}/></span></p>
