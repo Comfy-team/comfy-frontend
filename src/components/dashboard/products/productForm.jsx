@@ -81,7 +81,7 @@ const ProductForm = ({
       </div>
       <div className="row m-0">
         {/* price */}
-        <div className="col-4 ps-0">
+        <div className="col-4 px-0">
           <div className="form-group mb-3">
             <label htmlFor="price" className="mb-1">
               Price
@@ -102,7 +102,7 @@ const ProductForm = ({
           </div>
         </div>
         {/* discount */}
-        <div className="col-4">
+        <div className="col-4 px-2 px-md-3">
           <div className="form-group mb-3">
             <label htmlFor="discount" className="mb-1">
               Discount
@@ -124,7 +124,7 @@ const ProductForm = ({
           </div>
         </div>
         {/* stock */}
-        <div className="col-4 pe-0">
+        <div className="col-4 px-0">
           <div className="form-group mb-3">
             <label htmlFor="stock" className="mb-1">
               Stock
@@ -147,7 +147,7 @@ const ProductForm = ({
       </div>
       <div className="row m-0">
         {/* category */}
-        <div className="col-6 ps-0">
+        <div className="col-6 ps-0 pe-2 pe-md-1">
           <div className="form-group mb-3">
             <label htmlFor="category" className="mb-1">
               Category
@@ -174,7 +174,7 @@ const ProductForm = ({
           </div>
         </div>
         {/* brand */}
-        <div className="col-6 pe-0">
+        <div className="col-6 pe-0 pe-2">
           <div className="form-group mb-3">
             <label htmlFor="brand" className="mb-1">
               Brand
@@ -203,9 +203,15 @@ const ProductForm = ({
       </div>
       {/* colors */}
       <div className="form-group mb-3">
-        <label htmlFor="colors">Colors</label>
-        <div className="d-flex align-items-center gap-3 flex-wrap mb-3 mt-2">
-          {values.colors.map((color, index) => (
+        <label htmlFor="colors" className="mb-1">
+          Colors
+        </label>
+        <div
+          className={`d-flex align-items-center gap-3 flex-wrap ${
+            values.colors?.length > 0 ? "mb-3 mt-2" : ""
+          }`}
+        >
+          {values.colors?.map((color, index) => (
             <ProductColor
               key={color}
               color={color}
@@ -240,9 +246,15 @@ const ProductForm = ({
       </div>
       {/* images */}
       <div className="form-group mb-4 pb-4">
-        <label htmlFor="images">Images</label>
-        <div className="d-flex align-items-center gap-3 flex-wrap mb-3 mt-2">
-          {selectedImages.map((image, index) => (
+        <label htmlFor="images" className="mb-1">
+          Images
+        </label>
+        <div
+          className={`d-flex align-items-center gap-3 flex-wrap ${
+            selectedImages?.length > 0 ? "mb-3 mt-2" : ""
+          }`}
+        >
+          {selectedImages?.map((image, index) => (
             <ProductImage
               key={image._id || `${image.name}-${index}`}
               src={
@@ -253,7 +265,7 @@ const ProductForm = ({
               productName={productName}
               onDelete={() => {
                 setSelectedImages(
-                  selectedImages.filter((ele) => {
+                  selectedImages?.filter((ele) => {
                     return image._id
                       ? ele._id !== image._id
                       : ele.name !== image.name;
