@@ -56,7 +56,7 @@ export default function PaymentMethod() {
   };
 
   return formData ? (
-    <div className="p-4">
+    <div className="">
       <div className={`${style.PaymentMethod} ml-5 ml-md-3 container `}>
         <div className="container">
           <div className="form-control mr-5 ps-4">
@@ -89,7 +89,7 @@ export default function PaymentMethod() {
             </button>
           </div>
           <hr className="border" />
-          <small className={`${style.gray} `}>
+          <small className={`${style.gray} mt-2`}>
             {" "}
             All Rights Reserved to comfy team
           </small>

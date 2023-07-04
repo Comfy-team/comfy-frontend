@@ -16,15 +16,15 @@ const Checkout = () => {
           <img
             src={logoimg}
             alt=""
-            style={{ width: "6rem", marginLeft: "4rem" }}
-            className={` mt-3 `}
+            style={{ width: "6rem" }}
+            className={`${style.logoCheckout} mt-3 `}
           />{" "}
         </Link>
         <div className={`${style.checkoutSmalContainer} row mt-5 `}>
           <div
-            className={`${style.leftFormColum}  col-lg-6 col-md-12  col-12 mr-3  mb-3 ml-5 px-5`}
+            className={`${style.leftFormColum}  col-lg-6 col-md-12  col-12 mr-3  mb-3 ml-5 px-sm-0 px-md-5 `}
           >
-            <div className="ms-4 mb-4">
+            <div className="mb-4 ms-4">
               <Breadcrumbcomponant />
             </div>
 
