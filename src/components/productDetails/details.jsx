@@ -91,9 +91,9 @@ const Details = ({ product }) => {
             setActiveQuantity(item.quantity);
             setActiveColor(item.color);
             setInCart(true);
+            return;
           }
         }
-        return;
       }
       setActiveColor(product.colors[0]);
       setInCart(false);
