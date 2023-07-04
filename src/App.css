@@ -392,6 +392,15 @@ footer {
 #home .carousel-control-prev {
   filter: invert(1);
 }
+
+@media (min-width:767px) {
+  #home .carousel-control-prev {
+  left:-40px;
+  }
+  #home .carousel .carousel-control-next{
+  right: -40px;
+  } 
+}
 /* ====== end  home carousel ========= */
 
 /* for cartModal*/
