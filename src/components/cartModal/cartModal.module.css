@@ -19,11 +19,9 @@
 .yellow-bar {
   background-color: var(--yellow) !important;
 }
-
 .d-none {
   display: none;
 }
-
 .input-text {
   display: block;
   font-size: 14px;
@@ -70,5 +68,8 @@
   .spanColor {
     width: 1rem !important;
     height: 1rem !important;
+  }
+  .progress {
+    height: 2.6rem !important;
   }
 }
