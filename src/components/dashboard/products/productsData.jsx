@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 // components
 import DashPagination from "../dashPagination";
@@ -129,9 +130,9 @@ const ProductsData = () => {
           />
           <Link
             to="/dashboard/products/add"
-            className={`text-capitalize btn ${style["dash-btn"]} d-block align-self-center mb-md-0 mb-5`}
+            className={`text-capitalize btn ${style["dash-btn"]} align-self-center align-self-md-start d-flex gap-1 align-items-center mb-md-0 mb-5`}
           >
-            Add a product
+          <FontAwesomeIcon icon={faPlus} /> <span>Add a product</span>
           </Link>
         </div>
       </div>
