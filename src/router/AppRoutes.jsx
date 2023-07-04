@@ -1,10 +1,9 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 
 // components
 import LayoutWithNav from "../components/layouts/layoutWithNav";
 import LayoutWithPageHeader from "../components/layouts/layoutWithPageHeader";
-import Spinner from "../components/common/spinner";
 import PaymentMethod from "./../pages/checkout/paymentMethod";
 import FormComonent from "./../pages/checkout/FormComonent";
 import HomeDash from "../components/dashboard/home/homeDash";

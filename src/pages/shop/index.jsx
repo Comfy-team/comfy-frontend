@@ -150,7 +150,7 @@ const Shop = () => {
 
   useLayoutEffect(() => {
     function updateSize() {
-      SetIsSmallScreen(window.innerWidth <= 767 ? true : false);
+      SetIsSmallScreen(window.innerWidth <768 ? true : false);
     }
     window.addEventListener("resize", updateSize);
     updateSize();
@@ -183,8 +183,8 @@ const Shop = () => {
                   <div className="products mb-4">
                     <div
                       className={`${
-                        !isSmallScreen &&
-                        "d-flex justify-content-between align-items-center"
+                        !isSmallScreen ?
+                        "d-flex justify-content-between align-items-center":""
                       } mb-4`}
                     >
                       <p className="mb-0">
