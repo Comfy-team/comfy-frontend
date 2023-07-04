@@ -56,7 +56,7 @@ export default function PaymentMethod() {
   };
 
   return formData ? (
-    <div>
+    <div className="p-4">
       <div className={`${style.PaymentMethod} ml-5 ml-md-3 container `}>
         <div className="container">
           <div className="form-control mr-5 ps-4">

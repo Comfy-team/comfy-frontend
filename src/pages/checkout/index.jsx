@@ -10,19 +10,19 @@ import Breadcrumbcomponant from "../../components/checkout/Breadcrumbcomponant";
 
 const Checkout = () => {
   return (
-    <div className={`${style.checkout} ml-5 ml-md-3 `}>
-      <div className={`${style.checkoutContainer}  mt-2  ms-0  `}>
+    <div className={`${style.checkout} ml-5 ml-md-3  `}>
+      <div className={`${style.checkoutContainer}  mt-2  ms-0   `}>
         <Link to="/home" className="logo">
           <img
             src={logoimg}
             alt=""
-            style={{ width: "6rem", marginLeft: "15px" }}
-            className={`{} mb-3 `}
+            style={{ width: "6rem", marginLeft: "4rem" }}
+            className={` mt-3 `}
           />{" "}
         </Link>
         <div className={`${style.checkoutSmalContainer} row mt-5 `}>
           <div
-            className={`${style.leftFormColum}  col-lg-6 col-md-6  col-12 mr-3  mb-3 ml-5 `}
+            className={`${style.leftFormColum}  col-lg-6 col-md-12  col-12 mr-3  mb-3 ml-5 px-5`}
           >
             <div className="ms-4 mb-4">
               <Breadcrumbcomponant />
@@ -31,7 +31,7 @@ const Checkout = () => {
             <Outlet> </Outlet>
           </div>
           <div
-            className={`${style.rightorderColumn} col-lg-6 col-md-6 col-12 `}
+            className={`${style.rightorderColumn} col-lg-6 col-md-12 col-12  `}
           >
             <ShoppingCardComponent />
           </div>
