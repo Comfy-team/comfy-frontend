@@ -8,15 +8,17 @@ export default function ProductCardCompnant({ index, item }) {
     <>
       {" "}
       <div key={index} className={`${style.imgcontainer} row mb-2 p-0 m-0`}>
-        <img
-          className={`${style.productImg}  col-2`}
-          alt={item.name}
-          src={`${
-            process.env.REACT_APP_BASE_URL +
-            "/" +
-            item?.product_id?.images[0]?.src
-          }`}
-        />
+        <div className="col-2 ">
+          <img
+            className={`${style.productImg}  `}
+            alt={item.name}
+            src={`${
+              process.env.REACT_APP_BASE_URL +
+              "/" +
+              item?.product_id?.images[0]?.src
+            }`}
+          />
+        </div>
 
         <div className={`${style.productInfo} col-8  `}>
           <p className="mb-0 ml-3">{item.product_id.name}</p>

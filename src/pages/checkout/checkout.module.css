@@ -42,10 +42,40 @@
 .checklabal {
   margin-top: 10px;
 }
+
+/* ================ */
+.PaymentMethod .orderInfo .first,
+.PaymentMethod .orderInfo .last {
+  /* background-color: red; */
+  font-size: 0.9rem !important;
+}
+/* ================= *
 /* =============shoppping cart ===================== */
 .imgcontainer {
   position: relative;
 }
+.logoCheckout {
+  margin-left: 2rem !important;
+}
+/* Styles for small screens */
+@media (max-width: 576px) {
+  .logoCheckout {
+    margin-left: 2rem !important;
+  }
+}
+/* Styles for medium screens */
+@media (min-width: 768px) and (max-width: 991px) {
+  .logoCheckout {
+    margin-left: 3.5rem !important;
+  }
+}
+/* Styles for large screens */
+@media (min-width: 992px) {
+  .logoCheckout {
+    margin-left: 4rem !important;
+  }
+}
+
 .productImg {
   width: 50px !important;
   height: 50px;
@@ -55,16 +85,13 @@
   position: relative;
 }
 .productImg img {
-  background-color: var(--footer-links);
-  background-attachment: fixed;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  width: 100%;
-  text-align: center;
+  height: 100%;
 }
 .productInfo p {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   margin-left: 5px;
 }
 .spanColor {
@@ -81,8 +108,8 @@
   position: absolute;
   background-color: #7f7f7f;
   color: #f7ffea;
-  top: -4px;
-  left: 38px;
+  top: -9px;
+  left: 48px;
   width: 20px !important;
   height: 20px !important;
   border-radius: 100px;

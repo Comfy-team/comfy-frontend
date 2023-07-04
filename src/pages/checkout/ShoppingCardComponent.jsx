@@ -51,10 +51,10 @@ export default function ShoppingCardComponent() {
             </div>
             <hr className="hr" />
             <div className="mb-1 row">
-              <div className="col-4 fs-5">Total</div>
+              <div className="col-4 ">Total</div>
               <div className="col-4"></div>
               <div className="col-4">
-                <p className=" fs-5">
+                <p className=" ">
                   <span className={`${style.currency}`}> USD</span>$
                   {priceWithShapping}
                 </p>
