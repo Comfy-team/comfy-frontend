@@ -21,10 +21,10 @@
   object-fit: cover;
 }
 .carousel-indicators [data-bs-target] {
-  background-color: var(--main-black);
-  width: 1.1rem;
-  height: 1.1rem;
-  border-radius: 50%;
+  background-color: var(--main-black) !important;
+  width: 1.1rem !important;
+  height: 1.1rem !important;
+  border-radius: 50% !important;
 }
 
 .carousel-caption {
@@ -44,7 +44,7 @@
   color: var(--main-black);
 }
 .discount {
-  font-size: 14px;
+  font-size: 16px;
   text-transform: uppercase;
   padding: 10px;
   margin-left: 10px;
@@ -58,7 +58,7 @@
   font-size: 60px;
   font-weight: 600;
   line-height: 64px;
-  width: 58%;
+  /* width: 58% !important; */
 }
 .explore {
   color: var(--main-black);
@@ -80,7 +80,10 @@
   .captionCarouel h3 {
     font-size: 40px;
     line-height: 40px;
-    width: 47%;
+    width: 47% !important;
+  }
+  .discount{
+    font-size: 14px;
   }
 }
 @media (max-width: 920px) {
@@ -101,12 +104,12 @@
   .discount {
     font-weight: 500;
     padding: 7px 0px;
-    width: 8rem;
+    width: 8rem !important;
   }
   .captionCarouel h3 {
     font-size: 23px;
     line-height: 20px;
-    width: 44%;
+    width: 44% !important;
   }
   .explore {
     font-weight: 500;
@@ -115,18 +118,23 @@
 }
 @media (max-width: 600px) {
   .carousel-indicators{
-    height: 40vh;
+    height: 40vh !important;
   }
   .captionCarouel h3 {
-    font-size: 1.25rem;
-    width: 65%;
+    font-size: 1.25rem !important;
+    width: 69% !important;
   }
   .carousel-indicators [data-bs-target] {
-    width: .8rem;
-    height: .8rem;
+    width: .8rem !important;
+    height: .8rem !important;
   
   }
 
+}
+@media (max-width: 500px){
+  .captionCarouel h3 {
+    width: 90% !important;
+  }
 }
 /* end Carouel style  */
 
@@ -363,14 +371,14 @@
 
 /* start services section*/
 .services {
-  margin-top: 80px;
-  margin-bottom: 80px;
+  margin-top: 80px !important;
+  margin-bottom: 80px !important;
 }
 
 @media (max-width: 767px) {
   .services {
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
   }
 }
 .icon {
