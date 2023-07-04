@@ -56,10 +56,12 @@
   height: 1rem !important;
   border: solid black;
 }
-
+.counter {
+  flex-wrap: nowrap !important;
+}
 
 @media (min-width: 320px) and (max-width: 425px) {
-  .modal {
+  .cart-modal {
     max-width: 20rem; /* adjust the modal's width for smaller screens */
   }
   .modal-content{
