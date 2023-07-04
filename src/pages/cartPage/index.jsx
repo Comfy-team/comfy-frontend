@@ -37,31 +37,26 @@ function CartPage(cartId) {
           </thead>
         )}
         <tbody>
-          {cart.items.length === 0 ? (
-            <div className=" mt-4">
-              <div colSpan="4" className="text-center pt-4 mt-4">
-                <span className="d-block py-3 fw-semibold">Your cart is empty.</span>
-                <button
-                  type="button"
-                  className={`btn btn-dark rounded-1 border-0 px-4 mb-5 ${style["cart-btn"]} pr-2`}
-                  onClick={handleReturnToShop}
-                >
-                  CONTINUE SHOPPING
-                </button>
-              </div>
-            </div>
+        {cart.items.length === 0 ? (
+    <tr>
+      <td colSpan="4" className="text-center pt-4 mt-4">
+        <span className="d-block py-3 fw-semibold">
+          Your cart is empty.
+        </span>
+        <button
+          type="button"
+          className={`btn btn-dark rounded-1 border-0 px-4 mb-5 ${style["cart-btn"]} pr-2`}
+          onClick={handleReturnToShop}
+        >
+          CONTINUE SHOPPING
+        </button>
+      </td>
+    </tr>
           ) : (
             <>
-              {cart.items.map((item, index) => (
-                <>
-                  <CartItem
-                    key={item._id}
-                    item={item}
-                    cartId={cart._id}
-                    index={index}
-                  />
-                </>
-              ))}
+      {cart.items.map((item, index) => (
+        <CartItem item={item} cartId={cart._id} index={index} key={item._id} />
+      ))}
               <tr>
                 <td colSpan={5}>
                   <div className="row justify-content-between align-items-center">

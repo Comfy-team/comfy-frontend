@@ -29,9 +29,9 @@ const CartItem = ({ item, cartId, product }) => {
     dispatch(showCartModal(false));
   };
   const handleDelete = () => {
-    setBtnSpinner(true); // show spinner
+    setBtnSpinner(true); 
     deleteItemFromCart(cartId, item?.product_id?._id, item.color).then(() => {
-      setBtnSpinner(false); // hide spinner
+      setBtnSpinner(false); 
       setShowWarning(false);
     });
   };
@@ -77,7 +77,9 @@ const CartItem = ({ item, cartId, product }) => {
                   className="text-decoration-none text-dark"
                   onClick={handleCloseCart}
                 >
-                  <strong className={`${style["item-name"]} d-block text-truncate hover-color-yellow`}>
+                  <strong
+                    className={`${style["item-name"]} d-block text-truncate hover-color-yellow`}
+                  >
                     {item?.product_id.name}
                   </strong>
                 </Link>
@@ -86,7 +88,7 @@ const CartItem = ({ item, cartId, product }) => {
                     Color:{" "}
                     <div
                       style={{ backgroundColor: `${item.color}` }}
-                      className={`${style.spanColor} rounded-circle ms-2 border-dark border-1`}
+                      className={`${style.spanColor} rounded-circle ms-2  border-dark border-1`}
                     ></div>
                   </h6>
                 )}
@@ -104,9 +106,11 @@ const CartItem = ({ item, cartId, product }) => {
         </span>
       </td>
       <td>
-        <div className="input-group justify-content-center">
+        <div
+          className={`${style["counter"]} input-group justify-content-center`}
+        >
           <button
-            className={`btn ${style["counter-btn"]} rounded-0 border-0`}
+            className="btn  rounded-0 border-0"
             type="button"
             onClick={() =>
               updateItemQuantity(
@@ -118,11 +122,15 @@ const CartItem = ({ item, cartId, product }) => {
             }
             disabled={item.quantity === 1}
           >
-            <FontAwesomeIcon icon={faMinus} size="xs" className="hover-color-yellow"/>
+            <FontAwesomeIcon
+              icon={faMinus}
+              size="xs"
+              className="hover-color-yellow"
+            />
           </button>
-          <p className={`${style["counter-value"]} m-0  px-1`}>{item?.quantity}</p>
+          <p className={`m-0 pt-1 px-1`}>{item?.quantity}</p>
           <button
-            className={`btn ${style["counter-btn"]} rounded-0 border-0`}
+            className="btn rounded-0 border-0"
             type="button"
             onClick={() =>
               updateItemQuantity(
@@ -134,19 +142,25 @@ const CartItem = ({ item, cartId, product }) => {
             }
             disabled={item.quantity === item.product_id.stock}
           >
-            <FontAwesomeIcon icon={faPlus} size="xs" className="hover-color-yellow"/>
+            <FontAwesomeIcon
+              icon={faPlus}
+              size="xs"
+              className="hover-color-yellow"
+            />
           </button>
         </div>
       </td>
       <td>
         <strong>${(item.price * item.quantity).toFixed(2)}</strong>
       </td>
+      <td>
       {showWarning && (
         <RemoveProductWarning
           onRemove={handleDelete}
           onCancel={() => setShowWarning(false)}
         />
       )}
+      </td>
     </tr>
   );
 };
