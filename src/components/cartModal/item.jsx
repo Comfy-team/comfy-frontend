@@ -95,7 +95,7 @@ function Item({ item, cartId }) {
               </div>
             </div>
             <div className="col-6">
-              <div className="input-group justify-content-center w-100">
+              <div className={`${style["counter"]} input-group justify-content-center`}>
                 <button
                   className="btn  rounded-0 border-0"
                   type="button"
@@ -128,8 +128,8 @@ function Item({ item, cartId }) {
                   <FontAwesomeIcon icon={faPlus} size="xs"  className="hover-color-yellow" />
                 </button>
               </div>
-              <div className="ps-4">
-                <span className="fw-semibold">stock:</span>
+              <div className="ps-3">
+                <span className="fw-semibold">stock: </span>
                 <span
                   className={item.product_id.stock === 0 ? "text-danger" : ""}
                 >
