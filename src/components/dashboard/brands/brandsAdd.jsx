@@ -61,7 +61,7 @@ const BrandsAdd = () => {
   };
 
   return (
-    <div className="ps-4 ">
+    <div className="ps-5 py-4">
       <h1 className={`py-3 ${dashStyle["fw-bold"]}`}>Add New Brand</h1>
       {errorMessage && !isSubmitted ? (
         <div
@@ -175,7 +175,7 @@ const BrandsAdd = () => {
 
               </div>
 
-              <div>
+              <div className="mb-4">
                 <input
                   type="submit"
                   className={`btn px-3 rounded-pill ${dashStyle["dash-btn"]}`}
