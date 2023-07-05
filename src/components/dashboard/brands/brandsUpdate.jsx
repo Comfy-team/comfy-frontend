@@ -69,7 +69,7 @@ const BrandsUpdate = () => {
   // Extract the file name from the path
   
   return (
-    <div className="ps-4">
+    <div className="ps-5 py-4">
       <h1 className={`py-3 ${dashStyle["fw-bold"]}`}>Update Brand</h1>
       {errorMessage && !isSubmitted ? (
         <div
@@ -173,7 +173,7 @@ const BrandsUpdate = () => {
                 ) : null}
               </div>
 
-              <div>
+              <div className="mb-4">
                 <input
                   type="submit"
                   className={`btn px-3 mb-3 rounded-pill ${dashStyle["dash-btn"]}`}
