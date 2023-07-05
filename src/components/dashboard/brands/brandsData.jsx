@@ -196,7 +196,7 @@ const BrandsData = () => {
                         />
                       </td>
                       <td>{brand.category}</td>
-                      <td className="text-center">{brand.products.length}</td>
+                      <td className={style.brandProduct}>{brand.products.length}</td>
                       <td className="text-center">
                         {/* <div className="d-flex"> */}
                         <Link

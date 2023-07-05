@@ -4,8 +4,8 @@
 }
 @media (max-width: 767px) {
     .brand-image {
-      width: 100% !important;
-      height: 100% !important;
+      /* width: 100% !important; */
+      /* height: 100% !important; */
     }
 }
 .max-w-xl {
@@ -13,4 +13,7 @@
 }
 .label label {
     font-weight: 550;
+}
+.brandProduct{
+    padding-left: 2.2rem !important;
 }
