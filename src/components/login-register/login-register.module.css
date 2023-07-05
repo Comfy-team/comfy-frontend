@@ -28,7 +28,7 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 .button-navigate{
-  margin-bottom:50px;
+  margin-bottom:50px !important;
 }
 
 
@@ -75,7 +75,7 @@
     outline: none;
     width: 100%;
     border-radius: 2px;
-    line-height: 50px;
+    line-height: 40px;
     padding: 0;
     cursor: pointer;
     border: 0;
