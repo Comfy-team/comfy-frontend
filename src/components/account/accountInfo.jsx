@@ -47,13 +47,14 @@ const AccountInfo = ({ user, token }) => {
         },
       })
       .then((res) => {
-        setIsSubmitted(true);
-        // dispatch(showToast("Account Updated successfully!"));
+        dispatch(showToast("Account Updated successfully!"));
+        
+        // setIsSubmitted(true);
       })
       .catch((err) => {
         // handle error, e.g. show error message
-        setErrorMessage("Unable to update, please try again.");
-        // dispatch(showToast("Unable to update, please try again."));
+        dispatch(showToast("Unable to update, please try again."));
+        // setErrorMessage("Unable to update, please try again.");
       });
   };
 
@@ -62,6 +63,7 @@ const AccountInfo = ({ user, token }) => {
       <h2 className={`${styles["text-2xl"]} ${styles.subTitle}`}>
         Account Information
       </h2>
+
       {errorMessage && !isSubmitted ? (
         <div
           className="alert alert-danger alert-dismissible fade show"
@@ -93,6 +95,7 @@ const AccountInfo = ({ user, token }) => {
           ></button>
         </div>
       ) : null}
+
       <Formik
         initialValues={{
           ...updateUser,
