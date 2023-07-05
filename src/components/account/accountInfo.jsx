@@ -1,13 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import axiosInstance from "../../apis/config";
 import { governoratesData } from "../../apis/governorates";
@@ -34,8 +31,6 @@ const AccountInfo = ({ user, token }) => {
     },
   });
 
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const updateUserSubmit = (updateUser) => {
     axiosInstance
@@ -48,13 +43,10 @@ const AccountInfo = ({ user, token }) => {
       })
       .then((res) => {
         dispatch(showToast("Account Updated successfully!"));
-        
-        // setIsSubmitted(true);
       })
       .catch((err) => {
         // handle error, e.g. show error message
         dispatch(showToast("Unable to update, please try again."));
-        // setErrorMessage("Unable to update, please try again.");
       });
   };
 
@@ -63,39 +55,6 @@ const AccountInfo = ({ user, token }) => {
       <h2 className={`${styles["text-2xl"]} ${styles.subTitle}`}>
         Account Information
       </h2>
-
-      {errorMessage && !isSubmitted ? (
-        <div
-          className="alert alert-danger alert-dismissible fade show"
-          role="alert"
-        >
-          {" "}
-          <FontAwesomeIcon icon={faTimes} /> {errorMessage}
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-            onClick={() => setErrorMessage(null)}
-          ></button>
-        </div>
-      ) : isSubmitted ? (
-        <div
-          className="alert alert-success alert-dismissible fade show"
-          role="alert"
-        >
-          Account Updated successfully!
-          <FontAwesomeIcon icon={faCheckCircle} className="ms-2" />
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-            onClick={() => setIsSubmitted(false)}
-          ></button>
-        </div>
-      ) : null}
-
       <Formik
         initialValues={{
           ...updateUser,
