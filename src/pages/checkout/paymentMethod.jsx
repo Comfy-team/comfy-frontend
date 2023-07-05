@@ -9,10 +9,10 @@ import style from "./checkout.module.css";
 import "../../App.css";
 import OrderInfo from "./../../components/checkout/orderInfo";
 import Spinner from "../../components/common/spinner";
-
 export default function PaymentMethod() {
   const [isAddingOrder, setIsAddingOrder] = useState(false);
   const navigate = useNavigate();
+
   const token = localStorage.getItem("userToken");
   const shippingValue = 20.0;
   // ===========
@@ -74,7 +74,7 @@ export default function PaymentMethod() {
           </div>
           <div className="row mb-4  w-100 m-auto">
             <Link
-              to="/checkout/information"
+              to="/checkout"
               className={` col-lg-6  col-md-6 col-sm-12  col-12  mt-2 mb-3 ${style.returnLink} text-decoration-none `}
             >
               {" "}

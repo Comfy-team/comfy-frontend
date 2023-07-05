@@ -150,7 +150,7 @@ export default function FormComonent() {
                 type="text"
                 id="phone"
               />{" "}
-              <label for="phone">phone </label>
+              <label htmlFor="phone">phone </label>
               {touched.phone && errors.phone && (
                 <div className="text-danger ms-2">{errors.phone}</div>
               )}
@@ -165,7 +165,7 @@ export default function FormComonent() {
                 type="text"
                 id="fullName"
               />{" "}
-              <label for="fullName">full Name </label>
+              <label htmlFor="fullName">full Name </label>
               {touched.fullName && errors.fullName && (
                 <div className="text-danger ms-2">{errors.fullName}</div>
               )}
@@ -179,7 +179,7 @@ export default function FormComonent() {
                 type="text"
                 id="apartment"
               />{" "}
-              <label for="apartment">apartment </label>
+              <label htmlFor="apartment">apartment </label>
               {touched.address?.apartment && errors.address?.apartment && (
                 <div className="text-danger ms-2">
                   {errors.address?.apartment}
@@ -195,7 +195,7 @@ export default function FormComonent() {
                 type="text"
                 id="building"
               />
-              <label for="building">building </label>
+              <label htmlFor="building">building </label>
 
               {touched.address?.building && errors.address?.building && (
                 <div className="text-danger ms-2">
@@ -212,7 +212,7 @@ export default function FormComonent() {
                 type="text"
                 id="street"
               />
-              <label for="street">street </label>
+              <label htmlFor="street">street </label>
 
               {touched.address?.street && errors.address?.street && (
                 <div className="text-danger ms-2">{errors.address?.street}</div>
@@ -234,7 +234,7 @@ export default function FormComonent() {
                   </option>
                   <option value="Egypt">Egypt </option>
                 </Field>
-                <label for="country">Country</label>
+                <label htmlFor="country">Country</label>
 
                 {touched.address?.country && errors.address?.country && (
                   <div className="text-danger ms-2">
@@ -264,9 +264,9 @@ export default function FormComonent() {
                     </option>
                   ))}
                 </Field>{" "}
-                <label for="postalCode">
+                <label htmlFor="postalCode">
                   {" "}
-                  <label for="postalCode">Governorate</label>
+                  <label htmlFor="postalCode">Governorate</label>
                 </label>
                 {touched.address?.governorate &&
                   errors.address?.governorate && (
@@ -312,7 +312,7 @@ export default function FormComonent() {
                     return null;
                   })}
                 </Field>
-                <label for="city">City</label>
+                <label htmlFor="city">City</label>
 
                 {errors.address?.city && touched.address?.city ? (
                   <span className="text-danger ms-2">
@@ -330,7 +330,7 @@ export default function FormComonent() {
                   type="text"
                   id="postalCode"
                 />
-                <label for="postalCode">Postal Code </label>
+                <label htmlFor="postalCode">Postal Code </label>
                 {touched.address?.postalCode && errors.address?.postalCode && (
                   <div className="text-danger ms-2">
                     {errors.address?.postalCode}
