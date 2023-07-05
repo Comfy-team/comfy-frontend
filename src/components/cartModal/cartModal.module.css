@@ -54,8 +54,13 @@
   height: 1rem !important;
   border: solid black;
 }
+.stock{
+  margin-top: -0.5rem;
+  margin-left: 1rem;
+}
 .counter {
   flex-wrap: nowrap !important;
+  margin-top: -0.5rem;
 }
 
 @media (min-width: 320px) and (max-width: 425px) {
@@ -71,5 +76,8 @@
   }
   .progress {
     height: 2.6rem !important;
+  }
+  .stock{
+    margin-left: 0;
   }
 }

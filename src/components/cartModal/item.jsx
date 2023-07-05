@@ -13,6 +13,7 @@ import {
   deleteItemFromCart,
   updateItemQuantity,
 } from "../../functions/cart.js";
+import Price from "./price.jsx";
 import { showCartModal } from "../../store/slices/cartModalSlice.js";
 import RemoveProductWarning from "../common/removeProductWarning";
 
@@ -75,7 +76,7 @@ function Item({ item, cartId }) {
                 </strong>
               )}
 
-              <strong className="d-block">${item?.price}</strong>
+              <Price price={item.price} discount={item.product_id.discount} />
               <div className="d-flex pt-2">
                 {showBtnSpinner ? (
                   <div
@@ -128,7 +129,7 @@ function Item({ item, cartId }) {
                   <FontAwesomeIcon icon={faPlus} size="xs"  className="hover-color-yellow" />
                 </button>
               </div>
-              <div className="ps-3">
+              <div className={`${style.stock} ps-3`}>
                 <span className="fw-semibold">stock: </span>
                 <span
                   className={item.product_id.stock === 0 ? "text-danger" : ""}
