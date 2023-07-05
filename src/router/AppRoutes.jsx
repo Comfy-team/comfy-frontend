@@ -53,12 +53,9 @@ const AppRoutes = () => {
           <Route path="/search" element={<SearchPage />} />
         </Route>
       </Route>
-      <Route
-        path="/Checkout"
-        element={<Navigate to="/Checkout/information" replace />}
-      />
+
       <Route path="/checkout" element={<Checkout />}>
-        <Route path="information" element={<FormComonent />} />
+        <Route path="" element={<FormComonent />} />
         <Route path="shipping" element={<PaymentMethod />} />
       </Route>
       <Route path="/dashboard" element={<Dashboard />}>
