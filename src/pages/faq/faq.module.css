@@ -30,14 +30,15 @@
   text-decoration: none;
   color: var(--footer-links);
   margin-bottom: 10px;
+  text-transform: lowercase;
 }
 .mainFaqContainer .faqcontainer .largecolumn p {
   margin-bottom: 50px;
 }
 .mainFaqContainer .faqcontainer .largecolumn h6 {
   font-weight: 900;
-  letter-spacing: 3px;
-  margin-bottom: 15px;
+  letter-spacing: 2.2px;
+  margin-bottom: 3px;
 }
 @media (max-width: 1024px) {
   .mainFaqContainer {

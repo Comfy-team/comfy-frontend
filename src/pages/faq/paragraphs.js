@@ -8,53 +8,33 @@ export const list = [
   },
   {
     id: 2,
-    heading: `Why FAQ Pages Are A Priority
+    heading: `WIs there any limitation on the quantity or amount of online purchase?
     `,
-    content: `FAQ pages continue to be a priority area for SEO and digital marketing professionals.
-  
-      An FAQ page is one of the simplest ways to improve your site and help site visitors and users.
-      
-      Your FAQ section should be seen as a constantly expanding source of value provided to your audience. It is a place where their ever-changing and growing requirements are not only met but anticipated and exceeded frequently.`,
+    content: `No, there is no limit. The quantity that you can buy is depending on the available stock of the online purchase.`,
   },
   {
     id: 3,
-    heading: `Why FAQ Pages Are A Priority
+    heading: `How can I get large items home?
     `,
-    content: `FAQ pages continue to be a priority area for SEO and digital marketing professionals.
-  
-      An FAQ page is one of the simplest ways to improve your site and help site visitors and users.
-      
-      Your FAQ section should be seen as a constantly expanding source of value provided to your audience. It is a place where their ever-changing and growing requirements are not only met but anticipated and exceeded frequently.`,
+    content: `Most IKEA products are flat-packed, making them easy to transport. The IKEA store offers (or will refer you to) a home delivery service if you prefer. Home delivery is not included in the product price.`,
   },
   {
     id: 4,
-    heading: `Why FAQ Pages Are A Priority
+    heading: `Why are items sometimes out of stock?
     `,
-    content: `FAQ pages continue to be a priority area for SEO and digital marketing professionals.
-  
-      An FAQ page is one of the simplest ways to improve your site and help site visitors and users.
-      
-      Your FAQ section should be seen as a constantly expanding source of value provided to your audience. It is a place where their ever-changing and growing requirements are not only met but anticipated and exceeded frequently.`,
+    content: `Every effort is made to maintain the availability of items shown in the catalogue, but due to popularity and supply issues, some products may not always be available. Generally, IKEA can estimate when a product should be back in stock. Because IKEA products are manufactured throughout the world, there are sometimes circumstances which can cause delivery delays`,
   },
   {
     id: 5,
-    heading: `Why FAQ Pages Are A Priority
+    heading: `What if I want to have the products assembled?
     `,
-    content: `FAQ pages continue to be a priority area for SEO and digital marketing professionals.
-  
-      An FAQ page is one of the simplest ways to improve your site and help site visitors and users.
-      
-      Your FAQ section should be seen as a constantly expanding source of value provided to your audience. It is a place where their ever-changing and growing requirements are not only met but anticipated and exceeded frequently.`,
+    content: `IKEA products are generally easy to assemble and require no special tools. If you prefer, most IKEA stores can refer you to a reputable, reasonably priced assembly company that can come to your home to assemble and install our products.`,
   },
   {
     id: 6,
-    heading: `Why FAQ Pages Are A Priority
+    heading: ` Is there any limitation on the quantity or amount of online purchase?
     `,
-    content: `FAQ pages continue to be a priority area for SEO and digital marketing professionals.
-  
-      An FAQ page is one of the simplest ways to improve your site and help site visitors and users.
-      
-      Your FAQ section should be seen as a constantly expanding source of value provided to your audience. It is a place where their ever-changing and growing requirements are not only met but anticipated and exceeded frequently.`,
+    content: `No, there is no limit. The quantity that you can buy is depending on the available stock of the online purchase.`,
   },
   {
     id: 7,
@@ -68,22 +48,16 @@ export const list = [
   },
   {
     id: 8,
-    heading: `Why FAQ Pages Are A Priority
+    heading: `What is the IKEA business idea?
     `,
-    content: `FAQ pages continue to be a priority area for SEO and digital marketing professionals.
-  
-      An FAQ page is one of the simplest ways to improve your site and help site visitors and users.
-      
-      Your FAQ section should be seen as a constantly expanding source of value provided to your audience. It is a place where their ever-changing and growing requirements are not only met but anticipated and exceeded frequently.`,
+    content: `The IKEA business idea is: "We shall offer a wide range of well-designed, functional home furnishing products at prices so low that as many people as possible will be able to afford them."`,
   },
   {
     id: 9,
-    heading: `Why FAQ Pages Are A Priority
+    heading: `How does IKEA approach environmental issues?
     `,
-    content: `FAQ pages continue to be a priority area for SEO and digital marketing professionals.
-  
-      An FAQ page is one of the simplest ways to improve your site and help site visitors and users.
-      
-      Your FAQ section should be seen as a constantly expanding source of value provided to your audience. It is a place where their ever-changing and growing requirements are not only met but anticipated and exceeded frequently.`,
+    content: `We're working to create a better environment outdoors as well as indoors.
+
+`,
   },
 ];
