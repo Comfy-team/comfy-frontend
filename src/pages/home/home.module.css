@@ -142,36 +142,12 @@
 /* start trenging section */
 
 .trendingSection {
-  margin-top: 50px;
+  margin-top: 50px !important;
 }
 .trendingSection h2 {
   font-size: 32px;
   font-weight: 700;
-  margin-bottom: 50px;
-}
-.addCardButton {
-  bottom: 16px;
-  left: 52px;
-  padding: 0 5px;
-  -webkit-transition: all 0.24s linear 0s;
-  -o-transition: all 0.24s linear 0s;
-  transition: all 0.24s linear 0s;
-  line-height: 36px;
-  background-color: var(--white);
-  color: var(--main-black);
-  text-align: center;
-  border-radius: 5px;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  width: 60%;
-  border: none;
-  cursor: pointer;
-}
-.addCardButton:hover {
-  color: var(--white);
-  background-color: var(--yellow);
+  margin-bottom: 50px !important;
 }
 
 /* end trenging section */
@@ -179,14 +155,14 @@
 /* ------------------------------------------- brand Category ----------------------- */
 /* start brand category  */
 .brandCategory {
-  margin-top: 50px;
+  margin-top: 50px !important;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 .modifyImage {
   height: 400px;
-  margin-bottom: 30px;
+  margin-bottom: 30px !important;
 }
 
 .brandImage{
@@ -232,7 +208,7 @@
 
 /* start category section*/
 .category {
-  margin-top: 50px;
+  margin-top: 50px !important;
 }
 
 .categoryItem {
@@ -243,7 +219,7 @@
   transition: all 0.24s linear 0ms;
 }
 .gapColumn{
-  gap: 1.5rem 0;
+  gap: 1.5rem 0 !important;
 }
 .categoryItem img {
   width: 100%;
@@ -286,11 +262,11 @@
   background-color: var(--yellow);
 }
 .overlay h2 {
-  text-shadow: 1px 2px 3px var(--white);
-  font-size: 24px;
-  margin-top: 20px;
-  font-weight: 400;
-  line-height: 1;
+  text-shadow: 1px 2px 3px var(--white) !important;
+  font-size: 24px !important;
+  margin-top: 20px !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
   text-transform: capitalize;
 }
 .categoryLink {
@@ -299,7 +275,7 @@
   cursor: pointer;
 }
 .overlay h2:hover {
-  color: var(--yellow);
+  color: var(--yellow) !important;
 }
 
 .itemOne img,
@@ -315,18 +291,20 @@
 }
 
 .categoryItem .overlay h6 {
-  opacity: 0;
+  margin-top: 10px;
+  opacity: 0 !important;
   -webkit-transition: opacity 0.3s ease-in-out;
   -o-transition: opacity 0.3s ease-in-out;
   transition: opacity 0.3s ease-in-out;
 }
 
 .categoryItem:hover .overlay h6 {
-  opacity: 1;
+  opacity: 1 !important;
 }
 .overlay h6:hover {
-  color: var(--yellow);
+  color: var(--yellow) !important;
 }
+
 @media (min-width: 768px) and (max-width: 991px) {
   /* Styles for viewport width between 768px and 991px */
   .overlay p{
@@ -352,16 +330,18 @@
     -ms-flex-align: center;
     align-items: center;
   }
-  .overlay p ,.overlay h2 ,.overlay h6{
+  .overlay p ,.overlay h6{
     font-size: 1.25rem;
     min-width: 150px
   }
   .overlay h2{
-    margin-bottom: 10px;
+    font-size: 1.25rem;
+    margin-bottom: 10px !important;
   }
   .categoryItem .overlay h6{
-    opacity: 1;
-    color: var(--yellow);
+    margin-top: 0;
+    opacity: 1 !important;
+    color: var(--yellow) !important;
   }
 
 }
