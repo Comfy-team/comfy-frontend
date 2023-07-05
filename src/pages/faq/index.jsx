@@ -12,17 +12,19 @@ const FAQ = () => {
         >
           <h1> frequently asked questions</h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit
-            amet tortor vel mi lacinia aliquam. Sed interdum sapien eget elit
-            malesuada, eu faucibus libero bibendum. Sed iaculis vestibulum
+            FAQ pages continue to be a priority area for SEO and digital
+            marketing professionals. An FAQ page is one of the simplest ways to
+            improve your site and help site visitors and users. Your FAQ section
+            should be seen as a constantly expanding source of value provided to
+            your audience.
           </p>
           <div className={`${styles.listoquestion}   mb-5`}>
-            <a href="#faqpara3">payment options</a>
-            <a href="#faqpara5">condition</a>
-            <a href="#faqpara6">marketplace</a>
-            <a href="#faqpara7">terms condition</a>
-            <a href="#faqpara8">delivery job</a>
-            <a href="#faqpara9">efficient</a>
+            <a href="#faqpara3">LARGE ITEMS </a>
+            <a href="#faqpara5">ASSEMBLED</a>
+            <a href="#faqpara6">LIMITATION </a>
+            <a href="#faqpara7">PRIORITY</a>
+            <a href="#faqpara8">IDEA</a>
+            <a href="#faqpara9"> ENVIRONMENTAL ISSUES</a>
           </div>
         </div>
 
