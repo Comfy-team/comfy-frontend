@@ -47,6 +47,7 @@ function CartModal({ showModal, hideModal }) {
 
   return (
     <>
+    
       {showModal && (
         <div className="container">
           <div
