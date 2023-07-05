@@ -12,6 +12,7 @@ import {
   deleteItemFromCart,
   updateItemQuantity,
 } from "../../functions/cart.js";
+import Price from "../cartModal/price.jsx";
 import RemoveProductWarning from "../common/removeProductWarning.jsx";
 import { showCartModal } from "../../store/slices/cartModalSlice.js";
 
@@ -98,7 +99,7 @@ const CartItem = ({ item, cartId, product }) => {
         </table>
       </td>
       <td>
-        <strong>${item.price}</strong>
+              <Price price={item.price} discount={item.product_id.discount} />
       </td>
       <td>
         <span className={item.product_id.stock === 0 ? "text-danger" : ""}>
