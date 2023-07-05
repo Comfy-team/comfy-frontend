@@ -152,7 +152,7 @@ const CartItem = ({ item, cartId, product }) => {
         </div>
       </td>
       <td>
-        <strong>${(item.price * (1-(item?.product_id.discount)/100) * item.quantity).toFixed(2)}</strong>
+        <strong>${(item.price * item.quantity).toFixed(2)}</strong>
       </td>
       <td>
       {showWarning && (
