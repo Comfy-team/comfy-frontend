@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 // font awesome
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 // components
+import { showCartModal } from "../../store/slices/cartModalSlice";
+import RemoveProductWarning from "../common/removeProductWarning";
+
+// functions
 import { addItemToCart, deleteItemFromCart } from "../../functions/cart";
 
 // style
 import style from "../../pages/searchPage/searchPage.module.css";
-import RemoveProductWarning from "../common/removeProductWarning";
 
 const SearchCard = ({ product, query }) => {
   const [shownTitle, setShownTitle] = useState("");
@@ -21,6 +24,7 @@ const SearchCard = ({ product, query }) => {
   const [inCart, setInCart] = useState(false);
   const [showBtnSpinner, setShowBtnSpinner] = useState(false);
   const cart = useSelector((state) => state.cart.cart);
+  const dispatch = useDispatch();
 
   const highlightMatch = (name, query) => {
     const regex = new RegExp(query, "i");
@@ -123,27 +127,21 @@ const SearchCard = ({ product, query }) => {
                   <span className="visually-hidden">Loading...</span>
                 </div>
               </button>
+            ) : inCart ? (
+              <button
+                className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2"
+                onClick={() => dispatch(showCartModal(true))}
+              >
+                <FontAwesomeIcon icon={faCartShopping} /> In Cart
+              </button>
             ) : (
               <button
-                type="button"
-                className={`${style["add-to-cart-btn"]} btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2`}
+                className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2"
                 onClick={() =>
-                  !inCart
-                    ? handleAddToCart(
-                        product._id,
-                        product.colors[0],
-                        product.price
-                      )
-                    : setShowWarning(true)
+                  handleAddToCart(product._id, product.colors[0], product.price)
                 }
               >
-                {inCart ? (
-                  "remove from cart"
-                ) : (
-                  <>
-                    <FontAwesomeIcon icon={faPlus} /> <span>add to cart</span>
-                  </>
-                )}
+                <FontAwesomeIcon icon={faPlus} /> Add to Cart
               </button>
             )
           ) : (

@@ -119,7 +119,7 @@ const ProductsUpdate = () => {
   }, [id]);
 
   return data ? (
-    <div className="px-4">
+    <div className="px-3 px-md-4">
       <h1 className="h4 mb-4 py-3">Edit Product</h1>
       <Formik
         initialValues={{

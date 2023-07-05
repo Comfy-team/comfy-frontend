@@ -121,13 +121,18 @@ body {
 
 /* start toggle btn */
 .toggle-aside-btn {
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.5rem;
+  height: 1.5rem;
   font-size: 0.95rem;
   transform: translateX(25%);
-  top: 4rem;
-  outline: 6px solid var(--dash-bg) !important;
+  top: 3.5rem;
+  outline: 5px solid var(--dash-bg) !important;
   z-index: 1030;
+  transition: transform ease 0.3s;
+}
+
+.toggle-aside-btn.collapsed {
+  transform: rotate(180deg) translateX(-25%);
 }
 /* end toggle btn */
 /* end aside */

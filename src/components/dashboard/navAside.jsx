@@ -75,7 +75,7 @@ const NavAside = ({ isSmallScreen, collapsed, onToggleAside }) => {
     <aside
       className={`${style.aside} sticky-top bg-white py-lg-4 pe-3 pe-lg-0 d-flex flex-column`}
     >
-      {!isSmallScreen && <ToggleAsideBtn onToggleAside={onToggleAside} />}
+      {!isSmallScreen && <ToggleAsideBtn collapsed={collapsed} onToggleAside={onToggleAside} />}
       <div className="d-flex justify-content-between py-2 py-lg-0 align-items-center d-lg-block">
         <Link
           className="navbar-brand d-inline-block align-self-start mx-3"
