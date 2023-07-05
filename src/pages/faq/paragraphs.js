@@ -16,19 +16,19 @@ export const list = [
     id: 3,
     heading: `How can I get large items home?
     `,
-    content: `Most IKEA products are flat-packed, making them easy to transport. The IKEA store offers (or will refer you to) a home delivery service if you prefer. Home delivery is not included in the product price.`,
+    content: `Most Comfy products are flat-packed, making them easy to transport. The Comfy store offers (or will refer you to) a home delivery service if you prefer. Home delivery is not included in the product price.`,
   },
   {
     id: 4,
     heading: `Why are items sometimes out of stock?
     `,
-    content: `Every effort is made to maintain the availability of items shown in the catalogue, but due to popularity and supply issues, some products may not always be available. Generally, IKEA can estimate when a product should be back in stock. Because IKEA products are manufactured throughout the world, there are sometimes circumstances which can cause delivery delays`,
+    content: `Every effort is made to maintain the availability of items shown in the catalogue, but due to popularity and supply issues, some products may not always be available. Generally, Comfy can estimate when a product should be back in stock. Because Comfy products are manufactured throughout the world, there are sometimes circumstances which can cause delivery delays`,
   },
   {
     id: 5,
     heading: `What if I want to have the products assembled?
     `,
-    content: `IKEA products are generally easy to assemble and require no special tools. If you prefer, most IKEA stores can refer you to a reputable, reasonably priced assembly company that can come to your home to assemble and install our products.`,
+    content: `Comfy products are generally easy to assemble and require no special tools. If you prefer, most Comfy stores can refer you to a reputable, reasonably priced assembly company that can come to your home to assemble and install our products.`,
   },
   {
     id: 6,
@@ -48,13 +48,13 @@ export const list = [
   },
   {
     id: 8,
-    heading: `What is the IKEA business idea?
+    heading: `What is the Comfy business idea?
     `,
-    content: `The IKEA business idea is: "We shall offer a wide range of well-designed, functional home furnishing products at prices so low that as many people as possible will be able to afford them."`,
+    content: `The Comfy business idea is: "We shall offer a wide range of well-designed, functional home furnishing products at prices so low that as many people as possible will be able to afford them."`,
   },
   {
     id: 9,
-    heading: `How does IKEA approach environmental issues?
+    heading: `How does Comfy approach environmental issues?
     `,
     content: `We're working to create a better environment outdoors as well as indoors.
 
