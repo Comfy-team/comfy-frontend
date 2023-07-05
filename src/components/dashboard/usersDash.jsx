@@ -174,7 +174,7 @@ const UsersDash = () => {
               <th scope="col">Email</th>
               <th scope="col">Phone</th>
               <th scope="col">Governorate</th>
-              <th scope="col">City</th>
+              <th scope="col" className="text-center">City</th>
               <th scope="col">Orders</th>
               <th scope="col">Actions</th>
             </tr>
