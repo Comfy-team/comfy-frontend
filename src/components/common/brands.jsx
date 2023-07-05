@@ -7,6 +7,7 @@ import "react-multi-carousel/lib/styles.css";
 
 // components
 import { LeftArrow, RightArrow } from "./customSliderArrows";
+import Spinner from "./spinner";
 
 // React multi-carousel breakpoints
 const responsive = {
@@ -48,10 +49,10 @@ const Brands = () => {
     setIsdragged(true);
   };
 
-  return (
+  return brands.length > 0 ? (
     <section className="brands-slider py-5 ps-3 border border-start-0 border-end-0">
       <div
-      className="py-3"
+        className="py-3"
         onMouseLeave={() => setIsMouseDown(false)}
         onMouseUp={() => setIsMouseDown(false)}
       >
@@ -85,6 +86,8 @@ const Brands = () => {
         </Carousel>
       </div>
     </section>
+  ) : (
+    <Spinner />
   );
 };
 

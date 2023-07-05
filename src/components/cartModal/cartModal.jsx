@@ -47,6 +47,7 @@ function CartModal({ showModal, hideModal }) {
 
   return (
     <>
+    
       {showModal && (
         <div className="container">
           <div
@@ -93,9 +94,8 @@ function CartModal({ showModal, hideModal }) {
                         className={`${style["product-container"]} container-fluid  w-100`}
                       >
                         {cart.items.map((item, index) => (
-                          <div key={item.product_id._id}>
+                          <div key={item._id}>
                             <Item item={item} cartId={cart._id} />
-
                             {index !== cart.items.length - 1 && (
                               <hr className="text-secondary" />
                             )}
@@ -147,7 +147,7 @@ function CartModal({ showModal, hideModal }) {
                           </span>
                         </div>
                         <div
-                          className={`${style["progress-bar-text"]} text-light w-100 text-center`}
+                          className={`${style["progress-bar-text"]} text-light w-100 text-center px-2 `}
                         >
                           <FontAwesomeIcon
                             icon={faTruck}

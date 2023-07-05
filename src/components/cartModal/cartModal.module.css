@@ -19,11 +19,9 @@
 .yellow-bar {
   background-color: var(--yellow) !important;
 }
-
 .d-none {
   display: none;
 }
-
 .input-text {
   display: block;
   font-size: 14px;
@@ -56,10 +54,17 @@
   height: 1rem !important;
   border: solid black;
 }
-
+.stock{
+  margin-top: -0.5rem;
+  margin-left: 1rem;
+}
+.counter {
+  flex-wrap: nowrap !important;
+  margin-top: -0.5rem;
+}
 
 @media (min-width: 320px) and (max-width: 425px) {
-  .modal {
+  .cart-modal {
     max-width: 20rem; /* adjust the modal's width for smaller screens */
   }
   .modal-content{
@@ -68,5 +73,11 @@
   .spanColor {
     width: 1rem !important;
     height: 1rem !important;
+  }
+  .progress {
+    height: 2.6rem !important;
+  }
+  .stock{
+    margin-left: 0;
   }
 }

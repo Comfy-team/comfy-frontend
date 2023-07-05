@@ -87,7 +87,7 @@ const ProductsAdd = () => {
   };
 
   return (
-    <div className="px-4">
+    <div className="px-3 px-md-4">
       <h1 className="h4 mb-4 py-3">Add Product</h1>
       <Formik
         initialValues={{

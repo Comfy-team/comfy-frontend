@@ -13,6 +13,7 @@ import {
   deleteItemFromCart,
   updateItemQuantity,
 } from "../../functions/cart.js";
+import Price from "./price.jsx";
 import { showCartModal } from "../../store/slices/cartModalSlice.js";
 import RemoveProductWarning from "../common/removeProductWarning";
 
@@ -75,7 +76,7 @@ function Item({ item, cartId }) {
                 </strong>
               )}
 
-              <strong className="d-block">${item?.price}</strong>
+              <Price price={item.price} discount={item?.product_id.discount} />
               <div className="d-flex pt-2">
                 {showBtnSpinner ? (
                   <div
@@ -95,7 +96,7 @@ function Item({ item, cartId }) {
               </div>
             </div>
             <div className="col-6">
-              <div className="input-group justify-content-center w-100">
+              <div className={`${style["counter"]} input-group justify-content-center`}>
                 <button
                   className="btn  rounded-0 border-0"
                   type="button"
@@ -123,18 +124,18 @@ function Item({ item, cartId }) {
                       item.color
                     )
                   }
-                  disabled={item.quantity === item.product_id.stock}
+                  disabled={item.quantity === item?.product_id.stock}
                 >
                   <FontAwesomeIcon icon={faPlus} size="xs"  className="hover-color-yellow" />
                 </button>
               </div>
-              <div className="ps-4">
-                <span className="fw-semibold">stock:</span>
+              <div className={`${style.stock} ps-3`}>
+                <span className="fw-semibold">stock: </span>
                 <span
-                  className={item.product_id.stock === 0 ? "text-danger" : ""}
+                  className={item?.product_id.stock === 0 ? "text-danger" : ""}
                 >
-                  {item.product_id.stock > 0
-                    ? item.product_id.stock
+                  {item?.product_id.stock > 0
+                    ? item?.product_id.stock
                     : "Out Of Stock"}
                 </span>
               </div>

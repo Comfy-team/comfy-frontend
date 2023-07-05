@@ -142,41 +142,44 @@ export default function FormComonent() {
         {({ errors, touched }) => (
           <Form>
             <h6> Contact </h6>
-            <div className="form-group">
+            <div className="form-group form-floating ">
               <Field
                 name="phone"
                 placeholder="phone"
                 className="form-control"
                 type="text"
                 id="phone"
-              />
+              />{" "}
+              <label htmlFor="phone">phone </label>
               {touched.phone && errors.phone && (
                 <div className="text-danger ms-2">{errors.phone}</div>
               )}
             </div>
             <h6 className={`{} mb-0 mt-4 `}> Shipping address </h6>
 
-            <div className="form-group ">
+            <div className="form-group form-floating ">
               <Field
                 name="fullName"
                 placeholder="full name"
                 className="form-control"
                 type="text"
                 id="fullName"
-              />
+              />{" "}
+              <label htmlFor="fullName">full Name </label>
               {touched.fullName && errors.fullName && (
                 <div className="text-danger ms-2">{errors.fullName}</div>
               )}
             </div>
 
-            <div className="form-group">
+            <div className="form-group form-floating ">
               <Field
                 name="address.apartment"
                 placeholder="Apartment"
                 className="form-control"
                 type="text"
                 id="apartment"
-              />
+              />{" "}
+              <label htmlFor="apartment">apartment </label>
               {touched.address?.apartment && errors.address?.apartment && (
                 <div className="text-danger ms-2">
                   {errors.address?.apartment}
@@ -184,7 +187,7 @@ export default function FormComonent() {
               )}
             </div>
 
-            <div className={`${style.formGroup} form-group`}>
+            <div className={`${style.formGroup} form-group form-floating `}>
               <Field
                 name="address.building"
                 placeholder="Building"
@@ -192,13 +195,16 @@ export default function FormComonent() {
                 type="text"
                 id="building"
               />
+              <label htmlFor="building">building </label>
+
               {touched.address?.building && errors.address?.building && (
                 <div className="text-danger ms-2">
                   {errors.address?.building}
                 </div>
               )}
             </div>
-            <div className={`${style.formGroup} form-group`}>
+
+            <div className={`${style.formGroup}  form-floating   form-group`}>
               <Field
                 name="address.street"
                 placeholder="Street"
@@ -206,48 +212,38 @@ export default function FormComonent() {
                 type="text"
                 id="street"
               />
+              <label htmlFor="street">street </label>
+
               {touched.address?.street && errors.address?.street && (
                 <div className="text-danger ms-2">{errors.address?.street}</div>
               )}
             </div>
-
-            <div className={`${style.formGroup} ${style.gray} form-group`}>
-              <Field
-                className={`form-control ${style.gray}  ${style.input}`}
-                name="address.country"
-                id="country"
-                as="select"
-                type="text"
+            <div className="row mb-3 mt-0 ">
+              <div
+                className={`${style.formGroup} ${style.gray} form-group form-floating  col-lg-6  col-sm-12`}
               >
-                <option value="" id="0" disabled className={`${style.gray} `}>
-                  Country
-                </option>
-                <option value="Egypt">Egypt </option>
-              </Field>
-
-              {touched.address?.country && errors.address?.country && (
-                <div className="text-danger ms-2">
-                  {errors.address?.country}
-                </div>
-              )}
-            </div>
-            <div className="row mb-3 mt-0">
-              <div className="form-group col-4 ">
                 <Field
-                  name="address.postalCode"
-                  placeholder="postal Code"
-                  className="form-control"
+                  className={`form-control ${style.gray}  ${style.input}`}
+                  name="address.country"
+                  id="country"
+                  as="select"
                   type="text"
-                  id="postalCode"
-                />
-                {touched.address?.postalCode && errors.address?.postalCode && (
+                >
+                  <option value="" id="0" disabled className={`${style.gray} `}>
+                    Country
+                  </option>
+                  <option value="Egypt">Egypt </option>
+                </Field>
+                <label htmlFor="country">Country</label>
+
+                {touched.address?.country && errors.address?.country && (
                   <div className="text-danger ms-2">
-                    {errors.address?.postalCode}
+                    {errors.address?.country}
                   </div>
                 )}
               </div>
 
-              <div className="form-group col-4 ">
+              <div className="form-group form-floating   col-lg-6 col-sm-12">
                 <Field
                   className={`form-control ${style.input} ${style.gray} `}
                   name="address.governorate"
@@ -258,7 +254,6 @@ export default function FormComonent() {
                   <option value="" id="0" disabled>
                     Governorate
                   </option>
-
                   {governoratesData.map(governorate => (
                     <option
                       key={governorate.id}
@@ -268,7 +263,11 @@ export default function FormComonent() {
                       {governorate.governorate_name_en}
                     </option>
                   ))}
-                </Field>
+                </Field>{" "}
+                <label htmlFor="postalCode">
+                  {" "}
+                  <label htmlFor="postalCode">Governorate</label>
+                </label>
                 {touched.address?.governorate &&
                   errors.address?.governorate && (
                     <div className="text-danger ms-2">
@@ -276,8 +275,10 @@ export default function FormComonent() {
                     </div>
                   )}
               </div>
-              {/**=========city===========*/}
-              <div className="form-group col-4 ">
+            </div>
+            {/**=========city===========*/}
+            <div className="row mb-3 mt-0  form-floating ">
+              <div className="form-group form-floating  col-lg-6  col-sm-12">
                 <Field
                   className={`form-control ${style.input} ${style.gray} `}
                   name="address.city"
@@ -311,15 +312,35 @@ export default function FormComonent() {
                     return null;
                   })}
                 </Field>
+                <label htmlFor="city">City</label>
+
                 {errors.address?.city && touched.address?.city ? (
                   <span className="text-danger ms-2">
                     {errors.address?.city}
                   </span>
                 ) : null}
+                {/* </div> */}
+                {/*====================*/}
               </div>
-
-              {/*====================*/}
+              <div className="form-group form-floating  col-lg-6  col-sm-12">
+                <Field
+                  name="address.postalCode"
+                  placeholder="postal Code"
+                  className="form-control"
+                  type="text"
+                  id="postalCode"
+                />
+                <label htmlFor="postalCode">Postal Code </label>
+                {touched.address?.postalCode && errors.address?.postalCode && (
+                  <div className="text-danger ms-2">
+                    {errors.address?.postalCode}
+                  </div>
+                )}
+              </div>
             </div>
+
+            {/*====================*/}
+
             <div className="form-check">
               <input
                 type="checkbox"
@@ -336,6 +357,7 @@ export default function FormComonent() {
                 save this information for next time{" "}
               </label>
             </div>
+            {/*====================*/}
 
             <div className="row mb-4  w-100 m-auto">
               <Link

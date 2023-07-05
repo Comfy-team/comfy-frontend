@@ -20,7 +20,7 @@ export default function Breadcrumbcomponant() {
           </li>
           <li className="breadcrumb-item">
             <Link
-              to="/checkout/information"
+              to="/checkout"
               className={`breadcrumb-item ${style.none}
                   `}
             >

@@ -71,16 +71,28 @@ const Details = ({ product }) => {
     setBtnSpinner(false);
     if (product) {
       if (cart.items?.length > 0) {
-        const item = cart.items.find((ele) =>
-          activeColor
-            ? ele.product_id._id === product._id && ele.color === activeColor
-            : ele.product_id._id === product._id
-        );
-        if (item) {
-          setActiveQuantity(item.quantity);
-          setActiveColor(item.color);
-          setInCart(true);
+        let item;
+        if (activeColor) {
+          item = cart.items.find(
+            (ele) =>
+              ele.product_id._id === product._id && ele.color === activeColor
+          );
+          if (item) {
+            setActiveQuantity(item.quantity);
+            setActiveColor(item.color);
+            setInCart(true);
+          } else {
+            setInCart(false);
+          }
           return;
+        } else {
+          item = cart.items.find((ele) => ele.product_id._id === product._id);
+          if (item) {
+            setActiveQuantity(item.quantity);
+            setActiveColor(item.color);
+            setInCart(true);
+            return;
+          }
         }
       }
       setActiveColor(product.colors[0]);

@@ -16,13 +16,11 @@
   width: 1rem !important;
   height: 1rem !important;
   border: solid black;
+  margin-top: 0.1rem;
 }
-.counter-btn {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
-}
-.counter-value {
-  width: 2rem;
+.counter {
+  flex-wrap: nowrap !important;
+  margin-top: -0.3rem;
 }
 @media (max-width: 767.98px) {
   .counter-value {

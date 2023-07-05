@@ -1,11 +1,8 @@
 import { useLayoutEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 
 // components
 import NavAside from "../../components/dashboard/navAside";
-import ToastInfo from "../../components/common/toast";
-import { showToast } from "../../store/slices/toastSlice";
 
 // style
 import style from "./dashboard.module.css";
@@ -13,8 +10,6 @@ import style from "./dashboard.module.css";
 const Dashboard = () => {
   const [collapseAside, setCollapseAside] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const toastMsg = useSelector((state) => state.toastInfo.msg);
-  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     function updateSize() {
@@ -54,13 +49,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      {toastMsg && (
-        <ToastInfo
-          msg={toastMsg}
-          show={toastMsg ? true : false}
-          onDismissToast={() => dispatch(showToast(""))}
-        />
-      )}
     </div>
   );
 };

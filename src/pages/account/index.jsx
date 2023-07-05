@@ -80,7 +80,7 @@ const Account = () => {
       <div className="container">
         <div className="d-flex justify-content-between align-items-center col-12 col-lg-7">
           <h1>Account</h1>
-          <button className={`text-danger btn btn-md`} onClick={handelLogout}>
+          <button className={`text-danger btn btn-md mb-2`} onClick={handelLogout}>
             Logout
           </button>
         </div>

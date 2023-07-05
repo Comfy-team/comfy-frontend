@@ -1,10 +1,9 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 
 // components
 import LayoutWithNav from "../components/layouts/layoutWithNav";
 import LayoutWithPageHeader from "../components/layouts/layoutWithPageHeader";
-import Spinner from "../components/common/spinner";
 import PaymentMethod from "./../pages/checkout/paymentMethod";
 import FormComonent from "./../pages/checkout/FormComonent";
 import HomeDash from "../components/dashboard/home/homeDash";
@@ -24,122 +23,42 @@ import BrandsAdd from "./../components/dashboard/brands/brandsAdd";
 import CategoriesAdd from "./../components/dashboard/categories/categoriesAdd";
 
 // pages
-const Home = React.lazy(() => import("./../pages/home"));
-const About = React.lazy(() => import("./../pages/about"));
-const Contact = React.lazy(() => import("./../pages/contact"));
-const Shop = React.lazy(() => import("./../pages/shop"));
-const FAQ = React.lazy(() => import("./../pages/faq"));
-const ProductDetails = React.lazy(() => import("./../pages/productDetails"));
-const Checkout = React.lazy(() => import("./../pages/checkout"));
-const CartPage = React.lazy(() => import("./../pages/cartPage"));
-const Page404 = React.lazy(() => import("./../pages/page404"));
-const SearchPage = React.lazy(() => import("./../pages/searchPage"));
-const Account = React.lazy(() => import("./../pages/account"));
-const Dashboard = React.lazy(() => import("./../pages/dashboard"));
+import Home from "./../pages/home";
+import About from "./../pages/about";
+import Contact from "./../pages/contact";
+import Shop from "./../pages/shop";
+import FAQ from "./../pages/faq";
+import ProductDetails from "./../pages/productDetails";
+import Checkout from "./../pages/checkout";
+import CartPage from "./../pages/cartPage";
+import Page404 from "./../pages/page404";
+import SearchPage from "./../pages/searchPage";
+import Account from "./../pages/account";
+import Dashboard from "./../pages/dashboard";
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route element={<LayoutWithNav />}>
-        <Route
-          path="/"
-          element={
-            <Suspense fallback={<Spinner />}>
-              <Home />
-            </Suspense>
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route path="/home" element={<Navigate to="/" replace />} />
-        <Route
-          path="/account/:id"
-          element={
-            <Suspense fallback={<Spinner />}>
-              <Account />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/product-details/:id"
-          element={
-            <Suspense fallback={<Spinner />}>
-              <ProductDetails />
-            </Suspense>
-          }
-        />
+        <Route path="/account/:id" element={<Account />} />
+        <Route path="/product-details/:id" element={<ProductDetails />} />
         <Route element={<LayoutWithPageHeader />}>
-          <Route
-            path="/shop"
-            element={
-              <Suspense fallback={<Spinner />}>
-                <Shop />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <Suspense fallback={<Spinner />}>
-                <About />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              <Suspense fallback={<Spinner />}>
-                <Contact />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/faq"
-            element={
-              <Suspense fallback={<Spinner />}>
-                <FAQ />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/cart"
-            element={
-              <Suspense fallback={<Spinner />}>
-                <CartPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/search"
-            element={
-              <Suspense fallback={<Spinner />}>
-                <SearchPage />
-              </Suspense>
-            }
-          />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/search" element={<SearchPage />} />
         </Route>
       </Route>
-      <Route
-        path="/Checkout"
-        element={<Navigate to="/Checkout/information" replace />}
-      />
-      <Route
-        path="/checkout"
-        element={
-          <Suspense fallback={<Spinner />}>
-            <Checkout />
-          </Suspense>
-        }
-      >
-        <Route path="information" element={<FormComonent />} />
+
+      <Route path="/checkout" element={<Checkout />}>
+        <Route path="" element={<FormComonent />} />
         <Route path="shipping" element={<PaymentMethod />} />
       </Route>
-      <Route
-        path="/dashboard"
-        element={
-          <Suspense fallback={<Spinner />}>
-            <Dashboard />
-          </Suspense>
-        }
-      >
+      <Route path="/dashboard" element={<Dashboard />}>
         <Route path="" element={<HomeDash />} />
         <Route path="users" element={<UsersDash />} />
         <Route path="products" element={<ProductsDash />}>

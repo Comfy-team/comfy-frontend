@@ -75,13 +75,13 @@ export const updateItemQuantity = (cartId, id, quantity, color) => {
   }
 };
 
-export const addItemToCart = (cartId, id, color, price) => {
+export const addItemToCart = (cartId, id, color, price, discount) => {
   const token = localStorage.getItem("userToken");
   if (token) {
     axiosInstance
       .post(
         `/cart/${cartId}`,
-        { product_id: id, color, price: price },
+        { product_id: id, color, price: price, discount: discount },
         {
           headers: {
             Authorization: `Bearer ${token}`,

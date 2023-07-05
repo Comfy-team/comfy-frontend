@@ -9,10 +9,10 @@ import style from "./checkout.module.css";
 import "../../App.css";
 import OrderInfo from "./../../components/checkout/orderInfo";
 import Spinner from "../../components/common/spinner";
-
 export default function PaymentMethod() {
   const [isAddingOrder, setIsAddingOrder] = useState(false);
   const navigate = useNavigate();
+
   const token = localStorage.getItem("userToken");
   const shippingValue = 20.0;
   // ===========
@@ -56,7 +56,7 @@ export default function PaymentMethod() {
   };
 
   return formData ? (
-    <div>
+    <div className="">
       <div className={`${style.PaymentMethod} ml-5 ml-md-3 container `}>
         <div className="container">
           <div className="form-control mr-5 ps-4">
@@ -74,7 +74,7 @@ export default function PaymentMethod() {
           </div>
           <div className="row mb-4  w-100 m-auto">
             <Link
-              to="/checkout/information"
+              to="/checkout"
               className={` col-lg-6  col-md-6 col-sm-12  col-12  mt-2 mb-3 ${style.returnLink} text-decoration-none `}
             >
               {" "}
@@ -89,7 +89,7 @@ export default function PaymentMethod() {
             </button>
           </div>
           <hr className="border" />
-          <small className={`${style.gray} `}>
+          <small className={`${style.gray} mt-2`}>
             {" "}
             All Rights Reserved to comfy team
           </small>
