@@ -149,7 +149,7 @@ const CategoriesData = () => {
               onClick={handleAddCategory}
               value={searchQuery}
             >
-              <FontAwesomeIcon icon={faPlus} />Add New Category
+              <FontAwesomeIcon icon={faPlus} /> Add New Category
             </button>
           </div>
         </div>
@@ -159,7 +159,7 @@ const CategoriesData = () => {
         <table className="table ">
           <thead>
             <tr>
-              <th scope="col" className="text-truncate">
+              <th scope="col" className="ps-4">
                 #ID
               </th>
               <th scope="col">Name</th>
@@ -178,7 +178,7 @@ const CategoriesData = () => {
             ) : (
               displayedCategories.map((category) => (
                 <tr key={category._id}>
-                  <td>{category._id}</td>
+                  <td className="ps-4">{category._id}</td>
                   <td>{category.name}</td>
                   <td className="ps-4">{category.products_id.length}</td>
                   <td>
