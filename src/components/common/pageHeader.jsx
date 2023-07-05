@@ -9,9 +9,14 @@ export default function PageHeader({ path }) {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb justify-content-center mb-0">
               <li className="breadcrumb-item">
-                <Link href="/" className="text-black-50 text-decoration-none">Home</Link>
+                <Link to="/" className="text-black-50 text-decoration-none">
+                  Home
+                </Link>
               </li>
-              <li className="breadcrumb-item active text-dark text-capitalize" aria-current="page">
+              <li
+                className="breadcrumb-item active text-dark text-capitalize"
+                aria-current="page"
+              >
                 {path}
               </li>
             </ol>
