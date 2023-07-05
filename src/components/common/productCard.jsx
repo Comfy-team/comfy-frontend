@@ -18,11 +18,11 @@ const ProductCard = ({ product }) => {
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
 
-  const handleAddToCart = (id, color, price) => {
+  const handleAddToCart = (id, color, price, discount) => {
     if (cart.items) {
       setShowBtnSpinner(true);
     }
-    addItemToCart(cart._id, id, color, price);
+    addItemToCart(cart._id, id, color, price, discount);
   };
 
   useEffect(() => {
@@ -81,7 +81,12 @@ const ProductCard = ({ product }) => {
             <button
               className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2"
               onClick={() =>
-                handleAddToCart(product._id, product.colors[0], product.price)
+                handleAddToCart(
+                  product._id,
+                  product.colors[0],
+                  product.price,
+                  product.discount
+                )
               }
             >
               <FontAwesomeIcon icon={faPlus} /> Add to Cart
