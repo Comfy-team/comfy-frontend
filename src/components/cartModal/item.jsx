@@ -76,7 +76,7 @@ function Item({ item, cartId }) {
                 </strong>
               )}
 
-              <Price price={item.price} discount={item.product_id.discount} />
+              <Price price={item.price} discount={item?.product_id.discount} />
               <div className="d-flex pt-2">
                 {showBtnSpinner ? (
                   <div
@@ -124,7 +124,7 @@ function Item({ item, cartId }) {
                       item.color
                     )
                   }
-                  disabled={item.quantity === item.product_id.stock}
+                  disabled={item.quantity === item?.product_id.stock}
                 >
                   <FontAwesomeIcon icon={faPlus} size="xs"  className="hover-color-yellow" />
                 </button>
@@ -132,10 +132,10 @@ function Item({ item, cartId }) {
               <div className={`${style.stock} ps-3`}>
                 <span className="fw-semibold">stock: </span>
                 <span
-                  className={item.product_id.stock === 0 ? "text-danger" : ""}
+                  className={item?.product_id.stock === 0 ? "text-danger" : ""}
                 >
-                  {item.product_id.stock > 0
-                    ? item.product_id.stock
+                  {item?.product_id.stock > 0
+                    ? item?.product_id.stock
                     : "Out Of Stock"}
                 </span>
               </div>
