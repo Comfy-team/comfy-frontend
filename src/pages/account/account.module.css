@@ -20,6 +20,7 @@
   width: -moz-fit-content;
   width: fit-content;
   border-bottom: 2px solid transparent;
+  cursor: pointer;
 }
 .title h6 {
   color: var(--footer-links);
