@@ -14,7 +14,7 @@ export default function PaymentMethod() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem("userToken");
-  const shippingValue = 20.0;
+  const shippingValue = 15.0;
   // ===========
   const cart = useSelector(state => state.cart.cart);
   const formData = useSelector(state => state.CheckoutForm.form);
