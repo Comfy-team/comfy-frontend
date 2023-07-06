@@ -49,7 +49,6 @@ const ProductForm = ({
         <Field
           type="text"
           name="name"
-          placeholder="name"
           className={`form-control ${
             errors.name && touched.name ? "is-invalid" : ""
           }`}
@@ -68,7 +67,6 @@ const ProductForm = ({
         <Field
           as="textarea"
           name="description"
-          placeholder="description"
           className={`form-control ${
             errors.description && touched.description ? "is-invalid" : ""
           }`}
@@ -111,7 +109,6 @@ const ProductForm = ({
               type="number"
               name="discount"
               min="0"
-              placeholder="discount"
               className={`form-control ${
                 errors.discount && touched.discount ? "is-invalid" : ""
               }`}
@@ -159,7 +156,7 @@ const ProductForm = ({
                 errors.category && touched.category ? "is-invalid" : ""
               }`}
             >
-              <option value="">Category</option>
+              <option value="">Choose...</option>
               {categories?.map((ele) => (
                 <option key={ele._id} value={ele._id}>
                   {ele.name}
@@ -186,7 +183,7 @@ const ProductForm = ({
                 errors.brand && touched.brand ? "is-invalid" : ""
               }`}
             >
-              <option value="">Brand</option>
+              <option value="">Choose...</option>
               {brands?.map((ele) => (
                 <option key={ele._id} value={ele._id}>
                   {ele.name}

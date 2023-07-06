@@ -123,12 +123,12 @@ body {
 .toggle-aside-btn {
   width: 1.5rem;
   height: 1.5rem;
-  font-size: 0.95rem;
+  font-size: 0.95rem!important;
   transform: translateX(25%);
-  top: 3.5rem;
+  top: 3.6rem;
   outline: 5px solid var(--dash-bg) !important;
   z-index: 1030;
-  transition: transform ease 0.3s;
+  transition: transform ease 0.3s, background-color 0.5s!important;
 }
 
 .toggle-aside-btn.collapsed {
@@ -140,15 +140,6 @@ body {
 /* start main content */
 
 /* start home */
-#dash-home .dash-home-btn {
-  font-size: 0.85rem;
-}
-
-#dash-home .dash-home-btn:hover {
-  background-color: var(--dash-btn-hover) !important;
-  color: white !important;
-}
-
 @media (max-width: 767.5px) {
   #dash-home .dash-welcome-img {
     width: 10rem;

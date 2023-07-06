@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import DashPagination from "../dashPagination";
@@ -53,18 +53,18 @@ const ProductsData = () => {
         },
       })
       .then((res) => {
-        if (res.status === 200) {
-          dispatch(showToast("Product was deleted successfully!"));
-          let newData = [...data].filter((ele) => ele._id !== id);
-          setData(newData);
-          setProductToDelete(null);
-        } else {
-          dispatch(
-            showToast("Failed to delete product! Please try again later!")
-          );
-        }
+        dispatch(showToast("Product was deleted successfully!"));
+        let newData = [...data].filter((ele) => ele._id !== id);
+        setData(newData);
+        setProductToDelete(null);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        dispatch(
+          showToast("Failed to delete product! Please try again later!")
+        );
+        setProductToDelete(null);
+      });
   };
 
   const getResults = (query, page = 1) => {
@@ -132,7 +132,7 @@ const ProductsData = () => {
             to="/dashboard/products/add"
             className={`text-capitalize btn ${style["dash-btn"]} align-self-center align-self-md-start d-flex gap-1 align-items-center mb-md-0 mb-5`}
           >
-          <FontAwesomeIcon icon={faPlus} /> <span>Add a product</span>
+            <FontAwesomeIcon icon={faPlus} /> <span>Add a product</span>
           </Link>
         </div>
       </div>
@@ -143,7 +143,9 @@ const ProductsData = () => {
               <table className="table border-top">
                 <thead>
                   <tr>
-                    <th scope="col">#id</th>
+                    <th scope="col" className="ps-4">
+                      #ID
+                    </th>
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
                     <th scope="col">Price</th>
@@ -161,7 +163,10 @@ const ProductsData = () => {
                 <tbody>
                   {data.map((product) => (
                     <tr key={product._id}>
-                      <th scope="row" className={style["dash-prod-id-holder"]}>
+                      <th
+                        scope="row"
+                        className={`${style["dash-prod-id-holder"]} ps-4`}
+                      >
                         <span className={`d-block ${style["dash-prod-id"]}`}>
                           {product._id}
                         </span>
@@ -177,7 +182,9 @@ const ProductsData = () => {
                       <td className="text-center">
                         {product.price.toFixed(2)}
                       </td>
-                      <td className="text-center">{product.discount}%</td>
+                      <td className="text-center">
+                        {product.discount > 0 ? `${product.discount}%` : 0}
+                      </td>
                       <td className="text-center">{product.stock}</td>
                       <td className="text-center text-capitalize">
                         {product.category.name}
