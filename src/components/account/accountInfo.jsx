@@ -5,17 +5,19 @@ import { useDispatch } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-
+//component
 import axiosInstance from "../../apis/config";
 import { governoratesData } from "../../apis/governorates";
 import { cities } from "../../apis/cities";
 import { showToast } from "../../store/slices/toastSlice";
 
+// style
 import styles from "../../pages/account/account.module.css";
 
-const AccountInfo = ({ user, token }) => {
+const AccountInfo = ({ user, token,setUser }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const [showBtnSpinner, SetShowBtnSpinner] = useState(false);
   const [updateUser, setUpdateUser] = useState({
     id: id,
     fullName: user?.fullName,
@@ -33,6 +35,7 @@ const AccountInfo = ({ user, token }) => {
 
 
   const updateUserSubmit = (updateUser) => {
+    SetShowBtnSpinner(true);
     axiosInstance
       .patch("/users", updateUser, {
         headers: {
@@ -43,10 +46,13 @@ const AccountInfo = ({ user, token }) => {
       })
       .then((res) => {
         dispatch(showToast("Account Updated successfully!"));
+        SetShowBtnSpinner(false);
+        setUser(updateUser)
       })
       .catch((err) => {
         // handle error, e.g. show error message
         dispatch(showToast("Unable to update, please try again."));
+        SetShowBtnSpinner(false);
       });
   };
 
@@ -290,12 +296,25 @@ const AccountInfo = ({ user, token }) => {
               ) : null}
             </div>
             <div className={`pt-3`}>
+            {!showBtnSpinner ? 
               <input
                 type="submit"
                 className={`btn-bg-dark text-center ${styles.button}`}
                 value="Update account"
               />
+              : 
+              <button
+              type="button"
+              className={`btn-bg-dark text-center ${styles.button}`}
+            >
+              <div className="spinner-border spinner-border-sm" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </button>
+             
+              }
             </div>
+
           </Form>
         )}
       </Formik>
