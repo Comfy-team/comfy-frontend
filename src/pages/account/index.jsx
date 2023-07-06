@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useSearchParams} from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import AccountInfo from "./../../components/account/accountInfo";
@@ -11,6 +11,7 @@ import { showLoginModal } from "../../store/slices/loginModalSlice";
 import axiosInstance from "./../../apis/config";
 import style from "./account.module.css";
 import jwtDecode from "jwt-decode";
+import Spinner from "../../components/common/spinner";
 
 const Account = () => {
   const { id } = useParams();
@@ -18,26 +19,25 @@ const Account = () => {
   const dispatch = useDispatch();
   let token = localStorage.getItem("userToken");
   const [notAuth, setNotAuth] = useState(true);
-
+  const [showSpinner, setShowSpinner] = useState(true);
   const [user, setUser] = useState({});
   const [activeTitle, setActiveTitle] = useState("myOrder");
-  const [activeComponent, setActiveComponent] = useState(
-    <AccountOrders user={user} token={token} />
-  );
-
+  const [searchParams, setSearchParams] = useSearchParams({
+    active: "myOrder",
+  });
   const handleAccountInfoClick = () => {
     setActiveTitle("accountInfo");
-    setActiveComponent(<AccountInfo user={user} token={token} />);
+    setSearchParams({ active: "accountInfo" });
   };
 
   const handleChangePasswordClick = () => {
     setActiveTitle("changePassword");
-    setActiveComponent(<ChangePasswords user={user} token={token} />);
+    setSearchParams({ active: "changePassword" });
   };
 
   const handleMyOrderClick = () => {
     setActiveTitle("myOrder");
-    setActiveComponent(<AccountOrders user={user} token={token} />);
+    setSearchParams({ active: "myOrder" });
   };
 
   
@@ -45,7 +45,6 @@ const Account = () => {
     const token = localStorage.getItem("userToken");
     if (!token) {
       setNotAuth(true);
-
       navigate("/");
       dispatch(showLoginModal(true));
     } else {
@@ -54,6 +53,7 @@ const Account = () => {
   }, [token]);
 
   useEffect(() => {
+    setShowSpinner(true);
     if(jwtDecode(token).role === "admin"){
       navigate("/dashboard");
     }else{
@@ -65,7 +65,11 @@ const Account = () => {
         },
       })
       .then((res) => {
+        if (searchParams.get("active")) {
+          setActiveTitle(searchParams.get("active"));
+        }
         setUser(res.data);
+        setShowSpinner(false);
       })
       .catch((err) => console.log(err));
     }
@@ -77,6 +81,7 @@ const Account = () => {
 
   return !notAuth ? (
     <div id={`${style.account}`} style={{}}>
+      {!showSpinner ?  
       <div className="container">
         <div className="d-flex justify-content-between align-items-center col-12 col-lg-7">
           <h1>Account</h1>
@@ -109,7 +114,7 @@ const Account = () => {
              ${activeTitle === "accountInfo" ? style.active : ""}`}
               onClick={handleAccountInfoClick}
             >
-              <h6 className={`mr-2 mr-sm-0 ms-sm-1`}>Account info</h6>
+              <h6 className={`mr-2 mr-sm-0 ms-sm-1 `}>Account info</h6>
             </div>
           </div>
           <div className="col-5 col-sm-4 col-lg-2">
@@ -118,25 +123,28 @@ const Account = () => {
              ${activeTitle === "changePassword" ? style.active : ""}`}
               onClick={handleChangePasswordClick}
             >
-              <h6 className="text-center text-sm-start ">Change password</h6>
+              <h6 className="text-center text-sm-start">Change password</h6>
             </div>
           </div>
         </div>
         <hr className={`row col-12 col-lg-7 ${style["border-ms"]}`} />
-
+        
         <div className={`${style.acountPage}`}>
+
           {activeTitle === "myOrder" && (
             <AccountOrders user={user} token={token} />
           )}
 
           {activeTitle === "accountInfo" && (
-            <AccountInfo user={user} token={token} />
+            <AccountInfo user={user} setUser={setUser} token={token} />
           )}
           {activeTitle === "changePassword" && (
             <ChangePasswords user={user} token={token} />
           )}
         </div>
+
       </div>
+      : <Spinner />}
     </div>
   ) : (
     "wait"
