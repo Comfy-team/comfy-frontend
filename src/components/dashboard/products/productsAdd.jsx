@@ -26,7 +26,7 @@ const ProductsAdd = () => {
     discount: Yup.number()
       .min(0, "minimum is 0")
       .required("Discount is required"),
-    stock: Yup.number().min(0, "minimum is 0").required("Stock is required"),
+    stock: Yup.number().min(1, "minimum is 1").required("Stock is required"),
     category: Yup.string().required("Category is required"),
     brand: Yup.string().required("Brand is required"),
     colors: Yup.array()
@@ -62,16 +62,16 @@ const ProductsAdd = () => {
         },
       })
       .then((res) => {
-        if (res.status === 201) {
-          dispatch(showToast("Product was added successfully!"));
-          resetForm();
-          setSelectedImages([]);
-        } else {
-          dispatch(showToast("Failed to add product! Please try again later!"));
-        }
+        dispatch(showToast("Product was added successfully!"));
+        resetForm();
+        setSelectedImages([]);
         SetShowBtnSpinner(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        dispatch(showToast("Failed to add product! Please try again later."));
+        SetShowBtnSpinner(false);
+        console.log(error);
+      });
   };
 
   const onImageInput = (e) => {
@@ -95,7 +95,7 @@ const ProductsAdd = () => {
           description: "",
           price: 1,
           discount: 0,
-          stock: 0,
+          stock: 1,
           category: "",
           brand: "",
           colors: [],

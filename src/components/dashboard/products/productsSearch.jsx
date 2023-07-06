@@ -1,11 +1,13 @@
+// font awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+
 // form validation
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
 // style
 import style from "../../../pages/dashboard/dashboard.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const ProductsSearch = ({ onSearch, searchParams, onRemoveSearch }) => {
   const searchSchema = Yup.object().shape({
@@ -20,14 +22,15 @@ const ProductsSearch = ({ onSearch, searchParams, onRemoveSearch }) => {
       validationSchema={searchSchema}
       onSubmit={onSearch}
     >
-      {({ errors, touched, values, setFieldValue }) => (
+      {({ errors, touched, setFieldTouched, setFieldValue }) => (
         <Form id={style["dash-search"]} className="m-0 mb-4">
           <div className="form-group mb-3 mb-sm-0">
             <div className="position-relative pe-md-4">
-              {values.searchValue && (
+              {searchParams?.get("query") && (
                 <button
                   type="button"
                   onClick={() => {
+                    setFieldTouched("searchValue", false);
                     setFieldValue("searchValue", "");
                     onRemoveSearch();
                   }}
