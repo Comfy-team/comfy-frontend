@@ -7,6 +7,7 @@ import "react-multi-carousel/lib/styles.css";
 import { LeftArrow, RightArrow } from "./../common/customSliderArrows";
 import axiosInstance from "../../apis/config";
 import ProductCard from "./../common/productCard";
+import Spinner from "../common/spinner";
 
 //style
 import styles from "./../../pages/home/home.module.css";
@@ -44,13 +45,15 @@ const responsive = {
 };
 
 const Trending = () => {
-  let [product, setProduct] = useState([]);
-
+  const [product, setProduct] = useState([]);
+  const [showSpinner, setShowSpinner] = useState(true);
   useEffect(() => {
+    setShowSpinner(true);
     axiosInstance
       .get("/products", {})
       .then((response) => {
         setProduct(response.data.data);
+        setShowSpinner(false);
       })
       .catch((error) => {
         console.log(error);
@@ -61,6 +64,7 @@ const Trending = () => {
     <>
       <div className={`${styles.trendingSection}`}>
         <h2 className="text-center">Top Trending</h2>
+        {!showSpinner ? (
         <div className="container-fluid px-md-5">
           <div className={`row justify-contant-between`}>
             <Carousel
@@ -89,6 +93,9 @@ const Trending = () => {
             </Carousel>
           </div>
         </div>
+        ) : (
+          <Spinner />
+        )}
       </div>
     </>
   );
