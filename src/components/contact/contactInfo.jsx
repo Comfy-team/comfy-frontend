@@ -1,13 +1,20 @@
 import { useState, useRef } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+
 import emailjs from "emailjs-com";
+
+//font awsome 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import {
   faHeadphones,
   faMapMarkerAlt,
 } from "@fortawesome/free-solid-svg-icons";
+
+//formik
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
+//style
 import style from "../../pages/contact/contact.module.css";
 
 const ContactForm = () => {
@@ -42,13 +49,12 @@ const ContactForm = () => {
 
     try {
       // Send email using EmailJS API
-      const result = await emailjs.send(
+      await emailjs.send(
         "service_e1wev9l",
         "template_wh85pl4",
         templateParams,
         "TsoWOt-ZQTaLMUt3q"
       );
-      console.log(result.text);
       setIsMessageSent(true);
     } catch (error) {
       console.log(error.text);
@@ -184,7 +190,7 @@ const ContactInfo = () => {
                 </div>
                 <div className="col-9 contact-info">
                   <h5 className="d-block">Phone</h5>
-                  <p>+20 1003533427 | +20 1003533478</p>
+                  <p>+20 1003533427</p>
                 </div>
               </div>
               <hr />
