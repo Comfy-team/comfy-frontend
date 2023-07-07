@@ -13,7 +13,8 @@ import style from "./checkout.module.css";
 import "../../App.css";
 import OrderInfo from "./../../components/checkout/orderInfo";
 import Spinner from "../../components/common/spinner";
-import RemoveProductWarning from "./../../components/common/removeProductWarning";
+import ConfirmPopup from "../../components/common/confirmPopup";
+
 export default function PaymentMethod() {
   const [showWarning, setShowWarning] = useState(false);
   const [isAddingOrder, setIsAddingOrder] = useState(false);
@@ -99,8 +100,9 @@ export default function PaymentMethod() {
       </div>
 
       {showWarning && (
-        <RemoveProductWarning
-          onRemove={() => {
+        <ConfirmPopup
+          msg={"Are you sure you want to purchase?"}
+          onConfirm={() => {
             onConfirmClick();
             setIsAddingOrder(true);
           }}
