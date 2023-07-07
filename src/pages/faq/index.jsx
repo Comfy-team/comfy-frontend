@@ -19,6 +19,7 @@ const FAQ = () => {
             your audience.
           </p>
           <div className={`${styles.listoquestion}   mb-5`}>
+            <a href="#e">e e </a>
             <a href="#faqpara3">LARGE ITEMS </a>
             <a href="#faqpara5">ASSEMBLED</a>
             <a href="#faqpara6">LIMITATION </a>
@@ -32,16 +33,11 @@ const FAQ = () => {
           className={`${styles.largecolumn}  col-md-6 col-sm-12 col-lg-8     mt-5  `}
         >
           {list.map(item => (
-            <div key={item.id} className="">
-              <h6
-                className="text-uppercase font-weight-bold"
-                id={`faqpara${item.id}`}
-              >
-                {" "}
+            <div key={item.id} className="" id={`faqpara${item.id}`}>
+              <h6 className="text-uppercase font-weight-bold">
                 {item.id}- {item.heading}{" "}
               </h6>
               <p> {item.content} </p>
-              <p />
             </div>
           ))}
         </div>
