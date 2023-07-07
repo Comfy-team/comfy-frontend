@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux";
 
 // component
 import DashPagination from "./dashPagination";
-import RemoveProductWarning from "../common/removeProductWarning";
 import { showToast } from "../../store/slices/toastSlice";
+import ConfirmPopup from "../common/confirmPopup";
+import axiosInstance from "../../apis/config";
 
 //icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,7 +13,6 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 //style
 import dashStyle from "./../../pages/dashboard/dashboard.module.css";
-import axiosInstance from "../../apis/config";
 
 const UsersDash = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -42,7 +42,7 @@ const UsersDash = () => {
         .then((res) => {
           setAllUsersInPage(res.data);
           setAllUsers(res.data.data);
-          setTotaUsers(res.data.totalUsers)
+          setTotaUsers(res.data.totalUsers);
         })
         .catch((err) => {
           console.log(err);
@@ -59,7 +59,7 @@ const UsersDash = () => {
         .then((res) => {
           setAllUsersInPage(res.data);
           setAllUsers(res.data.data);
-          setTotaUsers(res.data.totalUsers)
+          setTotaUsers(res.data.totalUsers);
         })
         .catch((err) => {
           console.log(err);
@@ -95,7 +95,7 @@ const UsersDash = () => {
             setAllUsers(res.data.data);
             setTotaUsers(res.data.totalUsers);
             dispatch(showToast("User was deleted successfully!"));
-            setUserIdToDelete("")
+            setUserIdToDelete("");
           })
           .catch((err) => {
             console.log(err);
@@ -164,74 +164,76 @@ const UsersDash = () => {
           </div>
         </div>
         <div className="table-responsive mb-5">
-        <table className="table border-top" id="DataTables_Table_0">
-          <thead>
-            <tr>
-              <th scope="col" className="ps-4">
-                #ID
-              </th>
-              <th scope="col">FullName</th>
-              <th scope="col">Email</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Governorate</th>
-              <th scope="col" className="text-center">City</th>
-              <th scope="col">Orders</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allUsers.length > 0 ? (
-              allUsers.map((user) => {
-                return (
-                  <tr key={user._id}>
-                    <td
-                      className={`ps-4`}
-                      data-id={user._id}
-                      onClick={showAllId}
-                    >
-                      {user._id.substring(0, 8) + "..."}
-                    </td>
-                    <td>{user.fullName}</td>
-                    <td>{user.email}</td>
-                    <td
-                      className={
-                        user.phone !== "" ? "text-start" : "text-center"
-                      }
-                    >
-                      {user.phone !== "" ? user.phone : "x"}
-                    </td>
-                    <td className="text-center">
-                      {user.address.governorate !== ""
-                        ? user.address.governorate
-                        : "x"}
-                    </td>
-                    <td className="text-center">
-                      {user.address.city !== "" ? user.address.city : "x"}
-                    </td>
-                    <td className="text-center">{user.order.length}</td>
-                    <td className="text-center">
-                      <FontAwesomeIcon
-                        icon={faTrashCan}
-                        type="button"
-                        onClick={() => {
-                          setUserIdToDelete(user._id);
-                          setShowWarning(true);
-                        }}
-                        className="text-danger"
-                      />
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
+          <table className="table border-top" id="DataTables_Table_0">
+            <thead>
               <tr>
-                <td colSpan="8" className="text-center">
-                  No users found.
-                </td>
+                <th scope="col" className="ps-4">
+                  #ID
+                </th>
+                <th scope="col">FullName</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Governorate</th>
+                <th scope="col" className="text-center">
+                  City
+                </th>
+                <th scope="col">Orders</th>
+                <th scope="col">Actions</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {allUsers.length > 0 ? (
+                allUsers.map((user) => {
+                  return (
+                    <tr key={user._id}>
+                      <td
+                        className={`ps-4`}
+                        data-id={user._id}
+                        onClick={showAllId}
+                      >
+                        {user._id.substring(0, 8) + "..."}
+                      </td>
+                      <td>{user.fullName}</td>
+                      <td>{user.email}</td>
+                      <td
+                        className={
+                          user.phone !== "" ? "text-start" : "text-center"
+                        }
+                      >
+                        {user.phone !== "" ? user.phone : "x"}
+                      </td>
+                      <td className="text-center">
+                        {user.address.governorate !== ""
+                          ? user.address.governorate
+                          : "x"}
+                      </td>
+                      <td className="text-center">
+                        {user.address.city !== "" ? user.address.city : "x"}
+                      </td>
+                      <td className="text-center">{user.order.length}</td>
+                      <td className="text-center">
+                        <FontAwesomeIcon
+                          icon={faTrashCan}
+                          type="button"
+                          onClick={() => {
+                            setUserIdToDelete(user._id);
+                            setShowWarning(true);
+                          }}
+                          className="text-danger"
+                        />
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan="8" className="text-center">
+                    No users found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
         <DashPagination
           totalPages={allUsersInPage.totalPages}
@@ -239,8 +241,9 @@ const UsersDash = () => {
           onPageChange={onPageChange}
         />
         {showWarning && userIdToDelete && (
-          <RemoveProductWarning
-            onRemove={() => deleteUser(userIdToDelete)}
+          <ConfirmPopup
+            msg={"Are you sure you want to delete user?"}
+            onConfirm={() => deleteUser(userIdToDelete)}
             onCancel={() => {
               setShowWarning(false);
               setUserIdToDelete("");

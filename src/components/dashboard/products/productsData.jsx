@@ -12,11 +12,11 @@ import DashPagination from "../dashPagination";
 import axiosInstance from "../../../apis/config";
 import Spinner from "../../common/spinner";
 import ProductsSearch from "./productsSearch";
-import RemoveProductWarning from "../../common/removeProductWarning";
 import { showToast } from "../../../store/slices/toastSlice";
 
 // style
 import style from "../../../pages/dashboard/dashboard.module.css";
+import ConfirmPopup from "../../common/confirmPopup";
 
 const ProductsData = () => {
   const [page, setPage] = useState(1);
@@ -263,8 +263,9 @@ const ProductsData = () => {
         <Spinner />
       )}
       {showWarning && productToDelete && (
-        <RemoveProductWarning
-          onRemove={() =>
+        <ConfirmPopup
+          msg={`Are you sure you want to remove ${productToDelete.name} from products?`}
+          onConfirm={() =>
             handleRemoveProduct(
               productToDelete._id,
               productToDelete.brand,

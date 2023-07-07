@@ -11,7 +11,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import axiosInstance from "../../../apis/config";
 import DashPagination from "./../dashPagination";
 import { showToast } from "../../../store/slices/toastSlice";
-import RemoveProductWarning from "../../common/removeProductWarning";
+import ConfirmPopup from "../../common/confirmPopup";
 
 //style
 import dashStyle from "../../../pages/dashboard/dashboard.module.css";
@@ -220,8 +220,9 @@ const CategoriesData = () => {
         onPageChange={onPageChange}
       />
       {showWarning && categoryToDelete && (
-        <RemoveProductWarning
-          onRemove={() => handleDeleteCategory(categoryToDelete._id)}
+        <ConfirmPopup
+          msg={`Are you sure you want to delete ${categoryToDelete.name} from categories?`}
+          onConfirm={() => handleDeleteCategory(categoryToDelete._id)}
           onCancel={() => {
             setShowWarning(false);
             setCategoryToDelete(null);
