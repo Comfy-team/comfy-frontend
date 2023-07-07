@@ -13,10 +13,10 @@ import axiosInstance from "../../../apis/config";
 import Spinner from "../../common/spinner";
 import ProductsSearch from "./productsSearch";
 import { showToast } from "../../../store/slices/toastSlice";
+import ConfirmPopup from "../../common/confirmPopup";
 
 // style
 import style from "../../../pages/dashboard/dashboard.module.css";
-import ConfirmPopup from "../../common/confirmPopup";
 
 const ProductsData = () => {
   const [page, setPage] = useState(1);
