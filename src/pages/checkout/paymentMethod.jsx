@@ -1,16 +1,24 @@
 import { useNavigate, Link } from "react-router-dom";
 import React, { useState } from "react";
+// import { useEffect } from "react";
+
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 //
 import axiosInstance from "../../apis/config";
 import { emptyCart } from "../../functions/cart";
+import { showToast } from "../../store/slices/toastSlice.js";
 //style
 import style from "./checkout.module.css";
 import "../../App.css";
 import OrderInfo from "./../../components/checkout/orderInfo";
 import Spinner from "../../components/common/spinner";
+import RemoveProductWarning from "./../../components/common/removeProductWarning";
 export default function PaymentMethod() {
+  const [showWarning, setShowWarning] = useState(false);
   const [isAddingOrder, setIsAddingOrder] = useState(false);
+  const [buttonText, setButtonText] = useState("Confirm order");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const token = localStorage.getItem("userToken");
@@ -18,11 +26,6 @@ export default function PaymentMethod() {
   // ===========
   const cart = useSelector(state => state.cart.cart);
   const formData = useSelector(state => state.CheckoutForm.form);
-
-  const confirmOrder = event => {
-    let msg = window.confirm("Are you sure you want to make this order?");
-    return msg;
-  };
   // ===========
   const additionalInfo = {
     totalPrice: cart.totalPrice,
@@ -30,7 +33,8 @@ export default function PaymentMethod() {
     userId: cart.user_id,
   };
   const newObjectData = { ...formData, ...additionalInfo };
-  const onConfirmClick = event => {
+  const onConfirmClick = () => {
+    setShowWarning(false);
     axiosInstance
       .post(`/orders`, newObjectData, {
         headers: {
@@ -40,21 +44,18 @@ export default function PaymentMethod() {
         },
       })
       .then(res => {
-        // console.log(res);
-        const the_msg = confirmOrder();
-        if (the_msg === false) return;
-        emptyCart(cart._id);
-        event.target.textContent = "order Done ";
-        setIsAddingOrder(true);
+        dispatch(showToast("orders was make  successfully!"));
         setTimeout(() => {
-          navigate("/shop");
-        }, 3000);
+          navigate(`/account/${cart.user_id}`);
+        }, 4000);
+        emptyCart(cart._id);
+        setIsAddingOrder(true);
+        setButtonText("order Done");
       })
       .catch(error => {
         console.log(error.response);
       });
   };
-
   return formData ? (
     <div className="">
       <div className={`${style.PaymentMethod} ml-5 ml-md-3 container `}>
@@ -72,20 +73,21 @@ export default function PaymentMethod() {
               <div className="col-2"> ${shippingValue}</div>
             </div>
           </div>
-          <div className="row mb-4  w-100 m-auto">
+          <div className="row mb-4  w-100 mx-auto  ">
             <Link
               to="/checkout"
-              className={` col-lg-6  col-md-6 col-sm-12  col-12  mt-2 mb-3 ${style.returnLink} text-decoration-none `}
+              className={` col-lg-6  col-md-6 col-sm-12  col-12  mt-2 mb-3  mt-4 ${style.returnLink} text-decoration-none `}
             >
-              {" "}
-              {`<  `} return to information{" "}
+              {`<  `} return to information
             </Link>
             <button
               className={`${style.orderbtn} col-lg-6  col-md-6 col-sm-12  col-12  btn  h-100  ws-100 me-0 `}
-              onClick={onConfirmClick}
+              onClick={() => {
+                setShowWarning(true);
+              }}
               disabled={isAddingOrder}
             >
-              Confirm order
+              {buttonText}
             </button>
           </div>
           <hr className="border" />
@@ -95,6 +97,19 @@ export default function PaymentMethod() {
           </small>
         </div>
       </div>
+
+      {showWarning && (
+        <RemoveProductWarning
+          onRemove={() => {
+            onConfirmClick();
+            setIsAddingOrder(true);
+          }}
+          onCancel={() => {
+            setShowWarning(false);
+            setIsAddingOrder(false);
+          }}
+        />
+      )}
     </div>
   ) : (
     <Spinner />
