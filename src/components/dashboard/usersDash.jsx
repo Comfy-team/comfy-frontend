@@ -20,7 +20,6 @@ const UsersDash = () => {
   const [allUsersInPage, setAllUsersInPage] = useState([]);
   const [totalUsers, setTotaUsers] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const [deleteStatus, setDeleteStatus] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [userIdToDelete, setUserIdToDelete] = useState("");
   const [showWarning, setShowWarning] = useState(false);
@@ -168,22 +167,6 @@ const UsersDash = () => {
       <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
         Users (total: {totalUsers})
       </h4>
-      {deleteStatus ? (
-        <div
-          className={`alert alert-success alert-dismissible fade show ms-4 w-50`}
-        >
-          {deleteStatus}
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-            onClick={() => setDeleteStatus(null)}
-          ></button>
-        </div>
-      ) : (
-        ""
-      )}
 
       <div className="overflow-x-auto pb-3">
         <div className="row ms-4 me-3">
