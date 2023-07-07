@@ -8,11 +8,6 @@ import * as Yup from "yup";
 import axiosInstance from "../../../apis/config";
 import { showToast } from "../../../store/slices/toastSlice";
 
-// font awesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-
 // style
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
 import style from "./brands.module.css";
@@ -21,22 +16,20 @@ const BrandsAdd = () => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [image, setImage] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [imageError, setImageError] = useState(null);
+  const [showBtnSpinner, SetShowBtnSpinner] = useState(false);
   const token = localStorage.getItem("userToken");
   const dispatch = useDispatch();
   const addBrandSubmit = () => {
     if (image === "") {
-      setImageError("Image is reqiured")
+      setImageError("Image is reqiured");
       return;
     }
-
+    SetShowBtnSpinner(true);
     const formData = new FormData();
     formData.append("name", name);
     formData.append("category", category);
     formData.append("image", image);
-
     // create a FormData object to send the form data and file
     axiosInstance
       .post("/brands", formData, {
@@ -47,53 +40,23 @@ const BrandsAdd = () => {
         },
       })
       .then((res) => {
-        // setIsSubmitted(true);
         dispatch(showToast("brand added successfully!"));
+        SetShowBtnSpinner(false);
         setName("");
         setCategory("");
         setImage("");
       })
       .catch((err) => {
         console.log(err);
+        SetShowBtnSpinner(false);
         // handle error, e.g. show error message
-        setErrorMessage("Unable to add, please try again.");
+        dispatch(showToast("Unable to add new brand, please try again."));
       });
   };
 
   return (
-    <div className="ps-4 ">
+    <div className="ps-5 py-4">
       <h1 className={`py-3 ${dashStyle["fw-bold"]}`}>Add New Brand</h1>
-      {errorMessage && !isSubmitted ? (
-        <div
-          className="alert alert-danger alert-dismissible fade show"
-          role="alert"
-        >
-          {" "}
-          <FontAwesomeIcon icon={faTimes} /> {errorMessage}
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-            onClick={() => setErrorMessage(null)}
-          ></button>
-        </div>
-      ) : isSubmitted ? (
-        <div
-          className="alert alert-success alert-dismissible fade show"
-          role="alert"
-        >
-          brand added successfully!
-          <FontAwesomeIcon icon={faCheckCircle} className="ms-2" />
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-            onClick={() => setIsSubmitted(false)}
-          ></button>
-        </div>
-      ) : null}
 
       <div>
         <Formik
@@ -172,15 +135,28 @@ const BrandsAdd = () => {
                 {image === "" ? (
                   <span className="text-danger ms-2">Image is reqiured</span>
                 ) : null}
-
               </div>
 
-              <div>
-                <input
-                  type="submit"
-                  className={`btn px-3 rounded-pill ${dashStyle["dash-btn"]}`}
-                  value="add brand"
-                />
+              <div className="mb-4">
+                {!showBtnSpinner ? (
+                  <input
+                    type="submit"
+                    className={`btn px-3 rounded-pill ${dashStyle["dash-btn"]}`}
+                    value="add brand"
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    className={`btn px-3 rounded-pill ${dashStyle["dash-btn"]}`}
+                  >
+                    <div
+                      className="spinner-border spinner-border-sm"
+                      role="status"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </button>
+                )}
               </div>
             </Form>
           )}

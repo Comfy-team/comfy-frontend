@@ -1,20 +1,27 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
+// font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
-import styles from "../../pages/account/account.module.css";
+//component
 import axiosInstance from "../../apis/config";
+import { showToast } from "../../store/slices/toastSlice";
+
+//style
+import styles from "../../pages/account/account.module.css";
 
 
 const ChangePasswords = ({ user, token}) => {
     const { id } = useParams();
+    const dispatch = useDispatch();
+    const [showBtnSpinner, SetShowBtnSpinner] = useState(false);
     const [updateUser, setUpdateUser] = useState({
       id:id,
       password: "",
@@ -24,8 +31,6 @@ const ChangePasswords = ({ user, token}) => {
 
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const togglePasswordVisibility = (passwordField) => {
     if (passwordField === "currentPassword") {
@@ -36,6 +41,7 @@ const ChangePasswords = ({ user, token}) => {
   };
 
   const updateUserSubmit = (updateUser, { resetForm }) => {
+    SetShowBtnSpinner(true);
     axiosInstance
       .patch(`/users`, updateUser,
        {
@@ -46,12 +52,14 @@ const ChangePasswords = ({ user, token}) => {
         },
       })
       .then((res) => {
-        setIsSubmitted(true);
-            resetForm()
+        dispatch(showToast("Change Password successfully!"));
+        SetShowBtnSpinner(false);
+        resetForm()
       })
       .catch((err) => {
         // handle error, e.g. show error message
-        setErrorMessage("Unable to update / check your current Password again and make sure that new password is different from the current.");
+        dispatch(showToast("Unable to update / check your current Password again and make sure that new password is different from the current."));
+        SetShowBtnSpinner(false);
       });
   };
   return (
@@ -59,32 +67,6 @@ const ChangePasswords = ({ user, token}) => {
       <h2 className={`${styles["text-2xl"]} ${styles.subTitle}`}>
         Update your password
       </h2>
-
-      {errorMessage && !isSubmitted ? (
-  <div className="alert alert-danger alert-dismissible fade show" role="alert">
-    <FontAwesomeIcon icon={faTimes}/>
-     {" "}{errorMessage}
-     <button
-      type="button"
-      className="btn-close mt-3"
-      data-bs-dismiss="alert"
-      aria-label="Close"
-      onClick={() => setErrorMessage(null)}
-    ></button>
-  </div>
-) : isSubmitted ? (
-    <div className="alert alert-success alert-dismissible fade show" role="alert">
-    Change Password successfully!
-       <FontAwesomeIcon icon={faCheckCircle} className="ms-2" />
-       <button
-      type="button"
-      className="btn-close"
-      data-bs-dismiss="alert"
-      aria-label="Close"
-      onClick={() => setIsSubmitted(false)}
-    ></button>
-  </div>
-) : null}
 
       <Formik
         initialValues={{
@@ -184,11 +166,23 @@ const ChangePasswords = ({ user, token}) => {
             </div>
 
             <div className={`pt-3`}>
+            {!showBtnSpinner ? 
               <input
                 type="submit"
                 className={`btn-bg-dark text-center ${styles.button}`}
                 value="Update password"
               />
+              : 
+              <button
+              type="button"
+              className={`btn-bg-dark text-center ${styles.button}`}
+            >
+              <div className="spinner-border spinner-border-sm" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </button>
+             
+              }
             </div>
           </Form>
         )}

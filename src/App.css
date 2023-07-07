@@ -97,7 +97,7 @@ img {
   background-color: rgba(0, 0, 0, 0.4) !important;
   width: 50px;
   height: 50px;
-  border-radius: 100%;
+  border-radius: 50% !important;
   opacity: 0;
 }
 
@@ -244,7 +244,7 @@ footer {
 .footer-content {
   max-height: 0;
   overflow: hidden;
-  transition:0.5s ease-out;
+  transition: 0.5s ease-out;
 }
 .footer-content.show {
   max-height: 40rem;
@@ -312,6 +312,29 @@ footer {
   }
 }
 /* end page header */
+
+/* start insta post */
+.loading-img {
+  background-color: #ededed !important;
+  background: linear-gradient(
+      100deg,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 60%
+    )
+    #ededed;
+  background-size: 200% 100%;
+  background-position-x: 180%;
+  animation: loading 1s ease-in-out infinite;
+  aspect-ratio: 1/1;
+}
+
+@keyframes loading {
+  to {
+    background-position-x: -20%;
+  }
+}
+/* end insta post */
 /* end main layout */
 
 /* about style page */
@@ -392,6 +415,7 @@ footer {
 #home .carousel-control-prev {
   filter: invert(1);
 }
+
 /* ====== end  home carousel ========= */
 
 /* for cartModal*/

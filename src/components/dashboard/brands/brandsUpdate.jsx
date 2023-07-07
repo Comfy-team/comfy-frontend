@@ -4,14 +4,10 @@ import { useDispatch } from "react-redux";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+
 // component
 import axiosInstance from "../../../apis/config";
 import { showToast } from "../../../store/slices/toastSlice";
-
-// font awesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 // style
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
@@ -20,8 +16,7 @@ import style from "./brands.module.css";
 
 const BrandsUpdate = () => {
   const [brandById, setBrandById] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showBtnSpinner, SetShowBtnSpinner] = useState(false);
   const [image, setImage] = useState(null);
   const token = localStorage.getItem("userToken");
   const { id } = useParams();
@@ -38,6 +33,7 @@ const BrandsUpdate = () => {
       });
   }, []);
   const updateBrandSubmit = (brandById) => {
+    SetShowBtnSpinner(true);
     const formData = new FormData();
     formData.append("_id", id)
     formData.append("name", brandById.name);
@@ -55,12 +51,14 @@ const BrandsUpdate = () => {
         },
       })
       .then((res) => {
-        // setIsSubmitted(true);
+        SetShowBtnSpinner(false);
         dispatch(showToast("brand updated successfully!"));
       })
       .catch((error) => {
         console.log(error)
-        setErrorMessage("Unable to update, please try again.")});
+        SetShowBtnSpinner(false);
+        dispatch(showToast("Unable to update brand, please try again."));
+      });
   };
   if (!brandById) {
     // Display a loading spinner or message while the data is being fetched
@@ -69,39 +67,9 @@ const BrandsUpdate = () => {
   // Extract the file name from the path
   
   return (
-    <div className="ps-4">
+    <div className="ps-5 py-4">
       <h1 className={`py-3 ${dashStyle["fw-bold"]}`}>Update Brand</h1>
-      {errorMessage && !isSubmitted ? (
-        <div
-          className="alert alert-danger alert-dismissible fade show"
-          role="alert"
-        >
-          {" "}
-          <FontAwesomeIcon icon={faTimes} /> {errorMessage}
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-            onClick={() => setErrorMessage(null)}
-          ></button>
-        </div>
-      ) : isSubmitted ? (
-        <div
-          className="alert alert-success alert-dismissible fade show"
-          role="alert"
-        >
-        Brand Updated successfully!
-          <FontAwesomeIcon icon={faCheckCircle} className="ms-2" />
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-            onClick={() => setIsSubmitted(false)}
-          ></button>
-        </div>
-      ) : null}
+
       <div>
         <Formik
           initialValues={{
@@ -173,12 +141,26 @@ const BrandsUpdate = () => {
                 ) : null}
               </div>
 
-              <div>
+              <div className="mb-4">
+              {!showBtnSpinner ? (
                 <input
                   type="submit"
                   className={`btn px-3 mb-3 rounded-pill ${dashStyle["dash-btn"]}`}
                   value="update brand"
                 />
+                ) : (
+                  <button
+                    type="button"
+                    className={`btn px-3 rounded-pill ${dashStyle["dash-btn"]}`}
+                  >
+                    <div
+                      className="spinner-border spinner-border-sm"
+                      role="status"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </button>
+                )}
               </div>
             </Form>
           )}

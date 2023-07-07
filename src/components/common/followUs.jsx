@@ -11,6 +11,7 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 // components
 import { LeftArrow, RightArrow } from "./customSliderArrows";
+import InstaPost from "./instaPost";
 
 // imported assets
 import post1 from "../../assets/instagram/insta-1.jpg";
@@ -129,8 +130,9 @@ const FollowUs = () => {
                 className={`post ${
                   isDragged && isMouseDown ? "dragged" : ""
                 } d-block text-decoration-none overflow-hidden position-relative`}
+                style={{ minHeight: "200px" }}
               >
-                <img src={post.src} alt="" className="d-block img-fluid" />
+                <InstaPost src={post.src} />
                 <div className="icon-holder w-100 h-100 position-absolute top-0 start-0 text-white d-flex justify-content-center align-items-center fs-2">
                   <FontAwesomeIcon icon={faInstagram} />
                 </div>

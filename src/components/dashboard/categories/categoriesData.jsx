@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom";
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faEdit } from "@fortawesome/free-regular-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import axiosInstance from "../../../apis/config";
 import DashPagination from "./../dashPagination";
 import { showToast } from "../../../store/slices/toastSlice";
-import RemoveProductWarning from "../../common/removeProductWarning";
+import ConfirmPopup from "../../common/confirmPopup";
 
 //style
 import dashStyle from "../../../pages/dashboard/dashboard.module.css";
@@ -32,7 +33,6 @@ const CategoriesData = () => {
 
   useEffect(() => {
     if (searchQuery === "") {
-      // If search query is empty, show all categories
       axiosInstance
         .get(`/categories`, {
           params: {
@@ -44,7 +44,6 @@ const CategoriesData = () => {
           setAllCategories(res.data);
           setTotalCategories(res.data.totalCategories);
           setLoading(false);
-          console.log(displayedCategories.totalPages);
         })
         .catch((err) => {
           console.log(err);
@@ -74,10 +73,8 @@ const CategoriesData = () => {
     setCurrentPage(1);
     setSearchQuery(query);
     if (query === "") {
-      // If search query is empty, show all categories
       setDisplayedCategories(categories.slice(0, 10));
     } else {
-      // If search query is not empty, filter the categories and show the results
       const filteredCategories = categories.filter((category) =>
         category.name.toLowerCase().includes(query)
       );
@@ -130,13 +127,13 @@ const CategoriesData = () => {
   }
 
   return (
-    <>
+    <div className="py-4">
       <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
         Categories (total: {totalCategories})
       </h4>
       <div className="row ms-4 me-3">
-        <div className="my-4 row d-flex align-items-center justify-content-between">
-          <div className="col-6">
+        <div className="my-4 row d-flex flex-column-reverse flex-md-row  align-items-center justify-content-between">
+          <div className="col-12 col-md-6">
             <input
               className="form-control"
               type="search"
@@ -145,14 +142,14 @@ const CategoriesData = () => {
               onChange={handleSearch}
             />
           </div>
-          <div className="col-6 d-flex justify-content-end">
+          <div className="col-10 col-md-6 d-flex justify-content-center justify-content-md-end  mb-5 mb-md-0">
             <button
               type="button"
               className={`btn text-capitalize ${dashStyle["dash-btn"]}`}
               onClick={handleAddCategory}
               value={searchQuery}
             >
-              Add New Category
+              <FontAwesomeIcon icon={faPlus} /> Add New Category
             </button>
           </div>
         </div>
@@ -162,7 +159,7 @@ const CategoriesData = () => {
         <table className="table ">
           <thead>
             <tr>
-              <th scope="col" className="text-truncate">
+              <th scope="col" className="ps-4">
                 #ID
               </th>
               <th scope="col">Name</th>
@@ -181,7 +178,7 @@ const CategoriesData = () => {
             ) : (
               displayedCategories.map((category) => (
                 <tr key={category._id}>
-                  <td>{category._id}</td>
+                  <td className="ps-4">{category._id}</td>
                   <td>{category.name}</td>
                   <td className="ps-4">{category.products_id.length}</td>
                   <td>
@@ -223,15 +220,16 @@ const CategoriesData = () => {
         onPageChange={onPageChange}
       />
       {showWarning && categoryToDelete && (
-        <RemoveProductWarning
-          onRemove={() => handleDeleteCategory(categoryToDelete._id)}
+        <ConfirmPopup
+          msg={`Are you sure you want to delete ${categoryToDelete.name} from categories?`}
+          onConfirm={() => handleDeleteCategory(categoryToDelete._id)}
           onCancel={() => {
             setShowWarning(false);
             setCategoryToDelete(null);
           }}
         />
       )}
-    </>
+    </div>
   );
 };
 

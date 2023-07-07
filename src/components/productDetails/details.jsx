@@ -9,7 +9,7 @@ import Colors from "./colors";
 import Quantity from "./quantity";
 import AdditionalInfo from "./additionalInfo";
 import { showLoginModal } from "../../store/slices/loginModalSlice";
-import RemoveProductWarning from "../common/removeProductWarning";
+import ConfirmPopup from "../common/confirmPopup";
 
 // functions
 import {
@@ -71,16 +71,28 @@ const Details = ({ product }) => {
     setBtnSpinner(false);
     if (product) {
       if (cart.items?.length > 0) {
-        const item = cart.items.find((ele) =>
-          activeColor
-            ? ele.product_id._id === product._id && ele.color === activeColor
-            : ele.product_id._id === product._id
-        );
-        if (item) {
-          setActiveQuantity(item.quantity);
-          setActiveColor(item.color);
-          setInCart(true);
+        let item;
+        if (activeColor) {
+          item = cart.items.find(
+            (ele) =>
+              ele.product_id._id === product._id && ele.color === activeColor
+          );
+          if (item) {
+            setActiveQuantity(item.quantity);
+            setActiveColor(item.color);
+            setInCart(true);
+          } else {
+            setInCart(false);
+          }
           return;
+        } else {
+          item = cart.items.find((ele) => ele.product_id._id === product._id);
+          if (item) {
+            setActiveQuantity(item.quantity);
+            setActiveColor(item.color);
+            setInCart(true);
+            return;
+          }
         }
       }
       setActiveColor(product.colors[0]);
@@ -187,8 +199,9 @@ const Details = ({ product }) => {
         <AdditionalInfo product={product} />
       </div>
       {showWarning && (
-        <RemoveProductWarning
-          onRemove={handleDeleteFromCart}
+        <ConfirmPopup
+          msg={"Are you sure you want to delete from cart?"}
+          onConfirm={handleDeleteFromCart}
           onCancel={() => setShowWarning(false)}
         />
       )}

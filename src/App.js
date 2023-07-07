@@ -1,12 +1,14 @@
 import { useEffect } from "react";
-import {  BrowserRouter } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 // components
 import AppRoutes from "./router/AppRoutes";
 import axiosInstance from "./apis/config";
 import { setBrands } from "./store/slices/brandsSlice";
 import { getCart } from "./functions/cart";
+import ToastInfo from "./components/common/toast";
+import { showToast } from "./store/slices/toastSlice";
 
 // bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,6 +17,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 function App() {
+  const toastMsg = useSelector((state) => state.toastInfo.msg);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,6 +35,13 @@ function App() {
   return (
     <BrowserRouter>
       <AppRoutes />
+      {toastMsg && (
+        <ToastInfo
+          msg={toastMsg}
+          show={toastMsg ? true : false}
+          onDismissToast={() => dispatch(showToast(""))}
+        />
+      )}
     </BrowserRouter>
   );
 }

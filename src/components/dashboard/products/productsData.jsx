@@ -5,14 +5,15 @@ import { useDispatch } from "react-redux";
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import DashPagination from "../dashPagination";
 import axiosInstance from "../../../apis/config";
 import Spinner from "../../common/spinner";
 import ProductsSearch from "./productsSearch";
-import RemoveProductWarning from "../../common/removeProductWarning";
 import { showToast } from "../../../store/slices/toastSlice";
+import ConfirmPopup from "../../common/confirmPopup";
 
 // style
 import style from "../../../pages/dashboard/dashboard.module.css";
@@ -52,18 +53,18 @@ const ProductsData = () => {
         },
       })
       .then((res) => {
-        if (res.status === 200) {
-          dispatch(showToast("Product was deleted successfully!"));
-          let newData = [...data].filter((ele) => ele._id !== id);
-          setData(newData);
-          setProductToDelete(null);
-        } else {
-          dispatch(
-            showToast("Failed to delete product! Please try again later!")
-          );
-        }
+        dispatch(showToast("Product was deleted successfully!"));
+        let newData = [...data].filter((ele) => ele._id !== id);
+        setData(newData);
+        setProductToDelete(null);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        dispatch(
+          showToast("Failed to delete product! Please try again later!")
+        );
+        setProductToDelete(null);
+      });
   };
 
   const getResults = (query, page = 1) => {
@@ -121,7 +122,7 @@ const ProductsData = () => {
     <>
       <div className="px-4">
         <h1 className="h4 mb-4 py-3">Products (total: {totalProducts})</h1>
-        <div className="d-flex align-items-start justify-content-between px-md-2">
+        <div className="d-flex flex-md-row flex-column-reverse align-items-md-start justify-content-between px-md-2">
           <ProductsSearch
             onSearch={handleSearch}
             searchParams={searchParams}
@@ -129,9 +130,9 @@ const ProductsData = () => {
           />
           <Link
             to="/dashboard/products/add"
-            className={`text-capitalize btn ${style["dash-btn"]} d-block`}
+            className={`text-capitalize btn ${style["dash-btn"]} align-self-center align-self-md-start d-flex gap-1 align-items-center mb-md-0 mb-5`}
           >
-            Add a product
+            <FontAwesomeIcon icon={faPlus} /> <span>Add a product</span>
           </Link>
         </div>
       </div>
@@ -142,7 +143,9 @@ const ProductsData = () => {
               <table className="table border-top">
                 <thead>
                   <tr>
-                    <th scope="col">#id</th>
+                    <th scope="col" className="ps-4">
+                      #ID
+                    </th>
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
                     <th scope="col">Price</th>
@@ -159,8 +162,11 @@ const ProductsData = () => {
                 </thead>
                 <tbody>
                   {data.map((product) => (
-                    <tr key={product._id} className="overflow-hidden">
-                      <th scope="row" className={style["dash-prod-id-holder"]}>
+                    <tr key={product._id}>
+                      <th
+                        scope="row"
+                        className={`${style["dash-prod-id-holder"]} ps-4`}
+                      >
                         <span className={`d-block ${style["dash-prod-id"]}`}>
                           {product._id}
                         </span>
@@ -176,7 +182,9 @@ const ProductsData = () => {
                       <td className="text-center">
                         {product.price.toFixed(2)}
                       </td>
-                      <td className="text-center">{product.discount}%</td>
+                      <td className="text-center">
+                        {product.discount > 0 ? `${product.discount}%` : 0}
+                      </td>
                       <td className="text-center">{product.stock}</td>
                       <td className="text-center text-capitalize">
                         {product.category.name}
@@ -255,8 +263,9 @@ const ProductsData = () => {
         <Spinner />
       )}
       {showWarning && productToDelete && (
-        <RemoveProductWarning
-          onRemove={() =>
+        <ConfirmPopup
+          msg={`Are you sure you want to remove ${productToDelete.name} from products?`}
+          onConfirm={() =>
             handleRemoveProduct(
               productToDelete._id,
               productToDelete.brand,

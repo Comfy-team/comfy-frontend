@@ -26,7 +26,7 @@ const ProductsAdd = () => {
     discount: Yup.number()
       .min(0, "minimum is 0")
       .required("Discount is required"),
-    stock: Yup.number().min(0, "minimum is 0").required("Stock is required"),
+    stock: Yup.number().min(1, "minimum is 1").required("Stock is required"),
     category: Yup.string().required("Category is required"),
     brand: Yup.string().required("Brand is required"),
     colors: Yup.array()
@@ -34,14 +34,14 @@ const ProductsAdd = () => {
       .required("Color is required"),
   });
 
-  const handleAddProduct = (values, { setSubmitting }) => {
-    SetShowBtnSpinner(true);
+  const handleAddProduct = (values, { setSubmitting, resetForm }) => {
     setSubmitting(false);
     if (imageError) return;
     if (selectedImages.length === 0) {
       setImageError("Enter at least one image");
       return;
     }
+    SetShowBtnSpinner(true);
     const token = localStorage.getItem("userToken");
     const formData = new FormData();
     // append data
@@ -62,14 +62,16 @@ const ProductsAdd = () => {
         },
       })
       .then((res) => {
-        if (res.status === 201) {
-          dispatch(showToast("Product was added successfully!"));
-        } else {
-          dispatch(showToast("Failed to add product! Please try again later!"));
-        }
+        dispatch(showToast("Product was added successfully!"));
+        resetForm();
+        setSelectedImages([]);
         SetShowBtnSpinner(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        dispatch(showToast("Failed to add product! Please try again later."));
+        SetShowBtnSpinner(false);
+        console.log(error);
+      });
   };
 
   const onImageInput = (e) => {
@@ -85,7 +87,7 @@ const ProductsAdd = () => {
   };
 
   return (
-    <div className="px-4">
+    <div className="px-3 px-md-4">
       <h1 className="h4 mb-4 py-3">Add Product</h1>
       <Formik
         initialValues={{
@@ -93,7 +95,7 @@ const ProductsAdd = () => {
           description: "",
           price: 1,
           discount: 0,
-          stock: 0,
+          stock: 1,
           category: "",
           brand: "",
           colors: [],

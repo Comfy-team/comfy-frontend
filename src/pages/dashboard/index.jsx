@@ -1,12 +1,8 @@
 import { useLayoutEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 
 // components
 import NavAside from "../../components/dashboard/navAside";
-import ToggleAsideBtn from "../../components/dashboard/toggleAsideBtn";
-import ToastInfo from "../../components/common/toast";
-import { showToast } from "../../store/slices/toastSlice";
 
 // style
 import style from "./dashboard.module.css";
@@ -14,8 +10,6 @@ import style from "./dashboard.module.css";
 const Dashboard = () => {
   const [collapseAside, setCollapseAside] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const toastMsg = useSelector((state) => state.toastInfo.msg);
-  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     function updateSize() {
@@ -37,16 +31,13 @@ const Dashboard = () => {
 
   return (
     <div id={style.dashboard} className="position-relative">
-      <div className="d-flex flex-lg-row flex-column flex-wrap h-100">
+      <div className="d-lg-flex flex-lg-row h-100">
         <div
           className={`${collapseAside ? "col-lg-1" : "col-lg-3"} ${
             style.col
           } px-0 pe-lg-3 position-relative`}
         >
-          {!isSmallScreen && (
-            <ToggleAsideBtn onToggleAside={handleToggleAside} />
-          )}
-          <NavAside isSmallScreen={isSmallScreen} collapsed={collapseAside} />
+          <NavAside isSmallScreen={isSmallScreen} collapsed={collapseAside} onToggleAside={handleToggleAside} />
         </div>
         <div
           className={`${collapseAside ? "col-lg-11" : "col-lg-9"} ${
@@ -58,13 +49,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      {toastMsg && (
-        <ToastInfo
-          msg={toastMsg}
-          show={toastMsg ? true : false}
-          onDismissToast={() => dispatch(showToast(""))}
-        />
-      )}
     </div>
   );
 };

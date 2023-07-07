@@ -6,7 +6,7 @@ import Alert from "react-bootstrap/Alert";
 // components
 import { enableBodyScroll, disableBodyScroll } from "../../functions/global";
 
-const RemoveProductWarning = ({ onRemove, onCancel }) => {
+const ConfirmPopup = ({msg, onConfirm, onCancel }) => {
   useEffect(() => {
     disableBodyScroll();
     return enableBodyScroll;
@@ -21,14 +21,14 @@ const RemoveProductWarning = ({ onRemove, onCancel }) => {
         dismissible
       >
         <div className="px-3 pt-4">
-          <p> Are you sure you want to remove from cart?</p>
+          <p>{msg}</p>
           <div className="d-flex justify-content-center gap-2">
             <button
               type="button"
               className="btn btn-bg-dark text-white"
-              onClick={onRemove}
+              onClick={onConfirm}
             >
-              remove
+              confirm
             </button>
             <button
               type="button"
@@ -44,4 +44,4 @@ const RemoveProductWarning = ({ onRemove, onCancel }) => {
   );
 };
 
-export default RemoveProductWarning;
+export default ConfirmPopup;

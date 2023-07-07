@@ -22,28 +22,26 @@ export default function ShoppingCardComponent() {
 
   return (
     <div>
-      {" "}
+      {/* <Price price={item.price} discount={item?.product_id.discount} /> */}
       <div className="ps-4 pt-2">
         {theitems && theitems.length > 0 ? (
           <div className="container ">
             {theitems.map((item, index) => (
-              <ProductCardCompnant
-                index={index}
-                item={item}
-                key={index + item}
-              />
+              <ProductCardCompnant index={index} item={item} key={item._id} />
             ))}
-
-            <div className={`${style.Subtotal} mb-1 row mt-5`}>
-              <div className="col-2 ">Subtotal</div>
+            <div
+              className={`${style.Subtotal} mb-1 row mt-5 mx-0 
+`}
+            >
+              <div className="col-2 ms-0 ps-0 ">Subtotal</div>
               <div className="col-7"></div>
               <div className="col-2">
                 {" "}
                 <p>${cart?.totalPrice}</p>
               </div>
             </div>
-            <div className={`${style.Shipping}  mb-1 row`}>
-              <div className="col-4">Shipping</div>
+            <div className={`${style.Shipping}  mb-1 row mx-0`}>
+              <div className="col-4 ps-0 ">Shipping</div>
               <div className="col-5"></div>
               <div className="col-3 ">
                 <p className="">${shipping}</p>
@@ -51,10 +49,10 @@ export default function ShoppingCardComponent() {
             </div>
             <hr className="hr" />
             <div className="mb-1 row">
-              <div className="col-4 fs-5">Total</div>
+              <div className="col-4 ">Total</div>
               <div className="col-4"></div>
               <div className="col-4">
-                <p className=" fs-5">
+                <p className=" ">
                   <span className={`${style.currency}`}> USD</span>$
                   {priceWithShapping}
                 </p>

@@ -10,10 +10,10 @@ import * as Yup from "yup";
 import axiosInstance from "../../../apis/config";
 import Spinner from "../../common/spinner";
 import ProductForm from "./productForm";
+import { showToast } from "../../../store/slices/toastSlice";
 
 // style
 import style from "../../../pages/dashboard/dashboard.module.css";
-import { showToast } from "../../../store/slices/toastSlice";
 
 const ProductsUpdate = () => {
   const [data, setData] = useState(null);
@@ -76,16 +76,16 @@ const ProductsUpdate = () => {
         },
       })
       .then((res) => {
-        if (res.status === 200) {
-          dispatch(showToast("Product was updated successfully!"));
-        } else {
-          dispatch(
-            showToast("Failed to update product! Please try again later!")
-          );
-        }
         SetShowBtnSpinner(false);
+        dispatch(showToast("Product was updated successfully!"));
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        SetShowBtnSpinner(false);
+        dispatch(
+          showToast("Failed to update product! Please try again later.")
+        );
+      });
   };
 
   const onImageInput = (e) => {
@@ -119,7 +119,7 @@ const ProductsUpdate = () => {
   }, [id]);
 
   return data ? (
-    <div className="px-4">
+    <div className="px-3 px-md-4">
       <h1 className="h4 mb-4 py-3">Edit Product</h1>
       <Formik
         initialValues={{

@@ -1,15 +1,22 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 
-import styles from "../../pages/account/account.module.css";
-import axiosInstance from "../../apis/config";
 import jwtDecode from "jwt-decode";
+
+//component
+import axiosInstance from "../../apis/config";
+import Spinner from "../common/spinner";
+
+//style
+import styles from "../../pages/account/account.module.css";
 
 const AccountOrders = ({ token }) => {
   const [isCollapsed, setIsCollapsed] = useState({});
   const [userOrder, setUserOrder] = useState([]);
+  const [showSpinner, setShowSpinner] = useState(true);
   const { id } = useParams();
   useEffect(() => {
+    setShowSpinner(true);
     if (jwtDecode(token).role === "user"){
     axiosInstance
       .get(`/users/${id}/orders`, {
@@ -20,7 +27,7 @@ const AccountOrders = ({ token }) => {
         },
       })
       .then((res) => {
-        setUserOrder(res.data);
+        setUserOrder(res.data.reverse());
         setIsCollapsed((prevState) => {
           // Set the first order ID to false (expanded) and the rest to true (collapsed)
           const newState = {};
@@ -29,6 +36,7 @@ const AccountOrders = ({ token }) => {
           });
           return { ...prevState, ...newState };
         });
+        setShowSpinner(false);
       })
       .catch((error) => console.log(error));
     }
@@ -45,7 +53,8 @@ const AccountOrders = ({ token }) => {
       <h2 className={`${styles["text-2xl"]} ${styles.subTitle}`}>
         Order History
       </h2>
-
+      {!showSpinner ? (
+        <>
       {userOrder.length > 0 ? (
         userOrder.map((order) => {
           const collapseId = `collapse-${order._id}`;
@@ -62,7 +71,7 @@ const AccountOrders = ({ token }) => {
                       </p>
 
                       <p className={`text-secondary ${styles.deleverDate}`}>
-                        <span>{order.date}</span>
+                        <span>{order.date.slice(0, 16).replace('T', ' ')}</span>
                         <span className="mx-2">-</span>
                         <span className={styles.deliever}>Delivered</span>
                       </p>
@@ -91,7 +100,7 @@ const AccountOrders = ({ token }) => {
                     return (
                       <div
                         className={`card-body text-center ${styles.cartBody}`}
-                        key={order._id}
+                        key={item._id}
                       >
                         <div className={`d-flex py-4`}>
                           <div
@@ -104,7 +113,7 @@ const AccountOrders = ({ token }) => {
                                 "/" +
                                 item?.product_id?.images[0].src
                               }
-                              alt="image"
+                              alt="product item"
                             />
                           </div>
                           <div className="d-flex flex-grow-1 flex-column ms-4">
@@ -155,6 +164,10 @@ const AccountOrders = ({ token }) => {
         })
       ) : (
         <p className="text-secondary">No orders yet.</p>
+      )}
+      </>
+      ) : (
+        <Spinner />
       )}
     </div>
   );

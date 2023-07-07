@@ -1,24 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-
+//component
 import axiosInstance from "../../apis/config";
 import { governoratesData } from "../../apis/governorates";
 import { cities } from "../../apis/cities";
 import { showToast } from "../../store/slices/toastSlice";
 
+// style
 import styles from "../../pages/account/account.module.css";
 
-const AccountInfo = ({ user, token }) => {
+const AccountInfo = ({ user, token,setUser }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const [showBtnSpinner, SetShowBtnSpinner] = useState(false);
   const [updateUser, setUpdateUser] = useState({
     id: id,
     fullName: user?.fullName,
@@ -34,10 +33,9 @@ const AccountInfo = ({ user, token }) => {
     },
   });
 
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const updateUserSubmit = (updateUser) => {
+    SetShowBtnSpinner(true);
     axiosInstance
       .patch("/users", updateUser, {
         headers: {
@@ -47,13 +45,14 @@ const AccountInfo = ({ user, token }) => {
         },
       })
       .then((res) => {
-        setIsSubmitted(true);
-        // dispatch(showToast("Account Updated successfully!"));
+        dispatch(showToast("Account Updated successfully!"));
+        SetShowBtnSpinner(false);
+        setUser(updateUser)
       })
       .catch((err) => {
         // handle error, e.g. show error message
-        setErrorMessage("Unable to update, please try again.");
-        // dispatch(showToast("Unable to update, please try again."));
+        dispatch(showToast("Unable to update, please try again."));
+        SetShowBtnSpinner(false);
       });
   };
 
@@ -62,37 +61,6 @@ const AccountInfo = ({ user, token }) => {
       <h2 className={`${styles["text-2xl"]} ${styles.subTitle}`}>
         Account Information
       </h2>
-      {errorMessage && !isSubmitted ? (
-        <div
-          className="alert alert-danger alert-dismissible fade show"
-          role="alert"
-        >
-          {" "}
-          <FontAwesomeIcon icon={faTimes} /> {errorMessage}
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-            onClick={() => setErrorMessage(null)}
-          ></button>
-        </div>
-      ) : isSubmitted ? (
-        <div
-          className="alert alert-success alert-dismissible fade show"
-          role="alert"
-        >
-          Account Updated successfully!
-          <FontAwesomeIcon icon={faCheckCircle} className="ms-2" />
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-            onClick={() => setIsSubmitted(false)}
-          ></button>
-        </div>
-      ) : null}
       <Formik
         initialValues={{
           ...updateUser,
@@ -328,12 +296,25 @@ const AccountInfo = ({ user, token }) => {
               ) : null}
             </div>
             <div className={`pt-3`}>
+            {!showBtnSpinner ? 
               <input
                 type="submit"
                 className={`btn-bg-dark text-center ${styles.button}`}
                 value="Update account"
               />
+              : 
+              <button
+              type="button"
+              className={`btn-bg-dark text-center ${styles.button}`}
+            >
+              <div className="spinner-border spinner-border-sm" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </button>
+             
+              }
             </div>
+
           </Form>
         )}
       </Formik>

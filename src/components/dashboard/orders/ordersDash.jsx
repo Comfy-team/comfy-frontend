@@ -1,23 +1,31 @@
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
 // component
 import DashPagination from "./../dashPagination";
 //icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { showToast } from "../../../store/slices/toastSlice";
+
 //style
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
 import axiosInstance from "../../../apis/config";
+import ConfirmPopup from "../../common/confirmPopup";
 
 const OrdersDash = () => {
   const [allorders, setAllorders] = useState([]);
   const [allOrdersInPage, setAllordersInPage] = useState([]);
-
+  const [showWarning, setShowWarning] = useState(false);
+  const [orderIdToDelete, setOrderIdToDelete] = useState("");
+  const [totalOrders, setTotaOrders] = useState(0);
   const [deleteStatus, setDeleteStatus] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
   const token = localStorage.getItem("userToken");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (searchQuery === "") {
@@ -32,16 +40,16 @@ const OrdersDash = () => {
             "x-access-token": token,
           },
         })
-        .then(res => {
+        .then((res) => {
           setAllordersInPage(res.data);
           setAllorders(res.data.data);
+          setTotaOrders(res.data.totalOrders);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     } else {
       // If search query is not empty
-
       axiosInstance
         .get(`/orders/search`, {
           params: {
@@ -49,52 +57,53 @@ const OrdersDash = () => {
             page: currentPage,
           },
         })
-        .then(res => {
+        .then((res) => {
           setAllordersInPage(res.data);
           setAllorders(res.data.data);
+          setTotaOrders(res.data.totalOrders);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     }
   }, [currentPage, searchQuery]);
+
   // delete order
   function deleteOrder(id) {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this order?"
-    );
-    if (confirmDelete) {
-      axiosInstance
-        .delete(`/orders/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "x-access-token": token,
-          },
-        })
-        .then(res => {
-          setDeleteStatus(`order ${id} deleted successfully.`);
-          axiosInstance
-            .get(`/orders`, {
-              params: {
-                page: currentPage,
-              },
-              headers: {
-                Authorization: `Bearer ${token}`,
-                "x-access-token": token,
-              },
-            })
-            .then(res => {
-              setAllordersInPage(res.data);
-              setAllorders(res.data.data);
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+    setShowWarning(false);
+    axiosInstance
+      .delete(`/orders/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "x-access-token": token,
+        },
+      })
+      .then((res) => {
+        setDeleteStatus(`order ${id} deleted successfully.`);
+        axiosInstance
+          .get(`/orders`, {
+            params: {
+              page: currentPage,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "x-access-token": token,
+            },
+          })
+          .then((res) => {
+            setAllordersInPage(res.data);
+            setAllorders(res.data.data);
+            setTotaOrders(res.data.totalOrders);
+            dispatch(showToast("orders was deleted successfully!"));
+            setOrderIdToDelete("");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   // expand object id
   function showAllId(event) {
@@ -125,7 +134,7 @@ const OrdersDash = () => {
         <div>
           <div className={`py-4`}>
             <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
-              Orders (total: {allorders.length})
+              Orders (total: {totalOrders})
             </h4>
             {deleteStatus ? (
               <div
@@ -143,7 +152,6 @@ const OrdersDash = () => {
             ) : (
               ""
             )}
-
             <div className="overflow-x-auto pb-3">
               <div className="row ms-4 me-3">
                 <div className="my-4 col-12 col-md-6 d-flex align-items-center justify-content-start ">
@@ -157,7 +165,6 @@ const OrdersDash = () => {
                   />
                 </div>
               </div>
-
               <table className="table border-top" id="DataTables_Table_0">
                 <thead>
                   <tr>
@@ -167,7 +174,6 @@ const OrdersDash = () => {
                     <th scope="col" className="ps-4">
                       User ID
                     </th>
-
                     <th scope="col">Data</th>
                     <th scope="col">Time</th>
                     <th scope="col">TotalPrice</th>
@@ -234,7 +240,10 @@ const OrdersDash = () => {
                               icon={faTrashCan}
                               type="button"
                               className="text-danger"
-                              onClick={() => deleteOrder(order._id)}
+                              onClick={() => {
+                                setShowWarning(true);
+                                setOrderIdToDelete(order._id);
+                              }}
                             />
                           </td>
                         </tr>
@@ -254,6 +263,16 @@ const OrdersDash = () => {
                 currentPage={currentPage}
                 onPageChange={onPageChange}
               />
+              {showWarning && orderIdToDelete && (
+                <ConfirmPopup
+                  msg={"Are you sure you want to delete order?"}
+                  onConfirm={() => deleteOrder(orderIdToDelete)}
+                  onCancel={() => {
+                    setShowWarning(false);
+                    setOrderIdToDelete("");
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>

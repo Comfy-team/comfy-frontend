@@ -179,7 +179,7 @@ const ContactInfo = () => {
                 </div>
                 <div className="col-9 contact-info ">
                   <h5 className="d-block">Address</h5>
-                  <p>19 El Galaa St ، El Dakahleya ، Masoura City</p>
+                  <p> Cairo Festival City, New Cairo, Egypt </p>
                 </div>
               </div>
               <hr />
@@ -188,7 +188,7 @@ const ContactInfo = () => {
                 <div className="col-2 contact-info-icon">
                   <FontAwesomeIcon icon={faHeadphones} className=" fa-2x" />
                 </div>
-                <div className="col-9 contact-info">
+                <div className="col-10 contact-info">
                   <h5 className="d-block">Phone</h5>
                   <p>+20 1003533427</p>
                 </div>
@@ -198,7 +198,7 @@ const ContactInfo = () => {
                 <div className="col-2 contact-info-icon">
                   <FontAwesomeIcon icon={faEnvelope} className=" fa-2x" />
                 </div>
-                <div className="col-9 contact-info">
+                <div className="col-10 contact-info">
                   <h5 className="d-block">Email</h5>
                   <p>comfyproject20@gmail.com</p>
                 </div>
