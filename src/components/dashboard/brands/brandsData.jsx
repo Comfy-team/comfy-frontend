@@ -13,6 +13,7 @@ import DashPagination from "../dashPagination";
 import axiosInstance from "../../../apis/config";
 import { showToast } from "../../../store/slices/toastSlice";
 import ConfirmPopup from "../../common/confirmPopup";
+import Spinner from "../../common/spinner";
 
 // style
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
@@ -23,10 +24,10 @@ const BrandsData = () => {
   const [allBrandsInPage, setAllBrandsInPage] = useState([]);
   const [totalBrands, setTotalBrands] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [deleteStatus, setDeleteStatus] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [brandIdToDelete, setBrandIdToDelete] = useState("");
   const [showWarning, setShowWarning] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(true);
   const token = localStorage.getItem("userToken");
   const dispatch = useDispatch();
 
@@ -43,6 +44,7 @@ const BrandsData = () => {
           setAllBrandsInPage(res.data);
           setAllBrands(res.data.data);
           setTotalBrands(res.data.totalBrands);
+          setShowSpinner(false);
         })
         .catch((err) => {
           console.log(err);
@@ -69,7 +71,7 @@ const BrandsData = () => {
 
   // search by brand id or name
   function handleSearch(event) {
-    const query = event.target.value.trim().toLowerCase();
+    const query = event.target.value;
     setCurrentPage(1);
     setSearchQuery(query);
     if (query === "") {
@@ -96,7 +98,7 @@ const BrandsData = () => {
         },
       })
       .then((res) => {
-        // setDeleteStatus(`Brand ${id} deleted successfully.`)
+        dispatch(showToast("brand was deleted successfully!"));
         axiosInstance
           .get(`/brands`, {
             params: {
@@ -107,7 +109,6 @@ const BrandsData = () => {
             setAllBrandsInPage(res.data);
             setAllBrands(res.data.data);
             setTotalBrands(res.data.totalBrands);
-            dispatch(showToast("brand was deleted successfully!"));
             setBrandIdToDelete("");
           })
           .catch((err) => {
@@ -116,6 +117,7 @@ const BrandsData = () => {
       })
       .catch((err) => {
         console.log(err);
+        showToast("Failed to delete brand! Please try again later!");
       });
   }
   return (
@@ -123,22 +125,6 @@ const BrandsData = () => {
       <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
         Brands (total: {totalBrands} )
       </h4>
-      {deleteStatus ? (
-        <div
-          className={`alert alert-success alert-dismissible fade show ms-4 w-50`}
-        >
-          {deleteStatus}
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-            onClick={() => setDeleteStatus(null)}
-          ></button>
-        </div>
-      ) : (
-        ""
-      )}
       <div className="pb-3">
         <div className="row ms-4 me-3">
           <div className="my-4 row d-flex flex-column-reverse flex-md-row  align-items-center justify-content-between">
@@ -161,7 +147,8 @@ const BrandsData = () => {
             </div>
           </div>
         </div>
-
+        {!showSpinner ? (
+          <>
         <div className="table-responsive mb-5">
           <table className="table border-top">
             <thead>
@@ -239,6 +226,12 @@ const BrandsData = () => {
           currentPage={currentPage}
           onPageChange={onPageChange}
         />
+        </>
+        ) : (
+          <Spinner />
+        )}
+
+
         {showWarning && brandIdToDelete && (
           <ConfirmPopup
             msg={"Are you sure you want to remove brand?"}
