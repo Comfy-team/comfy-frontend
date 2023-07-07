@@ -15,10 +15,10 @@ import {
 } from "../../functions/cart.js";
 import Price from "./price.jsx";
 import { showCartModal } from "../../store/slices/cartModalSlice.js";
-import RemoveProductWarning from "../common/removeProductWarning";
+import ConfirmPopup from "../common/confirmPopup.jsx";  
 
 // Styles
-import style from "./cartModal.module.css";
+import style from "./cartModal.module.css"; 
 
 function Item({ item, cartId }) {
   const navigate = useNavigate();
@@ -96,7 +96,9 @@ function Item({ item, cartId }) {
               </div>
             </div>
             <div className="col-6">
-              <div className={`${style["counter"]} input-group justify-content-center`}>
+              <div
+                className={`${style["counter"]} input-group justify-content-center`}
+              >
                 <button
                   className="btn  rounded-0 border-0"
                   type="button"
@@ -110,7 +112,11 @@ function Item({ item, cartId }) {
                   }
                   disabled={item.quantity === 1}
                 >
-                  <FontAwesomeIcon icon={faMinus} size="xs" className="hover-color-yellow"/>
+                  <FontAwesomeIcon
+                    icon={faMinus}
+                    size="xs"
+                    className="hover-color-yellow"
+                  />
                 </button>
                 <p className={`m-0 py-2 px-1`}>{item?.quantity}</p>
                 <button
@@ -126,7 +132,11 @@ function Item({ item, cartId }) {
                   }
                   disabled={item.quantity === item?.product_id.stock}
                 >
-                  <FontAwesomeIcon icon={faPlus} size="xs"  className="hover-color-yellow" />
+                  <FontAwesomeIcon
+                    icon={faPlus}
+                    size="xs"
+                    className="hover-color-yellow"
+                  />
                 </button>
               </div>
               <div className={`${style.stock} ps-3`}>
@@ -144,8 +154,9 @@ function Item({ item, cartId }) {
         </div>
       </div>
       {showWarning && (
-        <RemoveProductWarning
-          onRemove={handleDelete}
+        <ConfirmPopup
+          msg={`Are you sure you want to delete ${item.product_id.name} from cart?`}
+          onConfirm={handleDelete}
           onCancel={() => setShowWarning(false)}
         />
       )}
