@@ -7,12 +7,12 @@ import DashPagination from "./../dashPagination";
 //icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import RemoveProductWarning from "../../common/removeProductWarning";
 import { showToast } from "../../../store/slices/toastSlice";
 
 //style
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
 import axiosInstance from "../../../apis/config";
+import ConfirmPopup from "../../common/confirmPopup";
 
 const OrdersDash = () => {
   const [allorders, setAllorders] = useState([]);
@@ -40,12 +40,12 @@ const OrdersDash = () => {
             "x-access-token": token,
           },
         })
-        .then(res => {
+        .then((res) => {
           setAllordersInPage(res.data);
           setAllorders(res.data.data);
           setTotaOrders(res.data.totalOrders);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     } else {
@@ -57,12 +57,12 @@ const OrdersDash = () => {
             page: currentPage,
           },
         })
-        .then(res => {
+        .then((res) => {
           setAllordersInPage(res.data);
           setAllorders(res.data.data);
           setTotaOrders(res.data.totalOrders);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     }
@@ -78,7 +78,7 @@ const OrdersDash = () => {
           "x-access-token": token,
         },
       })
-      .then(res => {
+      .then((res) => {
         setDeleteStatus(`order ${id} deleted successfully.`);
         axiosInstance
           .get(`/orders`, {
@@ -90,18 +90,18 @@ const OrdersDash = () => {
               "x-access-token": token,
             },
           })
-          .then(res => {
+          .then((res) => {
             setAllordersInPage(res.data);
             setAllorders(res.data.data);
             setTotaOrders(res.data.totalOrders);
             dispatch(showToast("orders was deleted successfully!"));
             setOrderIdToDelete("");
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
           });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -264,8 +264,9 @@ const OrdersDash = () => {
                 onPageChange={onPageChange}
               />
               {showWarning && orderIdToDelete && (
-                <RemoveProductWarning
-                  onRemove={() => deleteOrder(orderIdToDelete)}
+                <ConfirmPopup
+                  msg={"Are you sure you want to delete order?"}
+                  onConfirm={() => deleteOrder(orderIdToDelete)}
                   onCancel={() => {
                     setShowWarning(false);
                     setOrderIdToDelete("");

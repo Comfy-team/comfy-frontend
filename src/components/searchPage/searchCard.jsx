@@ -8,10 +8,9 @@ import { faPlus, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import { showCartModal } from "../../store/slices/cartModalSlice";
-import RemoveProductWarning from "../common/removeProductWarning";
 
 // functions
-import { addItemToCart, deleteItemFromCart } from "../../functions/cart";
+import { addItemToCart } from "../../functions/cart";
 
 // style
 import style from "../../pages/searchPage/searchPage.module.css";
@@ -20,7 +19,6 @@ const SearchCard = ({ product, query }) => {
   const [shownTitle, setShownTitle] = useState("");
   const [shownCategory, setShownCategory] = useState("");
   const [shownBrand, setShownBrand] = useState("");
-  const [showWarning, setShowWarning] = useState(false);
   const [inCart, setInCart] = useState(false);
   const [showBtnSpinner, setShowBtnSpinner] = useState(false);
   const cart = useSelector((state) => state.cart.cart);
@@ -54,16 +52,6 @@ const SearchCard = ({ product, query }) => {
       setShowBtnSpinner(true);
     }
     addItemToCart(cart._id, id, color, price);
-  };
-
-  const handleDeleteFromCart = () => {
-    setShowBtnSpinner(true);
-    deleteItemFromCart(cart._id, product._id);
-    setShowWarning(false);
-  };
-
-  const handleCancel = () => {
-    setShowWarning(false);
   };
 
   useEffect(() => {
@@ -181,12 +169,6 @@ const SearchCard = ({ product, query }) => {
           </div>
         </div>
       </div>
-      {showWarning && (
-        <RemoveProductWarning
-          onCancel={handleCancel}
-          onRemove={handleDeleteFromCart}
-        />
-      )}
     </>
   );
 };
