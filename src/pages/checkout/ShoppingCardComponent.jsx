@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import style from "./checkout.module.css";
 import { useSelector } from "react-redux";
 import ProductCardCompnant from "./../../components/checkout/ProductCardCompnant";
-// import Price from "./../../components/productDetails/price";
 
 export default function ShoppingCardComponent() {
   let [theitems, SetItems] = useState([]);
@@ -29,13 +28,7 @@ export default function ShoppingCardComponent() {
         {theitems && theitems.length > 0 ? (
           <div className="container ">
             {theitems.map((item, index) => (
-              <>
-                <ProductCardCompnant
-                  index={index}
-                  item={item}
-                  key={index + item}
-                />
-              </>
+              <ProductCardCompnant index={index} item={item} key={item._id} />
             ))}
             <div
               className={`${style.Subtotal} mb-1 row mt-5 mx-0 
