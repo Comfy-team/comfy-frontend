@@ -130,7 +130,7 @@ const AccountOrders = ({ token }) => {
                                 <p
                                   className={`${styles.price} py-1 px-2 text-center`}
                                 >
-                                  ${item.price}
+                                  ${item.price * (1- item.product_id.discount / 100)}
                                 </p>
                               </div>
                             </div>
@@ -153,7 +153,7 @@ const AccountOrders = ({ token }) => {
                     </div>
                     <div>
                       <p className={`h5 ${styles.price} py-1 px-2 text-center`}>
-                        ${order.totalPrice}
+                        ${order.totalPrice + 15}
                       </p>
                     </div>
                   </div>
