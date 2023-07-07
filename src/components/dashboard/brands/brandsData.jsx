@@ -11,8 +11,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 // components
 import DashPagination from "../dashPagination";
 import axiosInstance from "../../../apis/config";
-import RemoveProductWarning from "../../common/removeProductWarning";
 import { showToast } from "../../../store/slices/toastSlice";
+import ConfirmPopup from "../../common/confirmPopup";
 
 // style
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
@@ -196,7 +196,9 @@ const BrandsData = () => {
                         />
                       </td>
                       <td>{brand.category}</td>
-                      <td className={style.brandProduct}>{brand.products.length}</td>
+                      <td className={style.brandProduct}>
+                        {brand.products.length}
+                      </td>
                       <td className="text-center">
                         {/* <div className="d-flex"> */}
                         <Link
@@ -238,8 +240,9 @@ const BrandsData = () => {
           onPageChange={onPageChange}
         />
         {showWarning && brandIdToDelete && (
-          <RemoveProductWarning
-            onRemove={() => deleteBrand(brandIdToDelete)}
+          <ConfirmPopup
+            msg={"Are you sure you want to remove brand?"}
+            onConfirm={() => deleteBrand(brandIdToDelete)}
             onCancel={() => {
               setShowWarning(false);
               setBrandIdToDelete("");
