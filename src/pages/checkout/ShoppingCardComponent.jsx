@@ -7,7 +7,6 @@ export default function ShoppingCardComponent() {
   let [theitems, SetItems] = useState([]);
 
   const cart = useSelector(state => state.cart.cart);
-  console.log("cart", cart);
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
