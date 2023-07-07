@@ -157,3 +157,7 @@
 .none {
   text-decoration: none;
 }
+
+.gray {
+  color: var(--footer-links);
+}
