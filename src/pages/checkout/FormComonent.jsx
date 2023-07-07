@@ -13,6 +13,8 @@ import { saveFormData } from "../../store/slices/formSlice";
 import "../../App.css";
 import style from "./checkout.module.css";
 import Spinner from "./../../components/common/spinner";
+import { useSelector } from "react-redux";
+
 //yup validation
 const DisplayingErrorMessagesSchema = Yup.object().shape({
   fullName: Yup.string()
@@ -45,13 +47,18 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
     country: Yup.string(),
   }),
 });
+
 export default function FormComonent() {
   const [saveInfo, setSaveInfo] = useState(true);
+  const [theSendData, settheSendData] = useState(true);
   const [user, setUser] = useState("");
   const token = localStorage.getItem("userToken");
   const decoded = jwtDecode(token);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const formData = useSelector(state => state.CheckoutForm.form);
+  // console.log(formData);
+
   //intial value
   const [theintialvalue, settheIntialvalue] = useState({
     fullName: "",
@@ -79,6 +86,8 @@ export default function FormComonent() {
         // console.log(res);
         setUser(res.data);
         settheIntialvalue(res.data);
+        dispatch(saveFormData(res.data));
+
         const theData = res.data;
 
         const fullName = theData.fullName;
@@ -95,7 +104,7 @@ export default function FormComonent() {
     dispatch(saveFormData(submitdata));
 
     //data send to database
-    let theSendData = {
+    settheSendData({
       id: decoded.id,
       phone: submitdata?.phone,
       address: {
@@ -106,7 +115,7 @@ export default function FormComonent() {
         apartment: submitdata?.address?.apartment,
         postalCode: submitdata?.address?.postalCode,
       },
-    };
+    });
     if (saveInfo) {
       axiosInstance
         .patch("/users", theSendData, {
@@ -120,9 +129,16 @@ export default function FormComonent() {
           // console.log(res);
         })
         .catch(err => console.log(err));
+    } else {
+      settheIntialvalue(theSendData);
+      saveFormData(theSendData);
+      // console.log("theSendData", theSendData);
+      // console.log("else");
+      // console.log("formData", formData);
     }
   };
 
+  useEffect(() => {});
   if (!user) {
     return (
       <div>
