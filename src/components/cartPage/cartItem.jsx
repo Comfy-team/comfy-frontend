@@ -13,8 +13,8 @@ import {
   updateItemQuantity,
 } from "../../functions/cart.js";
 import Price from "../cartModal/price.jsx";
-import RemoveProductWarning from "../common/removeProductWarning.jsx";
 import { showCartModal } from "../../store/slices/cartModalSlice.js";
+import ConfirmPopup from "../common/confirmPopup.jsx";
 
 //style
 import style from "../../pages/cartPage/cartPage.module.css";
@@ -30,9 +30,9 @@ const CartItem = ({ item, cartId, product }) => {
     dispatch(showCartModal(false));
   };
   const handleDelete = () => {
-    setBtnSpinner(true); 
+    setBtnSpinner(true);
     deleteItemFromCart(cartId, item?.product_id?._id, item.color).then(() => {
-      setBtnSpinner(false); 
+      setBtnSpinner(false);
       setShowWarning(false);
     });
   };
@@ -99,7 +99,7 @@ const CartItem = ({ item, cartId, product }) => {
         </table>
       </td>
       <td>
-              <Price price={item.price} discount={item.product_id.discount} />
+        <Price price={item.price} discount={item.product_id.discount} />
       </td>
       <td>
         <span className={item.product_id.stock === 0 ? "text-danger" : ""}>
@@ -155,12 +155,13 @@ const CartItem = ({ item, cartId, product }) => {
         <strong>${(item.price * item.quantity).toFixed(2)}</strong>
       </td>
       <td>
-      {showWarning && (
-        <RemoveProductWarning
-          onRemove={handleDelete}
-          onCancel={() => setShowWarning(false)}
-        />
-      )}
+        {showWarning && (
+          <ConfirmPopup
+            msg={`Are you sure you want to delete ${item.product_id.name} from cart?`}
+            onConfirm={handleDelete}
+            onCancel={() => setShowWarning(false)}
+          />
+        )}
       </td>
     </tr>
   );
