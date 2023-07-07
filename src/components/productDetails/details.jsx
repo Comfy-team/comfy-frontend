@@ -9,7 +9,7 @@ import Colors from "./colors";
 import Quantity from "./quantity";
 import AdditionalInfo from "./additionalInfo";
 import { showLoginModal } from "../../store/slices/loginModalSlice";
-import RemoveProductWarning from "../common/removeProductWarning";
+import ConfirmPopup from "../common/confirmPopup";
 
 // functions
 import {
@@ -199,8 +199,9 @@ const Details = ({ product }) => {
         <AdditionalInfo product={product} />
       </div>
       {showWarning && (
-        <RemoveProductWarning
-          onRemove={handleDeleteFromCart}
+        <ConfirmPopup
+          msg={"Are you sure you want to delete from cart?"}
+          onConfirm={handleDeleteFromCart}
           onCancel={() => setShowWarning(false)}
         />
       )}
