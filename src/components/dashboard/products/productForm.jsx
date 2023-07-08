@@ -13,6 +13,8 @@ const ProductForm = ({
   touched,
   values,
   imageError,
+  stockError,
+  onStockError,
   productName,
   selectedImages,
   onImageInput,
@@ -79,7 +81,7 @@ const ProductForm = ({
       </div>
       <div className="row m-0">
         {/* price */}
-        <div className="col-4 px-0">
+        <div className="col-6 px-0">
           <div className="form-group mb-3">
             <label htmlFor="price" className="mb-1">
               Price
@@ -100,7 +102,7 @@ const ProductForm = ({
           </div>
         </div>
         {/* discount */}
-        <div className="col-4 px-2 px-md-3">
+        <div className="col-6 pe-0 ps-md-3">
           <div className="form-group mb-3">
             <label htmlFor="discount" className="mb-1">
               Discount
@@ -120,31 +122,10 @@ const ProductForm = ({
             />
           </div>
         </div>
-        {/* stock */}
-        <div className="col-4 px-0">
-          <div className="form-group mb-3">
-            <label htmlFor="stock" className="mb-1">
-              Stock
-            </label>
-            <Field
-              type="number"
-              name="stock"
-              min="0"
-              className={`form-control ${
-                errors.stock && touched.stock ? "is-invalid" : ""
-              }`}
-            />
-            <ErrorMessage
-              name="stock"
-              component="div"
-              className="invalid-feedback"
-            />
-          </div>
-        </div>
       </div>
       <div className="row m-0">
         {/* category */}
-        <div className="col-6 ps-0 pe-2 pe-md-1">
+        <div className="col-6 px-0">
           <div className="form-group mb-3">
             <label htmlFor="category" className="mb-1">
               Category
@@ -171,7 +152,7 @@ const ProductForm = ({
           </div>
         </div>
         {/* brand */}
-        <div className="col-6 pe-0 pe-2">
+        <div className="col-6 pe-0 ps-md-3">
           <div className="form-group mb-3">
             <label htmlFor="brand" className="mb-1">
               Brand
@@ -198,24 +179,34 @@ const ProductForm = ({
           </div>
         </div>
       </div>
-      {/* colors */}
+      {/* stock and colors */}
       <div className="form-group mb-3">
         <label htmlFor="colors" className="mb-1">
-          Colors
+           Colors & Stock
         </label>
         <div
-          className={`d-flex align-items-center gap-3 flex-wrap ${
+          className={`d-flex gap-3 flex-wrap ${
             values.colors?.length > 0 ? "mb-3 mt-2" : ""
           }`}
         >
-          {values.colors?.map((color, index) => (
+          {values.colors?.map((color) => (
             <ProductColor
-              key={color}
+              key={color.color}
               color={color}
+              stockError={stockError}
+              onStockError={onStockError}
+              onUpdateStock={(value) => {
+                const colorIndx = values.colors.findIndex(
+                  (ele) => ele.color === color.color
+                );
+                const newColors = [...values.colors];
+                newColors[colorIndx].stock = value;
+                setFieldValue("colors", newColors);
+              }}
               onDelete={() =>
                 setFieldValue(
                   "colors",
-                  values.colors.filter((ele) => ele !== color)
+                  values.colors.filter((ele) => ele.color !== color.color)
                 )
               }
             />
@@ -229,11 +220,17 @@ const ProductForm = ({
           }`}
           value={selectedColor}
           onChange={(e) => setSelectedColor(e.target.value)}
-          onBlur={(e) =>
+          onBlur={(e) => {
+            if (
+              values.colors.findIndex((ele) => ele.color === e.target.value) !==
+              -1
+            )
+              return;
             setFieldValue("colors", [
-              ...new Set([...values.colors, e.target.value]),
-            ])
-          }
+              ...values.colors,
+              { color: e.target.value, stock: 1 },
+            ]);
+          }}
         />
         <ErrorMessage
           name="colors"

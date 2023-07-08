@@ -16,6 +16,7 @@ import style from "../../../pages/dashboard/dashboard.module.css";
 const ProductsAdd = () => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [imageError, setImageError] = useState("");
+  const [stockError, setStockError] = useState(false);
   const [showBtnSpinner, SetShowBtnSpinner] = useState(false);
   const dispatch = useDispatch();
 
@@ -25,8 +26,8 @@ const ProductsAdd = () => {
     price: Yup.number().min(1, "minimum is 1").required("Price is required"),
     discount: Yup.number()
       .min(0, "minimum is 0")
+      .integer("discount is integer")
       .required("Discount is required"),
-    stock: Yup.number().min(1, "minimum is 1").required("Stock is required"),
     category: Yup.string().required("Category is required"),
     brand: Yup.string().required("Brand is required"),
     colors: Yup.array()
@@ -36,16 +37,19 @@ const ProductsAdd = () => {
 
   const handleAddProduct = (values, { setSubmitting, resetForm }) => {
     setSubmitting(false);
-    if (imageError) return;
+    // check if there're errors
+    if (imageError || stockError) return;
     if (selectedImages.length === 0) {
       setImageError("Enter at least one image");
       return;
     }
     SetShowBtnSpinner(true);
     const token = localStorage.getItem("userToken");
+    // append data to formData
     const formData = new FormData();
-    // append data
-    values.colors.forEach((color) => formData.append("colors[]", color));
+    values.colors.forEach((color) =>
+      formData.append("colors[]", JSON.stringify(color))
+    );
     selectedImages.forEach((image) => formData.append("images", image));
     Object.keys(values).forEach((key) => {
       if (key === "colors") {
@@ -53,6 +57,7 @@ const ProductsAdd = () => {
       }
       formData.append(key, values[key]);
     });
+    // post data
     axiosInstance
       .post("/products", formData, {
         headers: {
@@ -95,7 +100,6 @@ const ProductsAdd = () => {
           description: "",
           price: 1,
           discount: 0,
-          stock: 1,
           category: "",
           brand: "",
           colors: [],
@@ -110,6 +114,8 @@ const ProductsAdd = () => {
               touched={touched}
               values={values}
               imageError={imageError}
+              stockError={stockError}
+              onStockError={(value) => setStockError(value)}
               productName={values.name}
               selectedImages={selectedImages}
               onImageInput={onImageInput}
