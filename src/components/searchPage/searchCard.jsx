@@ -21,6 +21,8 @@ const SearchCard = ({ product, query }) => {
   const [shownBrand, setShownBrand] = useState("");
   const [inCart, setInCart] = useState(false);
   const [showBtnSpinner, setShowBtnSpinner] = useState(false);
+  const [outOfStock, setOutOfStock] = useState(false);
+  const [activeColor, setActiveColor] = useState({});
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
 
@@ -47,11 +49,11 @@ const SearchCard = ({ product, query }) => {
     return highlighted;
   };
 
-  const handleAddToCart = (id, color, price) => {
+  const handleAddToCart = (id, color) => {
     if (cart.items) {
       setShowBtnSpinner(true);
     }
-    addItemToCart(cart._id, id, color, price);
+    addItemToCart(cart._id, id, color);
   };
 
   useEffect(() => {
@@ -69,10 +71,18 @@ const SearchCard = ({ product, query }) => {
 
   useEffect(() => {
     setShowBtnSpinner(false);
+    // check if product out of stock
+    if (product.colors.every((obj) => obj.stock === 0)) {
+      setOutOfStock(true);
+    }
+    // if not logged in or admin
     if (!cart.items) {
       setInCart(false);
       return;
     }
+    // set first active color
+    const activeColor = product.colors.find((obj) => obj.stock > 0);
+    setActiveColor(activeColor);
     const productIndx = cart.items.findIndex(
       (ele) => ele.product_id._id === product._id
     );
@@ -84,7 +94,7 @@ const SearchCard = ({ product, query }) => {
       <div
         className={`${style["search-card"]} product-card card position-relative border-0 rounded-0`}
       >
-        {product.stock === 0 ? (
+        {outOfStock ? (
           <span className="badge d-block bg-yellow position-absolute text-white">
             Out Of Stock
           </span>
@@ -108,7 +118,7 @@ const SearchCard = ({ product, query }) => {
               className="img-fluid card-img-top rounded-0 hover-img position-absolute w-100 h-100 top-0 start-0"
             />
           </Link>
-          {product.stock > 0 ? (
+          {!outOfStock ? (
             showBtnSpinner ? (
               <button className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2">
                 <div className="spinner-border spinner-border-sm" role="status">
@@ -125,9 +135,7 @@ const SearchCard = ({ product, query }) => {
             ) : (
               <button
                 className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2"
-                onClick={() =>
-                  handleAddToCart(product._id, product.colors[0], product.price)
-                }
+                onClick={() => handleAddToCart(product._id, activeColor)}
               >
                 <FontAwesomeIcon icon={faPlus} /> Add to Cart
               </button>
