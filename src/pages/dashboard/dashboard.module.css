@@ -228,6 +228,10 @@ body {
   transform: translate(50%, -45%);
 }
 
+.dash-prod-color-stock {
+  width: 7rem!important;
+}
+
 /* start search from */
 @media (min-width: 768px) {
   #dash-search input {

@@ -19,6 +19,7 @@ const ProductsUpdate = () => {
   const [data, setData] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
   const [imageError, setImageError] = useState("");
+  const [stockError, setStockError] = useState(false);
   const [showBtnSpinner, SetShowBtnSpinner] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -29,8 +30,8 @@ const ProductsUpdate = () => {
     price: Yup.number().min(1, "minimum is 1").required("Price is required"),
     discount: Yup.number()
       .min(0, "minimum is 0")
+      .integer("discount is integer")
       .required("Discount is required"),
-    stock: Yup.number().min(0, "minimum is 0").required("Stock is required"),
     category: Yup.string().required("Category is required"),
     brand: Yup.string().required("Brand is required"),
     colors: Yup.array()
@@ -39,18 +40,21 @@ const ProductsUpdate = () => {
   });
 
   const handleUpdateProduct = (values, { setSubmitting }) => {
-    SetShowBtnSpinner(true);
     setSubmitting(false);
-    if (imageError) return;
+    // check if there're errors
+    if (imageError || stockError) return;
     if (selectedImages.length === 0) {
       setImageError("Enter at least one image");
       return;
     }
+    SetShowBtnSpinner(true);
     const token = localStorage.getItem("userToken");
-    const formData = new FormData();
     // append data
+    const formData = new FormData();
     formData.append("_id", data._id);
-    values.colors.forEach((color) => formData.append("colors[]", color));
+    values.colors.forEach((color) =>
+      formData.append("colors[]", JSON.stringify(color))
+    );
     selectedImages.forEach((image) =>
       image.src
         ? formData.append("images", JSON.stringify(image))
@@ -67,6 +71,7 @@ const ProductsUpdate = () => {
       }
       formData.append(key, values[key]);
     });
+    // send request
     axiosInstance
       .patch("/products", formData, {
         headers: {
@@ -127,7 +132,6 @@ const ProductsUpdate = () => {
           description: data.description,
           price: data.price,
           discount: data.discount,
-          stock: data.stock,
           category: data.category._id,
           brand: data.brand._id,
           colors: data.colors,
@@ -142,6 +146,8 @@ const ProductsUpdate = () => {
               touched={touched}
               values={values}
               imageError={imageError}
+              stockError={stockError}
+              onStockError={(value) => setStockError(value)}
               productName={data.name}
               selectedImages={selectedImages}
               onImageInput={onImageInput}

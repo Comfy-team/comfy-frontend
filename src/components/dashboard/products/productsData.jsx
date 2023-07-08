@@ -54,9 +54,8 @@ const ProductsData = () => {
       })
       .then((res) => {
         dispatch(showToast("Product was deleted successfully!"));
-        let newData = [...data].filter((ele) => ele._id !== id);
-        setData(newData);
         setProductToDelete(null);
+        getAllData();
       })
       .catch((error) => {
         console.log(error);
@@ -65,6 +64,15 @@ const ProductsData = () => {
         );
         setProductToDelete(null);
       });
+  };
+
+  const handleSearch = (values, { setSubmitting }) => {
+    setSubmitting(false);
+    setSearchParams({ page: 1, query: values.searchValue });
+  };
+
+  const handleRemoveSearch = () => {
+    setSearchParams({ page: 1, query: "" });
   };
 
   const getResults = (query, page = 1) => {
@@ -85,16 +93,7 @@ const ProductsData = () => {
       .catch((error) => console.log(error));
   };
 
-  const handleSearch = (values, { setSubmitting }) => {
-    setSubmitting(false);
-    setSearchParams({ page: 1, query: values.searchValue });
-  };
-
-  const handleRemoveSearch = () => {
-    setSearchParams({ page: 1, query: "" });
-  };
-
-  useEffect(() => {
+  const getAllData = () => {
     setShowSpinner(true);
     if (searchParams.get("page")) {
       setPage(+searchParams.get("page"));
@@ -116,6 +115,10 @@ const ProductsData = () => {
         })
         .catch((error) => console.log(error));
     }
+  };
+
+  useEffect(() => {
+    getAllData();
   }, [searchParams]);
 
   return (
@@ -150,12 +153,11 @@ const ProductsData = () => {
                     <th scope="col">Description</th>
                     <th scope="col">Price</th>
                     <th scope="col">Discount</th>
-                    <th scope="col">Stock</th>
                     <th scope="col">Category</th>
                     <th scope="col" className="text-center">
                       Brand
                     </th>
-                    <th scope="col">Colors</th>
+                    <th scope="col">Stock</th>
                     <th scope="col">Images</th>
                     <th scope="col">Actions</th>
                   </tr>
@@ -185,19 +187,25 @@ const ProductsData = () => {
                       <td className="text-center">
                         {product.discount > 0 ? `${product.discount}%` : 0}
                       </td>
-                      <td className="text-center">{product.stock}</td>
                       <td className="text-center text-capitalize">
                         {product.category.name}
                       </td>
                       <td className="text-center">{product.brand.name}</td>
                       <td>
-                        <div className="d-flex flex-column align-items-center justify-content-center gap-1">
+                        <div className="d-flex flex-column gap-1">
                           {product.colors.map((ele) => (
-                            <span
-                              key={ele}
-                              className={`${style["dash-prod-clr"]} d-inline-block rounded-circle border border-2`}
-                              style={{ backgroundColor: ele }}
-                            ></span>
+                            <div
+                              key={ele.color}
+                              className="d-flex align-items-center gap-2 justify-content-between"
+                            >
+                              <span className="d-inline-block ps-1">
+                                {ele.stock}
+                              </span>
+                              <span
+                                className={`${style["dash-prod-clr"]} d-inline-block rounded-circle border border-2`}
+                                style={{ backgroundColor: ele.color }}
+                              ></span>
+                            </div>
                           ))}
                         </div>
                       </td>
