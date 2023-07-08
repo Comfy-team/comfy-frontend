@@ -8,6 +8,7 @@ import axiosInstance from "./../../apis/config";
 import { cities } from "../../apis/cities";
 import { governoratesData } from "../../apis/governorates";
 import { saveFormData } from "../../store/slices/formSlice";
+import { showToast } from "../../store/slices/toastSlice.js";
 
 //style
 import "../../App.css";
@@ -50,28 +51,37 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
 
 export default function FormComonent() {
   const [saveInfo, setSaveInfo] = useState(true);
-  const [theSendData, settheSendData] = useState(true);
   const [user, setUser] = useState("");
   const token = localStorage.getItem("userToken");
   const decoded = jwtDecode(token);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const formData = useSelector(state => state.CheckoutForm.form);
-  // console.log(formData);
+  const theformData = useSelector(state => state.CheckoutForm.theformData);
 
   //intial value
-  const [theintialvalue, settheIntialvalue] = useState({
-    fullName: "",
-    phone: user?.phone || "",
-    address: {
-      postalCode: user?.address?.postalCode || "",
-      apartment: user?.address?.apartment || "",
-      street: user?.address?.street || "",
-      building: user?.address?.building || "",
-      city: user?.address?.city || "",
-      governorate: user?.address?.governorate || "",
-      country: "Egypt",
-    },
+  const [theintialvalue, settheIntialvalue] = useState(() => {
+    // retrieve form data from localStorage if it exists
+    const savedFormData = localStorage.getItem("formData");
+    if (savedFormData) {
+      return JSON.parse(savedFormData);
+    } else {
+      return {
+        fullName: user.fullName || "",
+        phone: theformData?.phone || "",
+        address: {
+          postalCode: theformData?.address?.postalCode || "",
+          apartment: theformData?.address?.apartment || "",
+          street: theformData?.address?.street || "",
+          building: formData?.address?.building || "",
+          city: theformData?.address?.city || "",
+          governorate: theformData?.address?.governorate || "",
+          country: "Egypt",
+        },
+      };
+    }
   });
 
   useEffect(() => {
@@ -83,13 +93,11 @@ export default function FormComonent() {
         },
       })
       .then(res => {
-        // console.log(res);
         setUser(res.data);
         settheIntialvalue(res.data);
         dispatch(saveFormData(res.data));
 
         const theData = res.data;
-
         const fullName = theData.fullName;
         settheIntialvalue({
           ...theData,
@@ -99,12 +107,19 @@ export default function FormComonent() {
       .catch(err => console.log(err));
   }, [decoded.id, token]);
 
+  useEffect(() => {
+    const savedFormData = localStorage.getItem("formData");
+    if (savedFormData) {
+      settheIntialvalue(JSON.parse(savedFormData));
+    }
+  }, [formData]);
+
   const formSubmit = submitdata => {
     navigate(`/checkout/shipping`);
     dispatch(saveFormData(submitdata));
 
     //data send to database
-    settheSendData({
+    let theSendData = {
       id: decoded.id,
       phone: submitdata?.phone,
       address: {
@@ -115,7 +130,11 @@ export default function FormComonent() {
         apartment: submitdata?.address?.apartment,
         postalCode: submitdata?.address?.postalCode,
       },
-    });
+    };
+    settheIntialvalue(submitdata);
+    // save form data to localStorage
+    localStorage.setItem("formData", JSON.stringify(submitdata));
+
     if (saveInfo) {
       axiosInstance
         .patch("/users", theSendData, {
@@ -127,18 +146,16 @@ export default function FormComonent() {
         })
         .then(res => {
           // console.log(res);
+          // dispatch(showToast("new info  updated  successfully!"));
         })
         .catch(err => console.log(err));
     } else {
-      settheIntialvalue(theSendData);
+      settheIntialvalue(submitdata);
+
+      // settheIntialvalue(theSendData);
       saveFormData(theSendData);
-      // console.log("theSendData", theSendData);
-      // console.log("else");
-      // console.log("formData", formData);
     }
   };
-
-  useEffect(() => {});
   if (!user) {
     return (
       <div>
