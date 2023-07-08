@@ -8,9 +8,14 @@ import {
 import CartItem from "../../components/cartPage/cartItem";
 import { emptyCart } from "../../functions/cart";
 import style from "./cartPage.module.css";
-function CartPage(cartId) {
-  const navigate = useNavigate();
+function CartPage() {
   const cart = useSelector((state) => state.cart.cart);
+  const navigate = useNavigate();
+  const totalPrice = cart.items.reduce((acc, item) => {
+    const itemPrice = item.price * item.quantity * (1 - item.discount / 100);
+    return acc + itemPrice;
+  }, 0);
+
   const handleReturnToShop = () => {
     navigate("/shop");
   };
@@ -93,7 +98,7 @@ function CartPage(cartId) {
                       >
                         <span>TOTAL PRICE:</span>
                         <strong className="color-yellow ps-2">
-                          ${cart?.totalPrice}
+                        <strong>{`$${totalPrice.toFixed(2)}`}</strong>
                         </strong>
                       </div>
                     </div>
