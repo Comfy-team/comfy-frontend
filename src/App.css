@@ -139,10 +139,10 @@ img {
 .disable-scroll .react-multi-carousel-track,
 .disable-scroll .react-multi-carousel-item {
   -webkit-transform: unset !important;
-      -ms-transform: unset !important;
-          transform: unset !important;
+  -ms-transform: unset !important;
+  transform: unset !important;
   -webkit-transform-style: unset !important;
-          transform-style: unset !important;
+  transform-style: unset !important;
   will-change: unset !important;
 }
 /* end custom classes */
@@ -192,8 +192,8 @@ img {
 
 .brands-slider img:hover {
   -webkit-transform: scale(1.2);
-      -ms-transform: scale(1.2);
-          transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(1.2);
 }
 /* end brands slider*/
 
@@ -204,7 +204,8 @@ img {
   transition: opacity ease 0.5s, -webkit-transform ease 0.7s;
   -o-transition: opacity ease 0.5s, transform ease 0.7s;
   transition: opacity ease 0.5s, transform ease 0.7s;
-  transition: opacity ease 0.5s, transform ease 0.7s, -webkit-transform ease 0.7s;
+  transition: opacity ease 0.5s, transform ease 0.7s,
+    -webkit-transform ease 0.7s;
 }
 
 .product-card:hover .hover-img {
@@ -218,8 +219,8 @@ img {
   bottom: 1rem;
   left: 50%;
   -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 @media (min-width: 992px) {
@@ -237,8 +238,8 @@ img {
 
 .product-card .holder:hover .hover-img {
   -webkit-transform: scale(1.2);
-      -ms-transform: scale(1.2);
-          transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 .product-card .badge {
@@ -264,11 +265,11 @@ footer {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 .footer-toggle .icon {
   -webkit-transition: -webkit-transform 0.3s ease-in-out;
@@ -300,8 +301,8 @@ footer {
 .menu-footer .link:hover {
   display: block;
   -webkit-transform: translateX(10px);
-      -ms-transform: translateX(10px);
-          transform: translateX(10px);
+  -ms-transform: translateX(10px);
+  transform: translateX(10px);
 }
 .icon {
   -webkit-transition: -webkit-transform 0.3s ease-in-out;
@@ -313,13 +314,13 @@ footer {
 }
 .icon::before {
   -webkit-transform: rotate(90deg);
-      -ms-transform: rotate(90deg);
-          transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 .icon-rotate {
   -webkit-transform: rotate(180deg);
-      -ms-transform: rotate(180deg);
-          transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 .contacts {
   text-decoration: underline;
@@ -386,7 +387,7 @@ footer {
   background-size: 200% 100%;
   background-position-x: 180%;
   -webkit-animation: loading 1s ease-in-out infinite;
-          animation: loading 1s ease-in-out infinite;
+  animation: loading 1s ease-in-out infinite;
   aspect-ratio: 1/1;
 }
 
@@ -430,7 +431,7 @@ footer {
 .aboutContainer.aboutImg {
   height: 100%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .contentContainer {
   background-color: var(--light-gray) !important;
@@ -463,8 +464,11 @@ footer {
 .nav-tabs .nav-link {
   color: var(--main-black);
 }
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
+  color: var(--main-black);
+}
 .nav-tabs .Tabs {
-  /* background-color: var(--light-gray); */
   margin-top: 0;
 }
 /* =====================================================  */
@@ -481,7 +485,7 @@ footer {
   height: 2.5rem;
   z-index: 1000;
   -webkit-box-shadow: 1px 0px 6px rgb(203, 202, 202);
-          box-shadow: 1px 0px 6px rgb(203, 202, 202);
+  box-shadow: 1px 0px 6px rgb(203, 202, 202);
 }
 @media (max-width: 767px) {
   .flow-button {
@@ -498,7 +502,7 @@ footer {
 #home .carousel .carousel-control-next,
 #home .carousel-control-prev {
   -webkit-filter: invert(1);
-          filter: invert(1);
+  filter: invert(1);
 }
 
 /* ====== end  home carousel ========= */
