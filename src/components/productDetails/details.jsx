@@ -113,8 +113,8 @@ const Details = ({ product }) => {
       <div className="border-top border-bottom py-4">
         <div className="d-flex align-items-center gap-2 mb-4">
           <span className="fw-semibold">Stock:</span>
-          <span className={product.stock === 0 ? "text-danger" : ""}>
-            {product.stock > 0 ? product.stock : "Out Of Stock"}
+          <span className={activeColor.stock === 0 ? "text-danger" : ""}>
+            {activeColor.stock > 0 ? activeColor.stock : "Out Of Stock"}
           </span>
         </div>
         <div className="d-flex align-items-center gap-3 mb-4">
@@ -136,7 +136,7 @@ const Details = ({ product }) => {
             <Quantity
               id={product._id}
               active={activeQuantity}
-              stock={product.stock}
+              stock={activeColor.stock}
               onQuantityChange={handleQuantityChange}
               onDeleteItem={() => setShowWarning(true)}
             />
@@ -151,10 +151,10 @@ const Details = ({ product }) => {
           <button
             onClick={() =>
               cart.items
-                ? handleAddToCart(product._id, activeColor, product.price)
+                ? handleAddToCart(product._id, activeColor)
                 : dispatch(showLoginModal(true))
             }
-            disabled={product.stock > 0 ? false : true}
+            disabled={activeColor.stock > 0 ? false : true}
             className="btn btn-bg-dark text-white text-capitalize px-5 rounded-2 d-block mx-auto"
           >
             Add to cart
@@ -186,11 +186,11 @@ const Details = ({ product }) => {
         </form>
         <button
           type="button"
-          className="btn my-3 py-2 d-block w-100 bg-dark text-white text-uppercase"
-          disabled={!terms || product.stock === 0 ? true : false}
+          className="btn my-3 py-2 d-block w-100 btn-bg-dark text-white text-uppercase"
+          disabled={!terms || activeColor.stock === 0 ? true : false}
           onClick={() =>
             cart.items
-              ? handleBuyProduct(product._id, activeColor, product.price)
+              ? handleBuyProduct(product._id, activeColor)
               : dispatch(showLoginModal(true))
           }
         >
