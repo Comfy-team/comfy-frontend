@@ -19,7 +19,6 @@ const FAQ = () => {
             your audience.
           </p>
           <div className={`${styles.listoquestion}   mb-5`}>
-            <a href="#e">e e </a>
             <a href="#faqpara3">LARGE ITEMS </a>
             <a href="#faqpara5">ASSEMBLED</a>
             <a href="#faqpara6">LIMITATION </a>
