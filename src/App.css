@@ -1,3 +1,9 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
 :root {
   --white: #fff;
   --yellow: #c7ab62;
@@ -132,8 +138,11 @@ img {
 
 .disable-scroll .react-multi-carousel-track,
 .disable-scroll .react-multi-carousel-item {
-  transform: unset !important;
-  transform-style: unset !important;
+  -webkit-transform: unset !important;
+      -ms-transform: unset !important;
+          transform: unset !important;
+  -webkit-transform-style: unset !important;
+          transform-style: unset !important;
   will-change: unset !important;
 }
 /* end custom classes */
@@ -148,6 +157,8 @@ img {
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
   z-index: 10;
+  -webkit-transition: opacity 0.5s ease;
+  -o-transition: opacity 0.5s ease;
   transition: opacity 0.5s ease;
 }
 
@@ -172,18 +183,28 @@ img {
 
 /* start brands slider*/
 .brands-slider img {
+  -webkit-transition: -webkit-transform ease 0.5s;
+  transition: -webkit-transform ease 0.5s;
+  -o-transition: transform ease 0.5s;
   transition: transform ease 0.5s;
+  transition: transform ease 0.5s, -webkit-transform ease 0.5s;
 }
 
 .brands-slider img:hover {
-  transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+      -ms-transform: scale(1.2);
+          transform: scale(1.2);
 }
 /* end brands slider*/
 
 /* start product card */
 .product-card .holder .hover-img {
   opacity: 0;
+  -webkit-transition: opacity ease 0.5s, -webkit-transform ease 0.7s;
+  transition: opacity ease 0.5s, -webkit-transform ease 0.7s;
+  -o-transition: opacity ease 0.5s, transform ease 0.7s;
   transition: opacity ease 0.5s, transform ease 0.7s;
+  transition: opacity ease 0.5s, transform ease 0.7s, -webkit-transform ease 0.7s;
 }
 
 .product-card:hover .hover-img {
@@ -196,12 +217,16 @@ img {
   width: 86%;
   bottom: 1rem;
   left: 50%;
-  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
 }
 
 @media (min-width: 992px) {
   .product-card .add-to-cart-btn {
     opacity: 0;
+    -webkit-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
     transition: opacity 0.5s ease;
   }
 
@@ -211,7 +236,9 @@ img {
 }
 
 .product-card .holder:hover .hover-img {
-  transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+      -ms-transform: scale(1.2);
+          transform: scale(1.2);
 }
 
 .product-card .badge {
@@ -233,40 +260,66 @@ footer {
 }
 .footer-toggle {
   cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .footer-toggle .icon {
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  -o-transition: transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
   margin-left: 1rem;
 }
 .footer-content {
   max-height: 0;
   overflow: hidden;
+  -webkit-transition: 0.5s ease-out;
+  -o-transition: 0.5s ease-out;
   transition: 0.5s ease-out;
 }
 .footer-content.show {
   max-height: 40rem;
+  -webkit-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
   transition: 0.5s ease-in-out;
 }
 .menu-footer .link {
   text-decoration: none;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
 .menu-footer .link:hover {
   display: block;
-  transform: translateX(10px);
+  -webkit-transform: translateX(10px);
+      -ms-transform: translateX(10px);
+          transform: translateX(10px);
 }
 .icon {
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  -o-transition: transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
   margin-left: 1rem;
 }
 .icon::before {
-  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
 }
 .icon-rotate {
-  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 .contacts {
   text-decoration: underline;
@@ -316,6 +369,13 @@ footer {
 /* start insta post */
 .loading-img {
   background-color: #ededed !important;
+  background: -o-linear-gradient(
+      350deg,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 60%
+    )
+    #ededed;
   background: linear-gradient(
       100deg,
       rgba(255, 255, 255, 0) 40%,
@@ -325,8 +385,15 @@ footer {
     #ededed;
   background-size: 200% 100%;
   background-position-x: 180%;
-  animation: loading 1s ease-in-out infinite;
+  -webkit-animation: loading 1s ease-in-out infinite;
+          animation: loading 1s ease-in-out infinite;
   aspect-ratio: 1/1;
+}
+
+@-webkit-keyframes loading {
+  to {
+    background-position-x: -20%;
+  }
 }
 
 @keyframes loading {
@@ -335,12 +402,24 @@ footer {
   }
 }
 /* end insta post */
+
+/* start dashboard */
+.dash-navlink.active {
+  color: var(--dash-active-text) !important;
+  background-color: var(--dash-active-bg) !important;
+}
+
+.dash-navlink.active::after {
+  background-color: var(--dash-btn-bg);
+}
+/* end dashboard */
 /* end main layout */
 
 /* about style page */
-
 .aboutContainer {
+  display: -ms-grid;
   display: grid;
+  -ms-grid-rows: 1fr !important;
   grid-template-rows: 1fr !important;
   background-color: var(--light-gray) !important;
 }
@@ -350,13 +429,15 @@ footer {
 }
 .aboutContainer.aboutImg {
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .contentContainer {
   background-color: var(--light-gray) !important;
 }
 
 .aboutContainer.aboutBtns {
+  display: -ms-grid;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 }
@@ -391,13 +472,16 @@ footer {
 
 /* ===== start scroll to top button ======= */
 .flow-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   bottom: 4rem;
   right: 2.5rem;
   width: 2.5rem;
   height: 2.5rem;
   z-index: 1000;
-  box-shadow: 1px 0px 6px rgb(203, 202, 202);
+  -webkit-box-shadow: 1px 0px 6px rgb(203, 202, 202);
+          box-shadow: 1px 0px 6px rgb(203, 202, 202);
 }
 @media (max-width: 767px) {
   .flow-button {
@@ -413,7 +497,8 @@ footer {
 }
 #home .carousel .carousel-control-next,
 #home .carousel-control-prev {
-  filter: invert(1);
+  -webkit-filter: invert(1);
+          filter: invert(1);
 }
 
 /* ====== end  home carousel ========= */
@@ -437,14 +522,3 @@ footer {
   font-size: 0.9rem;
 }
 /* end delete alert */
-
-/* start dashboard */
-.dash-navlink.active {
-  color: var(--dash-active-text) !important;
-  background-color: var(--dash-active-bg) !important;
-}
-
-.dash-navlink.active::after {
-  background-color: var(--dash-btn-bg);
-}
-/* end dashboard */
