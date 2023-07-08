@@ -15,7 +15,7 @@ export default function WhatTell() {
         </p>
         <h5> mohamad ali</h5>
         <div>
-          <h6 className=" mb-5 pb-5"> analyst</h6>
+          <h6 className=" mb-3 "> analyst</h6>
         </div>
       </div>
     </div>
