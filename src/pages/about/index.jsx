@@ -27,7 +27,7 @@ const About = () => {
           </div>
         </div>
       </div>
-      <div className={`${styles.whatTellContainer} py-5 `}>
+      <div className={`${styles.whatTellContainer} py-5 mb-2 `}>
         <WhatTell />
       </div>
     </>

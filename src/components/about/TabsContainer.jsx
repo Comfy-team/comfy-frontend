@@ -8,7 +8,7 @@ export default function TabsContainer() {
     <>
       <div className={`${styles.tabsContainer} tabsContainer mt-0 `}>
         <Tabs
-          defaultActiveKey="profile"
+          defaultActiveKey="home"
           id="uncontrolled-tab-example"
           className={`mb-3 ${styles[("active", "tabs")]} Tabs`}
           transition={true}
