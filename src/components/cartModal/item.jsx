@@ -32,9 +32,9 @@ function Item({ item, cartId }) {
   };
 
   const handleDelete = () => {
-    setBtnSpinner(true); // show spinner
+    setBtnSpinner(true); 
     deleteItemFromCart(cartId, item?.product_id?._id, item.color).then(() => {
-      setBtnSpinner(false); // hide spinner
+      setBtnSpinner(false); 
       setShowWarning(false);
     });
   };
