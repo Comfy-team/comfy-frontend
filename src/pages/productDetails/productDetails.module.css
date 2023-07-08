@@ -1,5 +1,14 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 /* start details */
 .home-link {
+  -webkit-transition: color 0.5 ease;
+  -o-transition: color 0.5 ease;
   transition: color 0.5 ease;
 }
 
@@ -15,6 +24,7 @@
 .description {
   line-clamp: 3;
   -webkit-line-clamp: 3;
+  -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
