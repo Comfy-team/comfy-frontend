@@ -23,13 +23,13 @@ export const getCart = (token) => {
     .catch((error) => console.log(error));
 };
 
-export const deleteItemFromCart = (cartId, id, color) => {
+export const addItemToCart = (cartId, id, color) => {
   const token = localStorage.getItem("userToken");
   if (token) {
-    return axiosInstance
-      .patch(
-        `/cart/${cartId}/delete`,
-        { itemId: id, color },
+    axiosInstance
+      .post(
+        `/cart/${cartId}`,
+        { product_id: id, color },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -75,13 +75,13 @@ export const updateItemQuantity = (cartId, id, quantity, color) => {
   }
 };
 
-export const addItemToCart = (cartId, id, color, price, discount) => {
+export const deleteItemFromCart = (cartId, id, color) => {
   const token = localStorage.getItem("userToken");
   if (token) {
-    axiosInstance
-      .post(
-        `/cart/${cartId}`,
-        { product_id: id, color, price: price, discount: discount },
+    return axiosInstance
+      .patch(
+        `/cart/${cartId}/delete`,
+        { itemId: id, color },
         {
           headers: {
             Authorization: `Bearer ${token}`,
