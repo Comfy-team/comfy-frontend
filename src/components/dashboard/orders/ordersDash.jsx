@@ -13,8 +13,11 @@ import { showToast } from "../../../store/slices/toastSlice";
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
 import axiosInstance from "../../../apis/config";
 import ConfirmPopup from "../../common/confirmPopup";
+import Spinner from "./../../common/spinner";
 
 const OrdersDash = () => {
+  const [showSpinner, setShowSpinner] = useState(true);
+
   const [allorders, setAllorders] = useState([]);
   const [allOrdersInPage, setAllordersInPage] = useState([]);
   const [showWarning, setShowWarning] = useState(false);
@@ -40,12 +43,13 @@ const OrdersDash = () => {
             "x-access-token": token,
           },
         })
-        .then((res) => {
+        .then(res => {
           setAllordersInPage(res.data);
           setAllorders(res.data.data);
           setTotaOrders(res.data.totalOrders);
+          setShowSpinner(false);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     } else {
@@ -57,12 +61,12 @@ const OrdersDash = () => {
             page: currentPage,
           },
         })
-        .then((res) => {
+        .then(res => {
           setAllordersInPage(res.data);
           setAllorders(res.data.data);
           setTotaOrders(res.data.totalOrders);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     }
@@ -78,7 +82,7 @@ const OrdersDash = () => {
           "x-access-token": token,
         },
       })
-      .then((res) => {
+      .then(res => {
         setDeleteStatus(`order ${id} deleted successfully.`);
         axiosInstance
           .get(`/orders`, {
@@ -90,19 +94,22 @@ const OrdersDash = () => {
               "x-access-token": token,
             },
           })
-          .then((res) => {
+          .then(res => {
             setAllordersInPage(res.data);
             setAllorders(res.data.data);
             setTotaOrders(res.data.totalOrders);
             dispatch(showToast("orders was deleted successfully!"));
             setOrderIdToDelete("");
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
+        dispatch(
+          showToast(" error occur in order delete order ${id} !try again ")
+        );
       });
   }
   // expand object id
@@ -165,99 +172,108 @@ const OrdersDash = () => {
                   />
                 </div>
               </div>
-              <table className="table border-top" id="DataTables_Table_0">
-                <thead>
-                  <tr>
-                    <th scope="col" className="ps-4">
-                      #ID
-                    </th>
-                    <th scope="col" className="ps-4">
-                      User ID
-                    </th>
-                    <th scope="col">Data</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">TotalPrice</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Governorate</th>
-                    <th scope="col">Postal Code</th>
-                    <th scope="col">City</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Items Number</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {allorders?.length > 0 ? (
-                    allorders.map((order, index) => {
-                      return (
-                        <tr key={order?._id}>
-                          <td
-                            className={`ps-4`}
-                            data-id={order?._id}
-                            onClick={showAllId}
-                          >
-                            {order?._id.substring(0, 8) + "..."}
-                          </td>
-                          <td
-                            className={`ps-4`}
-                            data-id={order?.userId}
-                            onClick={showAllId}
-                          >
-                            {order?.userId.substring(0, 8) + "..."}
-                          </td>
-                          <td>{new Date(order.date).toLocaleDateString()}</td>
-                          <td>{new Date(order.date).toLocaleTimeString()}</td>
-                          <td>{order?.totalPrice} $ </td>
-                          <td
-                            className={
-                              order?.phone !== "" ? "text-start" : "text-center"
-                            }
-                          >
-                            {order?.phone !== "" ? order?.phone : "x"}
-                          </td>
-                          <td className="text-center">
-                            {order?.address?.governorate !== ""
-                              ? order?.address?.governorate
-                              : "x"}
-                          </td>
-                          <td>{order?.address?.postalCode} </td>
-
-                          <td className="text-center">
-                            {order?.address?.city !== ""
-                              ? order?.address?.city
-                              : "x"}
-                          </td>
-                          <td>
-                            {order?.address?.street} -{" "}
-                            {order?.address?.building}
-                            {"- "}
-                            {order?.address?.apartment}{" "}
-                          </td>
-
-                          <td className="text-center">{order.items?.length}</td>
-                          <td className="text-center">
-                            <FontAwesomeIcon
-                              icon={faTrashCan}
-                              type="button"
-                              className="text-danger"
-                              onClick={() => {
-                                setShowWarning(true);
-                                setOrderIdToDelete(order._id);
-                              }}
-                            />
-                          </td>
-                        </tr>
-                      );
-                    })
-                  ) : (
+              {!showSpinner ? (
+                <table className="table border-top" id="DataTables_Table_0">
+                  <thead>
                     <tr>
-                      <td colSpan="8" className="text-center">
-                        No orders found.
-                      </td>
+                      <th scope="col" className="ps-4">
+                        #ID
+                      </th>
+                      <th scope="col" className="ps-4">
+                        User ID
+                      </th>
+                      <th scope="col">Data</th>
+                      <th scope="col">Time</th>
+                      <th scope="col">TotalPrice</th>
+                      <th scope="col">Phone</th>
+                      <th scope="col">Governorate</th>
+                      <th scope="col">Postal Code</th>
+                      <th scope="col">City</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">Items Number</th>
+                      <th scope="col">Actions</th>
                     </tr>
-                  )}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {allorders?.length > 0 ? (
+                      allorders.map((order, index) => {
+                        return (
+                          <tr key={order?._id}>
+                            <td
+                              className={`ps-4`}
+                              data-id={order?._id}
+                              onClick={showAllId}
+                            >
+                              {order?._id.substring(0, 8) + "..."}
+                            </td>
+                            <td
+                              className={`ps-4`}
+                              data-id={order?.userId}
+                              onClick={showAllId}
+                            >
+                              {order?.userId.substring(0, 8) + "..."}
+                            </td>
+                            <td>{new Date(order.date).toLocaleDateString()}</td>
+                            <td>{new Date(order.date).toLocaleTimeString()}</td>
+                            <td>{order?.totalPrice} $ </td>
+                            <td
+                              className={
+                                order?.phone !== ""
+                                  ? "text-start"
+                                  : "text-center"
+                              }
+                            >
+                              {order?.phone !== "" ? order?.phone : "x"}
+                            </td>
+                            <td className="text-center">
+                              {order?.address?.governorate !== ""
+                                ? order?.address?.governorate
+                                : "x"}
+                            </td>
+                            <td>{order?.address?.postalCode} </td>
+
+                            <td className="text-center">
+                              {order?.address?.city !== ""
+                                ? order?.address?.city
+                                : "x"}
+                            </td>
+                            <td>
+                              {order?.address?.street} -{" "}
+                              {order?.address?.building}
+                              {"- "}
+                              {order?.address?.apartment}{" "}
+                            </td>
+
+                            <td className="text-center">
+                              {order.items?.length}
+                            </td>
+                            <td className="text-center">
+                              <FontAwesomeIcon
+                                icon={faTrashCan}
+                                type="button"
+                                className="text-danger"
+                                onClick={() => {
+                                  setShowWarning(true);
+                                  setOrderIdToDelete(order._id);
+                                }}
+                              />
+                            </td>
+                          </tr>
+                        );
+                      })
+                    ) : (
+                      <tr>
+                        <td colSpan="8" className="text-center">
+                          No orders found.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              ) : (
+                <Spinner />
+              )}
+
               <DashPagination
                 totalPages={allOrdersInPage.totalPages}
                 currentPage={currentPage}
