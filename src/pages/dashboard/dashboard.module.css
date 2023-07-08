@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 #dashboard {
   --dash-bg: #f5f5f9;
   --dash-white: rgba(255, 255, 255, 0.95);
@@ -22,6 +29,8 @@
 }
 
 #dashboard .col {
+  -webkit-transition: width 0.7s ease;
+  -o-transition: width 0.7s ease;
   transition: width 0.7s ease;
 }
 
@@ -43,6 +52,8 @@ body {
 .dash-btn {
   background-color: var(--dash-btn-bg) !important;
   color: white !important;
+  -webkit-transition: background-color 0.5s ease;
+  -o-transition: background-color 0.5s ease;
   transition: background-color 0.5s ease;
 }
 
@@ -72,7 +83,8 @@ body {
 .logo {
   width: 6rem;
   max-width: 100%;
-  filter: hue-rotate(224deg);
+  -webkit-filter: hue-rotate(224deg);
+          filter: hue-rotate(224deg);
 }
 
 @media (min-width: 992px) {
@@ -82,8 +94,16 @@ body {
 }
 
 .dash-navlink {
+  -webkit-transition: color 0.5s ease, background-color 0.5s ease,
+    gap 0.5s ease, -webkit-box-pack 0.5s ease;
+  transition: color 0.5s ease, background-color 0.5s ease,
+    gap 0.5s ease, -webkit-box-pack 0.5s ease;
+  -o-transition: color 0.5s ease, background-color 0.5s ease,
+    justify-content 0.5s ease, gap 0.5s ease;
   transition: color 0.5s ease, background-color 0.5s ease,
     justify-content 0.5s ease, gap 0.5s ease;
+  transition: color 0.5s ease, background-color 0.5s ease,
+    justify-content 0.5s ease, gap 0.5s ease, -webkit-box-pack 0.5s ease, -ms-flex-pack 0.5s ease;
   color: var(--dash-main-text) !important;
 }
 
@@ -100,11 +120,15 @@ body {
   width: 3px;
   height: 100%;
   border-radius: 5px 0 0 5px;
+  -webkit-transition: background-color 0.5s ease;
+  -o-transition: background-color 0.5s ease;
   transition: background-color 0.5s ease;
 }
 
 .title {
   width: 6.5rem;
+  -webkit-transition: width 0.4s ease;
+  -o-transition: width 0.4s ease;
   transition: width 0.4s ease;
   overflow: hidden;
 }
@@ -124,15 +148,23 @@ body {
   width: 1.5rem;
   height: 1.5rem;
   font-size: 0.95rem!important;
-  transform: translateX(25%);
+  -webkit-transform: translateX(25%);
+      -ms-transform: translateX(25%);
+          transform: translateX(25%);
   top: 3.6rem;
   outline: 5px solid var(--dash-bg) !important;
   z-index: 1030;
+  -webkit-transition: background-color 0.5s, -webkit-transform ease 0.3s!important;
+  transition: background-color 0.5s, -webkit-transform ease 0.3s!important;
+  -o-transition: transform ease 0.3s, background-color 0.5s!important;
   transition: transform ease 0.3s, background-color 0.5s!important;
+  transition: transform ease 0.3s, background-color 0.5s, -webkit-transform ease 0.3s!important;
 }
 
 .toggle-aside-btn.collapsed {
-  transform: rotate(180deg) translateX(-25%);
+  -webkit-transform: rotate(180deg) translateX(-25%);
+      -ms-transform: rotate(180deg) translateX(-25%);
+          transform: rotate(180deg) translateX(-25%);
 }
 /* end toggle btn */
 /* end aside */
@@ -182,15 +214,19 @@ body {
 .description {
   line-clamp: 3;
   -webkit-line-clamp: 6;
-  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }
 
 .dash-prod-id {
   width: 5rem;
-  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
   overflow: hidden;
+  -webkit-transition: width 0.5s ease;
+  -o-transition: width 0.5s ease;
   transition: width 0.5s ease;
 }
 
@@ -215,7 +251,9 @@ body {
 
 .dash-prod-form-clr + button {
   font-size: 0.8rem;
-  transform: translateY(-25%);
+  -webkit-transform: translateY(-25%);
+      -ms-transform: translateY(-25%);
+          transform: translateY(-25%);
 }
 
 .dash-prod-form-img {
@@ -225,7 +263,9 @@ body {
 
 .dash-prod-form-img + button {
   font-size: 0.8rem;
-  transform: translate(50%, -45%);
+  -webkit-transform: translate(50%, -45%);
+      -ms-transform: translate(50%, -45%);
+          transform: translate(50%, -45%);
 }
 
 .dash-prod-color-stock {
@@ -241,12 +281,6 @@ body {
 /* end search form */
 /* end products */
 
-/* start brands */
-/* end brands */
-
-/* start orders */
-/* end orders */
-
 /* end main content */
 
 /* start pagination */
@@ -254,6 +288,8 @@ body {
   font-size: 0.8rem;
   background-color: var(--dash-pagination-bg) !important;
   color: var(--dash-main-text) !important;
+  -webkit-transition: opacity 0.5 ease, color 0.5 ease;
+  -o-transition: opacity 0.5 ease, color 0.5 ease;
   transition: opacity 0.5 ease, color 0.5 ease;
 }
 
@@ -270,7 +306,8 @@ body {
 .pagination-btn.active {
   background-color: var(--dash-btn-bg) !important;
   color: white !important;
-  box-shadow: 0px 3px 5px -2px var(--dash-btn-bg);
+  -webkit-box-shadow: 0px 3px 5px -2px var(--dash-btn-bg);
+          box-shadow: 0px 3px 5px -2px var(--dash-btn-bg);
 }
 
 .pagination-btn.disabled {
