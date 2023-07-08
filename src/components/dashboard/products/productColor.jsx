@@ -39,7 +39,7 @@ const ProductColor = ({
         <input
           type="number"
           min={1}
-          className={`form-control ${style["dash-prod-color-stock"]} ${
+          className={`form-control flex-fill ${style["dash-prod-color-stock"]} ${
             error ? "is-invalid" : ""
           }`}
           value={color.stock}
