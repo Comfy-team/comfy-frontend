@@ -11,10 +11,11 @@ import style from "./cartPage.module.css";
 function CartPage() {
   const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
-  const totalPrice = cart.items.reduce((acc, item) => {
+  const totalPrice = cart.items && cart.items.length > 0 ? 
+  cart.items.reduce((acc, item) => {
     const itemPrice = item.price * item.quantity * (1 - item.discount / 100);
     return acc + itemPrice;
-  }, 0);
+  }, 0) : 0;
 
   const handleReturnToShop = () => {
     navigate("/shop");
