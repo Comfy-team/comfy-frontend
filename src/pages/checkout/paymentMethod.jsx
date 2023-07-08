@@ -1,24 +1,25 @@
 import { useNavigate, Link } from "react-router-dom";
 import React, { useState } from "react";
-import { useEffect } from "react";
-
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 //
 import axiosInstance from "../../apis/config";
 import { emptyCart } from "../../functions/cart";
 import { showToast } from "../../store/slices/toastSlice.js";
-//style
-import style from "./checkout.module.css";
-import "../../App.css";
+
 import OrderInfo from "./../../components/checkout/orderInfo";
 import Spinner from "../../components/common/spinner";
 import ConfirmPopup from "../../components/common/confirmPopup";
+//style
+import style from "./checkout.module.css";
+import "../../App.css";
 
 export default function PaymentMethod() {
   const [showWarning, setShowWarning] = useState(false);
+  const [showBtnSpinner, SetShowBtnSpinner] = useState(false);
   const [isAddingOrder, setIsAddingOrder] = useState(false);
   const [buttonText, setButtonText] = useState("Confirm order");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ export default function PaymentMethod() {
   // ===========
   const cart = useSelector(state => state.cart.cart);
   const formData = useSelector(state => state.CheckoutForm.form);
+
   // ===========
   const additionalInfo = {
     totalPrice: cart.totalPrice,
@@ -35,6 +37,7 @@ export default function PaymentMethod() {
   };
   const newObjectData = { ...formData, ...additionalInfo };
   const onConfirmClick = () => {
+    SetShowBtnSpinner(true);
     setShowWarning(false);
     axiosInstance
       .post(`/orders`, newObjectData, {
@@ -51,9 +54,15 @@ export default function PaymentMethod() {
         }, 4000);
         emptyCart(cart._id);
         setIsAddingOrder(true);
+        SetShowBtnSpinner(false);
+
+        // delete form data from localStorage
+        localStorage.removeItem("formData");
         setButtonText("order Done");
       })
       .catch(error => {
+        dispatch(showToast("Unable to make order, please try again."));
+        SetShowBtnSpinner(false);
         console.log(error.response);
       });
   };
@@ -81,6 +90,8 @@ export default function PaymentMethod() {
             >
               {`<  `} return to information
             </Link>
+          </div>
+          {!showBtnSpinner ? (
             <button
               className={`${style.orderbtn} col-lg-6  col-md-6 col-sm-12  col-12  btn  h-100  ws-100 me-0 `}
               onClick={() => {
@@ -90,10 +101,20 @@ export default function PaymentMethod() {
             >
               {buttonText}
             </button>
-          </div>
+          ) : (
+            <button
+              className={`${style.orderbtn} col-lg-6  col-md-6 col-sm-12  col-12  btn  h-100  ws-100 me-0 `}
+              onClick={() => {
+                setShowWarning(true);
+              }}
+              disabled={isAddingOrder}
+            >
+              {buttonText}
+              <div className="spinner-border spinner-border-sm"></div>
+            </button>
+          )}
           <hr className="border" />
           <small className={`${style.gray} mt-2`}>
-            {" "}
             All Rights Reserved to comfy team
           </small>
         </div>
