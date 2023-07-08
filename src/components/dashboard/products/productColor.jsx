@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -12,15 +14,19 @@ const ProductColor = ({
   stockError,
   onStockError,
 }) => {
+  const [error, seterror] = useState(false);
+
   const handleStockChange = (stock) => {
     onUpdateStock(stock);
     if (stock < 1 || Math.floor(stock) !== stock) {
       onStockError(true);
+      seterror(true);
     } else {
       onStockError(false);
+      seterror(false);
     }
   };
-  
+
   return (
     <div>
       <div className="p-2 d-flex gap-2 align-items-center border rounded-3">
@@ -33,8 +39,8 @@ const ProductColor = ({
         <input
           type="number"
           min={1}
-          className={`form-control ${style["dash-prod-color-stock"]} ${
-            stockError ? "is-invalid" : ""
+          className={`form-control flex-fill ${style["dash-prod-color-stock"]} ${
+            error ? "is-invalid" : ""
           }`}
           value={color.stock}
           onChange={(e) => {
@@ -49,7 +55,7 @@ const ProductColor = ({
           <FontAwesomeIcon icon={faXmark} />
         </button>
       </div>
-      {stockError && (
+      {error && (
         <p className="invalid-feedback d-block">
           stock should be an integer larger than 0
         </p>
