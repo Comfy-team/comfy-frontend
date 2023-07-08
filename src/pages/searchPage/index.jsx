@@ -12,10 +12,10 @@ import * as Yup from "yup";
 import axiosInstance from "../../apis/config";
 import SearchCard from "../../components/searchPage/searchCard";
 import PagePagination from "../../components/shop/pagePagination";
+import Spinner from "../../components/common/spinner";
 
 // style
 import style from "./searchPage.module.css";
-import Spinner from "../../components/common/spinner";
 
 const SearchPage = () => {
   const [data, setData] = useState(null);
