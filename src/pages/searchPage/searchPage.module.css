@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 .search-page {
   min-height: 80vh;
 }
@@ -8,12 +15,25 @@ input:-webkit-autofill {
 }
 
 @media (max-width: 767px) {
+  input::-webkit-input-placeholder {
+    font-size: 0.7rem !important;
+  }
+  input::-moz-placeholder {
+    font-size: 0.7rem !important;
+  }
+  input:-ms-input-placeholder {
+    font-size: 0.7rem !important;
+  }
+  input::-ms-input-placeholder {
+    font-size: 0.7rem !important;
+  }
   input::placeholder {
     font-size: 0.7rem !important;
   }
 }
 
-input, .submit-holder{
+input,
+.submit-holder {
   height: 2.5rem;
 }
 
@@ -23,12 +43,16 @@ input, .submit-holder{
   width: 86%;
   bottom: 1rem;
   left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
   transform: translateX(-50%);
 }
 
 @media (min-width: 992px) {
   .add-to-cart-btn {
     opacity: 0;
+    -webkit-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
     transition: opacity 0.5s ease;
   }
 
@@ -39,6 +63,7 @@ input, .submit-holder{
 
 .title {
   white-space: nowrap;
+  -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
 }
 
