@@ -16,7 +16,7 @@ const ProductCard = ({ product }) => {
   const [inCart, setInCart] = useState(false);
   const [showBtnSpinner, setShowBtnSpinner] = useState(false);
   const [outOfStock, setOutOfStock] = useState(false);
-  const [activeColor, setActiveColor] = useState({});
+  const [activeColor, setActiveColor] = useState("");
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
 
@@ -33,14 +33,14 @@ const ProductCard = ({ product }) => {
     if (product.colors.every((obj) => obj.stock === 0)) {
       setOutOfStock(true);
     }
-    // if not logged in or admin
+    // if not logged in
     if (!cart.items) {
       setInCart(false);
       return;
     }
     // set first active color
     const activeColor = product.colors.find((obj) => obj.stock > 0);
-    setActiveColor(activeColor);
+    setActiveColor(activeColor.color);
     const productIndx = cart.items.findIndex(
       (ele) => ele.product_id._id === product._id
     );
@@ -68,12 +68,16 @@ const ProductCard = ({ product }) => {
             className="img-fluid card-img-top rounded-0"
           />
           <img
-            src={process.env.REACT_APP_BASE_URL + "/" + product.images[1].src}
+            src={
+              product.images[1]
+                ? process.env.REACT_APP_BASE_URL + "/" + product.images[1].src
+                : process.env.REACT_APP_BASE_URL + "/" + product.images[0].src
+            }
             alt={product.name}
             className="img-fluid card-img-top rounded-0 hover-img position-absolute w-100 h-100 top-0 start-0"
           />
         </Link>
-        {!outOfStock ? (
+        {!(outOfStock || cart.role === "admin") ? (
           showBtnSpinner ? (
             <button className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2">
               <div className="spinner-border spinner-border-sm" role="status">
