@@ -56,7 +56,7 @@ export default function FormComonent() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const formData = useSelector(state => state.CheckoutForm.form);
+  // const formData = useSelector(state => state.CheckoutForm.form);
 
   const savedFormData = localStorage.getItem("localFormData");
 
@@ -92,8 +92,8 @@ export default function FormComonent() {
       })
       .then(res => {
         setUser(res.data);
-        settheIntialvalue(res.data);
-        dispatch(saveFormData(res.data));
+        // settheIntialvalue(res.data);
+        // dispatch(saveFormData(res.data));
       })
       .catch(err => console.log(err));
   }, [decoded.id, token]);
@@ -102,7 +102,7 @@ export default function FormComonent() {
     if (savedFormData) {
       settheIntialvalue(JSON.parse(savedFormData));
     }
-  }, [formData]);
+  }, []);
 
   const formSubmit = submitdata => {
     navigate(`/checkout/shipping`);
