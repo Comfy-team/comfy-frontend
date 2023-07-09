@@ -76,7 +76,7 @@ function Item({ item, cartId }) {
                 </strong>
               )}
 
-              <Price price={item.price} discount={item?.product_id.discount} />
+              <Price price={item.product_id.price} discount={item?.product_id.discount} />
               <div className="d-flex pt-2">
                 {showBtnSpinner ? (
                   <div
