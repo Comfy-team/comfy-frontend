@@ -7,11 +7,11 @@ import axiosInstance from "../../apis/config";
 import { emptyCart } from "../../functions/cart";
 import { showToast } from "../../store/slices/toastSlice.js";
 
-import OrderInfo from "./../../components/checkout/orderInfo";
-import Spinner from "../../components/common/spinner";
-import ConfirmPopup from "../../components/common/confirmPopup";
+import OrderInfo from "./orderInfo";
+import Spinner from "../common/spinner";
+import ConfirmPopup from "../common/confirmPopup";
 //style
-import style from "./checkout.module.css";
+import style from "../../pages/checkout/checkout.module.css";
 
 export default function PaymentMethod() {
   const [showWarning, setShowWarning] = useState(false);
@@ -67,7 +67,7 @@ export default function PaymentMethod() {
   };
   return formData ? (
     <div className="">
-      <div className={`${style.PaymentMethod} ml-5 ml-md-3 container `}>
+      <div className={`${style.PaymentMethod}  container `}>
         <div className="container">
           <div className="form-control mr-5 ps-4">
             <OrderInfo formData={formData} />
@@ -89,29 +89,29 @@ export default function PaymentMethod() {
             >
               {`<  `} return to information
             </Link>
+            {!showBtnSpinner ? (
+              <button
+                className={`${style.orderbtn} col-lg-6  col-md-6 col-sm-12  col-12  btn  h-100  ws-100 me-0 `}
+                onClick={() => {
+                  setShowWarning(true);
+                }}
+                disabled={isAddingOrder}
+              >
+                {buttonText}
+              </button>
+            ) : (
+              <button
+                className={`${style.orderbtn} col-lg-6  col-md-6 col-sm-12  col-12  btn  h-100  ws-100 me-0 `}
+                onClick={() => {
+                  setShowWarning(true);
+                }}
+                disabled={isAddingOrder}
+              >
+                {buttonText}
+                <div className="spinner-border spinner-border-sm"></div>
+              </button>
+            )}{" "}
           </div>
-          {!showBtnSpinner ? (
-            <button
-              className={`${style.orderbtn} col-lg-6  col-md-6 col-sm-12  col-12  btn  h-100  ws-100 me-0 `}
-              onClick={() => {
-                setShowWarning(true);
-              }}
-              disabled={isAddingOrder}
-            >
-              {buttonText}
-            </button>
-          ) : (
-            <button
-              className={`${style.orderbtn} col-lg-6  col-md-6 col-sm-12  col-12  btn  h-100  ws-100 me-0 `}
-              onClick={() => {
-                setShowWarning(true);
-              }}
-              disabled={isAddingOrder}
-            >
-              {buttonText}
-              <div className="spinner-border spinner-border-sm"></div>
-            </button>
-          )}
           <hr className="border" />
           <small className={`${style.gray} mt-2`}>
             All Rights Reserved to comfy team
