@@ -58,23 +58,24 @@ export default function FormComonent() {
 
   const formData = useSelector(state => state.CheckoutForm.form);
 
+  const savedFormData = localStorage.getItem("localFormData");
+
   //intial value
   const [theintialvalue, settheIntialvalue] = useState(() => {
     // retrieve form data from localStorage if it exists
-    const savedFormData = localStorage.getItem("formData");
     if (savedFormData) {
       return JSON.parse(savedFormData);
     } else {
       return {
         fullName: user.fullName || "",
-        phone: formData?.phone || "",
+        phone: user?.phone || "",
         address: {
-          postalCode: formData?.address?.postalCode || "",
-          apartment: formData?.address?.apartment || "",
-          street: formData?.address?.street || "",
-          building: formData?.address?.building || "",
-          city: formData?.address?.city || "",
-          governorate: formData?.address?.governorate || "",
+          postalCode: user?.address?.postalCode || "",
+          apartment: user?.address?.apartment || "",
+          street: user?.address?.street || "",
+          building: user?.address?.building || "",
+          city: user?.address?.city || "",
+          governorate: user?.address?.governorate || "",
           country: "Egypt",
         },
       };
@@ -98,7 +99,6 @@ export default function FormComonent() {
   }, [decoded.id, token]);
 
   useEffect(() => {
-    const savedFormData = localStorage.getItem("formData");
     if (savedFormData) {
       settheIntialvalue(JSON.parse(savedFormData));
     }
@@ -124,7 +124,7 @@ export default function FormComonent() {
     settheIntialvalue(submitdata);
 
     // save form data to localStorage
-    localStorage.setItem("formData", JSON.stringify(submitdata));
+    localStorage.setItem("localFormData", JSON.stringify(submitdata));
 
     if (saveInfo) {
       axiosInstance
