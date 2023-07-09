@@ -20,10 +20,10 @@ import ConfirmPopup from "../common/confirmPopup.jsx";
 import style from "../../pages/cartPage/cartPage.module.css";
 
 const CartItem = ({ item, cartId, product }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [showBtnSpinner, setBtnSpinner] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleCloseCart = () => {
     navigate(`/product-details/${item?.product_id._id}`);
@@ -85,13 +85,13 @@ const CartItem = ({ item, cartId, product }) => {
                   </strong>
                 </Link>
                 {item?.color && (
-                  <h6 className="d-flex">
-                    Color:{" "}
+                  <div className="d-flex fw-semibold">
+                    Color:
                     <div
                       style={{ backgroundColor: `${item.color}` }}
-                      className={`${style.spanColor} rounded-circle ms-2  border-dark border-1`}
+                      className={`${style.spanColor} rounded-circle ms-2 mt-1 border-dark border-1`}
                     ></div>
-                  </h6>
+                  </div>
                 )}
               </td>
             </tr>
@@ -152,7 +152,7 @@ const CartItem = ({ item, cartId, product }) => {
         </div>
       </td>
       <td>
-        <strong>${(item.price * item.quantity).toFixed(2)}</strong>
+        <strong>${(item.price *(1 - item.discount / 100)* item.quantity).toFixed(2)}</strong>
       </td>
       <td>
         {showWarning && (
