@@ -4,8 +4,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 // components
 import LayoutWithNav from "../components/layouts/layoutWithNav";
 import LayoutWithPageHeader from "../components/layouts/layoutWithPageHeader";
-import PaymentMethod from "./../pages/checkout/paymentMethod";
-import FormComonent from "./../pages/checkout/FormComonent";
+
 import HomeDash from "../components/dashboard/home/homeDash";
 import UsersDash from "../components/dashboard/usersDash";
 import OrdersDash from "../components/dashboard/orders/ordersDash";
@@ -35,6 +34,8 @@ import Page404 from "./../pages/page404";
 import SearchPage from "./../pages/searchPage";
 import Account from "./../pages/account";
 import Dashboard from "./../pages/dashboard";
+import FormComonent from "./../components/checkout/FormComonent";
+import PaymentMethod from "./../components/checkout/paymentMethod";
 
 const AppRoutes = () => {
   return (
