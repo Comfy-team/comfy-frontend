@@ -91,7 +91,7 @@ export default function FormComonent() {
         },
       })
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         setUser(res.data);
         // settheIntialvalue(res.data);
         // dispatch(saveFormData(res.data));
