@@ -417,50 +417,19 @@ footer {
 /* end main layout */
 
 /* about style page */
-.aboutContainer {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-rows: 1fr !important;
-  grid-template-rows: 1fr !important;
-  background-color: var(--light-gray) !important;
-}
-.aboutContainer.mgContainer {
-  height: 100%;
-  height: 20%;
-}
-.aboutContainer.aboutImg {
-  height: 100%;
-  -o-object-fit: cover;
-  object-fit: cover;
-}
-.contentContainer {
-  background-color: var(--light-gray) !important;
-}
-
-.aboutContainer.aboutBtns {
-  display: -ms-grid;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-}
-
-.aboutContainer.aboutBtn {
-  height: 50px;
+.aboutContainer .aboutBtn {
   background-color: var(--main-black);
   color: var(--white);
-  text-align: center;
 }
-
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
   background-color: var(--main-black) !important;
   color: white !important;
 }
-
 /* Define the color for the active tab */
 .aboutContainer .nav-link.active {
   color: white;
 }
-
 .nav-tabs .nav-link {
   color: var(--main-black);
 }
@@ -471,7 +440,6 @@ footer {
 .nav-tabs .Tabs {
   margin-top: 0;
 }
-/* =====================================================  */
 /* =====  end about page =============== */
 
 /* ===== start scroll to top button ======= */
