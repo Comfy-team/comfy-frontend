@@ -121,7 +121,7 @@ const Account = () => {
              ${activeTitle === "accountInfo" ? style.active : ""}`}
                 onClick={handleAccountInfoClick}
               >
-                <h6 className={`mr-2 mr-sm-0 ms-sm-1 `}>Account info</h6>
+                <h6>Account info</h6>
               </div>
             </div>
             <div className="col-5 col-sm-4 col-lg-2">
