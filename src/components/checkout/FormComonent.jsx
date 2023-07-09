@@ -91,6 +91,7 @@ export default function FormComonent() {
         },
       })
       .then(res => {
+        console.log(res.data);
         setUser(res.data);
         // settheIntialvalue(res.data);
         // dispatch(saveFormData(res.data));
@@ -121,7 +122,7 @@ export default function FormComonent() {
         postalCode: submitdata?.address?.postalCode,
       },
     };
-    settheIntialvalue(submitdata);
+    // settheIntialvalue(submitdata);
 
     // save form data to localStorage
     localStorage.setItem("localFormData", JSON.stringify(submitdata));
@@ -140,7 +141,7 @@ export default function FormComonent() {
         })
         .catch(err => console.log(err));
     } else {
-      // settheIntialvalue(submitdata);
+      settheIntialvalue(submitdata);
       // saveFormData(theSendData);
     }
   };
