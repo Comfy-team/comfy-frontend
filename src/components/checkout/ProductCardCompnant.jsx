@@ -1,6 +1,5 @@
 import React from "react";
 
-import "../../App.css";
 import style from "../../pages/checkout/checkout.module.css";
 
 export default function ProductCardCompnant({ index, item }) {
