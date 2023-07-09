@@ -15,6 +15,7 @@ const AccountOrders = ({ token }) => {
   const [userOrder, setUserOrder] = useState([]);
   const [showSpinner, setShowSpinner] = useState(true);
   const { id } = useParams();
+  
   useEffect(() => {
     setShowSpinner(true);
     if (jwtDecode(token).role === "user") {
