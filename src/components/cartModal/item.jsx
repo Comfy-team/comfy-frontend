@@ -15,16 +15,20 @@ import {
 } from "../../functions/cart.js";
 import Price from "./price.jsx";
 import { showCartModal } from "../../store/slices/cartModalSlice.js";
-import ConfirmPopup from "../common/confirmPopup.jsx";  
+import ConfirmPopup from "../common/confirmPopup.jsx";
 
 // Styles
-import style from "./cartModal.module.css"; 
+import style from "./cartModal.module.css";
 
 function Item({ item, cartId }) {
+  const [showBtnSpinner, setBtnSpinner] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showBtnSpinner, setBtnSpinner] = useState(false); // initialize showBtnSpinner to false
-  const [showWarning, setShowWarning] = useState(false);
+
+  const stock = item?.color
+    ? item.product_id.colors.find((color) => color.color === item.color)?.stock
+    : 0;
 
   const handleCloseCart = () => {
     navigate(`/product-details/${item?.product_id._id}`);
@@ -32,9 +36,9 @@ function Item({ item, cartId }) {
   };
 
   const handleDelete = () => {
-    setBtnSpinner(true); 
+    setBtnSpinner(true);
     deleteItemFromCart(cartId, item?.product_id?._id, item.color).then(() => {
-      setBtnSpinner(false); 
+      setBtnSpinner(false);
       setShowWarning(false);
     });
   };
@@ -67,16 +71,19 @@ function Item({ item, cartId }) {
           <div className="row">
             <div className="col-6">
               {item?.color && (
-                <strong className="d-flex">
-                  Color:{" "}
+                <div className="d-flex fw-semibold">
+                  Color:
                   <div
                     style={{ backgroundColor: `${item.color}` }}
                     className={`${style.spanColor} rounded-circle ms-2 mt-1 border-dark border-1`}
                   ></div>
-                </strong>
+                </div>
               )}
 
-              <Price price={item.product_id.price} discount={item?.product_id.discount} />
+              <Price
+                price={item.product_id.price}
+                discount={item?.product_id.discount}
+              />
               <div className="d-flex pt-2">
                 {showBtnSpinner ? (
                   <div
@@ -130,7 +137,7 @@ function Item({ item, cartId }) {
                       item.color
                     )
                   }
-                  disabled={item.quantity === item?.product_id.stock}
+                  disabled={item.quantity === stock}
                 >
                   <FontAwesomeIcon
                     icon={faPlus}
@@ -141,12 +148,8 @@ function Item({ item, cartId }) {
               </div>
               <div className={`${style.stock} ps-3`}>
                 <span className="fw-semibold">stock: </span>
-                <span
-                  className={item?.product_id.stock === 0 ? "text-danger" : ""}
-                >
-                  {item?.product_id.stock > 0
-                    ? item?.product_id.stock
-                    : "Out Of Stock"}
+                <span className={stock === 0 ? "text-danger" : ""}>
+                  {stock > 0 ? stock : "Out Of Stock"}
                 </span>
               </div>
             </div>
