@@ -36,7 +36,7 @@ const Details = ({ product }) => {
     setActiveColor(color);
     if (!cart.items) return;
     const item = cart.items.find(
-      (ele) => ele.product_id._id === product._id && color === ele.color
+      (ele) => ele.product_id._id === product._id && color.color === ele.color
     );
     if (item) {
       setActiveQuantity(item.quantity);
@@ -46,50 +46,61 @@ const Details = ({ product }) => {
     }
   };
 
-  const handleQuantityChange = (id, quantity) => {
+  const handleQuantityChange = (quantity) => {
     setActiveQuantity(quantity);
-    updateItemQuantity(cart._id, id, quantity, activeColor);
+    setBtnSpinner(true);
+    updateItemQuantity(cart._id, product._id, quantity, activeColor.color);
   };
 
-  const handleAddToCart = (id, color, price) => {
+  const handleAddToCart = () => {
     setBtnSpinner(true);
-    addItemToCart(cart._id, id, color, price);
+    addItemToCart(cart._id, product._id, activeColor.color);
   };
 
   const handleDeleteFromCart = () => {
     setBtnSpinner(true);
-    deleteItemFromCart(cart._id, product._id, activeColor);
+    deleteItemFromCart(cart._id, product._id, activeColor.color);
     setShowWarning(false);
   };
 
-  const handleBuyProduct = (id, color, price) => {
-    handleAddToCart(id, color, price);
+  const handleBuyProduct = () => {
+    handleAddToCart();
     navigate("/cart");
   };
 
   useEffect(() => {
     setBtnSpinner(false);
     if (product) {
+      // check if user is logged in and not admin
       if (cart.items?.length > 0) {
         let item;
+        // check if there's change in cart and affected current chosen color while user is on this page
         if (activeColor) {
           item = cart.items.find(
             (ele) =>
-              ele.product_id._id === product._id && ele.color === activeColor
+              ele.product_id._id === product._id &&
+              ele.color === activeColor.color
           );
           if (item) {
+            const newActiveColor = product.colors.find(
+              (color) => color.color === item.color
+            );
             setActiveQuantity(item.quantity);
-            setActiveColor(item.color);
+            setActiveColor(newActiveColor);
             setInCart(true);
           } else {
             setInCart(false);
           }
           return;
         } else {
+          // user just navigated to page
           item = cart.items.find((ele) => ele.product_id._id === product._id);
           if (item) {
+            const newActiveColor = product.colors.find(
+              (color) => color.color === item.color
+            );
             setActiveQuantity(item.quantity);
-            setActiveColor(item.color);
+            setActiveColor(newActiveColor);
             setInCart(true);
             return;
           }
@@ -134,7 +145,6 @@ const Details = ({ product }) => {
             </div>
           ) : (
             <Quantity
-              id={product._id}
               active={activeQuantity}
               stock={activeColor.stock}
               onQuantityChange={handleQuantityChange}
@@ -150,11 +160,11 @@ const Details = ({ product }) => {
         ) : (
           <button
             onClick={() =>
-              cart.items
-                ? handleAddToCart(product._id, activeColor)
-                : dispatch(showLoginModal(true))
+              cart.items ? handleAddToCart() : dispatch(showLoginModal(true))
             }
-            disabled={activeColor.stock > 0 ? false : true}
+            disabled={
+              activeColor.stock > 0 && cart.role !== "admin" ? false : true
+            }
             className="btn btn-bg-dark text-white text-capitalize px-5 rounded-2 d-block mx-auto"
           >
             Add to cart
@@ -187,11 +197,13 @@ const Details = ({ product }) => {
         <button
           type="button"
           className="btn my-3 py-2 d-block w-100 btn-bg-dark text-white text-uppercase"
-          disabled={!terms || activeColor.stock === 0 ? true : false}
+          disabled={
+            !terms || activeColor.stock === 0 || cart.role === "admin"
+              ? true
+              : false
+          }
           onClick={() =>
-            cart.items
-              ? handleBuyProduct(product._id, activeColor)
-              : dispatch(showLoginModal(true))
+            cart.items ? handleBuyProduct() : dispatch(showLoginModal(true))
           }
         >
           buy it now
