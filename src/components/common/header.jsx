@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import jwtDecode from "jwt-decode";
-
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,19 +10,15 @@ import {
   faCartShopping,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-
 // components
 import { showLoginModal } from "../../store/slices/loginModalSlice";
 import { showCartModal } from "../../store/slices/cartModalSlice";
-
-// assets
 import logo from "../../assets/logos/logo-header.png";
 
 const Header = ({ isMediumScreen, cart }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [decodedToken, setDecodedToken] = useState(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -134,28 +129,28 @@ const Header = ({ isMediumScreen, cart }) => {
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                   <span className="visually-hidden">search</span>
                 </Link>
-                <button
-                  type="button"
-                  className="cart-btn btn p-0 fs-5 hover-color-yellow position-relative"
-                  onClick={() =>
-                    decodedToken
-                      ? decodedToken.role === "admin"
-                        ? navigate("/dashboard")
-                        : dispatch(showCartModal(true))
-                      : dispatch(showLoginModal(true))
-                  }
-                >
-                  <FontAwesomeIcon icon={faCartShopping} />
-                  <span className="visually-hidden">cart</span>
-                  <span className="position-absolute bg-yellow top-0 start-0 translate-middle badge rounded-pill">
-                    {cart.items
-                      ? cart.items.length > 99
-                        ? "99+"
-                        : cart.items.length
-                      : 0}
-                    <span className="visually-hidden">items in cart</span>
-                  </span>
-                </button>
+                {!(cart.role && cart.role === "admin") && (
+                  <button
+                    type="button"
+                    className="cart-btn btn p-0 fs-5 hover-color-yellow position-relative"
+                    onClick={() =>
+                      decodedToken
+                        ? dispatch(showCartModal(true))
+                        : dispatch(showLoginModal(true))
+                    }
+                  >
+                    <FontAwesomeIcon icon={faCartShopping} />
+                    <span className="visually-hidden">cart</span>
+                    <span className="position-absolute bg-yellow top-0 start-0 translate-middle badge rounded-pill">
+                      {cart.items
+                        ? cart.items.length > 99
+                          ? "99+"
+                          : cart.items.length
+                        : 0}
+                      <span className="visually-hidden">items in cart</span>
+                    </span>
+                  </button>
+                )}
               </div>
             )}
           </div>

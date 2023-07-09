@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 // font awesome
@@ -16,12 +16,13 @@ import { showCartModal } from "../../store/slices/cartModalSlice";
 
 const BottomNav = ({ cart }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   return (
     <nav className="bg-white sticky-bottom border-top">
       <div className="list-unstyled row py-3 m-0">
-        <div className="col-3 text-center">
+        <div
+          className={`${cart.role === "admin" ? "col-4" : "col-3"} text-center`}
+        >
           <div>
             {cart.user_id ? (
               <Link
@@ -50,7 +51,11 @@ const BottomNav = ({ cart }) => {
             )}
           </div>
         </div>
-        <div className="col-3 text-center border-start border-end">
+        <div
+          className={`${
+            cart.role === "admin" ? "col-4" : "col-3"
+          } text-center border-start border-end`}
+        >
           <div>
             <Link
               className="btn p-0 lh-1 color-main-gray fs-5 hover-color-yellow"
@@ -61,7 +66,9 @@ const BottomNav = ({ cart }) => {
             </Link>
           </div>
         </div>
-        <div className="col-3 text-center border-end">
+        <div
+          className={`${cart.role === "admin" ? "col-4" : "col-3"} text-center`}
+        >
           <div>
             <Link
               to="/search"
@@ -72,32 +79,32 @@ const BottomNav = ({ cart }) => {
             </Link>
           </div>
         </div>
-        <div className="col-3 text-center">
-          <div>
-            <button
-              type="button"
-              className="cart-btn btn lh-1 p-0 fs-5 hover-color-yellow position-relative"
-              onClick={() =>
-                cart.user_id
-                  ? dispatch(showCartModal(true))
-                  : cart.role === "admin"
-                  ? navigate("/dashboard")
-                  : dispatch(showLoginModal(true))
-              }
-            >
-              <FontAwesomeIcon icon={faCartShopping} />
-              <span className="visually-hidden">cart</span>
-              <span className="position-absolute bg-yellow top-0 start-0 translate-middle badge rounded-pill">
-                {cart.items
-                  ? cart.items.length > 99
-                    ? "99+"
-                    : cart.items.length
-                  : 0}
-                <span className="visually-hidden">items in cart</span>
-              </span>
-            </button>
+        {!(cart.role && cart.role === "admin") && (
+          <div className="col-3 text-center border-start">
+            <div>
+              <button
+                type="button"
+                className="cart-btn btn lh-1 p-0 fs-5 hover-color-yellow position-relative"
+                onClick={() =>
+                  cart.user_id
+                    ? dispatch(showCartModal(true))
+                    : dispatch(showLoginModal(true))
+                }
+              >
+                <FontAwesomeIcon icon={faCartShopping} />
+                <span className="visually-hidden">cart</span>
+                <span className="position-absolute bg-yellow top-0 start-0 translate-middle badge rounded-pill">
+                  {cart.items
+                    ? cart.items.length > 99
+                      ? "99+"
+                      : cart.items.length
+                    : 0}
+                  <span className="visually-hidden">items in cart</span>
+                </span>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </nav>
   );
