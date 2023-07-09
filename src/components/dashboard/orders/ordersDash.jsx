@@ -137,161 +137,152 @@ const OrdersDash = () => {
 
   return (
     <div>
-      <div>
-        <div>
-          <div className={`py-4`}>
-            <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
-              Orders (total: {totalOrders})
-            </h4>
-            {deleteStatus ? (
-              <div
-                className={`alert alert-success alert-dismissible fade show ms-4 w-50`}
-              >
-                {deleteStatus}
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="alert"
-                  aria-label="Close"
-                  onClick={() => setDeleteStatus(null)}
-                ></button>
-              </div>
-            ) : (
-              ""
-            )}
-            <div className="overflow-x-auto pb-3">
-              <div className="row ms-4 me-3">
-                <div className="my-4 col-12 col-md-6 d-flex align-items-center justify-content-start ">
-                  <input
-                    className="form-control"
-                    type="search"
-                    placeholder="Search by order id"
-                    aria-controls="DataTables_Table_0"
-                    value={searchQuery}
-                    onChange={handleSearch}
-                  />
-                </div>
-              </div>
-              {!showSpinner ? (
-                <table className="table border-top" id="DataTables_Table_0">
-                  <thead>
-                    <tr>
-                      <th scope="col" className="ps-4">
-                        #ID
-                      </th>
-                      <th scope="col" className="ps-4">
-                        User ID
-                      </th>
-                      <th scope="col">Data</th>
-                      <th scope="col">Time</th>
-                      <th scope="col">TotalPrice</th>
-                      <th scope="col">Phone</th>
-                      <th scope="col">Governorate</th>
-                      <th scope="col">Postal Code</th>
-                      <th scope="col">City</th>
-                      <th scope="col">Address</th>
-                      <th scope="col">Items Number</th>
-                      <th scope="col">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {allorders?.length > 0 ? (
-                      allorders.map((order, index) => {
-                        return (
-                          <tr key={order?._id}>
-                            <td
-                              className={`ps-4`}
-                              data-id={order?._id}
-                              onClick={showAllId}
-                            >
-                              {order?._id.substring(0, 8) + "..."}
-                            </td>
-                            <td
-                              className={`ps-4`}
-                              data-id={order?.userId}
-                              onClick={showAllId}
-                            >
-                              {order?.userId.substring(0, 8) + "..."}
-                            </td>
-                            <td>{new Date(order.date).toLocaleDateString()}</td>
-                            <td>{new Date(order.date).toLocaleTimeString()}</td>
-                            <td>{order?.totalPrice} $ </td>
-                            <td
-                              className={
-                                order?.phone !== ""
-                                  ? "text-start"
-                                  : "text-center"
-                              }
-                            >
-                              {order?.phone !== "" ? order?.phone : "x"}
-                            </td>
-                            <td className="text-center">
-                              {order?.address?.governorate !== ""
-                                ? order?.address?.governorate
-                                : "x"}
-                            </td>
-                            <td>{order?.address?.postalCode} </td>
-
-                            <td className="text-center">
-                              {order?.address?.city !== ""
-                                ? order?.address?.city
-                                : "x"}
-                            </td>
-                            <td>
-                              {order?.address?.street} -{" "}
-                              {order?.address?.building}
-                              {"- "}
-                              {order?.address?.apartment}{" "}
-                            </td>
-
-                            <td className="text-center">
-                              {order.items?.length}
-                            </td>
-                            <td className="text-center">
-                              <FontAwesomeIcon
-                                icon={faTrashCan}
-                                type="button"
-                                className="text-danger"
-                                onClick={() => {
-                                  setShowWarning(true);
-                                  setOrderIdToDelete(order._id);
-                                }}
-                              />
-                            </td>
-                          </tr>
-                        );
-                      })
-                    ) : (
-                      <tr>
-                        <td colSpan="8" className="text-center">
-                          No orders found.
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              ) : (
-                <Spinner />
-              )}
-
-              <DashPagination
-                totalPages={allOrdersInPage.totalPages}
-                currentPage={currentPage}
-                onPageChange={onPageChange}
-              />
-              {showWarning && orderIdToDelete && (
-                <ConfirmPopup
-                  msg={"Are you sure you want to delete order?"}
-                  onConfirm={() => deleteOrder(orderIdToDelete)}
-                  onCancel={() => {
-                    setShowWarning(false);
-                    setOrderIdToDelete("");
-                  }}
-                />
-              )}
-            </div>
+      <div className={`py-4`}>
+        <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
+          Orders (total: {totalOrders})
+        </h4>
+        {deleteStatus ? (
+          <div
+            className={`alert alert-success alert-dismissible fade show ms-4 w-50`}
+          >
+            {deleteStatus}
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+              onClick={() => setDeleteStatus(null)}
+            ></button>
+          </div>
+        ) : (
+          ""
+        )}
+        <div className="row ms-4 me-3">
+          <div className="my-4 col-12 col-md-6 d-flex align-items-center justify-content-start ">
+            <input
+              className="form-control"
+              type="search"
+              placeholder="Search by order id"
+              aria-controls="DataTables_Table_0"
+              value={searchQuery}
+              onChange={handleSearch}
+            />
           </div>
         </div>
+        <div className="overflow-x-auto pb-3">
+          {!showSpinner ? (
+            <table className="table border-top" id="DataTables_Table_0">
+              <thead>
+                <tr>
+                  <th scope="col" className="ps-4">
+                    #ID
+                  </th>
+                  <th scope="col" className="ps-4">
+                    User ID
+                  </th>
+                  <th scope="col">Data</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">TotalPrice</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Governorate</th>
+                  <th scope="col">Postal Code</th>
+                  <th scope="col">City</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Items Number</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allorders?.length > 0 ? (
+                  allorders.map((order, index) => {
+                    return (
+                      <tr key={order?._id}>
+                        <td
+                          className={`ps-4`}
+                          data-id={order?._id}
+                          onClick={showAllId}
+                        >
+                          {order?._id.substring(0, 8) + "..."}
+                        </td>
+                        <td
+                          className={`ps-4`}
+                          data-id={order?.userId}
+                          onClick={showAllId}
+                        >
+                          {order?.userId.substring(0, 8) + "..."}
+                        </td>
+                        <td>{new Date(order.date).toLocaleDateString()}</td>
+                        <td>{new Date(order.date).toLocaleTimeString()}</td>
+                        <td>{order?.totalPrice} $ </td>
+                        <td
+                          className={
+                            order?.phone !== "" ? "text-start" : "text-center"
+                          }
+                        >
+                          {order?.phone !== "" ? order?.phone : "x"}
+                        </td>
+                        <td className="text-center">
+                          {order?.address?.governorate !== ""
+                            ? order?.address?.governorate
+                            : "x"}
+                        </td>
+                        <td>{order?.address?.postalCode} </td>
+
+                        <td className="text-center">
+                          {order?.address?.city !== ""
+                            ? order?.address?.city
+                            : "x"}
+                        </td>
+                        <td>
+                          {order?.address?.street} - {order?.address?.building}
+                          {"- "}
+                          {order?.address?.apartment}{" "}
+                        </td>
+
+                        <td className="text-center">{order.items?.length}</td>
+                        <td className="text-center">
+                          <FontAwesomeIcon
+                            icon={faTrashCan}
+                            type="button"
+                            className="text-danger"
+                            onClick={() => {
+                              setShowWarning(true);
+                              setOrderIdToDelete(order._id);
+                            }}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan="8" className="text-center">
+                      No orders found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          ) : (
+            <Spinner />
+          )}
+        </div>
+
+        <DashPagination
+          totalPages={allOrdersInPage.totalPages}
+          currentPage={currentPage}
+          onPageChange={onPageChange}
+        />
+        {showWarning && orderIdToDelete && (
+          <ConfirmPopup
+            msg={"Are you sure you want to delete order?"}
+            onConfirm={() => deleteOrder(orderIdToDelete)}
+            onCancel={() => {
+              setShowWarning(false);
+              setOrderIdToDelete("");
+            }}
+          />
+        )}
       </div>
       <Outlet />
     </div>
