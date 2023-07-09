@@ -49,11 +49,11 @@ const SearchCard = ({ product, query }) => {
     return highlighted;
   };
 
-  const handleAddToCart = (id, color) => {
+  const handleAddToCart = () => {
     if (cart.items) {
       setShowBtnSpinner(true);
     }
-    addItemToCart(cart._id, id, color);
+    addItemToCart(cart._id, product._id, activeColor);
   };
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const SearchCard = ({ product, query }) => {
     }
     // set first active color
     const activeColor = product.colors.find((obj) => obj.stock > 0);
-    setActiveColor(activeColor);
+    setActiveColor(activeColor.color);
     const productIndx = cart.items.findIndex(
       (ele) => ele.product_id._id === product._id
     );
@@ -113,12 +113,16 @@ const SearchCard = ({ product, query }) => {
               className="img-fluid card-img-top rounded-0"
             />
             <img
-              src={process.env.REACT_APP_BASE_URL + "/" + product.images[1].src}
+              src={
+                product.images[1]
+                  ? process.env.REACT_APP_BASE_URL + "/" + product.images[1].src
+                  : process.env.REACT_APP_BASE_URL + "/" + product.images[0].src
+              }
               alt={product.name}
               className="img-fluid card-img-top rounded-0 hover-img position-absolute w-100 h-100 top-0 start-0"
             />
           </Link>
-          {!outOfStock ? (
+          {!(outOfStock || cart.role === "admin") ? (
             showBtnSpinner ? (
               <button className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2">
                 <div className="spinner-border spinner-border-sm" role="status">
@@ -135,7 +139,7 @@ const SearchCard = ({ product, query }) => {
             ) : (
               <button
                 className="add-to-cart-btn btn btn-bg-white py-2 text-uppercase position-absolute fw-semibold d-flex justify-content-center align-items-center gap-2"
-                onClick={() => handleAddToCart(product._id, activeColor)}
+                onClick={() => handleAddToCart()}
               >
                 <FontAwesomeIcon icon={faPlus} /> Add to Cart
               </button>
