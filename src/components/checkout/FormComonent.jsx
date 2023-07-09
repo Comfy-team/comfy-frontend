@@ -56,25 +56,26 @@ export default function FormComonent() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const formData = useSelector(state => state.CheckoutForm.form);
+  // const formData = useSelector(state => state.CheckoutForm.form);
+
+  const savedFormData = localStorage.getItem("localFormData");
 
   //intial value
   const [theintialvalue, settheIntialvalue] = useState(() => {
     // retrieve form data from localStorage if it exists
-    const savedFormData = localStorage.getItem("formData");
     if (savedFormData) {
       return JSON.parse(savedFormData);
     } else {
       return {
         fullName: user.fullName || "",
-        phone: formData?.phone || "",
+        phone: user?.phone || "",
         address: {
-          postalCode: formData?.address?.postalCode || "",
-          apartment: formData?.address?.apartment || "",
-          street: formData?.address?.street || "",
-          building: formData?.address?.building || "",
-          city: formData?.address?.city || "",
-          governorate: formData?.address?.governorate || "",
+          postalCode: user?.address?.postalCode || "",
+          apartment: user?.address?.apartment || "",
+          street: user?.address?.street || "",
+          building: user?.address?.building || "",
+          city: user?.address?.city || "",
+          governorate: user?.address?.governorate || "",
           country: "Egypt",
         },
       };
@@ -91,18 +92,17 @@ export default function FormComonent() {
       })
       .then(res => {
         setUser(res.data);
-        settheIntialvalue(res.data);
-        dispatch(saveFormData(res.data));
+        // settheIntialvalue(res.data);
+        // dispatch(saveFormData(res.data));
       })
       .catch(err => console.log(err));
   }, [decoded.id, token]);
 
   useEffect(() => {
-    const savedFormData = localStorage.getItem("formData");
     if (savedFormData) {
       settheIntialvalue(JSON.parse(savedFormData));
     }
-  }, [formData]);
+  }, []);
 
   const formSubmit = submitdata => {
     navigate(`/checkout/shipping`);
@@ -124,7 +124,7 @@ export default function FormComonent() {
     settheIntialvalue(submitdata);
 
     // save form data to localStorage
-    localStorage.setItem("formData", JSON.stringify(submitdata));
+    localStorage.setItem("localFormData", JSON.stringify(submitdata));
 
     if (saveInfo) {
       axiosInstance
@@ -140,8 +140,8 @@ export default function FormComonent() {
         })
         .catch(err => console.log(err));
     } else {
-      settheIntialvalue(submitdata);
-      saveFormData(theSendData);
+      // settheIntialvalue(submitdata);
+      // saveFormData(theSendData);
     }
   };
   if (!user) {
