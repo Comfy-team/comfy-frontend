@@ -43,12 +43,6 @@ const AccountOrders = ({ token }) => {
     }
   }, []);
 
-  const handleToggleCollapse = (orderId) => {
-    setIsCollapsed((prevState) => ({
-      ...prevState,
-      [orderId]: !prevState[orderId],
-    }));
-  };
   return (
     <div>
       <h2 className={`${styles["text-2xl"]} ${styles.subTitle}`}>
@@ -57,7 +51,7 @@ const AccountOrders = ({ token }) => {
       {!showSpinner ? (
         <>
           {userOrder.length > 0 ? (
-            userOrder.map((order) => {
+            userOrder.map((order, index) => {
               const collapseId = `collapse-${order._id}`;
               return (
                 <div id="accordion" key={order._id} className="container mb-5">
@@ -85,11 +79,8 @@ const AccountOrders = ({ token }) => {
                           <button
                             className={`btn rounded-pill px-3 py-2 bg-white ${styles["btn-show-order"]}`}
                             data-bs-toggle="collapse"
-                            data-bs-target={`${collapseId}`}
-                            aria-expanded={
-                              isCollapsed[order._id] ? "false" : "true"
-                            }
-                            onClick={() => handleToggleCollapse(order._id)}
+                            data-bs-target={`#${collapseId}`}
+                            aria-expanded={index === 0 ? "true" : "false"}
                           >
                             View Order
                           </button>
@@ -98,10 +89,7 @@ const AccountOrders = ({ token }) => {
                     </div>
                     <div
                       id={collapseId}
-                      data-parent="#accordion"
-                      className={`collapse ${
-                        isCollapsed[order._id] ? "" : "show"
-                      }`}
+                      className={`collapse ${index === 0 ? "show" : ""}`}
                     >
                       {order.items.map((item) => {
                         return (
@@ -139,7 +127,10 @@ const AccountOrders = ({ token }) => {
                                     >
                                       $
                                       {item.price *
-                                        (1 - item.product_id.discount / 100).toFixed(2)}
+                                        (
+                                          1 -
+                                          item.product_id.discount / 100
+                                        ).toFixed(2)}
                                     </p>
                                   </div>
                                 </div>
