@@ -1,6 +1,5 @@
 import styles from "./faq.module.css";
 import { list } from "./paragraphs";
-import "../../App.css";
 
 const FAQ = () => {
   return (
