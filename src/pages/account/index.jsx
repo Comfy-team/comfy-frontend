@@ -17,17 +17,19 @@ import Spinner from "../../components/common/spinner";
 import style from "./account.module.css";
 
 const Account = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  let token = localStorage.getItem("userToken");
   const [notAuth, setNotAuth] = useState(true);
   const [showSpinner, setShowSpinner] = useState(true);
   const [user, setUser] = useState({});
   const [activeTitle, setActiveTitle] = useState("myOrder");
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams({
     active: "myOrder",
   });
+
+  let token = localStorage.getItem("userToken");
+
   const handleAccountInfoClick = () => {
     setActiveTitle("accountInfo");
     setSearchParams({ active: "accountInfo" });
@@ -42,9 +44,12 @@ const Account = () => {
     setActiveTitle("myOrder");
     setSearchParams({ active: "myOrder" });
   };
+  function handelLogout() {
+    localStorage.removeItem("userToken");
+    navigate("/");
+  }
 
   useEffect(() => {
-    const token = localStorage.getItem("userToken");
     if (!token) {
       setNotAuth(true);
       navigate("/");
@@ -52,7 +57,7 @@ const Account = () => {
     } else {
       setNotAuth(false);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     setShowSpinner(true);
@@ -76,13 +81,10 @@ const Account = () => {
         .catch((err) => console.log(err));
     }
   }, []);
-  function handelLogout() {
-    localStorage.removeItem("userToken");
-    navigate("/");
-  }
+  
 
   return !notAuth ? (
-    <div id={`${style.account}`} style={{}}>
+    <div id={`${style.account}`}>
       {!showSpinner ? (
         <div className="container">
           <div className="d-flex justify-content-between align-items-center col-12 col-lg-7">
