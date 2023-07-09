@@ -12,7 +12,6 @@ import Spinner from "../../components/common/spinner";
 import ConfirmPopup from "../../components/common/confirmPopup";
 //style
 import style from "./checkout.module.css";
-import "../../App.css";
 
 export default function PaymentMethod() {
   const [showWarning, setShowWarning] = useState(false);

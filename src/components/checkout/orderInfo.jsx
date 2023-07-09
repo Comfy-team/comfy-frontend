@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 
-import "../../App.css";
 import style from "../../pages/checkout/checkout.module.css";
 
 const OrderInfo = ({ formData }) => {

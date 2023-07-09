@@ -11,7 +11,6 @@ import { saveFormData } from "../../store/slices/formSlice";
 import { showToast } from "../../store/slices/toastSlice.js";
 
 //style
-import "../../App.css";
 import style from "./checkout.module.css";
 import Spinner from "./../../components/common/spinner";
 import { useSelector } from "react-redux";
