@@ -27,8 +27,10 @@ export default function PaymentMethod() {
   // ===========
   const cart = useSelector(state => state.cart.cart);
   const formData = useSelector(state => state.CheckoutForm.form);
-
-  // ===========
+  console.log(cart); // ===========
+  console.log(cart); // ===========
+  console.log(cart); // ===========
+  console.log(cart); // ===========
   const additionalInfo = {
     totalPrice: cart.totalPrice,
     items: cart.items,
@@ -47,6 +49,7 @@ export default function PaymentMethod() {
         },
       })
       .then(res => {
+        console.log(res);
         dispatch(showToast("orders was make  successfully!"));
         setTimeout(() => {
           navigate(`/account/${cart.user_id}`);
