@@ -187,7 +187,6 @@ const BrandsData = () => {
                         {brand.products.length}
                       </td>
                       <td className="text-center">
-                        {/* <div className="d-flex"> */}
                         <Link
                           to={`update/${brand._id}`}
                           className={`btn p-0 ${dashStyle["dash-purple"]}`}
@@ -205,7 +204,6 @@ const BrandsData = () => {
                             setShowWarning(true);
                           }}
                         />
-                        {/* </div> */}
                       </td>
                     </tr>
                   );
