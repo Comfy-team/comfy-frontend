@@ -140,8 +140,8 @@ export default function FormComonent() {
         })
         .catch(err => console.log(err));
     } else {
-      settheIntialvalue(submitdata);
-      saveFormData(theSendData);
+      // settheIntialvalue(submitdata);
+      // saveFormData(theSendData);
     }
   };
   if (!user) {
