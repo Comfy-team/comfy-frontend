@@ -4,7 +4,6 @@ import React from "react";
 import ShoppingCardComponent from "./ShoppingCardComponent";
 import logoimg from "../../assets/logos/logo-header.png";
 //style
-import "../../App.css";
 import style from "./checkout.module.css";
 import Breadcrumbcomponant from "../../components/checkout/Breadcrumbcomponant";
 
