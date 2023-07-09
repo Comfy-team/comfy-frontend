@@ -1,5 +1,5 @@
 // React imports
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -9,25 +9,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Local imports
 import Item from "./item";
+import Spinner from "../common/spinner";
 import "../../functions/cart";
 
 //style
 import style from "./cartModal.module.css";
 
 function CartModal({ showModal, hideModal }) {
+  const [showSpinner, setShowSpinner] = useState(true);
   const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
 
-  const totalPrice = cart.items && cart.items.length > 0 ? 
-  cart.items.reduce((acc, item) => {
-    const itemPrice = item.price * item.quantity * (1 - item.discount / 100);
-    return acc + itemPrice;
-  }, 0) : 0;
-
   useEffect(() => {
     if (showModal) {
+      setShowSpinner(true);
       document.body.classList.add(`${style["no-scroll"]}`);
     }
+    setShowSpinner(false);
+
   }, [showModal]);
 
   useEffect(() => {
@@ -95,6 +94,7 @@ function CartModal({ showModal, hideModal }) {
                     </div>
                   ) : (
                     <>
+                    {!showSpinner ? (
                       <div
                         className={`${style["product-container"]} container-fluid  w-100`}
                       >
@@ -107,6 +107,9 @@ function CartModal({ showModal, hideModal }) {
                           </div>
                         ))}
                       </div>
+                      ) : (
+                        <Spinner />
+                      )}
                     </>
                   )}
                 </div>
@@ -135,7 +138,7 @@ function CartModal({ showModal, hideModal }) {
                         </div>
                         <div
                           className={`${style["yellow-bar"]} progress-bar ${
-                            cart.totalPrice >= 1200 ? style["d-none"] : ""
+                            cart.totalPrice >= 1200 ?  style["yellow-bar-hidden"] : ""
                           }`}
                           role="progressbar"
                           style={{
@@ -170,7 +173,7 @@ function CartModal({ showModal, hideModal }) {
 
                       <div className="justify-content-between d-flex py-2 fs-6 w-100">
                         <strong> Total Price </strong>
-                        <strong>{`$${totalPrice.toFixed(2)}`}</strong>
+                        <strong>${cart.totalPrice}</strong>
                       </div>
 
                       <div className="border-0 justify-content-center text-center w-100">
@@ -195,9 +198,10 @@ function CartModal({ showModal, hideModal }) {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+            </div>
+            </div>
+          )}
+        
     </>
   );
 }

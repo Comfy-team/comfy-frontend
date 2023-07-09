@@ -19,8 +19,8 @@
 .yellow-bar {
   background-color: var(--yellow) !important;
 }
-.d-none {
-  display: none;
+.yellow-bar-hidden {
+  display: none !important;
 }
 .input-text {
   display: block;
