@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import style from "./checkout.module.css";
 import { useSelector } from "react-redux";
-import ProductCardCompnant from "./../../components/checkout/ProductCardCompnant";
+
+import ProductCardCompnant from "./ProductCardCompnant";
+
+import style from "../../pages/checkout/checkout.module.css";
 
 export default function ShoppingCardComponent() {
   let [theitems, SetItems] = useState([]);
@@ -61,7 +63,7 @@ export default function ShoppingCardComponent() {
           </div>
         ) : (
           <div> Cart is Empty</div>
-        )}{" "}
+        )}
       </div>
     </div>
   );
