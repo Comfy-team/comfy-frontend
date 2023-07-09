@@ -8,13 +8,13 @@ import styles from "./about.module.css";
 const About = () => {
   return (
     <>
-      <div id="about" className={`container  mb-5   p-5 aboutContainer`}>
+      <div id="about" className={`container  mb-5   p-5 `}>
         <div className={` row `}>
           <div className={` col-sm-12 col-md-6 mb-5`}>
             <img
               src={img}
               alt=""
-              className="  mx-auto d-block img-fluid d-block ms-auto mb-1"
+              className="  mx-auto d-block img-fluid d-block  "
             />
           </div>
           <div className={`  col-sm-12 col-md-6  `}>
