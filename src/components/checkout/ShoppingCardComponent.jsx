@@ -5,20 +5,16 @@ import ProductCardCompnant from "./ProductCardCompnant";
 import style from "../../pages/checkout/checkout.module.css";
 
 export default function ShoppingCardComponent() {
-  const [availableItems, setAvailableItems] = useState([]);
+  // const [availableItems, setAvailableItems] = useState([]);
   const cart = useSelector(state => state.cart.cart);
-
+  let totalPrice = 0;
   const updatedAvailableItems = cart?.items?.filter(item => {
     if (item?.product_id?.colors[0]?.stock >= item?.quantity) {
-      // console.log(item);
+      totalPrice += item.product_id.price * item.quantity;
+
       return item;
     }
   });
-
-  const totalPrice = availableItems?.reduce((sum, item) => {
-    return sum + item.product_id.price * item.quantity;
-  }, 0);
-
   const shipping = totalPrice >= 1200 ? 0 : 15;
 
   const priceWithShapping = (shipping + +totalPrice).toFixed(2);
