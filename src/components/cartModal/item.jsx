@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 // Font Awesome imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faSquarePlus, faSquareMinus } from "@fortawesome/free-solid-svg-icons";
 
 // Local imports
 import {
@@ -33,6 +33,10 @@ function Item({ item, cartId }) {
   const handleCloseCart = () => {
     navigate(`/product-details/${item?.product_id._id}`);
     dispatch(showCartModal(false));
+  };
+
+  const handleUpdateQuantity = (quantity) => {
+    updateItemQuantity(cartId, item?.product_id._id, quantity, item.color);
   };
 
   const handleDelete = () => {
@@ -75,7 +79,7 @@ function Item({ item, cartId }) {
                   Color:
                   <div
                     style={{ backgroundColor: `${item.color}` }}
-                    className={`${style.spanColor} rounded-circle ms-2 mt-1 border-dark border-1`}
+                    className={`rounded-circle ms-2 mt-1 border-1 ${style.spanColor}`}
                   ></div>
                 </div>
               )}
@@ -102,46 +106,37 @@ function Item({ item, cartId }) {
                 )}
               </div>
             </div>
+
             <div className="col-6">
               <div
                 className={`${style["counter"]} input-group justify-content-center`}
               >
                 <button
-                  className="btn  rounded-0 border-0"
+                  className="btn rounded-0 border-0"
                   type="button"
-                  onClick={() =>
-                    updateItemQuantity(
-                      cartId,
-                      item?.product_id._id,
-                      item.quantity - 1,
-                      item.color
-                    )
-                  }
+                  onClick={() => handleUpdateQuantity(item.quantity - 1)}
                   disabled={item.quantity === 1}
                 >
                   <FontAwesomeIcon
-                    icon={faMinus}
-                    size="xs"
+                    icon={faSquareMinus}
+                    size="lg"
                     className="hover-color-yellow"
                   />
                 </button>
-                <p className={`m-0 py-2 px-1`}>{item?.quantity}</p>
+                <p
+                  className={`m-0 py-2 px-1 text-center ${style["counter-modal"]}`}
+                >
+                  {item?.quantity}
+                </p>
                 <button
                   className="btn rounded-0 border-0"
                   type="button"
-                  onClick={() =>
-                    updateItemQuantity(
-                      cartId,
-                      item?.product_id._id,
-                      item.quantity + 1,
-                      item.color
-                    )
-                  }
+                  onClick={() => handleUpdateQuantity(item.quantity + 1)}
                   disabled={item.quantity === stock}
                 >
                   <FontAwesomeIcon
-                    icon={faPlus}
-                    size="xs"
+                    icon={faSquarePlus}
+                    size="lg"
                     className="hover-color-yellow"
                   />
                 </button>
