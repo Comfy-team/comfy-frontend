@@ -108,7 +108,9 @@ const Details = ({ product }) => {
           }
         }
       }
-      setActiveColor(product.colors[0]);
+      const firstInStockColor =
+        product.colors.find((ele) => ele.stock > 0) || product.colors[0];
+      setActiveColor(firstInStockColor);
       setInCart(false);
     }
   }, [product, cart]);
@@ -193,7 +195,10 @@ const Details = ({ product }) => {
           type="button"
           className="btn my-3 py-2 d-block w-100 btn-bg-dark text-white text-uppercase"
           disabled={
-            !terms || activeColor.stock === 0 || cart.role === "admin"
+            !terms ||
+            activeColor.stock === 0 ||
+            cart.role === "admin" ||
+            activeQuantity > activeColor.stock
               ? true
               : false
           }
