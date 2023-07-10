@@ -9,6 +9,8 @@ export default function ShoppingCardComponent() {
   let [theitems, SetItems] = useState([]);
 
   const cart = useSelector(state => state.cart.cart);
+  // console.log(cart);
+  // console.log(cart.items[0].product_id.colors[0].stock);
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -19,8 +21,13 @@ export default function ShoppingCardComponent() {
     };
     fetchCartItems();
   }, [cart]);
-  const shipping = 15;
-  const priceWithShapping = cart?.totalPrice + shipping;
+  let shipping;
+  if (cart.totalPrice >= 1200) {
+    shipping = 0;
+  } else {
+    shipping = 15;
+  }
+  const priceWithShapping = (shipping + +cart?.totalPrice).toFixed(2);
 
   return (
     <div>
@@ -28,9 +35,11 @@ export default function ShoppingCardComponent() {
       <div className="ps-4 pt-2">
         {theitems && theitems.length > 0 ? (
           <div className="container ">
-            {theitems.map((item, index) => (
-              <ProductCardCompnant index={index} item={item} key={item._id} />
-            ))}
+            {theitems
+              .filter(item => item.product_id?.colors[0].stock >= 1)
+              .map((item, index) => (
+                <ProductCardCompnant index={index} item={item} key={item._id} />
+              ))}
             <div
               className={`${style.Subtotal} mb-1 row mt-5 mx-0 
 `}
@@ -46,7 +55,11 @@ export default function ShoppingCardComponent() {
               <div className="col-4 ps-0 ">Shipping</div>
               <div className="col-5"></div>
               <div className="col-3 ">
-                <p className="">${shipping}</p>
+                {shipping === 0 ? (
+                  <p className="">free shipping</p>
+                ) : (
+                  <p className="">${shipping}</p>
+                )}
               </div>
             </div>
             <hr className="hr" />

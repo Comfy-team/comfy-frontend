@@ -56,7 +56,7 @@ export default function FormComonent() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const formData = useSelector(state => state.CheckoutForm.form);
+  const formData = useSelector(state => state.CheckoutForm.form);
 
   const savedFormData = localStorage.getItem("localFormData");
 
