@@ -26,9 +26,8 @@ export default function PaymentMethod() {
   const shippingValue = 15.0;
   // ===========
   const cart = useSelector(state => state.cart.cart);
-  const formData = useSelector(state => state.CheckoutForm.form);
-  // console.log(cart); // ===========
 
+  const formData = JSON.parse(localStorage.getItem("localFormData"));
   const onConfirmClick = () => {
     SetShowBtnSpinner(true);
     setShowWarning(false);
@@ -41,7 +40,6 @@ export default function PaymentMethod() {
       );
     });
     console.log("availableItems", availableItems);
-
 
     const additionalInfo = {
       address: formData?.address,
