@@ -64,8 +64,10 @@ const Details = ({ product }) => {
   };
 
   const handleBuyProduct = () => {
-    handleAddToCart();
-    navigate("/cart");
+    if (!inCart) {
+      handleAddToCart();
+    }
+    navigate("/checkout");
   };
 
   useEffect(() => {

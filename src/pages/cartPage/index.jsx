@@ -19,15 +19,6 @@ function CartPage() {
   const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
 
-  const totalPrice =
-    cart.items && cart.items.length > 0
-      ? cart.items.reduce((acc, item) => {
-          const itemPrice =
-            item.price * item.quantity * (1 - item.discount / 100);
-          return acc + itemPrice;
-        }, 0)
-      : 0;
-
   const handleReturnToShop = () => {
     navigate("/shop");
   };
@@ -44,7 +35,7 @@ function CartPage() {
 
   return (
     <div
-      className={` table-responsive container-fluid ${style["cart-container"]}`}
+      className={`table-responsive container-fluid ${style["cart-container"]}`}
     >
       <table className="table text-center ">
         {cart.items.length > 0 && (
@@ -67,7 +58,7 @@ function CartPage() {
                 </span>
                 <button
                   type="button"
-                  className={`btn btn-dark rounded-1 border-0 px-4  ${style.cartBtn}`}
+                  className="btn btn-bg-dark text-light rounded-1 border-0 px-4"
                   onClick={handleReturnToShop}
                 >
                   CONTINUE SHOPPING
@@ -86,11 +77,11 @@ function CartPage() {
               ))}
               <tr>
                 <td colSpan={7}>
-                  <div className="row justify-content-between align-items-center mx-0">
+                  <div className="row justify-content-between align-items-center mx-0 py-2">
                     <div className="col-4">
                       <button
                         type="button"
-                        className={`btn btn-dark rounded-1 py-2 border-0  ${style.cartBtn}`}
+                        className="btn btn-bg-dark text-light rounded-1 py-2 border-0" 
                         onClick={handleReturnToShop}
                       >
                         <strong>
@@ -105,7 +96,7 @@ function CartPage() {
                     <div className="col-5">
                       <button
                         type="button"
-                        className={`btn btn-dark rounded-1 py-2 border-0 ${style.cartBtn}`}
+                        className="btn btn-bg-dark text-light rounded-1 py-2 border-0"
                         onClick={() => emptyCart(cart._id)}
                       >
                         <strong>
@@ -117,17 +108,17 @@ function CartPage() {
                     <div className="col-3">
                       TOTAL PRICE:
                       <span className="color-yellow ps-1 fw-semibold">
-                        {`$${totalPrice.toFixed(2)}`}
+                       ${cart.totalPrice}
                       </span>
                     </div>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td colSpan={5} className="border-0 py-4">
+                <td colSpan={5} className="border-0 pt-4">
                   <button
                     type="button"
-                    className={`${style.cartBtn} border-0 btn btn-dark w-50 rounded-1 py-2 px-4 my-3 fs-6`}
+                    className="border-0 btn btn-bg-dark text-light w-50 rounded-1 py-2 px-4 my-3 fs-6"
                     onClick={handleCheckout}
                   >
                     <strong>Checkout</strong>
