@@ -30,7 +30,6 @@ export default function PaymentMethod() {
 
   const updatedAvailableItems = cart?.items?.filter(item => {
     if (item?.product_id?.colors[0]?.stock >= item?.quantity) {
-      // console.log(item);
       return item;
     }
   });
