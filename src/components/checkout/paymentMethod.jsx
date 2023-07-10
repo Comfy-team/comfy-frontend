@@ -63,9 +63,9 @@ export default function PaymentMethod() {
         setButtonText("order Done");
       })
       .catch(error => {
+        console.log(error.response);
         dispatch(showToast("Unable to make order, please try again."));
         SetShowBtnSpinner(false);
-        console.log(error.response);
       });
   };
   return formData ? (

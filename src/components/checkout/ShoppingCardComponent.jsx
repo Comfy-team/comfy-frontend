@@ -10,7 +10,7 @@ export default function ShoppingCardComponent() {
 
   const cart = useSelector(state => state.cart.cart);
   console.log(cart);
-
+  // console.log(cart.items[0].product_id.colors[0].stock);
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -35,9 +35,11 @@ export default function ShoppingCardComponent() {
       <div className="ps-4 pt-2">
         {theitems && theitems.length > 0 ? (
           <div className="container ">
-            {theitems.map((item, index) => (
-              <ProductCardCompnant index={index} item={item} key={item._id} />
-            ))}
+            {theitems
+              .filter(item => item.product_id?.colors[0].stock >= 1)
+              .map((item, index) => (
+                <ProductCardCompnant index={index} item={item} key={item._id} />
+              ))}
             <div
               className={`${style.Subtotal} mb-1 row mt-5 mx-0 
 `}
