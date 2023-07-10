@@ -71,18 +71,21 @@ const SearchCard = ({ product, query }) => {
 
   useEffect(() => {
     setShowBtnSpinner(false);
+    let outOfStock = false;
     // check if product out of stock
     if (product.colors.every((obj) => obj.stock === 0)) {
       setOutOfStock(true);
+      outOfStock = true;
     }
-    // if not logged in or admin
+    // if not logged in
     if (!cart.items) {
       setInCart(false);
       return;
+    } else if (!outOfStock) {
+      // set first active color
+      const activeColor = product.colors.find((obj) => obj.stock > 0);
+      setActiveColor(activeColor.color);
     }
-    // set first active color
-    const activeColor = product.colors.find((obj) => obj.stock > 0);
-    setActiveColor(activeColor.color);
     const productIndx = cart.items.findIndex(
       (ele) => ele.product_id._id === product._id
     );
