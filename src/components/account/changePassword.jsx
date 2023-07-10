@@ -45,6 +45,9 @@ const ChangePasswords = ({ user, token}) => {
     axiosInstance
       .patch(`/users`, updateUser,
        {
+        params:{
+          id:id
+        },
         headers: {
             Authorization:`Bearer ${token}`,
             "Content-Type":"application/json",
