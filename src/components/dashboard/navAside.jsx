@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 
 // font awesome
@@ -65,6 +65,7 @@ const navLinks = [
 const NavAside = ({ isSmallScreen, collapsed, onToggleAside }) => {
   const [active, setActive] = useState("Home");
   const navigate = useNavigate();
+  const navToggleBtn = useRef();
 
   function handleLogout() {
     localStorage.removeItem("userToken");
@@ -75,7 +76,9 @@ const NavAside = ({ isSmallScreen, collapsed, onToggleAside }) => {
     <aside
       className={`${style.aside} sticky-top bg-white py-lg-4 pe-3 pe-lg-0 d-flex flex-column`}
     >
-      {!isSmallScreen && <ToggleAsideBtn collapsed={collapsed} onToggleAside={onToggleAside} />}
+      {!isSmallScreen && (
+        <ToggleAsideBtn collapsed={collapsed} onToggleAside={onToggleAside} />
+      )}
       <div className="d-flex justify-content-between py-2 py-lg-0 align-items-center d-lg-block">
         <Link
           className="navbar-brand d-inline-block align-self-start mx-3"
@@ -96,6 +99,7 @@ const NavAside = ({ isSmallScreen, collapsed, onToggleAside }) => {
             aria-controls="dash-nav"
             aria-expanded="false"
             aria-label="Toggle navigation"
+            ref={navToggleBtn}
           >
             <FontAwesomeIcon icon={faBars} />
           </button>
@@ -125,6 +129,9 @@ const NavAside = ({ isSmallScreen, collapsed, onToggleAside }) => {
                         ? "justify-content-center gap-0"
                         : "justify-content-start gap-2"
                     } align-items-center`}
+                    onClick={() =>
+                      isSmallScreen ? navToggleBtn.current.click() : ""
+                    }
                     to={ele.to}
                     end
                   >
