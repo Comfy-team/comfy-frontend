@@ -139,20 +139,13 @@ const Details = ({ product }) => {
           />
         </div>
         {inCart ? (
-          showBtnSpinner ? (
-            <div className="text-center">
-              <div className="spinner-border spinner-border-sm" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            </div>
-          ) : (
-            <Quantity
-              active={activeQuantity}
-              stock={activeColor.stock}
-              onQuantityChange={handleQuantityChange}
-              onDeleteItem={() => setShowWarning(true)}
-            />
-          )
+          <Quantity
+            active={activeQuantity}
+            stock={activeColor.stock}
+            showBtnSpinner={showBtnSpinner}
+            onQuantityChange={handleQuantityChange}
+            onDeleteItem={() => setShowWarning(true)}
+          />
         ) : showBtnSpinner ? (
           <button className="btn btn-bg-dark text-white text-capitalize px-5 rounded-2 d-block mx-auto">
             <div className="spinner-border spinner-border-sm" role="status">
