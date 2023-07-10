@@ -1,0 +1,24 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+.hero {
+  width: 15rem;
+}
+
+.splitted::before {
+  content: "";
+  width: 109%;
+  height: 11rem;
+  position: absolute;
+  background-color: #f8f9fa;
+  -webkit-transform: rotate(-5.4deg);
+  -ms-transform: rotate(-5.4deg);
+  transform: rotate(-5.4deg);
+  top: -9.6rem;
+  left: -5%;
+  z-index: -1;
+}
