@@ -4,7 +4,6 @@
 * Autoprefixer: v10.4.7
 * Browsers: last 4 version
 */
-
 #dashboard {
   --dash-bg: #f5f5f9;
   --dash-white: rgba(255, 255, 255, 0.95);
@@ -84,7 +83,7 @@ body {
   width: 6rem;
   max-width: 100%;
   -webkit-filter: hue-rotate(224deg);
-          filter: hue-rotate(224deg);
+  filter: hue-rotate(224deg);
 }
 
 @media (min-width: 992px) {
@@ -94,16 +93,23 @@ body {
 }
 
 .dash-navlink {
+  -webkit-transition: color 0.5s ease, background-color 0.5s ease, gap 0.5s ease,
+    -webkit-box-pack 0.5s ease;
+  transition: color 0.5s ease, background-color 0.5s ease, gap 0.5s ease,
+    -webkit-box-pack 0.5s ease;
+  -o-transition: color 0.5s ease, background-color 0.5s ease,
+    justify-content 0.5s ease, gap 0.5s ease;
   -webkit-transition: color 0.5s ease, background-color 0.5s ease,
     gap 0.5s ease, -webkit-box-pack 0.5s ease;
   transition: color 0.5s ease, background-color 0.5s ease,
     gap 0.5s ease, -webkit-box-pack 0.5s ease;
-  -o-transition: color 0.5s ease, background-color 0.5s ease,
-    justify-content 0.5s ease, gap 0.5s ease;
   transition: color 0.5s ease, background-color 0.5s ease,
     justify-content 0.5s ease, gap 0.5s ease;
   transition: color 0.5s ease, background-color 0.5s ease,
     justify-content 0.5s ease, gap 0.5s ease, -webkit-box-pack 0.5s ease, -ms-flex-pack 0.5s ease;
+  transition: color 0.5s ease, background-color 0.5s ease,
+    justify-content 0.5s ease, gap 0.5s ease, -webkit-box-pack 0.5s ease,
+    -ms-flex-pack 0.5s ease;
   color: var(--dash-main-text) !important;
 }
 
@@ -147,24 +153,26 @@ body {
 .toggle-aside-btn {
   width: 1.5rem;
   height: 1.5rem;
-  font-size: 0.95rem!important;
+  font-size: 0.95rem !important;
   -webkit-transform: translateX(25%);
-      -ms-transform: translateX(25%);
-          transform: translateX(25%);
+  -ms-transform: translateX(25%);
+  transform: translateX(25%);
   top: 3.6rem;
   outline: 5px solid var(--dash-bg) !important;
   z-index: 1030;
-  -webkit-transition: background-color 0.5s, -webkit-transform ease 0.3s!important;
-  transition: background-color 0.5s, -webkit-transform ease 0.3s!important;
-  -o-transition: transform ease 0.3s, background-color 0.5s!important;
-  transition: transform ease 0.3s, background-color 0.5s!important;
-  transition: transform ease 0.3s, background-color 0.5s, -webkit-transform ease 0.3s!important;
+  -webkit-transition: background-color 0.5s, -webkit-transform ease 0.3s !important;
+  transition: background-color 0.5s, -webkit-transform ease 0.3s !important;
+  -o-transition: transform ease 0.3s, background-color 0.5s !important;
+  transition: transform ease 0.3s, background-color 0.5s !important;
+  transition: transform ease 0.3s, background-color 0.5s, -webkit-transform ease 0.3s !important;
+  transition: transform ease 0.3s, background-color 0.5s,
+    -webkit-transform ease 0.3s !important;
 }
 
 .toggle-aside-btn.collapsed {
   -webkit-transform: rotate(180deg) translateX(-25%);
-      -ms-transform: rotate(180deg) translateX(-25%);
-          transform: rotate(180deg) translateX(-25%);
+  -ms-transform: rotate(180deg) translateX(-25%);
+  transform: rotate(180deg) translateX(-25%);
 }
 /* end toggle btn */
 /* end aside */
@@ -211,19 +219,10 @@ body {
 /* end categories */
 
 /* start products */
-.description {
-  line-clamp: 3;
-  -webkit-line-clamp: 6;
-  -o-text-overflow: ellipsis;
-     text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-}
-
 .dash-prod-id {
   width: 5rem;
   -o-text-overflow: ellipsis;
-     text-overflow: ellipsis;
+  text-overflow: ellipsis;
   overflow: hidden;
   -webkit-transition: width 0.5s ease;
   -o-transition: width 0.5s ease;
@@ -235,13 +234,13 @@ body {
 }
 
 .dash-prod-clr {
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .dash-prod-img {
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.7rem;
+  aspect-ratio: 1/1;
 }
 
 .dash-prod-form-clr {
@@ -252,8 +251,8 @@ body {
 .dash-prod-form-clr + button {
   font-size: 0.8rem;
   -webkit-transform: translateY(-25%);
-      -ms-transform: translateY(-25%);
-          transform: translateY(-25%);
+  -ms-transform: translateY(-25%);
+  transform: translateY(-25%);
 }
 
 .dash-prod-form-img {
@@ -264,12 +263,12 @@ body {
 .dash-prod-form-img + button {
   font-size: 0.8rem;
   -webkit-transform: translate(50%, -45%);
-      -ms-transform: translate(50%, -45%);
-          transform: translate(50%, -45%);
+  -ms-transform: translate(50%, -45%);
+  transform: translate(50%, -45%);
 }
 
 .dash-prod-color-stock {
-  width: 7rem!important;
+  width: 7rem !important;
 }
 
 /* start search from */
@@ -277,6 +276,26 @@ body {
   #dash-search input {
     width: 20rem;
   }
+}
+
+#dash-search input::-webkit-input-placeholder {
+  font-size: 0.9rem !important;
+}
+
+#dash-search input::-moz-placeholder {
+  font-size: 0.9rem !important;
+}
+
+#dash-search input:-ms-input-placeholder {
+  font-size: 0.9rem !important;
+}
+
+#dash-search input::-ms-input-placeholder {
+  font-size: 0.9rem !important;
+}
+
+#dash-search input::placeholder {
+  font-size: 0.9rem !important;
 }
 /* end search form */
 /* end products */
@@ -307,7 +326,7 @@ body {
   background-color: var(--dash-btn-bg) !important;
   color: white !important;
   -webkit-box-shadow: 0px 3px 5px -2px var(--dash-btn-bg);
-          box-shadow: 0px 3px 5px -2px var(--dash-btn-bg);
+  box-shadow: 0px 3px 5px -2px var(--dash-btn-bg);
 }
 
 .pagination-btn.disabled {
