@@ -146,7 +146,6 @@ const ProductsUpdate = () => {
               touched={touched}
               values={values}
               imageError={imageError}
-              stockError={stockError}
               onStockError={(value) => setStockError(value)}
               productName={data.name}
               selectedImages={selectedImages}

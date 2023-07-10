@@ -7,18 +7,12 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // style
 import style from "../../../pages/dashboard/dashboard.module.css";
 
-const ProductColor = ({
-  color,
-  onDelete,
-  onUpdateStock,
-  stockError,
-  onStockError,
-}) => {
+const ProductColor = ({ color, onDelete, onUpdateStock, onStockError }) => {
   const [error, seterror] = useState(false);
 
   const handleStockChange = (stock) => {
     onUpdateStock(stock);
-    if (stock < 1 || Math.floor(stock) !== stock) {
+    if (stock < 0 || Math.floor(stock) !== stock) {
       onStockError(true);
       seterror(true);
     } else {
@@ -38,10 +32,10 @@ const ProductColor = ({
         ></div>
         <input
           type="number"
-          min={1}
-          className={`form-control flex-fill ${style["dash-prod-color-stock"]} ${
-            error ? "is-invalid" : ""
-          }`}
+          min={0}
+          className={`form-control flex-fill ${
+            style["dash-prod-color-stock"]
+          } ${error ? "is-invalid" : ""}`}
           value={color.stock}
           onChange={(e) => {
             handleStockChange(+e.target.value);
