@@ -1,44 +1,34 @@
-import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-
+import React, { useState } from "react";
 import ProductCardCompnant from "./ProductCardCompnant";
 
 import style from "../../pages/checkout/checkout.module.css";
 
 export default function ShoppingCardComponent() {
   const [availableItems, setAvailableItems] = useState([]);
-
   const cart = useSelector(state => state.cart.cart);
-  // console.log(cart);
 
-  useEffect(() => {
-    const updatedAvailableItems = cart?.items?.filter(item => {
-      return (
-        item?.product_id?.colors?.length > 0 &&
-        item?.product_id?.colors[0]?.stock >= item?.quantity
-      );
-    });
-    setAvailableItems(updatedAvailableItems || []);
-  }, [cart]);
+  const updatedAvailableItems = cart?.items?.filter(item => {
+    if (item?.product_id?.colors[0]?.stock >= item?.quantity) {
+      // console.log(item);
+      return item;
+    }
+  });
 
-  // console.log(availableItems);
-  // Calculate the total price of the available items
   const totalPrice = availableItems?.reduce((sum, item) => {
     return sum + item.product_id.price * item.quantity;
   }, 0);
-  // console.log(totalPrice);
 
   const shipping = totalPrice >= 1200 ? 0 : 15;
 
   const priceWithShapping = (shipping + +totalPrice).toFixed(2);
-  // console.log(priceWithShapping);
 
   return (
     <div>
       <div className="ps-4 pt-2">
-        {availableItems && availableItems.length > 0 ? (
+        {updatedAvailableItems && updatedAvailableItems?.length > 0 ? (
           <div className="container ">
-            {availableItems.map((item, index) => (
+            {updatedAvailableItems.map((item, index) => (
               <ProductCardCompnant index={index} item={item} key={item._id} />
             ))}
             <div
@@ -48,7 +38,6 @@ export default function ShoppingCardComponent() {
               <div className="col-2 ms-0 ps-0 ">Subtotal</div>
               <div className="col-7"></div>
               <div className="col-2">
-                {" "}
                 <p>${totalPrice}</p>
               </div>
             </div>

@@ -7,9 +7,8 @@ import jwtDecode from "jwt-decode";
 import axiosInstance from "../../apis/config";
 import { cities } from "../../apis/cities";
 import { governoratesData } from "../../apis/governorates";
-import { saveFormData } from "../../store/slices/formSlice";
 
-import store from "../../store/store";
+// import store from "../../store/store";
 //componant
 import Spinner from "../common/spinner";
 //style
@@ -51,13 +50,12 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
 export default function FormComonent() {
   const [saveInfo, setSaveInfo] = useState(true);
   const [user, setUser] = useState("");
-  const token = localStorage.getItem("userToken");
-  const decoded = jwtDecode(token);
 
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("userToken");
+  const decoded = jwtDecode(token);
   const savedFormData = localStorage.getItem("localFormData");
-  console.log();
   //intial value
   const [theintialvalue, settheIntialvalue] = useState(() => {
     // retrieve form data from localStorage if it exists
@@ -89,7 +87,6 @@ export default function FormComonent() {
         },
       })
       .then(res => {
-        console.log(res.data);
         setUser(res.data);
         if (savedFormData) {
           settheIntialvalue(JSON.parse(savedFormData));
@@ -100,11 +97,8 @@ export default function FormComonent() {
       .catch(err => console.log(err));
   }, [decoded.id, token]);
 
-  useEffect(() => {}, [user]);
-
   const formSubmit = submitdata => {
     navigate(`/checkout/shipping`);
-    store.dispatch(saveFormData(submitdata));
 
     //data send to database
     let theSendData = {

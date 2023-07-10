@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 //
@@ -25,28 +25,27 @@ export default function PaymentMethod() {
   const token = localStorage.getItem("userToken");
   const shippingValue = 15.0;
   // ===========
+
   const cart = useSelector(state => state.cart.cart);
+
+  const updatedAvailableItems = cart?.items?.filter(item => {
+    if (item?.product_id?.colors[0]?.stock >= item?.quantity) {
+      // console.log(item);
+      return item;
+    }
+  });
 
   const formData = JSON.parse(localStorage.getItem("localFormData"));
   const onConfirmClick = () => {
     SetShowBtnSpinner(true);
     setShowWarning(false);
 
-    // Filter the cart items to include only those whose available stock is greater than or equal to the quantity in the cart
-    const availableItems = cart?.items?.filter(item => {
-      return (
-        item?.product_id?.colors?.length > 0 &&
-        item?.product_id?.colors[0]?.stock >= item?.quantity
-      );
-    });
-    console.log("availableItems", availableItems);
-
     const additionalInfo = {
       address: formData?.address,
       phone: formData?.phone,
       totalPrice: cart?.totalPrice,
       userId: cart?.user_id,
-      items: availableItems?.map(item => ({
+      items: updatedAvailableItems?.map(item => ({
         product_id: item?.product_id._id,
         quantity: item.quantity,
         color: item.color,
@@ -58,7 +57,6 @@ export default function PaymentMethod() {
       phone: formData?.phone,
       ...additionalInfo,
     };
-    console.log("newObjectData", newObjectData);
 
     axiosInstance
       .post(`/orders`, newObjectData, {
@@ -69,11 +67,11 @@ export default function PaymentMethod() {
         },
       })
       .then(res => {
-        console.log(res);
+        // console.log(res);
         dispatch(showToast("orders was make  successfully!"));
         setTimeout(() => {
           navigate(`/account/${cart.user_id}`);
-        }, 4000);
+        }, 2000);
         emptyCart(cart._id);
         setIsAddingOrder(true);
         SetShowBtnSpinner(false);
@@ -83,7 +81,7 @@ export default function PaymentMethod() {
         setButtonText("order Done");
       })
       .catch(error => {
-        console.log(error.response);
+        // console.log(error.response);
         dispatch(showToast("Unable to make order, please try again."));
         SetShowBtnSpinner(false);
       });

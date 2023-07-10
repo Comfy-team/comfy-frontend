@@ -6,7 +6,6 @@ import logoimg from "../../assets/logos/logo-header.png";
 //style
 import style from "./checkout.module.css";
 import Breadcrumbcomponant from "../../components/checkout/Breadcrumbcomponant";
-
 const Checkout = () => {
   return (
     <div className={`${style.checkout}  `}>
@@ -26,7 +25,7 @@ const Checkout = () => {
               <Breadcrumbcomponant />
             </div>
 
-            <Outlet> </Outlet>
+            <Outlet />
           </div>
           <div
             className={`${style.rightorderColumn} col-lg-6 col-md-12 col-12  `}
