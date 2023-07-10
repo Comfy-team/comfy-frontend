@@ -5,7 +5,7 @@ import Toast from "react-bootstrap/Toast";
 const ToastInfo = ({ msg, show, onDismissToast }) => {
   return (
     <ToastContainer
-      className="p-3 z-3"
+      className="p-3"
       containerPosition="fixed"
       position="middle-center"
     >
