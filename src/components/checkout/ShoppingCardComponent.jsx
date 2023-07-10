@@ -10,11 +10,14 @@ export default function ShoppingCardComponent() {
   let totalPrice = 0;
   const updatedAvailableItems = cart?.items?.filter(item => {
     if (item?.product_id?.colors[0]?.stock >= item?.quantity) {
-      totalPrice += item.product_id.price * item.quantity;
-
+      totalPrice +=
+        item?.product_id.price *
+        (1 - item.product_id.discount / 100) *
+        item.quantity;
       return item;
     }
   });
+
   const shipping = totalPrice >= 1200 ? 0 : 15;
 
   const priceWithShapping = (shipping + +totalPrice).toFixed(2);
