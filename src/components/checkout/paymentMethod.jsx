@@ -28,31 +28,40 @@ export default function PaymentMethod() {
   const cart = useSelector(state => state.cart.cart);
   const formData = useSelector(state => state.CheckoutForm.form);
   // console.log(cart); // ===========
-  // console.log(cart); // ===========
-  // console.log(cart); // ===========
-  // console.log(cart); // ===========
-  const additionalInfo = {
-    totalPrice: cart?.totalPrice,
-    userId: cart?.user_id,
-    items: cart?.items?.map(item => ({
-      product_id: item?.product_id._id,
-      quantity: item.quantity,
-      color: item.color,
-      price: item.product_id.price,
-    })),
-  };
-  // console.log("additionalInfo", additionalInfo);
-  // const shoppinginfo = {};
-  // console.log("formData", formData);
-  const newObjectData = {
-    address: formData?.address,
-    phone: formData?.phone,
-    ...additionalInfo,
-  };
-  // console.log("newObjectData", newObjectData);
+
   const onConfirmClick = () => {
     SetShowBtnSpinner(true);
     setShowWarning(false);
+
+    // Filter the cart items to include only those whose available stock is greater than or equal to the quantity in the cart
+    const availableItems = cart?.items?.filter(item => {
+      return (
+        item?.product_id?.colors?.length > 0 &&
+        item?.product_id?.colors[0]?.stock >= item?.quantity
+      );
+    });
+    console.log("availableItems", availableItems);
+
+
+    const additionalInfo = {
+      address: formData?.address,
+      phone: formData?.phone,
+      totalPrice: cart?.totalPrice,
+      userId: cart?.user_id,
+      items: availableItems?.map(item => ({
+        product_id: item?.product_id._id,
+        quantity: item.quantity,
+        color: item.color,
+        price: item.product_id.price,
+      })),
+    };
+    const newObjectData = {
+      address: formData?.address,
+      phone: formData?.phone,
+      ...additionalInfo,
+    };
+    console.log("newObjectData", newObjectData);
+
     axiosInstance
       .post(`/orders`, newObjectData, {
         headers: {
