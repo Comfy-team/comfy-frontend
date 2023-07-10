@@ -1,5 +1,5 @@
 // React imports
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -23,6 +23,7 @@ import style from "./cartModal.module.css";
 function Item({ item, cartId }) {
   const [showBtnSpinner, setBtnSpinner] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const [quantity, setQuantity] = useState(item?.quantity || 1);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -36,8 +37,33 @@ function Item({ item, cartId }) {
   };
 
   const handleUpdateQuantity = (quantity) => {
-    updateItemQuantity(cartId, item?.product_id._id, quantity, item.color);
+    if (stock === 0 && quantity !== 0) {
+      setQuantity(0);
+    } else if (quantity > stock) {
+      setQuantity(stock);
+    } else {
+      setQuantity(quantity);
+    }
+    updateItemQuantity(
+      cartId,
+      item?.product_id._id,
+      quantity,
+      item.color,
+    );
   };
+  
+  useEffect(() => {
+    if (item) {
+      let updatedQuantity = item.quantity || 1;
+      if (stock === 0 && updatedQuantity !== 0) {
+        updatedQuantity = 0;
+      } else if (updatedQuantity > stock) {
+        updatedQuantity = stock;
+      }
+      setQuantity(updatedQuantity);
+    }
+  }, [item, stock]);
+
 
   const handleDelete = () => {
     setBtnSpinner(true);
@@ -115,7 +141,7 @@ function Item({ item, cartId }) {
                   className="btn rounded-0 border-0"
                   type="button"
                   onClick={() => handleUpdateQuantity(item.quantity - 1)}
-                  disabled={item.quantity === 1}
+                  disabled={quantity === 1 || stock === 0}
                 >
                   <FontAwesomeIcon
                     icon={faSquareMinus}
@@ -126,13 +152,13 @@ function Item({ item, cartId }) {
                 <p
                   className={`m-0 py-2 px-1 text-center ${style["counter-modal"]}`}
                 >
-                  {item?.quantity}
+                  {quantity}
                 </p>
                 <button
                   className="btn rounded-0 border-0"
                   type="button"
-                  onClick={() => handleUpdateQuantity(item.quantity + 1)}
-                  disabled={item.quantity === stock}
+                  onClick={() => handleUpdateQuantity(quantity + 1)}
+                  disabled={quantity === stock || stock === 0}
                 >
                   <FontAwesomeIcon
                     icon={faSquarePlus}
