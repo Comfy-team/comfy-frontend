@@ -35,7 +35,7 @@ const Quantity = ({
         type="button"
         className="btn fs-4 p-0 border-0 outline-0 color-main-black hover-color-yellow"
         disabled={
-          active === stock || stock === 0 || showBtnSpinner ? true : false
+          active >= stock || stock === 0 || showBtnSpinner ? true : false
         }
         onClick={() => onQuantityChange(active + 1)}
       >
