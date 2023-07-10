@@ -2,21 +2,24 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import jwtDecode from "jwt-decode";
 
-import Login from "./login";
-import Register from "./register";
-
+// font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-import styles from "./login-register.module.css";
+// component
+import Login from "./login";
+import Register from "./register";
 import { showLoginModal } from "../../store/slices/loginModalSlice";
+
+// style
+import styles from "./login-register.module.css";
 
 
 const Modal = () => {
-  const dispatch = useDispatch();
-
+  
   const [activeTab, setActiveTab] = useState("login");
   const [userData, setUserData] = useState(null);
+  const dispatch = useDispatch();
 
   const closeModal = () => {
     dispatch(showLoginModal(false))
@@ -31,6 +34,7 @@ const Modal = () => {
   const handleRegistrationSuccess = () => {
     setActiveTab("login");
   };
+
   // *** decode token and save user data***
   function saveUserData() {
     // Get the JWT token from local storage
@@ -40,6 +44,7 @@ const Modal = () => {
     // Set the decoded user data in the state
     setUserData(decodedToken);
   }
+
   useEffect(() => {
     document.body.classList.add(styles["modal-open"]);
 
