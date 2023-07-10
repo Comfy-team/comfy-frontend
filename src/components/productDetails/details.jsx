@@ -64,7 +64,9 @@ const Details = ({ product }) => {
   };
 
   const handleBuyProduct = () => {
-    handleAddToCart();
+    if (!inCart) {
+      handleAddToCart();
+    }
     navigate("/cart");
   };
 
