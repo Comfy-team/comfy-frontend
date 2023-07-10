@@ -11,7 +11,6 @@ import Spinner from "../common/spinner";
 import styles from "../../pages/account/account.module.css";
 
 const AccountOrders = ({ token }) => {
-  const [isCollapsed, setIsCollapsed] = useState({});
   const [userOrder, setUserOrder] = useState([]);
   const [showSpinner, setShowSpinner] = useState(true);
   const { id } = useParams();
@@ -29,14 +28,6 @@ const AccountOrders = ({ token }) => {
         })
         .then((res) => {
           setUserOrder(res.data.reverse());
-          setIsCollapsed((prevState) => {
-            // Set the first order ID to false (expanded) and the rest to true (collapsed)
-            const newState = {};
-            res.data.forEach((order, index) => {
-              newState[order._id] = index === 0 ? false : true;
-            });
-            return { ...prevState, ...newState };
-          });
           setShowSpinner(false);
         })
         .catch((error) => console.log(error));
