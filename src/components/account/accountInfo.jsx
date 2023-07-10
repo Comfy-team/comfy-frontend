@@ -38,6 +38,9 @@ const AccountInfo = ({ user, token,setUser }) => {
     SetShowBtnSpinner(true);
     axiosInstance
       .patch("/users", updateUser, {
+        params:{
+          id:id
+        },
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
