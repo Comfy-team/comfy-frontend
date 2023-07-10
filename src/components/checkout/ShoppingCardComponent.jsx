@@ -11,18 +11,19 @@ export default function ShoppingCardComponent() {
   const cart = useSelector(state => state.cart.cart);
   // console.log(cart);
   // console.log(cart.items[0].product_id.colors[0].stock);
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        SetItems(cart.items);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchCartItems();
-  }, [cart]);
+  // useEffect(() => {
+  //   const fetchCartItems = async () => {
+  //     try {
+  //       SetItems(cart.items);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchCartItems();
+  // }, [cart]);
+
   let shipping;
-  if (cart.totalPrice >= 1200) {
+  if (cart?.totalPrice >= 1200) {
     shipping = 0;
   } else {
     shipping = 15;
@@ -36,7 +37,7 @@ export default function ShoppingCardComponent() {
         {theitems && theitems.length > 0 ? (
           <div className="container ">
             {theitems
-              .filter(item => item.product_id?.colors[0].stock >= 1)
+              .filter(item => item?.product_id?.colors[0]?.stock >= 1)
               .map((item, index) => (
                 <ProductCardCompnant index={index} item={item} key={item._id} />
               ))}
