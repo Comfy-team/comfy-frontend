@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import jwtDecode from "jwt-decode";
@@ -9,6 +8,8 @@ import axiosInstance from "../../apis/config";
 import { cities } from "../../apis/cities";
 import { governoratesData } from "../../apis/governorates";
 import { saveFormData } from "../../store/slices/formSlice";
+
+import store from "../../store/store";
 //componant
 import Spinner from "../common/spinner";
 //style
@@ -54,12 +55,9 @@ export default function FormComonent() {
   const decoded = jwtDecode(token);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const formData = useSelector(state => state.CheckoutForm.form);
 
   const savedFormData = localStorage.getItem("localFormData");
-
+  console.log();
   //intial value
   const [theintialvalue, settheIntialvalue] = useState(() => {
     // retrieve form data from localStorage if it exists
@@ -91,23 +89,22 @@ export default function FormComonent() {
         },
       })
       .then(res => {
-        // console.log(res.data);
+        console.log(res.data);
         setUser(res.data);
-        // settheIntialvalue(res.data);
-        // dispatch(saveFormData(res.data));
+        if (savedFormData) {
+          settheIntialvalue(JSON.parse(savedFormData));
+        } else {
+          settheIntialvalue(res.data);
+        }
       })
       .catch(err => console.log(err));
   }, [decoded.id, token]);
 
-  useEffect(() => {
-    if (savedFormData) {
-      settheIntialvalue(JSON.parse(savedFormData));
-    }
-  }, []);
+  useEffect(() => {}, [user]);
 
   const formSubmit = submitdata => {
     navigate(`/checkout/shipping`);
-    dispatch(saveFormData(submitdata));
+    store.dispatch(saveFormData(submitdata));
 
     //data send to database
     let theSendData = {
@@ -122,7 +119,6 @@ export default function FormComonent() {
         postalCode: submitdata?.address?.postalCode,
       },
     };
-    // settheIntialvalue(submitdata);
 
     // save form data to localStorage
     localStorage.setItem("localFormData", JSON.stringify(submitdata));
@@ -140,9 +136,6 @@ export default function FormComonent() {
           // console.log(res);
         })
         .catch(err => console.log(err));
-    } else {
-      settheIntialvalue(submitdata);
-      // saveFormData(theSendData);
     }
   };
   if (!user) {

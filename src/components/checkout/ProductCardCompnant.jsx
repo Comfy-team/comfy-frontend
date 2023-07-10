@@ -24,7 +24,7 @@ export default function ProductCardCompnant({ index, item }) {
           <div
             key={item.product_id}
             className={`${style.spanColor} `}
-            // style={{ backgroundColor: `${item?.colors[0]?.color}` }}
+            style={{ backgroundColor: `${item?.color}` }}
           ></div>
         </div>
         <div className="col-2 mt-3  ">

@@ -9,7 +9,7 @@ export default function ShoppingCardComponent() {
   const [availableItems, setAvailableItems] = useState([]);
 
   const cart = useSelector(state => state.cart.cart);
-  console.log(cart);
+  // console.log(cart);
 
   useEffect(() => {
     const updatedAvailableItems = cart?.items?.filter(item => {
@@ -21,17 +21,17 @@ export default function ShoppingCardComponent() {
     setAvailableItems(updatedAvailableItems || []);
   }, [cart]);
 
-  console.log(availableItems);
+  // console.log(availableItems);
   // Calculate the total price of the available items
   const totalPrice = availableItems?.reduce((sum, item) => {
     return sum + item.product_id.price * item.quantity;
   }, 0);
-  console.log(totalPrice);
+  // console.log(totalPrice);
 
   const shipping = totalPrice >= 1200 ? 0 : 15;
 
   const priceWithShapping = (shipping + +totalPrice).toFixed(2);
-  console.log(priceWithShapping);
+  // console.log(priceWithShapping);
 
   return (
     <div>
