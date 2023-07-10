@@ -6,40 +6,41 @@ import ProductCardCompnant from "./ProductCardCompnant";
 import style from "../../pages/checkout/checkout.module.css";
 
 export default function ShoppingCardComponent() {
-  let [theitems, SetItems] = useState([]);
+  const [availableItems, setAvailableItems] = useState([]);
 
   const cart = useSelector(state => state.cart.cart);
-  // console.log(cart);
-  // console.log(cart.items[0].product_id.colors[0].stock);
+  console.log(cart);
+
   useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        SetItems(cart.items);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchCartItems();
+    const updatedAvailableItems = cart?.items?.filter(item => {
+      return (
+        item?.product_id?.colors?.length > 0 &&
+        item?.product_id?.colors[0]?.stock >= item?.quantity
+      );
+    });
+    setAvailableItems(updatedAvailableItems || []);
   }, [cart]);
-  let shipping;
-  if (cart.totalPrice >= 1200) {
-    shipping = 0;
-  } else {
-    shipping = 15;
-  }
-  const priceWithShapping = (shipping + +cart?.totalPrice).toFixed(2);
+
+  console.log(availableItems);
+  // Calculate the total price of the available items
+  const totalPrice = availableItems?.reduce((sum, item) => {
+    return sum + item.product_id.price * item.quantity;
+  }, 0);
+  console.log(totalPrice);
+
+  const shipping = totalPrice >= 1200 ? 0 : 15;
+
+  const priceWithShapping = (shipping + +totalPrice).toFixed(2);
+  console.log(priceWithShapping);
 
   return (
     <div>
-      {/* <Price price={item.price} discount={item?.product_id.discount} /> */}
       <div className="ps-4 pt-2">
-        {theitems && theitems.length > 0 ? (
+        {availableItems && availableItems.length > 0 ? (
           <div className="container ">
-            {theitems
-              .filter(item => item.product_id?.colors[0].stock >= 1)
-              .map((item, index) => (
-                <ProductCardCompnant index={index} item={item} key={item._id} />
-              ))}
+            {availableItems.map((item, index) => (
+              <ProductCardCompnant index={index} item={item} key={item._id} />
+            ))}
             <div
               className={`${style.Subtotal} mb-1 row mt-5 mx-0 
 `}
@@ -48,7 +49,7 @@ export default function ShoppingCardComponent() {
               <div className="col-7"></div>
               <div className="col-2">
                 {" "}
-                <p>${cart?.totalPrice}</p>
+                <p>${totalPrice}</p>
               </div>
             </div>
             <div className={`${style.Shipping}  mb-1 row mx-0`}>
