@@ -9,7 +9,7 @@ export default function ShoppingCardComponent() {
   let [theitems, SetItems] = useState([]);
 
   const cart = useSelector(state => state.cart.cart);
-  console.log(cart);
+  // console.log(cart);
   // console.log(cart.items[0].product_id.colors[0].stock);
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -27,7 +27,7 @@ export default function ShoppingCardComponent() {
   } else {
     shipping = 15;
   }
-  const priceWithShapping = shipping + +cart?.totalPrice;
+  const priceWithShapping = (shipping + +cart?.totalPrice).toFixed(2);
 
   return (
     <div>

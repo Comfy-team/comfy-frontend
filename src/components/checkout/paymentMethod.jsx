@@ -27,16 +27,29 @@ export default function PaymentMethod() {
   // ===========
   const cart = useSelector(state => state.cart.cart);
   const formData = useSelector(state => state.CheckoutForm.form);
-  console.log(cart); // ===========
-  console.log(cart); // ===========
-  console.log(cart); // ===========
-  console.log(cart); // ===========
+  // console.log(cart); // ===========
+  // console.log(cart); // ===========
+  // console.log(cart); // ===========
+  // console.log(cart); // ===========
   const additionalInfo = {
-    totalPrice: cart.totalPrice,
-    items: cart.items,
-    userId: cart.user_id,
+    totalPrice: cart?.totalPrice,
+    userId: cart?.user_id,
+    items: cart?.items?.map(item => ({
+      product_id: item?.product_id._id,
+      quantity: item.quantity,
+      color: item.color,
+      price: item.product_id.price,
+    })),
   };
-  const newObjectData = { ...formData, ...additionalInfo };
+  // console.log("additionalInfo", additionalInfo);
+  // const shoppinginfo = {};
+  // console.log("formData", formData);
+  const newObjectData = {
+    address: formData?.address,
+    phone: formData?.phone,
+    ...additionalInfo,
+  };
+  // console.log("newObjectData", newObjectData);
   const onConfirmClick = () => {
     SetShowBtnSpinner(true);
     setShowWarning(false);
