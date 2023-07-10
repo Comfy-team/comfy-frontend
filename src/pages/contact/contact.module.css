@@ -1,21 +1,34 @@
-
 .contact-info-title {
     position: relative;
 }
-
 .contact-info-title::before {
     width: 100%;
     background-color: lightgray;
 }
-
 .contact-info-title::after {
     width: 30%;
     background-color: black;
 }
-.contact-info-title::before, .contact-info-title::after {
-    content: '';
+.contact-info-title::before,
+.contact-info-title::after {
+    content: "";
     position: absolute;
     height: 2px;
     bottom: 2px;
     left: 0;
+}
+.placeholder-style::-webkit-input-placeholder {
+    font-size: 1rem !important; 
+}
+.placeholder-style::-moz-placeholder {
+    font-size: 1rem !important; 
+}
+.placeholder-style:-ms-input-placeholder {
+    font-size: 1rem !important; 
+}
+.placeholder-style::-ms-input-placeholder {
+    font-size: 1rem !important; 
+}
+.placeholder-style::placeholder {
+    font-size: 1rem !important; 
 }
