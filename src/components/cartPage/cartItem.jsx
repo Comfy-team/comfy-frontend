@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 // Font Awesome imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faSquarePlus, faSquareMinus } from "@fortawesome/free-solid-svg-icons";
 
 // Local imports
 import {
@@ -24,6 +24,10 @@ const CartItem = ({ item, cartId, product }) => {
   const [showWarning, setShowWarning] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const stock = item?.color
+    ? item.product_id.colors.find((color) => color.color === item.color)?.stock
+    : 0;
 
   const handleCloseCart = () => {
     navigate(`/product-details/${item?.product_id._id}`);
@@ -89,7 +93,7 @@ const CartItem = ({ item, cartId, product }) => {
                     Color:
                     <div
                       style={{ backgroundColor: `${item.color}` }}
-                      className={`${style.spanColor} rounded-circle ms-2 mt-1 border-dark border-1`}
+                      className={`${style.circleColor} rounded-circle ms-2 mt-1 border-1`}
                     ></div>
                   </div>
                 )}
@@ -99,11 +103,14 @@ const CartItem = ({ item, cartId, product }) => {
         </table>
       </td>
       <td>
-        <Price price={item.price} discount={item.product_id.discount} />
+        <Price
+          price={item.product_id.price}
+          discount={item.product_id.discount}
+        />
       </td>
       <td>
-        <span className={item.product_id.stock === 0 ? "text-danger" : ""}>
-          {item.product_id.stock > 0 ? item.product_id.stock : "Out Of Stock"}
+        <span className={stock === 0 ? "text-danger" : ""}>
+          {stock > 0 ? stock : "Out Of Stock"}
         </span>
       </td>
       <td>
@@ -124,8 +131,8 @@ const CartItem = ({ item, cartId, product }) => {
             disabled={item.quantity === 1}
           >
             <FontAwesomeIcon
-              icon={faMinus}
-              size="xs"
+              icon={faSquareMinus}
+              size="lg"
               className="hover-color-yellow"
             />
           </button>
@@ -141,18 +148,25 @@ const CartItem = ({ item, cartId, product }) => {
                 item.color
               )
             }
-            disabled={item.quantity === item.product_id.stock}
+            disabled={item.quantity === stock}
           >
             <FontAwesomeIcon
-              icon={faPlus}
-              size="xs"
+              icon={faSquarePlus}
+              size="lg"
               className="hover-color-yellow"
             />
           </button>
         </div>
       </td>
       <td>
-        <strong>${(item.price *(1 - item.discount / 100)* item.quantity).toFixed(2)}</strong>
+        <strong>
+          $
+          {(
+            item?.product_id.price *
+            (1 - item.product_id.discount / 100) *
+            item.quantity
+          ).toFixed(2)}
+        </strong>
       </td>
       <td>
         {showWarning && (

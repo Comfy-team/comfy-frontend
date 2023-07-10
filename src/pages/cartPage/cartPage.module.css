@@ -1,21 +1,19 @@
 .cart-container {
-  padding-top: 4rem;
+  padding: 4rem 0;
   min-height: 80vh;
 }
 .pointer {
   cursor: pointer;
 }
-.cartBtn:hover {
-  background-color: #c7ab62;
-}
 .item-img {
   width: 5rem;
   height: 5rem;
 }
-.spanColor {
+.circleColor {
   width: 1rem !important;
   height: 1rem !important;
-  border: solid black;
+  border: 1px solid rgb(222, 205, 205);
+  margin-top: 0.3rem !important ;
 }
 .counter {
   -ms-flex-wrap: nowrap !important;
