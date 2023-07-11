@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 //
@@ -30,7 +30,10 @@ export default function PaymentMethod() {
 
   let totalPrice = 0;
   const updatedAvailableItems = cart?.items?.filter(item => {
-    if (item?.product_id?.colors[0]?.stock >= item?.quantity) {
+    const color = item?.color;
+    const stock = item?.product_id?.colors.find(c => c.color === color)?.stock;
+
+    if (stock >= item?.quantity) {
       totalPrice +=
         item?.product_id.price *
         (1 - item.product_id.discount / 100) *
@@ -73,11 +76,8 @@ export default function PaymentMethod() {
         },
       })
       .then(res => {
-        // console.log(res);
         dispatch(showToast("orders was make  successfully!"));
-        setTimeout(() => {
-          navigate(`/account/${cart.user_id}`);
-        }, 2000);
+        navigate(`/order-confirmed/${res.data._id}`);
         emptyCart(cart._id);
         setIsAddingOrder(true);
         SetShowBtnSpinner(false);
@@ -87,7 +87,7 @@ export default function PaymentMethod() {
         setButtonText("order Done");
       })
       .catch(error => {
-        // console.log(error.response);
+        console.log(error.response);
         dispatch(showToast("Unable to make order, please try again."));
         SetShowBtnSpinner(false);
       });
