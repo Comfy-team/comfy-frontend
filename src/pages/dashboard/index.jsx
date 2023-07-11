@@ -45,6 +45,8 @@ const Dashboard = () => {
     let decoded = jwt_decode(token);
     if (decoded.role !== "admin") {
       navigate("/404", { replace: true });
+    } else {
+      setIsAdmin(true);
     }
   }, [cart]);
 
