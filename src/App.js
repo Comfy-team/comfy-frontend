@@ -24,7 +24,7 @@ function App() {
     axiosInstance
       .get("/brands")
       .then((res) => {
-        dispatch(setBrands(res.data.data));
+        dispatch(setBrands(res.data.allData));
       })
       .catch((error) => console.log(error));
 
