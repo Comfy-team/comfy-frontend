@@ -8,6 +8,7 @@ import * as Yup from "yup";
 // component
 import axiosInstance from "../../../apis/config";
 import { showToast } from "../../../store/slices/toastSlice";
+import { setBrands } from "../../../store/slices/brandsSlice";
 
 // style
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
@@ -52,6 +53,7 @@ const BrandsUpdate = () => {
       })
       .then((res) => {
         SetShowBtnSpinner(false);
+        dispatch(setBrands(res.data))
         dispatch(showToast("brand updated successfully!"));
       })
       .catch((error) => {

@@ -7,6 +7,7 @@ import * as Yup from "yup";
 // component
 import axiosInstance from "../../../apis/config";
 import { showToast } from "../../../store/slices/toastSlice";
+import { setBrands } from "../../../store/slices/brandsSlice";
 
 // style
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
@@ -20,6 +21,7 @@ const BrandsAdd = () => {
   const [showBtnSpinner, SetShowBtnSpinner] = useState(false);
   const token = localStorage.getItem("userToken");
   const dispatch = useDispatch();
+
   const addBrandSubmit = () => {
     if (image === "") {
       setImageError("Image is reqiured");
@@ -45,6 +47,7 @@ const BrandsAdd = () => {
         setName("");
         setCategory("");
         setImage("");
+        dispatch(setBrands(res.data))
       })
       .catch((err) => {
         console.log(err);
