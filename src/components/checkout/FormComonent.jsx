@@ -55,6 +55,7 @@ export default function FormComonent() {
 
   const token = localStorage.getItem("userToken");
   const decoded = jwtDecode(token);
+
   const savedFormData = localStorage.getItem("localFormData");
   //intial value
   const [theintialvalue, settheIntialvalue] = useState(() => {
@@ -120,6 +121,9 @@ export default function FormComonent() {
     if (saveInfo) {
       axiosInstance
         .patch("/users", theSendData, {
+          params: {
+            id: decoded.id,
+          },
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
