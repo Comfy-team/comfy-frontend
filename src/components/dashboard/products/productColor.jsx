@@ -4,11 +4,15 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
+// components
+import ConfirmPopup from "./../../common/confirmPopup";
+
 // style
 import style from "../../../pages/dashboard/dashboard.module.css";
 
 const ProductColor = ({ color, onDelete, onUpdateStock, onStockError }) => {
   const [error, seterror] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   const handleStockChange = (stock) => {
     onUpdateStock(stock);
@@ -44,7 +48,7 @@ const ProductColor = ({ color, onDelete, onUpdateStock, onStockError }) => {
         <button
           type="button"
           className="text-danger btn p-0 outline-0 border-0"
-          onClick={onDelete}
+          onClick={() => setShowWarning(true)}
         >
           <FontAwesomeIcon icon={faXmark} />
         </button>
@@ -53,6 +57,16 @@ const ProductColor = ({ color, onDelete, onUpdateStock, onStockError }) => {
         <p className="invalid-feedback d-block">
           stock should be an integer larger than 0
         </p>
+      )}
+      {showWarning && (
+        <ConfirmPopup
+          msg={`Are you sure you want to remove color?`}
+          onConfirm={() => {
+            onDelete();
+            setShowWarning(false);
+          }}
+          onCancel={() => setShowWarning(false)}
+        />
       )}
     </div>
   );
