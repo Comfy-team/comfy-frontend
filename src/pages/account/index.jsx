@@ -58,12 +58,16 @@ const Account = () => {
       setNotAuth(false);
     }
   }, []);
-
+ console.log(jwtDecode(token))
   useEffect(() => {
+    if(!token){
+      return;
+    }
     setShowSpinner(true);
     if (jwtDecode(token).role === "admin") {
       navigate("/dashboard");
-    } else {
+    } else if(id && jwtDecode(token).id === id)
+      {
       axiosInstance
         .get(`/users/${id}`, {
           headers: {
@@ -78,10 +82,14 @@ const Account = () => {
           setUser(res.data);
           setShowSpinner(false);
         })
-        .catch((err) => console.log(err));
-    }
+        .catch((err) => {
+          console.log(err);
+        });
+      }else{
+        navigate("/404",{replace:true})
+        return;
+      }
   }, []);
-  
 
   return !notAuth ? (
     <div id={`${style.account}`}>
