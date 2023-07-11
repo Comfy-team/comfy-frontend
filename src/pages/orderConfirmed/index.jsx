@@ -20,6 +20,10 @@ const OrderConfirmed = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
+    if (!token) {
+      navigate("/404", { replace: true });
+      return;
+    }
     let decoded = jwt_decode(token);
     axiosInstance
       .get(`/orders/${id}`, {
@@ -38,7 +42,7 @@ const OrderConfirmed = () => {
         console.log(error);
         navigate("/404", { replace: true });
       });
-  }, []);
+  }, [id]);
 
   return order ? (
     <section className="overflow-hidden">
