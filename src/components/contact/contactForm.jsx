@@ -73,7 +73,7 @@ const ContactForm = () => {
             <Field
                 type="text"
                 name="name"
-                className={`form-control bg-light rounded-0 border-0 ${
+                className={`form-control bg-light rounded-0 border-light ${
                     touched.name && errors.name ? "is-invalid" : ""
                 }${style["placeholder-style"]}`}
                 placeholder="Name"
@@ -89,7 +89,7 @@ const ContactForm = () => {
             <Field
                 type="email"
                 name="email"
-                className={`form-control bg-light rounded-0 border-0 ${
+                className={`form-control rounded-0 bg-light border-light ${
                     touched.email && errors.email ? "is-invalid" : ""
                 }${style["placeholder-style"]}`}
                 placeholder="Email"
@@ -105,7 +105,7 @@ const ContactForm = () => {
             <Field
                 as="textarea"
                 name="message"
-                className={`form-control bg-light rounded-0 border-0 ${
+                className={`form-control bg-light rounded-0 border-light ${
                     touched.message && errors.message ? "is-invalid" : ""
                 }`}
                 rows="4"
