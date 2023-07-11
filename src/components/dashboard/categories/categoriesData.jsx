@@ -155,17 +155,17 @@ const CategoriesData = () => {
         </div>
       </div>
 
-      <div className="table-responsive">
+      <div className="table-responsive mb-5">
         <table className="table ">
           <thead>
             <tr>
               <th scope="col" className="ps-4">
                 #ID
               </th>
-              <th scope="col">Name</th>
-              <th scope="col">Products</th>
+              <th scope="col" >Name</th>
+              <th scope="col" >Products</th>
               <th scope="col">Image</th>
-              <th scope="col">Actions</th>
+              <th scope="col" className="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -180,7 +180,7 @@ const CategoriesData = () => {
                 <tr key={category._id}>
                   <td className="ps-4">{category._id}</td>
                   <td>{category.name}</td>
-                  <td className="ps-4">{category.products_id.length}</td>
+                  <td className={`${dashStyle.categoryProduct}`}>{category.products_id.length}</td>
                   <td>
                     <img
                       src={
@@ -190,7 +190,7 @@ const CategoriesData = () => {
                       className={`${dashStyle["categories-img"]}`}
                     />
                   </td>
-                  <td>
+                  <td className="text-center">
                     <FontAwesomeIcon
                       icon={faEdit}
                       type="button"
