@@ -116,7 +116,7 @@
   .button {
     padding: 0.875rem 1.5rem !important;
     font-size: 1rem !important;
-    line-height: .8rem !important;
+    line-height: 0.8rem !important;
   }
 }
 
@@ -175,7 +175,7 @@
   border-radius: 0.75rem;
 }
 @media (min-width: 640px) {
-  .productImage{
+  .productImage {
     width: 6rem !important;
   }
 }
@@ -207,5 +207,9 @@
   border-radius: 0.5rem;
   color: var(--green-color) !important;
 }
-
+.color {
+  width: 1rem !important;
+  height: 1rem !important;
+  outline: 1px solid #dddada;
+}
 /* ====== end account order =======*/

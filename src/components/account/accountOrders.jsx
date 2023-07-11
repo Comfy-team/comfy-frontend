@@ -27,6 +27,7 @@ const AccountOrders = ({ token }) => {
           },
         })
         .then((res) => {
+          console.log(res.data);
           setUserOrder(res.data.reverse());
           setShowSpinner(false);
         })
@@ -110,6 +111,12 @@ const AccountOrders = ({ token }) => {
                                     </h3>
                                     <p className={`text-start text-secondary`}>
                                       {item?.product_id?.brand?.name}
+                                        <span
+                                          className={`${styles.color} rounded-circle ms-2 border-1 d-inline-block`}
+                                          style={{
+                                            backgroundColor: item.color,
+                                          }}
+                                        ></span>
                                     </p>
                                   </div>
                                   <div className="mt-1">
@@ -144,9 +151,9 @@ const AccountOrders = ({ token }) => {
                         </div>
                         <div>
                           <p
-                            className={`h5 ${styles.price} py-1 px-2 text-center`}
+                            className={`h6 ${styles.price} py-1 px-2 text-center`}
                           >
-                            ${order.totalPrice + 15}
+                            ${order.totalPrice}
                           </p>
                         </div>
                       </div>
