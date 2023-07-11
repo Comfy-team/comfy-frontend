@@ -114,7 +114,6 @@ const ProductsAdd = () => {
               touched={touched}
               values={values}
               imageError={imageError}
-              stockError={stockError}
               onStockError={(value) => setStockError(value)}
               productName={values.name}
               selectedImages={selectedImages}

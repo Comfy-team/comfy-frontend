@@ -1,25 +1,32 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
+// font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
+// component
 import axiosInstance from "../../apis/config";
+import { showToast } from "../../store/slices/toastSlice";
 
+// style
 import styles from "./login-register.module.css";
 
 const Register = ({ onRegistrationSuccess }) => {
+  
   const [user, setUser] = useState({
     fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
@@ -29,7 +36,7 @@ const Register = ({ onRegistrationSuccess }) => {
       .post("/register", user)
       .then((response) => {
         // handle response data, e.g. show success message
-        setIsSubmitted(true);
+        dispatch(showToast("Register submitted successfully!"));
         resetForm();
         setTimeout(() => {
           onRegistrationSuccess();
@@ -37,21 +44,11 @@ const Register = ({ onRegistrationSuccess }) => {
       })
       .catch((error) => {
         // handle error, e.g. show error message
-        setErrorMessage(
-          "Email already exists / Registration failed. Please try again."
-        );
+        dispatch(showToast("Email already exists / Registration failed. Please try again."));
       });
   };
   return (
     <>
-      {errorMessage && !isSubmitted ? (
-        <div className="alert alert-danger">{errorMessage}</div>
-      ) : isSubmitted ? (
-        <div className="alert alert-success">
-          Register submitted successfully!
-        </div>
-      ) : null}
-
       <Formik
         initialValues={{
           ...user,

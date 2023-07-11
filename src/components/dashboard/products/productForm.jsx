@@ -13,7 +13,6 @@ const ProductForm = ({
   touched,
   values,
   imageError,
-  stockError,
   onStockError,
   productName,
   selectedImages,
@@ -193,7 +192,6 @@ const ProductForm = ({
             <ProductColor
               key={color.color}
               color={color}
-              stockError={stockError}
               onStockError={onStockError}
               onUpdateStock={(value) => {
                 const colorIndx = values.colors.findIndex(

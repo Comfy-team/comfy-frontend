@@ -39,9 +39,6 @@
     padding-bottom: 200px;
   }
 }
-.checklabal {
-  margin-top: 10px;
-}
 
 /* ================ */
 .PaymentMethod .orderInfo .first,
@@ -56,6 +53,7 @@
 }
 .logoCheckout {
   margin-left: 2rem !important;
+  width: 6rem;
 }
 /* Styles for small screens */
 @media (max-width: 576px) {

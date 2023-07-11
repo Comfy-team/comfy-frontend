@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import jwtDecode from "jwt-decode";
-
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,11 +10,9 @@ import {
   faCartShopping,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-
 // components
 import { showLoginModal } from "../../store/slices/loginModalSlice";
 import { showCartModal } from "../../store/slices/cartModalSlice";
-
 // assets
 import logo from "../../assets/logos/logo-header.png";
 
@@ -23,7 +20,7 @@ const Header = ({ isMediumScreen, cart }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [decodedToken, setDecodedToken] = useState(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navToggleBtn = useRef();
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -62,6 +59,7 @@ const Header = ({ isMediumScreen, cart }) => {
             aria-controls="header-nav"
             aria-expanded="false"
             aria-label="Toggle navigation"
+            ref={navToggleBtn}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -69,6 +67,14 @@ const Header = ({ isMediumScreen, cart }) => {
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
                 <NavLink
+                  onClick={() => {
+                    if (
+                      navToggleBtn.current.getAttribute("aria-expanded") ===
+                      "true"
+                    ) {
+                      navToggleBtn.current.click();
+                    }
+                  }}
                   to="/"
                   className="nav-link color-main-gray hover-color-yellow fs-5"
                 >
@@ -77,6 +83,14 @@ const Header = ({ isMediumScreen, cart }) => {
               </li>
               <li className="nav-item">
                 <NavLink
+                  onClick={() => {
+                    if (
+                      navToggleBtn.current.getAttribute("aria-expanded") ===
+                      "true"
+                    ) {
+                      navToggleBtn.current.click();
+                    }
+                  }}
                   to="/shop"
                   className="nav-link color-main-gray hover-color-yellow fs-5"
                 >
@@ -85,6 +99,14 @@ const Header = ({ isMediumScreen, cart }) => {
               </li>
               <li className="nav-item">
                 <NavLink
+                  onClick={() => {
+                    if (
+                      navToggleBtn.current.getAttribute("aria-expanded") ===
+                      "true"
+                    ) {
+                      navToggleBtn.current.click();
+                    }
+                  }}
                   to="/about"
                   className="nav-link color-main-gray hover-color-yellow fs-5"
                 >
@@ -93,6 +115,14 @@ const Header = ({ isMediumScreen, cart }) => {
               </li>
               <li className="nav-item">
                 <NavLink
+                  onClick={() => {
+                    if (
+                      navToggleBtn.current.getAttribute("aria-expanded") ===
+                      "true"
+                    ) {
+                      navToggleBtn.current.click();
+                    }
+                  }}
                   className="nav-link color-main-gray hover-color-yellow fs-5"
                   to="/contact"
                 >
@@ -101,6 +131,14 @@ const Header = ({ isMediumScreen, cart }) => {
               </li>
               <li className="nav-item">
                 <NavLink
+                  onClick={() => {
+                    if (
+                      navToggleBtn.current.getAttribute("aria-expanded") ===
+                      "true"
+                    ) {
+                      navToggleBtn.current.click();
+                    }
+                  }}
                   className="nav-link color-main-gray hover-color-yellow fs-5"
                   to="/faq"
                 >
@@ -134,28 +172,28 @@ const Header = ({ isMediumScreen, cart }) => {
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                   <span className="visually-hidden">search</span>
                 </Link>
-                <button
-                  type="button"
-                  className="cart-btn btn p-0 fs-5 hover-color-yellow position-relative"
-                  onClick={() =>
-                    decodedToken
-                      ? decodedToken.role === "admin"
-                        ? navigate("/dashboard")
-                        : dispatch(showCartModal(true))
-                      : dispatch(showLoginModal(true))
-                  }
-                >
-                  <FontAwesomeIcon icon={faCartShopping} />
-                  <span className="visually-hidden">cart</span>
-                  <span className="position-absolute bg-yellow top-0 start-0 translate-middle badge rounded-pill">
-                    {cart.items
-                      ? cart.items.length > 99
-                        ? "99+"
-                        : cart.items.length
-                      : 0}
-                    <span className="visually-hidden">items in cart</span>
-                  </span>
-                </button>
+                {!(cart.role && cart.role === "admin") && (
+                  <button
+                    type="button"
+                    className="cart-btn btn p-0 fs-5 hover-color-yellow position-relative"
+                    onClick={() =>
+                      decodedToken
+                        ? dispatch(showCartModal(true))
+                        : dispatch(showLoginModal(true))
+                    }
+                  >
+                    <FontAwesomeIcon icon={faCartShopping} />
+                    <span className="visually-hidden">cart</span>
+                    <span className="position-absolute bg-yellow top-0 start-0 translate-middle badge rounded-pill">
+                      {cart.items
+                        ? cart.items.length > 99
+                          ? "99+"
+                          : cart.items.length
+                        : 0}
+                      <span className="visually-hidden">items in cart</span>
+                    </span>
+                  </button>
+                )}
               </div>
             )}
           </div>

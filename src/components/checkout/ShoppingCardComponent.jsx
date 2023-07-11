@@ -1,32 +1,35 @@
-import React, { useState, useEffect } from "react";
-import style from "./checkout.module.css";
 import { useSelector } from "react-redux";
-import ProductCardCompnant from "./../../components/checkout/ProductCardCompnant";
+import React from "react";
+import ProductCardCompnant from "./ProductCardCompnant";
+
+import style from "../../pages/checkout/checkout.module.css";
 
 export default function ShoppingCardComponent() {
-  let [theitems, SetItems] = useState([]);
-
   const cart = useSelector(state => state.cart.cart);
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        SetItems(cart.items);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchCartItems();
-  }, [cart]);
-  const shipping = 15;
-  const priceWithShapping = cart?.totalPrice + shipping;
+  let totalPrice = 0;
+  const updatedAvailableItems = cart?.items?.filter(item => {
+    const color = item?.color;
+    const stock = item?.product_id?.colors.find(c => c.color === color)?.stock;
+
+    if (stock >= item?.quantity) {
+      totalPrice +=
+        item?.product_id.price *
+        (1 - item.product_id.discount / 100) *
+        item.quantity;
+      return item;
+    }
+  });
+
+  const shipping = totalPrice >= 1200 ? 0 : 15;
+
+  const priceWithShapping = (shipping + +totalPrice).toFixed(2);
 
   return (
     <div>
-      {/* <Price price={item.price} discount={item?.product_id.discount} /> */}
       <div className="ps-4 pt-2">
-        {theitems && theitems.length > 0 ? (
+        {updatedAvailableItems && updatedAvailableItems?.length > 0 ? (
           <div className="container ">
-            {theitems.map((item, index) => (
+            {updatedAvailableItems.map((item, index) => (
               <ProductCardCompnant index={index} item={item} key={item._id} />
             ))}
             <div
@@ -36,15 +39,18 @@ export default function ShoppingCardComponent() {
               <div className="col-2 ms-0 ps-0 ">Subtotal</div>
               <div className="col-7"></div>
               <div className="col-2">
-                {" "}
-                <p>${cart?.totalPrice}</p>
+                <p>${totalPrice}</p>
               </div>
             </div>
             <div className={`${style.Shipping}  mb-1 row mx-0`}>
               <div className="col-4 ps-0 ">Shipping</div>
               <div className="col-5"></div>
               <div className="col-3 ">
-                <p className="">${shipping}</p>
+                {shipping === 0 ? (
+                  <p className="">free shipping</p>
+                ) : (
+                  <p className="">${shipping}</p>
+                )}
               </div>
             </div>
             <hr className="hr" />
@@ -61,7 +67,7 @@ export default function ShoppingCardComponent() {
           </div>
         ) : (
           <div> Cart is Empty</div>
-        )}{" "}
+        )}
       </div>
     </div>
   );

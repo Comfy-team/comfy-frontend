@@ -1,12 +1,12 @@
 // React imports
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 // Font Awesome imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faSquarePlus, faSquareMinus } from "@fortawesome/free-solid-svg-icons";
 
 // Local imports
 import {
@@ -15,26 +15,60 @@ import {
 } from "../../functions/cart.js";
 import Price from "./price.jsx";
 import { showCartModal } from "../../store/slices/cartModalSlice.js";
-import ConfirmPopup from "../common/confirmPopup.jsx";  
+import ConfirmPopup from "../common/confirmPopup.jsx";
 
 // Styles
-import style from "./cartModal.module.css"; 
+import style from "./cartModal.module.css";
 
 function Item({ item, cartId }) {
+  const [showBtnSpinner, setBtnSpinner] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const [quantity, setQuantity] = useState(item?.quantity || 1);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showBtnSpinner, setBtnSpinner] = useState(false); // initialize showBtnSpinner to false
-  const [showWarning, setShowWarning] = useState(false);
+
+  const stock = item?.color
+    ? item.product_id.colors.find((color) => color.color === item.color)?.stock
+    : 0;
 
   const handleCloseCart = () => {
     navigate(`/product-details/${item?.product_id._id}`);
     dispatch(showCartModal(false));
   };
 
+  const handleUpdateQuantity = (quantity) => {
+    if (stock === 0 && quantity !== 0) {
+      setQuantity(0);
+    } else if (quantity > stock) {
+      setQuantity(stock);
+    } else {
+      setQuantity(quantity);
+    }
+    updateItemQuantity(
+      cartId,
+      item?.product_id._id,
+      quantity,
+      item.color,
+    );
+  };
+  
+  useEffect(() => {
+    if (item) {
+      let updatedQuantity = item.quantity || 1;
+      if (stock === 0 && updatedQuantity !== 0) {
+        updatedQuantity = 0;
+      } else if (updatedQuantity > stock) {
+        updatedQuantity = stock;
+      }
+      setQuantity(updatedQuantity);
+    }
+  }, [item, stock]);
+
+
   const handleDelete = () => {
-    setBtnSpinner(true); 
+    setBtnSpinner(true);
     deleteItemFromCart(cartId, item?.product_id?._id, item.color).then(() => {
-      setBtnSpinner(false); 
+      setBtnSpinner(false);
       setShowWarning(false);
     });
   };
@@ -67,16 +101,19 @@ function Item({ item, cartId }) {
           <div className="row">
             <div className="col-6">
               {item?.color && (
-                <strong className="d-flex">
-                  Color:{" "}
+                <div className="d-flex fw-semibold">
+                  Color:
                   <div
                     style={{ backgroundColor: `${item.color}` }}
-                    className={`${style.spanColor} rounded-circle ms-2 mt-1 border-dark border-1`}
+                    className={`rounded-circle ms-2 mt-1 border-1 ${style.spanColor}`}
                   ></div>
-                </strong>
+                </div>
               )}
 
-              <Price price={item.price} discount={item?.product_id.discount} />
+              <Price
+                price={item.product_id.price}
+                discount={item?.product_id.discount}
+              />
               <div className="d-flex pt-2">
                 {showBtnSpinner ? (
                   <div
@@ -95,58 +132,45 @@ function Item({ item, cartId }) {
                 )}
               </div>
             </div>
+
             <div className="col-6">
               <div
                 className={`${style["counter"]} input-group justify-content-center`}
               >
                 <button
-                  className="btn  rounded-0 border-0"
+                  className="btn rounded-0 border-0"
                   type="button"
-                  onClick={() =>
-                    updateItemQuantity(
-                      cartId,
-                      item?.product_id._id,
-                      item.quantity - 1,
-                      item.color
-                    )
-                  }
-                  disabled={item.quantity === 1}
+                  onClick={() => handleUpdateQuantity(item.quantity - 1)}
+                  disabled={quantity === 1 || stock === 0}
                 >
                   <FontAwesomeIcon
-                    icon={faMinus}
-                    size="xs"
+                    icon={faSquareMinus}
+                    size="lg"
                     className="hover-color-yellow"
                   />
                 </button>
-                <p className={`m-0 py-2 px-1`}>{item?.quantity}</p>
+                <p
+                  className={`m-0 py-2 px-1 text-center ${style["counter-modal"]}`}
+                >
+                  {quantity}
+                </p>
                 <button
                   className="btn rounded-0 border-0"
                   type="button"
-                  onClick={() =>
-                    updateItemQuantity(
-                      cartId,
-                      item?.product_id._id,
-                      item.quantity + 1,
-                      item.color
-                    )
-                  }
-                  disabled={item.quantity === item?.product_id.stock}
+                  onClick={() => handleUpdateQuantity(quantity + 1)}
+                  disabled={quantity === stock || stock === 0}
                 >
                   <FontAwesomeIcon
-                    icon={faPlus}
-                    size="xs"
+                    icon={faSquarePlus}
+                    size="lg"
                     className="hover-color-yellow"
                   />
                 </button>
               </div>
               <div className={`${style.stock} ps-3`}>
                 <span className="fw-semibold">stock: </span>
-                <span
-                  className={item?.product_id.stock === 0 ? "text-danger" : ""}
-                >
-                  {item?.product_id.stock > 0
-                    ? item?.product_id.stock
-                    : "Out Of Stock"}
+                <span className={stock === 0 ? "text-danger" : ""}>
+                  {stock > 0 ? stock : "Out Of Stock"}
                 </span>
               </div>
             </div>

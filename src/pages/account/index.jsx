@@ -124,7 +124,7 @@ const Account = () => {
                 <h6>Account info</h6>
               </div>
             </div>
-            <div className="col-5 col-sm-4 col-lg-2">
+            <div className="col-6 col-sm-4 col-lg-2">
               <div
                 className={`mx-auto mx-sm-0 ${style["title"]} 
              ${activeTitle === "changePassword" ? style.active : ""}`}

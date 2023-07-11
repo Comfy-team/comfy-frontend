@@ -1,19 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import jwtDecode from "jwt-decode";
-import axiosInstance from "./../../apis/config";
+
+import axiosInstance from "../../apis/config";
 import { cities } from "../../apis/cities";
 import { governoratesData } from "../../apis/governorates";
-import { saveFormData } from "../../store/slices/formSlice";
-import { showToast } from "../../store/slices/toastSlice.js";
 
+// import store from "../../store/store";
+//componant
+import Spinner from "../common/spinner";
 //style
-import style from "./checkout.module.css";
-import Spinner from "./../../components/common/spinner";
-import { useSelector } from "react-redux";
+import style from "../../pages/checkout/checkout.module.css";
 
 //yup validation
 const DisplayingErrorMessagesSchema = Yup.object().shape({
@@ -51,32 +50,29 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
 export default function FormComonent() {
   const [saveInfo, setSaveInfo] = useState(true);
   const [user, setUser] = useState("");
+
+  const navigate = useNavigate();
+
   const token = localStorage.getItem("userToken");
   const decoded = jwtDecode(token);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const formData = useSelector(state => state.CheckoutForm.form);
-  const theformData = useSelector(state => state.CheckoutForm.theformData);
-
+  const savedFormData = localStorage.getItem("localFormData");
   //intial value
   const [theintialvalue, settheIntialvalue] = useState(() => {
     // retrieve form data from localStorage if it exists
-    const savedFormData = localStorage.getItem("formData");
     if (savedFormData) {
       return JSON.parse(savedFormData);
     } else {
       return {
         fullName: user.fullName || "",
-        phone: theformData?.phone || "",
+        phone: user?.phone || "",
         address: {
-          postalCode: theformData?.address?.postalCode || "",
-          apartment: theformData?.address?.apartment || "",
-          street: theformData?.address?.street || "",
-          building: formData?.address?.building || "",
-          city: theformData?.address?.city || "",
-          governorate: theformData?.address?.governorate || "",
+          postalCode: user?.address?.postalCode || "",
+          apartment: user?.address?.apartment || "",
+          street: user?.address?.street || "",
+          building: user?.address?.building || "",
+          city: user?.address?.city || "",
+          governorate: user?.address?.governorate || "",
           country: "Egypt",
         },
       };
@@ -93,29 +89,17 @@ export default function FormComonent() {
       })
       .then(res => {
         setUser(res.data);
-        settheIntialvalue(res.data);
-        dispatch(saveFormData(res.data));
-
-        const theData = res.data;
-        const fullName = theData.fullName;
-        settheIntialvalue({
-          ...theData,
-          fullName,
-        });
+        if (savedFormData) {
+          settheIntialvalue(JSON.parse(savedFormData));
+        } else {
+          settheIntialvalue(res.data);
+        }
       })
       .catch(err => console.log(err));
   }, [decoded.id, token]);
 
-  useEffect(() => {
-    const savedFormData = localStorage.getItem("formData");
-    if (savedFormData) {
-      settheIntialvalue(JSON.parse(savedFormData));
-    }
-  }, [formData]);
-
   const formSubmit = submitdata => {
     navigate(`/checkout/shipping`);
-    dispatch(saveFormData(submitdata));
 
     //data send to database
     let theSendData = {
@@ -130,13 +114,16 @@ export default function FormComonent() {
         postalCode: submitdata?.address?.postalCode,
       },
     };
-    settheIntialvalue(submitdata);
+
     // save form data to localStorage
-    localStorage.setItem("formData", JSON.stringify(submitdata));
+    localStorage.setItem("localFormData", JSON.stringify(submitdata));
 
     if (saveInfo) {
       axiosInstance
         .patch("/users", theSendData, {
+          params: {
+            id: decoded.id,
+          },
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -145,20 +132,13 @@ export default function FormComonent() {
         })
         .then(res => {
           // console.log(res);
-          // dispatch(showToast("new info  updated  successfully!"));
         })
         .catch(err => console.log(err));
-    } else {
-      settheIntialvalue(submitdata);
-
-      // settheIntialvalue(theSendData);
-      saveFormData(theSendData);
     }
   };
   if (!user) {
     return (
       <div>
-        {" "}
         <Spinner />
       </div>
     );
@@ -187,7 +167,7 @@ export default function FormComonent() {
                 <div className="text-danger ms-2">{errors.phone}</div>
               )}
             </div>
-            <h6 className={`{} mb-0 mt-4 `}> Shipping address </h6>
+            <h6 className={`mb-0 mt-4 `}> Shipping address </h6>
 
             <div className="form-group form-floating ">
               <Field
@@ -196,7 +176,7 @@ export default function FormComonent() {
                 className="form-control"
                 type="text"
                 id="fullName"
-              />{" "}
+              />
               <label htmlFor="fullName">full Name </label>
               {touched.fullName && errors.fullName && (
                 <div className="text-danger ms-2">{errors.fullName}</div>
@@ -210,7 +190,7 @@ export default function FormComonent() {
                 className="form-control"
                 type="text"
                 id="apartment"
-              />{" "}
+              />
               <label htmlFor="apartment">apartment </label>
               {touched.address?.apartment && errors.address?.apartment && (
                 <div className="text-danger ms-2">
@@ -351,7 +331,6 @@ export default function FormComonent() {
                     {errors.address?.city}
                   </span>
                 ) : null}
-                {/* </div> */}
                 {/*====================*/}
               </div>
               <div className="form-group form-floating  col-lg-6  col-sm-12">
@@ -373,7 +352,7 @@ export default function FormComonent() {
 
             {/*====================*/}
 
-            <div className="form-check">
+            <div className="form-check my-3">
               <input
                 type="checkbox"
                 className="form-check-input"
@@ -383,7 +362,7 @@ export default function FormComonent() {
               />
 
               <label
-                className={`${style.checklabal} form-check-label mb-4`}
+                className={`${style.checklabal} form-check-label mt-2`}
                 htmlFor="exampleCheck1"
               >
                 save this information for next time{" "}

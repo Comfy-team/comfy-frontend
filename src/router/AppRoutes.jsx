@@ -4,8 +4,6 @@ import { Route, Routes, Navigate } from "react-router-dom";
 // components
 import LayoutWithNav from "../components/layouts/layoutWithNav";
 import LayoutWithPageHeader from "../components/layouts/layoutWithPageHeader";
-import PaymentMethod from "./../pages/checkout/paymentMethod";
-import FormComonent from "./../pages/checkout/FormComonent";
 import HomeDash from "../components/dashboard/home/homeDash";
 import UsersDash from "../components/dashboard/usersDash";
 import OrdersDash from "../components/dashboard/orders/ordersDash";
@@ -21,6 +19,8 @@ import CategoriesUpdate from "../components/dashboard/categories/categoriesUpdat
 import ProductsAdd from "../components/dashboard/products/productsAdd";
 import BrandsAdd from "./../components/dashboard/brands/brandsAdd";
 import CategoriesAdd from "./../components/dashboard/categories/categoriesAdd";
+import FormComonent from "./../components/checkout/FormComonent";
+import PaymentMethod from "./../components/checkout/paymentMethod";
 
 // pages
 import Home from "./../pages/home";
@@ -35,6 +35,7 @@ import Page404 from "./../pages/page404";
 import SearchPage from "./../pages/searchPage";
 import Account from "./../pages/account";
 import Dashboard from "./../pages/dashboard";
+import OrderConfirmed from "../pages/orderConfirmed";
 
 const AppRoutes = () => {
   return (
@@ -53,7 +54,7 @@ const AppRoutes = () => {
           <Route path="/search" element={<SearchPage />} />
         </Route>
       </Route>
-
+      <Route path="/order-confirmed/:id" element={<OrderConfirmed />} />
       <Route path="/checkout" element={<Checkout />}>
         <Route path="" element={<FormComonent />} />
         <Route path="shipping" element={<PaymentMethod />} />

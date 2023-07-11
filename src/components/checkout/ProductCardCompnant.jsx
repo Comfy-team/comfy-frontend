@@ -19,23 +19,23 @@ export default function ProductCardCompnant({ index, item }) {
           />
         </div>
         <div className={`${style.productInfo} col-7  `}>
-          <p className="mb-0 ml-3">{item.product_id.name}</p>
-          <div className={`${style.quantitCircle} mb-1"`}>{item.quantity}</div>
+          <p className="mb-0 ">{item?.product_id?.name}</p>
+          <div className={`${style.quantitCircle} mb-1"`}>{item?.quantity}</div>
           <div
             key={item.product_id}
             className={`${style.spanColor} `}
-            style={{ backgroundColor: `${item.color}` }}
+            style={{ backgroundColor: `${item?.color}` }}
           ></div>
         </div>
         <div className="col-2 mt-3  ">
           <p className="mb-0">
             $
-            {item.quantity *
-              (item.price - (item.price * item.product_id.discount) / 100)}
+            {item.product_id.price -
+              (item.product_id.price * item.product_id.discount) / 100}
           </p>
           {item.product_id.discount !== 0 && (
             <p className={`${style.gray} mb text-decoration-line-through`}>
-              ${item.quantity * (item.quantity * item.price)}
+              ${item.product_id.price}
             </p>
           )}
         </div>

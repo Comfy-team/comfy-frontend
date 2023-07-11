@@ -11,11 +11,10 @@ import Spinner from "../common/spinner";
 import styles from "../../pages/account/account.module.css";
 
 const AccountOrders = ({ token }) => {
-  const [isCollapsed, setIsCollapsed] = useState({});
   const [userOrder, setUserOrder] = useState([]);
   const [showSpinner, setShowSpinner] = useState(true);
   const { id } = useParams();
-  
+
   useEffect(() => {
     setShowSpinner(true);
     if (jwtDecode(token).role === "user") {
@@ -29,26 +28,12 @@ const AccountOrders = ({ token }) => {
         })
         .then((res) => {
           setUserOrder(res.data.reverse());
-          setIsCollapsed((prevState) => {
-            // Set the first order ID to false (expanded) and the rest to true (collapsed)
-            const newState = {};
-            res.data.forEach((order, index) => {
-              newState[order._id] = index === 0 ? false : true;
-            });
-            return { ...prevState, ...newState };
-          });
           setShowSpinner(false);
         })
         .catch((error) => console.log(error));
     }
   }, []);
 
-  const handleToggleCollapse = (orderId) => {
-    setIsCollapsed((prevState) => ({
-      ...prevState,
-      [orderId]: !prevState[orderId],
-    }));
-  };
   return (
     <div>
       <h2 className={`${styles["text-2xl"]} ${styles.subTitle}`}>
@@ -57,11 +42,11 @@ const AccountOrders = ({ token }) => {
       {!showSpinner ? (
         <>
           {userOrder.length > 0 ? (
-            userOrder.map((order) => {
+            userOrder.map((order, index) => {
               const collapseId = `collapse-${order._id}`;
               return (
                 <div id="accordion" key={order._id} className="container mb-5">
-                  <div className="card row col-12 col-lg-9">
+                  <div className="card col-12 col-lg-9">
                     <div className={`card-header ${styles["cardHeader"]}`}>
                       <div
                         className={`d-flex flex-column flex-sm-row p-2 justify-content-sm-between align-items-sm-center ${styles.orderHeader}`}
@@ -84,12 +69,9 @@ const AccountOrders = ({ token }) => {
                         <div className="mt-3 mt-sm-0">
                           <button
                             className={`btn rounded-pill px-3 py-2 bg-white ${styles["btn-show-order"]}`}
-                            data-toggle="collapse"
-                            data-target={`${collapseId}`}
-                            aria-expanded={
-                              isCollapsed[order._id] ? "false" : "true"
-                            }
-                            onClick={() => handleToggleCollapse(order._id)}
+                            data-bs-toggle="collapse"
+                            data-bs-target={`#${collapseId}`}
+                            aria-expanded={index === 0 ? "true" : "false"}
                           >
                             View Order
                           </button>
@@ -98,10 +80,7 @@ const AccountOrders = ({ token }) => {
                     </div>
                     <div
                       id={collapseId}
-                      data-parent="#accordion"
-                      className={`collapse ${
-                        isCollapsed[order._id] ? "" : "show"
-                      }`}
+                      className={`collapse ${index === 0 ? "show" : ""}`}
                     >
                       {order.items.map((item) => {
                         return (
@@ -133,18 +112,21 @@ const AccountOrders = ({ token }) => {
                                       {item?.product_id?.brand?.name}
                                     </p>
                                   </div>
-                                  <div className="ml-2 mt-1">
+                                  <div className="mt-1">
                                     <p
                                       className={`${styles.price} py-1 px-2 text-center`}
                                     >
                                       $
                                       {item.price *
-                                        (1 - item.product_id.discount / 100)}
+                                        (
+                                          1 -
+                                          item.product_id.discount / 100
+                                        ).toFixed(2)}
                                     </p>
                                   </div>
                                 </div>
 
-                                <div className="">
+                                <div>
                                   <p className="text-start text-secondary">
                                     Qty {item.quantity}
                                   </p>

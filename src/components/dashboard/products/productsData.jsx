@@ -158,13 +158,16 @@ const ProductsData = () => {
                       Brand
                     </th>
                     <th scope="col">Stock</th>
-                    <th scope="col">Images</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">
+                      Images
+                    </th>
+                    <th scope="col" colSpan={2}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.map((product) => (
                     <tr key={product._id}>
+                      {/* id */}
                       <th
                         scope="row"
                         className={`${style["dash-prod-id-holder"]} ps-4`}
@@ -173,58 +176,54 @@ const ProductsData = () => {
                           {product._id}
                         </span>
                       </th>
+                      {/* name */}
                       <td>{product.name}</td>
-                      <td>
-                        <span
-                          className={`${style.description} overflow-hidden`}
-                        >
-                          {product.description}
-                        </span>
-                      </td>
+                      {/* description */}
+                      <td>{product.description.slice(0, 40)}...</td>
+                      {/* price */}
                       <td className="text-center">
                         {product.price.toFixed(2)}
                       </td>
+                      {/* disount */}
                       <td className="text-center">
                         {product.discount > 0 ? `${product.discount}%` : 0}
                       </td>
+                      {/* category */}
                       <td className="text-center text-capitalize">
                         {product.category.name}
                       </td>
+                      {/* brand */}
                       <td className="text-center">{product.brand.name}</td>
+                      {/* stock */}
                       <td>
-                        <div className="d-flex flex-column gap-1">
+                        <div>
                           {product.colors.map((ele) => (
-                            <div
-                              key={ele.color}
-                              className="d-flex align-items-center gap-2 justify-content-between"
-                            >
-                              <span className="d-inline-block ps-1">
+                            <div key={ele.color} className="d-flex justify-content-between gap-2 mb-2">
+                              <span className="d-inline-block ps-1 lh-1 align-middle">
                                 {ele.stock}
                               </span>
                               <span
-                                className={`${style["dash-prod-clr"]} d-inline-block rounded-circle border border-2`}
+                                className={`${style["dash-prod-clr"]} d-inline-block align-middle rounded-circle border border-2`}
                                 style={{ backgroundColor: ele.color }}
                               ></span>
                             </div>
                           ))}
                         </div>
                       </td>
-                      <td>
-                        <div className="d-flex flex-column justify-content-center align-items-center gap-1">
-                          {product.images.map((ele) => (
-                            <img
-                              key={ele._id}
-                              src={
-                                process.env.REACT_APP_BASE_URL + "/" + ele.src
-                              }
-                              alt={product.name}
-                              className={`${style["dash-prod-img"]} border img-fluid rounded-2`}
-                            />
-                          ))}
-                        </div>
+                      {/* images */}
+                      <td colSpan={2}>
+                        {product.images.map((ele) => (
+                          <img
+                            key={ele._id}
+                            src={process.env.REACT_APP_BASE_URL + "/" + ele.src}
+                            alt={product.name}
+                            className={`${style["dash-prod-img"]} mx-auto d-block mb-2 border img-fluid rounded-2`}
+                          />
+                        ))}
                       </td>
+                      {/* actions */}
                       <td>
-                        <div className="d-flex align-items-center justify-content-center gap-2">
+                        <div className="d-flex justify-content-center gap-2">
                           <Link
                             to={`/dashboard/products/update/${product._id}`}
                             className={`btn p-0 border-0 outline-0 ${style["dash-purple"]}`}
@@ -241,7 +240,7 @@ const ProductsData = () => {
                           ) : (
                             <button
                               type="button"
-                              className="btn p-0 border-0 outline-0 text-danger"
+                              className="btn d-inline-block p-0 border-0 outline-0 text-danger"
                               onClick={() => {
                                 setProductToDelete(product);
                                 setShowWarning(true);

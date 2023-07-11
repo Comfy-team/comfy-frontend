@@ -19,7 +19,9 @@ export const getCart = (token) => {
         "x-access-token": token,
       },
     })
-    .then((res) => store.dispatch(setCart({ ...res.data, role: "user" })))
+    .then((res) => {
+      store.dispatch(setCart({ ...res.data, role: "user" }));
+    })
     .catch((error) => console.log(error));
 };
 
@@ -39,9 +41,7 @@ export const addItemToCart = (cartId, id, color) => {
         }
       )
       .then((res) => {
-        if (res.status === 200) {
-          getCart(token);
-        }
+        getCart(token);
       })
       .catch((error) => console.log(error));
   } else {
@@ -65,9 +65,7 @@ export const updateItemQuantity = (cartId, id, quantity, color) => {
         }
       )
       .then((res) => {
-        if (res.status === 200) {
-          getCart(token);
-        }
+        store.dispatch(setCart({ ...res.data, role: "user" }));
       })
       .catch((error) => console.log(error));
   } else {
@@ -91,9 +89,7 @@ export const deleteItemFromCart = (cartId, id, color) => {
         }
       )
       .then((res) => {
-        if (res.status === 200) {
-          getCart(token);
-        }
+        store.dispatch(setCart({ ...res.data, role: "user" }));
       })
       .catch((error) => console.log(error));
   } else {
@@ -117,9 +113,7 @@ export const emptyCart = (cartId) => {
         }
       )
       .then((res) => {
-        if (res.status === 200) {
-          store.dispatch(setCart(res.data));
-        }
+        store.dispatch(setCart({ ...res.data, role: "user" }));
       })
       .catch((error) => console.log(error));
   } else {

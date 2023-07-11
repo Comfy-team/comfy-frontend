@@ -7,7 +7,7 @@
   width: 27rem !important;
 }
 .modal-content {
-  height: 100vh !important;
+  height: 100svh !important;
 }
 
 .progress {
@@ -19,8 +19,8 @@
 .yellow-bar {
   background-color: var(--yellow) !important;
 }
-.d-none {
-  display: none;
+.yellow-bar-hidden {
+  display: none !important;
 }
 .input-text {
   display: block;
@@ -39,7 +39,9 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 .product-container {
   height: calc(80vh - 150px);
@@ -52,17 +54,20 @@
 .spanColor {
   width: 1rem !important;
   height: 1rem !important;
-  border: solid black;
+  outline: 1px solid #dddada;
 }
 .stock{
   margin-top: -0.5rem;
   margin-left: 1rem;
 }
 .counter {
-  flex-wrap: nowrap !important;
+  -ms-flex-wrap: nowrap !important;
+      flex-wrap: nowrap !important;
   margin-top: -0.5rem;
 }
-
+.counter-modal{
+  width: 1rem;
+}
 @media (min-width: 320px) and (max-width: 425px) {
   .cart-modal {
     max-width: 20rem; /* adjust the modal's width for smaller screens */
@@ -73,6 +78,7 @@
   .spanColor {
     width: 1rem !important;
     height: 1rem !important;
+    border: 1px solid rgb(222, 205, 205);
   }
   .progress {
     height: 2.6rem !important;

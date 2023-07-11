@@ -1,37 +1,45 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
 
 import jwtDecode from "jwt-decode";
+
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// font awesome
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
+// component
 import { getCart } from "./../../functions/cart";
 import axiosInstance from "../../apis/config";
+import { showToast } from "../../store/slices/toastSlice";
 
+// style
 import styles from "./login-register.module.css";
 
 const Login = ({ closeModal, saveUserData }) => {
-  const navigate =useNavigate();
+
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate =useNavigate();
+  const dispatch = useDispatch();
+
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
+
   const handleSubmit = (user, { resetForm }) => {
     axiosInstance
       .post("/login", user)
       .then((response) => {
         // handle response data, e.g. show success message
-        setIsSubmitted(true);
+        dispatch(showToast("Login successfully!"));
         // store token in local storage
         localStorage.setItem("userToken", response.data.token);
         // save User Data
@@ -47,16 +55,12 @@ const Login = ({ closeModal, saveUserData }) => {
       })
       .catch((error) => {
         // handle error, e.g. show error message
-        setErrorMessage("Email or Password not correct. Please try again.");
+        dispatch(showToast("Email or Password not correct. Please try again."));
+
       });
   };
   return (
     <>
-      {errorMessage && !isSubmitted ? (
-        <div className="alert alert-danger">{errorMessage}</div>
-      ) : isSubmitted ? (
-        <div className="alert alert-success">Login successfully!</div>
-      ) : null}
       <Formik
         initialValues={{ ...user }}
         validationSchema={Yup.object({
