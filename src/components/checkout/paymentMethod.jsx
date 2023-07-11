@@ -28,12 +28,19 @@ export default function PaymentMethod() {
 
   const cart = useSelector(state => state.cart.cart);
 
+  let totalPrice = 0;
   const updatedAvailableItems = cart?.items?.filter(item => {
     if (item?.product_id?.colors[0]?.stock >= item?.quantity) {
+      totalPrice +=
+        item?.product_id.price *
+        (1 - item.product_id.discount / 100) *
+        item.quantity;
       return item;
     }
   });
+  const shipping = totalPrice >= 1200 ? 0 : 15;
 
+  const priceWithShapping = (shipping + +totalPrice).toFixed(2);
   const formData = JSON.parse(localStorage.getItem("localFormData"));
   const onConfirmClick = () => {
     SetShowBtnSpinner(true);
@@ -42,7 +49,7 @@ export default function PaymentMethod() {
     const additionalInfo = {
       address: formData?.address,
       phone: formData?.phone,
-      totalPrice: cart?.totalPrice,
+      totalPrice: priceWithShapping,
       userId: cart?.user_id,
       items: updatedAvailableItems?.map(item => ({
         product_id: item?.product_id._id,
