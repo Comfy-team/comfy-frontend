@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 //fontawsome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,6 +12,7 @@ import {
 //components
 import CartItem from "../../components/cartPage/cartItem";
 import { emptyCart } from "../../functions/cart";
+import { showToast } from "../../store/slices/toastSlice";
 
 //style
 import style from "./cartPage.module.css";
@@ -18,13 +20,26 @@ import style from "./cartPage.module.css";
 function CartPage() {
   const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const handleReturnToShop = () => {
     navigate("/shop");
   };
   const handleCheckout = () => {
+    const hasUnavailableItems = cart.items.some(item => {
+      const stock = item?.color ? item.product_id.colors.find(color => color.color === item.color)?.stock : 0;
+      return item.quantity > stock;
+    });
+    if (hasUnavailableItems) {
+      dispatch(
+        showToast("Quantity cant be greater than stock please decrease it and try again!")
+        );
+      return;
+    }
     navigate("/checkout");
   };
+
   if (!cart || !cart.items) {
     return (
       <div className="text-center py-5">
