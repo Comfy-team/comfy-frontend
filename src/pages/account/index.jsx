@@ -58,7 +58,7 @@ const Account = () => {
       setNotAuth(false);
     }
   }, []);
- console.log(jwtDecode(token))
+
   useEffect(() => {
     if(!token){
       return;
