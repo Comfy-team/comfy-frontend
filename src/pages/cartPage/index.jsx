@@ -22,10 +22,10 @@ function CartPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
   const handleReturnToShop = () => {
     navigate("/shop");
   };
+
   const handleCheckout = () => {
     const hasUnavailableItems = cart.items.some(item => {
       const stock = item?.color ? item.product_id.colors.find(color => color.color === item.color)?.stock : 0;
@@ -33,7 +33,7 @@ function CartPage() {
     });
     if (hasUnavailableItems) {
       dispatch(
-        showToast("Quantity cant be greater than stock please decrease it and try again!")
+        showToast("Quantity cant be more than stock!")
         );
       return;
     }
