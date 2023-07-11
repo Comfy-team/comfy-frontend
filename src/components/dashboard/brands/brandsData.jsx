@@ -12,6 +12,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import DashPagination from "../dashPagination";
 import axiosInstance from "../../../apis/config";
 import { showToast } from "../../../store/slices/toastSlice";
+import { setBrands } from "../../../store/slices/brandsSlice";
 import ConfirmPopup from "../../common/confirmPopup";
 import Spinner from "../../common/spinner";
 
@@ -41,10 +42,11 @@ const BrandsData = () => {
           },
         })
         .then((res) => {
+          setShowSpinner(false); 
           setAllBrandsInPage(res.data);
           setAllBrands(res.data.data);
           setTotalBrands(res.data.totalBrands);
-          setShowSpinner(false);
+          dispatch(setBrands(res.data.allData))
         })
         .catch((err) => {
           console.log(err);
@@ -110,6 +112,7 @@ const BrandsData = () => {
             setAllBrands(res.data.data);
             setTotalBrands(res.data.totalBrands);
             setBrandIdToDelete("");
+            dispatch(setBrands(res.data.allData))
           })
           .catch((err) => {
             console.log(err);
