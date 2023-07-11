@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import jwtDecode from "jwt-decode";
@@ -13,12 +13,14 @@ import {
 // components
 import { showLoginModal } from "../../store/slices/loginModalSlice";
 import { showCartModal } from "../../store/slices/cartModalSlice";
+// assets
 import logo from "../../assets/logos/logo-header.png";
 
 const Header = ({ isMediumScreen, cart }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [decodedToken, setDecodedToken] = useState(null);
   const dispatch = useDispatch();
+  const navToggleBtn = useRef();
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -57,6 +59,7 @@ const Header = ({ isMediumScreen, cart }) => {
             aria-controls="header-nav"
             aria-expanded="false"
             aria-label="Toggle navigation"
+            ref={navToggleBtn}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -64,6 +67,14 @@ const Header = ({ isMediumScreen, cart }) => {
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
                 <NavLink
+                  onClick={() => {
+                    if (
+                      navToggleBtn.current.getAttribute("aria-expanded") ===
+                      "true"
+                    ) {
+                      navToggleBtn.current.click();
+                    }
+                  }}
                   to="/"
                   className="nav-link color-main-gray hover-color-yellow fs-5"
                 >
@@ -72,6 +83,14 @@ const Header = ({ isMediumScreen, cart }) => {
               </li>
               <li className="nav-item">
                 <NavLink
+                  onClick={() => {
+                    if (
+                      navToggleBtn.current.getAttribute("aria-expanded") ===
+                      "true"
+                    ) {
+                      navToggleBtn.current.click();
+                    }
+                  }}
                   to="/shop"
                   className="nav-link color-main-gray hover-color-yellow fs-5"
                 >
@@ -80,6 +99,14 @@ const Header = ({ isMediumScreen, cart }) => {
               </li>
               <li className="nav-item">
                 <NavLink
+                  onClick={() => {
+                    if (
+                      navToggleBtn.current.getAttribute("aria-expanded") ===
+                      "true"
+                    ) {
+                      navToggleBtn.current.click();
+                    }
+                  }}
                   to="/about"
                   className="nav-link color-main-gray hover-color-yellow fs-5"
                 >
@@ -88,6 +115,14 @@ const Header = ({ isMediumScreen, cart }) => {
               </li>
               <li className="nav-item">
                 <NavLink
+                  onClick={() => {
+                    if (
+                      navToggleBtn.current.getAttribute("aria-expanded") ===
+                      "true"
+                    ) {
+                      navToggleBtn.current.click();
+                    }
+                  }}
                   className="nav-link color-main-gray hover-color-yellow fs-5"
                   to="/contact"
                 >
@@ -96,6 +131,14 @@ const Header = ({ isMediumScreen, cart }) => {
               </li>
               <li className="nav-item">
                 <NavLink
+                  onClick={() => {
+                    if (
+                      navToggleBtn.current.getAttribute("aria-expanded") ===
+                      "true"
+                    ) {
+                      navToggleBtn.current.click();
+                    }
+                  }}
                   className="nav-link color-main-gray hover-color-yellow fs-5"
                   to="/faq"
                 >
