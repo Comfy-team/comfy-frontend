@@ -162,7 +162,7 @@ const OrdersDash = () => {
             <input
               className="form-control"
               type="search"
-              placeholder="Search by order id"
+              placeholder="Search by order id ,user id or price"
               aria-controls="DataTables_Table_0"
               value={searchQuery}
               onChange={handleSearch}
