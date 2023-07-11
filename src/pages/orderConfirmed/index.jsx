@@ -57,7 +57,7 @@ const OrderConfirmed = () => {
         <div
           className={`${style.splitted} d-flex justify-content-center align-items-center position-relative`}
         >
-          <span className="d-inline-block rounded-2 py-2 px-3 bg-warning">
+          <span className="d-inline-block rounded-2 py-2 px-3 text-white bg-warning">
             Order No: #{order._id.slice(0, 11)}
           </span>
         </div>
