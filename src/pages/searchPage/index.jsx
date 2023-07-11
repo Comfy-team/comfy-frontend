@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-// auto animate
-import { useAutoAnimate } from "@formkit/auto-animate/react";
-
 // for validation
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -23,7 +20,6 @@ const SearchPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(1);
-  const [animationParent] = useAutoAnimate();
   const [searchParams, setSearchParams] = useSearchParams({
     page: 1,
     query: "",
@@ -116,7 +112,7 @@ const SearchPage = () => {
           data.length > 0 ? (
             <div ref={searchContent}>
               <h1 className="h4 mb-4 px-2">Total Results: {totalResults}</h1>
-              <div ref={animationParent} className="row m-0 row-gap-3 mb-5">
+              <div className="row m-0 row-gap-3 mb-5">
                 {data.map((product) => (
                   <div key={product._id} className="sol-sm-6 col-md-4">
                     <SearchCard product={product} query={query} />

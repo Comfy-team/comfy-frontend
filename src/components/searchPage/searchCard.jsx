@@ -35,7 +35,7 @@ const SearchCard = ({ product, query }) => {
           <span key={indx}>
             {piece}
             <span
-              className={`bg-yellow ${
+              className={`bg-yellow text-dark ${
                 indx === 0 && piece === "" ? "text-capitalize" : ""
               } p-0`}
             >
@@ -155,7 +155,7 @@ const SearchCard = ({ product, query }) => {
           <h3 className="h6 fw-bold card-title">
             <Link
               title={product.name}
-              className={`${style.title} overflow-hidden d-block text-ellipsis text-decoration-none hover-color-yellow color-product-name`}
+              className="text-truncate overflow-hidden d-block text-ellipsis text-decoration-none hover-color-yellow color-product-name"
               to={`/product-details/${product._id}`}
             >
               {shownTitle}
