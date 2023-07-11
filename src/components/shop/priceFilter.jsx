@@ -33,7 +33,7 @@ const PriceFilter = ({ min, max, value, onFilter }) => {
       </span>
       <span className="position-absolute end-0 top-100 pt-2">
         {maxTooClose && `${Math.floor(value)}$-`}
-        {max}$
+        {value < max ? max : Math.floor(value)}$
       </span>
       {!minTooClose && !maxTooClose ? (
         <span
