@@ -178,15 +178,15 @@ const CartItem = ({ item, cartId, product }) => {
           ).toFixed(2)}
         </strong>
       </td>
-      <td>
-        {showWarning && (
+      
+        {showWarning && (<td>
           <ConfirmPopup
             msg={`Are you sure you want to delete ${item.product_id.name} from cart?`}
             onConfirm={handleDelete}
             onCancel={() => setShowWarning(false)}
           />
-        )}
       </td>
+        )}
     </tr>
   );
 };
