@@ -1,12 +1,21 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import React from "react";
+import jwtDecode from "jwt-decode";
+
 //components
 import ShoppingCardComponent from "../../components/checkout/ShoppingCardComponent";
+import Breadcrumbcomponant from "../../components/checkout/Breadcrumbcomponant";
 import logoimg from "../../assets/logos/logo-header.png";
 //style
 import style from "./checkout.module.css";
-import Breadcrumbcomponant from "../../components/checkout/Breadcrumbcomponant";
 const Checkout = () => {
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("userToken");
+  if (!token) {
+    navigate("/404", { replace: true });
+    return;
+  }
   return (
     <div className={`${style.checkout}  `}>
       <div className={`${style.checkoutContainer}  mt-2  ms-0   `}>
