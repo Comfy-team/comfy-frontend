@@ -6,9 +6,6 @@ import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
-// auto animate
-import { useAutoAnimate } from "@formkit/auto-animate/react";
-
 // components
 import axiosInstance from "../../apis/config";
 import ProductCard from "../../components/common/productCard";
@@ -40,15 +37,15 @@ const Shop = () => {
   });
   const [searchParams, setSearchParams] = useSearchParams({});
   const brands = useSelector((state) => state.brands.brands);
-  const [animationParent] = useAutoAnimate();
   const content = useRef();
 
   const getData = (
+    getMaxMinPrices = false,
     page = 1,
     brand = searchObj.brand,
     category = searchObj.category,
     sort = searchObj.sort,
-    price = 0
+    price = searchObj.price
   ) => {
     setProducts(null);
     axiosInstance
@@ -64,7 +61,7 @@ const Shop = () => {
       .then((res) => {
         setProducts(res.data.data);
         setTotalPages(res.data.totalPages);
-        if (sort === searchObj.sort && price === 0) {
+        if (getMaxMinPrices) {
           setMinPrice(res.data.minPrice);
           setMaxPrice(res.data.maxPrice);
           setSearchObj({
@@ -72,14 +69,14 @@ const Shop = () => {
             brand,
             category,
             sort,
-            price: res.data.maxPrice,
+            price,
           });
           setSearchParams({
             page,
             brand,
             category,
             sort,
-            price: res.data.maxPrice,
+            price,
           });
         }
       })
@@ -89,33 +86,42 @@ const Shop = () => {
   const updateFilters = (key, value) => {
     const obj = { ...searchObj };
     obj[key] = value;
+    if (key !== "page") obj["page"] = 1;
     setSearchObj(obj);
     setSearchParams(obj);
   };
 
   const handlePageChange = (page) => {
     content.current.scrollIntoView({ behavior: "smooth" });
-    getData(page);
+    updateFilters("page", page);
+    getData(false, page);
   };
 
   const handleSort = (sorting) => {
     updateFilters("sort", sorting);
-    getData(1, searchObj.brand, searchObj.category, sorting);
+    getData(false, 1, searchObj.brand, searchObj.category, sorting);
   };
 
   const handleCategoryFilter = (value) => {
     updateFilters("category", value);
-    getData(1, searchObj.brand, value);
+    getData(true, 1, searchObj.brand, value);
   };
 
   const handleBrandFilter = (value) => {
     updateFilters("brand", value);
-    getData(1, value);
+    getData(true, 1, value);
   };
 
   const handlePriceFilter = (value) => {
     updateFilters("price", value);
-    getData(1, searchObj.brand, searchObj.category, searchObj.sort, value);
+    getData(
+      false,
+      1,
+      searchObj.brand,
+      searchObj.category,
+      searchObj.sort,
+      value
+    );
   };
 
   const handleCloseFilterModal = () => {
@@ -136,9 +142,9 @@ const Shop = () => {
       const sort = Number(searchParams.get("sort")) || searchObj.sort;
       const price = +searchParams.get("price") || searchObj.price;
       setSearchObj({ page, brand, category, sort, price });
-      getData(page, brand, category, sort);
+      getData(true, page, brand, category, sort, price);
     } else {
-      getData();
+      getData(true);
     }
     axiosInstance
       .get("/categories")
@@ -150,7 +156,7 @@ const Shop = () => {
 
   useLayoutEffect(() => {
     function updateSize() {
-      SetIsSmallScreen(window.innerWidth <768 ? true : false);
+      SetIsSmallScreen(window.innerWidth < 768 ? true : false);
     }
     window.addEventListener("resize", updateSize);
     updateSize();
@@ -183,17 +189,18 @@ const Shop = () => {
                   <div className="products mb-4">
                     <div
                       className={`${
-                        !isSmallScreen ?
-                        "d-flex justify-content-between align-items-center":""
+                        !isSmallScreen
+                          ? "d-flex justify-content-between align-items-center"
+                          : ""
                       } mb-4`}
                     >
                       <p className="mb-0">
                         Showing page {searchObj.page} of {totalPages} pages
                       </p>
                       {isSmallScreen ? (
-                        <div className="d-flex justify-content-between align-items-center pt-3">
+                        <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center pt-3">
                           <button
-                            className="btn border"
+                            className="btn border d-inline-block mb-sm-0 mb-4"
                             type="button"
                             aria-expanded="false"
                             onClick={handleOpenFilterModal}
@@ -213,10 +220,7 @@ const Shop = () => {
                         />
                       )}
                     </div>
-                    <div
-                      ref={animationParent}
-                      className={`row ${style["products-grid"]}`}
-                    >
+                    <div className={`row ${style["products-grid"]}`}>
                       {products.map((product) => (
                         <div key={product._id} className="col-lg-4 col-sm-6">
                           <ProductCard product={product} />

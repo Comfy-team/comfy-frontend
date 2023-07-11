@@ -58,7 +58,7 @@ const Aside = ({
           <PriceFilter
             min={minPrice}
             max={maxPrice}
-            value={filters.price}
+            value={filters.price || maxPrice}
             onFilter={handlePriceFilter}
           />
         </form>
