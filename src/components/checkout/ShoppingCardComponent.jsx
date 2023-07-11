@@ -1,15 +1,17 @@
 import { useSelector } from "react-redux";
-import React, { useState } from "react";
+import React from "react";
 import ProductCardCompnant from "./ProductCardCompnant";
 
 import style from "../../pages/checkout/checkout.module.css";
 
 export default function ShoppingCardComponent() {
-  // const [availableItems, setAvailableItems] = useState([]);
   const cart = useSelector(state => state.cart.cart);
   let totalPrice = 0;
   const updatedAvailableItems = cart?.items?.filter(item => {
-    if (item?.product_id?.colors[0]?.stock >= item?.quantity) {
+    const color = item?.color;
+    const stock = item?.product_id?.colors.find(c => c.color === color)?.stock;
+
+    if (stock >= item?.quantity) {
       totalPrice +=
         item?.product_id.price *
         (1 - item.product_id.discount / 100) *
