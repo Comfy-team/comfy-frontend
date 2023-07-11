@@ -30,12 +30,17 @@ const FAQ = () => {
         <div
           className={`${styles.largecolumn}  col-md-6 col-sm-12 col-lg-8     mt-5  `}
         >
-          {list.map(item => (
-            <div key={item.id} className="" id={`faqpara${item.id}`}>
-              <h6 className="text-uppercase font-weight-bold">
+          {list.map((item, index) => (
+            <div
+              key={item.id}
+              className={index > 0 ? "pt-5" : ""}
+              id={`faqpara${item.id}`}
+            >
+              <h2 className={`text-uppercase h6 ${index > 0 ? "pt-3" : ""}`}>
+                {" "}
                 {item.id}- {item.heading}{" "}
-              </h6>
-              <p> {item.content} </p>
+              </h2>
+              <p className="mb-0"> {item.content} </p>
             </div>
           ))}
         </div>
