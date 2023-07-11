@@ -61,12 +61,6 @@ input,
   }
 }
 
-.title {
-  white-space: nowrap;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-}
-
 .extra-info {
   font-size: 0.85rem;
 }
