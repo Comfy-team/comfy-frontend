@@ -83,7 +83,6 @@ const OrdersDash = () => {
         },
       })
       .then(res => {
-        setDeleteStatus(`order ${id} deleted successfully.`);
         axiosInstance
           .get(`/orders`, {
             params: {
