@@ -49,6 +49,7 @@ function CartModal({ showModal, hideModal }) {
         );
       return;
     }
+    hideModal();
     navigate("/checkout");
   };
 
