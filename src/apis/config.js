@@ -24,6 +24,8 @@ axiosInstance.interceptors.request.use(
           window.location.replace(window.location.origin);
         }
       }
+    } else {
+      store.dispatch(setCart({}));
     }
     return config;
   },
