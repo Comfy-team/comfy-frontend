@@ -128,7 +128,6 @@ const BrandsData = () => {
       <h1 className={`mb-2 h4 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
         Brands (total: {totalBrands} )
       </h1>
-      
       <div>
         <div className="row ms-4 me-3">
           <div className="my-4 row d-flex flex-column-reverse flex-md-row  align-items-center justify-content-between">
