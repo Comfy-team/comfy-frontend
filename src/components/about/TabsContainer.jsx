@@ -64,8 +64,8 @@ export default function TabsContainer() {
           makes a positive impact on the world.
         </Tab>
         <Tab eventKey="  Design Philosophy" title="  Design Philosophy">
-          At our furniture company, we believe that great design should be both
-          beautiful and functional. <br />
+          At our company, we believe that great design should be both beautiful
+          and functional. <br />
           Our approach to furniture design is centered around the following
           principles: Simplicity: We believe that furniture should be simple and
           uncluttered, with clean lines and minimal ornamentation. We strive to
