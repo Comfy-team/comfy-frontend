@@ -12,6 +12,8 @@ import axiosInstance from "../../../apis/config";
 import DashPagination from "./../dashPagination";
 import { showToast } from "../../../store/slices/toastSlice";
 import ConfirmPopup from "../../common/confirmPopup";
+import Spinner from "../../common/spinner";
+
 
 //style
 import dashStyle from "../../../pages/dashboard/dashboard.module.css";
@@ -26,6 +28,8 @@ const CategoriesData = () => {
   const [loading, setLoading] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState(null);
   const [showWarning, setShowWarning] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(true);
+
 
   const token = localStorage.getItem("userToken");
   const navigate = useNavigate();
@@ -40,6 +44,7 @@ const CategoriesData = () => {
           },
         })
         .then((res) => {
+          setShowSpinner(false); 
           setDisplayedCategories(res.data.data);
           setAllCategories(res.data);
           setTotalCategories(res.data.totalCategories);
@@ -128,9 +133,9 @@ const CategoriesData = () => {
 
   return (
     <div className="py-4">
-      <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
+      <h1 className={`mb-2 py-4 ps-4 fs-4 ${dashStyle["fw-bold"]}`}>
         Categories (total: {totalCategories})
-      </h4>
+      </h1>
       <div className="row ms-4 me-3">
         <div className="my-4 row d-flex flex-column-reverse flex-md-row  align-items-center justify-content-between">
           <div className="col-12 col-md-6">
@@ -154,7 +159,8 @@ const CategoriesData = () => {
           </div>
         </div>
       </div>
-
+      {!showSpinner ? (
+        <>
       <div className="table-responsive mb-5">
         <table className="table ">
           <thead>
@@ -172,7 +178,6 @@ const CategoriesData = () => {
             {loading ? (
               <tr>
                 <td colSpan="5" className="text-center">
-                  Loading...
                 </td>
               </tr>
             ) : (
@@ -219,6 +224,10 @@ const CategoriesData = () => {
         totalPages={allCategories.totalPages}
         onPageChange={onPageChange}
       />
+      </>
+        ) : (
+          <Spinner />
+        )}
       {showWarning && categoryToDelete && (
         <ConfirmPopup
           msg={`Are you sure you want to delete ${categoryToDelete.name} from categories?`}

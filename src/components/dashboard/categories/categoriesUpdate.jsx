@@ -66,8 +66,8 @@ const CategoryUpdate = () => {
   }
 
   return (
-    <div className="ps-4">
-      <h1>Update Category</h1>
+    <div className="ps-4 py-4">
+      <h1 className="fs-4 py-4">Update Category</h1>
       {errorMessage ? (
         <div className="alert alert-danger">{errorMessage}</div>
       ) : null}

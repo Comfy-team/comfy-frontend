@@ -11,8 +11,6 @@ import axiosInstance from "../../../apis/config";
 import CategoryForm from "./categoryForm";
 import { showToast } from "../../../store/slices/toastSlice";
 
-//style
-import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
 
 const AddCategory = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -57,8 +55,8 @@ const AddCategory = () => {
   };
 
   return (
-    <div className="ps-4">
-      <h1 className={`py-3 ${dashStyle["fw-bold"]}`}>Add New Category</h1>
+    <div className="ps-4 py-4">
+      <h1 className={`py-4 fs-4`}>Add New Category</h1>
       {errorMessage ? (
         <div
           className="alert alert-danger alert-dismissible fade show"
