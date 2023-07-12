@@ -21,8 +21,7 @@ const OrderInfo = ({ formData }) => {
         <div className="col-6">
           {" "}
           {formData?.address?.apartment} ,{formData?.address?.street},
-          {formData?.address?.city},{formData?.address?.governorate},
-          {formData?.address?.country}
+          {formData?.address?.city},{formData?.address?.governorate}
         </div>
         <div className="col-3">
           <Link to="/checkout" className={`${style.linkclass}`}>
