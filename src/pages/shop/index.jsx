@@ -186,7 +186,7 @@ const Shop = () => {
             {products ? (
               products.length > 0 ? (
                 <>
-                  <div className="products mb-4">
+                  <div className="products mb-5">
                     <div
                       className={`${
                         !isSmallScreen
@@ -220,7 +220,7 @@ const Shop = () => {
                         />
                       )}
                     </div>
-                    <div className={`row ${style["products-grid"]}`}>
+                    <div className="row row-gap-3">
                       {products.map((product) => (
                         <div key={product._id} className="col-lg-4 col-sm-6">
                           <ProductCard product={product} />

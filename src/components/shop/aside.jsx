@@ -25,7 +25,7 @@ const Aside = ({
   return (
     <div
       className={`${style["shop-sidebar"]} ${
-        showFilterModal && style.show
+        showFilterModal ? style.show : ""
       } col-lg-3 col-md-4 pb-md-5`}
     >
       <aside className={`bg-white ${style.aside}`}>
@@ -42,7 +42,7 @@ const Aside = ({
             </button>
           </div>
         )}
-        <form className="pt-4 pb-5 px-3 p-md-0">
+        <form className={`${style.form} pt-4 pb-5 px-3 p-md-0`}>
           <Filter
             data={categories}
             name="categories"
