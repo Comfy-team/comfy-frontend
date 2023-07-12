@@ -13,6 +13,7 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 // components
 import ImageMagnifier from "./imageMagnifier";
 import FullScreenCarousel from "./fullScreenCarousel";
+import Spinner from "../common/spinner";
 
 // style
 import style from "../../pages/productDetails/productDetails.module.css";
@@ -97,7 +98,7 @@ const Images = ({ imgs, name }) => {
       </div>
     </>
   ) : (
-    "loading"
+    <Spinner />
   );
 };
 

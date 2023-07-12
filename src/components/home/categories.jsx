@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+// font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-import styles from "./../../pages/home/home.module.css";
+// component
 import axiosInstance from "./../../apis/config";
+
+// style
+import styles from "./../../pages/home/home.module.css";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);

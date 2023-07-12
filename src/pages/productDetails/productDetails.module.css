@@ -42,13 +42,13 @@
   outline-color: var(--main-black);
 }
 
-input[type="checkbox"]:checked {
+.terms-form input[type="checkbox"]:checked {
   background-color: var(--main-black);
   border-color: var(--main-black);
 }
 
-input[type="checkbox"],
-input[type="checkbox"] + label {
+.terms-form input[type="checkbox"],
+.terms-form input[type="checkbox"] + label {
   cursor: pointer;
 }
 

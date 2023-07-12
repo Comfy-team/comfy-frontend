@@ -27,7 +27,6 @@ const AccountOrders = ({ token }) => {
           },
         })
         .then((res) => {
-          console.log(res.data);
           setUserOrder(res.data.reverse());
           setShowSpinner(false);
         })

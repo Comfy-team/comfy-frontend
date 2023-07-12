@@ -5,7 +5,11 @@ import { useDispatch } from "react-redux";
 
 // Font Awesome imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose, faSquarePlus, faSquareMinus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClose,
+  faSquarePlus,
+  faSquareMinus,
+} from "@fortawesome/free-solid-svg-icons";
 
 // Local imports
 import {
@@ -109,7 +113,11 @@ const CartItem = ({ item, cartId, product }) => {
         />
       </td>
       <td>
-        <span className={stock === 0 ? "text-danger" : ""}>
+        <span
+          className={`${
+            item.quantity > stock || stock === 0 ? "text-danger" : ""
+          }`}
+        >
           {stock > 0 ? stock : "Out Of Stock"}
         </span>
       </td>
@@ -128,7 +136,7 @@ const CartItem = ({ item, cartId, product }) => {
                 item.color
               )
             }
-            disabled={item.quantity === 1}
+            disabled={item.quantity === 1 || stock === 0}
           >
             <FontAwesomeIcon
               icon={faSquareMinus}
@@ -136,7 +144,9 @@ const CartItem = ({ item, cartId, product }) => {
               className="hover-color-yellow"
             />
           </button>
+
           <p className={`m-0 pt-1 px-1`}>{item?.quantity}</p>
+
           <button
             className="btn rounded-0 border-0"
             type="button"
@@ -148,7 +158,7 @@ const CartItem = ({ item, cartId, product }) => {
                 item.color
               )
             }
-            disabled={item.quantity === stock}
+            disabled={item.quantity >= stock || stock === 0}
           >
             <FontAwesomeIcon
               icon={faSquarePlus}
@@ -168,15 +178,15 @@ const CartItem = ({ item, cartId, product }) => {
           ).toFixed(2)}
         </strong>
       </td>
-      <td>
-        {showWarning && (
+      
+        {showWarning && (<td>
           <ConfirmPopup
             msg={`Are you sure you want to delete ${item.product_id.name} from cart?`}
             onConfirm={handleDelete}
             onCancel={() => setShowWarning(false)}
           />
-        )}
       </td>
+        )}
     </tr>
   );
 };

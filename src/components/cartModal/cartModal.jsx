@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 // Font Awesome imports
 import { faClose, faTruck } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Local imports
 import Item from "./item";
 import Spinner from "../common/spinner";
+import { showToast } from "../../store/slices/toastSlice";
 import "../../functions/cart";
 
 //style
@@ -19,6 +21,7 @@ function CartModal({ showModal, hideModal }) {
   const [showSpinner, setShowSpinner] = useState(true);
   const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (showModal) {
@@ -36,6 +39,16 @@ function CartModal({ showModal, hideModal }) {
   }, []);
 
   const handleCheckout = () => {
+    const hasUnavailableItems = cart.items.some(item => {
+      const stock = item?.color ? item.product_id.colors.find(color => color.color === item.color)?.stock : 0;
+      return item.quantity > stock;
+    });
+    if (hasUnavailableItems) {
+      dispatch(
+        showToast("Quantity cant be more than stock!")
+        );
+      return;
+    }
     hideModal();
     navigate("/checkout");
   };

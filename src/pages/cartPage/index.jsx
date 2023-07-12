@@ -1,4 +1,5 @@
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 //fontawsome
@@ -11,20 +12,42 @@ import {
 //components
 import CartItem from "../../components/cartPage/cartItem";
 import { emptyCart } from "../../functions/cart";
+import { showToast } from "../../store/slices/toastSlice";
+import ConfirmPopup from "../../components/common/confirmPopup";
 
 //style
 import style from "./cartPage.module.css";
 
 function CartPage() {
   const cart = useSelector((state) => state.cart.cart);
+  const [showWarning, setShowWarning] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleReturnToShop = () => {
     navigate("/shop");
   };
+
   const handleCheckout = () => {
+    const hasUnavailableItems = cart.items.some((item) => {
+      const stock = item?.color
+        ? item.product_id.colors.find((color) => color.color === item.color)
+            ?.stock
+        : 0;
+      return item.quantity > stock;
+    });
+    if (hasUnavailableItems) {
+      dispatch(showToast("Quantity cant be more than stock!"));
+      return;
+    }
     navigate("/checkout");
   };
+
+  const handleEmptyCart = () => {
+    emptyCart(cart._id);
+    setShowWarning(false);
+  };
+
   if (!cart || !cart.items) {
     return (
       <div className="text-center py-5">
@@ -81,7 +104,7 @@ function CartPage() {
                     <div className="col-4">
                       <button
                         type="button"
-                        className="btn btn-bg-dark text-light rounded-1 py-2 border-0" 
+                        className="btn btn-bg-dark text-light rounded-1 py-2 border-0"
                         onClick={handleReturnToShop}
                       >
                         <strong>
@@ -97,7 +120,7 @@ function CartPage() {
                       <button
                         type="button"
                         className="btn btn-bg-dark text-light rounded-1 py-2 border-0"
-                        onClick={() => emptyCart(cart._id)}
+                        onClick={() => setShowWarning(true)}
                       >
                         <strong>
                           <FontAwesomeIcon icon={faTrashCan} className="me-2" />
@@ -108,7 +131,7 @@ function CartPage() {
                     <div className="col-3">
                       TOTAL PRICE:
                       <span className="color-yellow ps-1 fw-semibold">
-                       ${cart.totalPrice}
+                        ${cart.totalPrice}
                       </span>
                     </div>
                   </div>
@@ -124,6 +147,15 @@ function CartPage() {
                     <strong>Checkout</strong>
                   </button>
                 </td>
+                {showWarning && (
+                  <td>
+                    <ConfirmPopup
+                      msg={`Are you sure you want to remove all items from your cart?`}
+                      onConfirm={handleEmptyCart}
+                      onCancel={() =>setShowWarning(false)}
+                    />
+                  </td>
+                )}
               </tr>
             </>
           )}

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import jwtDecode from "jwt-decode";
@@ -8,13 +10,12 @@ import axiosInstance from "../../apis/config";
 import { cities } from "../../apis/cities";
 import { governoratesData } from "../../apis/governorates";
 
-// import store from "../../store/store";
 //componant
 import Spinner from "../common/spinner";
 //style
 import style from "../../pages/checkout/checkout.module.css";
 
-//yup validation
+// validation
 const DisplayingErrorMessagesSchema = Yup.object().shape({
   fullName: Yup.string()
     .required("Full name is required")
@@ -52,6 +53,7 @@ export default function FormComonent() {
   const [user, setUser] = useState("");
 
   const navigate = useNavigate();
+  const cart = useSelector(state => state.cart.cart);
 
   const token = localStorage.getItem("userToken");
   const decoded = jwtDecode(token);
@@ -130,9 +132,7 @@ export default function FormComonent() {
             "x-access-token": token,
           },
         })
-        .then(res => {
-          // console.log(res);
-        })
+        .then(res => {})
         .catch(err => console.log(err));
     }
   };
@@ -381,6 +381,7 @@ export default function FormComonent() {
 
               <button
                 type="submit"
+                disabled={cart?.totalPrice === 0}
                 className={`${style.formbtn} 
                  col-lg-6  col-md-6 col-sm-12  col-12  btn  h-100  ws-100 me-0 `}
               >

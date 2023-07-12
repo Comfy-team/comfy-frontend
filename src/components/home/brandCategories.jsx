@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
+
+// font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
+// style
+import styles from "./../../pages/home/home.module.css";
+
+// images
 import ecoFriendly from "./../../assets/brands-categories/eco-friendly.jpg";
 import outDoor from "./../../assets/brands-categories/luxury.jpg";
 
-import styles from "./../../pages/home/home.module.css";
 const BrandCategories = () => {
   return (
     <>

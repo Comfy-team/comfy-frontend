@@ -19,8 +19,9 @@ axiosInstance.interceptors.request.use(
       if (decoded.exp < currentTime) {
         localStorage.removeItem("userToken");
         store.dispatch(setCart({}));
-        if (config.headers.Authorization) {
-          window.location.replace("/");
+        const requireAuth = /(checkout|dashboard|account|order-comfirmed)/g;
+        if (requireAuth.test(window.location.pathname)) {
+          window.location.replace(window.location.origin);
         }
       }
     } else {

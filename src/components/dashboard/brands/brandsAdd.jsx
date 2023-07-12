@@ -59,7 +59,7 @@ const BrandsAdd = () => {
 
   return (
     <div className="ps-5 py-4">
-      <h1 className={`py-3 ${dashStyle["fw-bold"]}`}>Add New Brand</h1>
+      <h1 className={`py-3 h4 ${dashStyle["fw-bold"]}`}>Add New Brand</h1>
 
       <div>
         <Formik
@@ -117,7 +117,7 @@ const BrandsAdd = () => {
                 <div>
                   {image !== "" ? (
                     <img
-                      alt="brand image"
+                      alt="brand"
                       src={URL.createObjectURL(image)}
                       className="img-thumbnail mb-2"
                       width="100"

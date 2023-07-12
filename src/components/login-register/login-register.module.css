@@ -5,12 +5,15 @@
 }
 
 .cancel {
+  -o-transition: all 0.3s linear 0s;
   transition: all 0.3s linear 0s;
   -webkit-transition: all 0.3s linear 0s;
   cursor: pointer;
 }
 .cancel:hover {
   transform: rotate(-180deg);
+  -webkit-transform: rotate(-180deg);
+  -ms-transform: rotate(-180deg);
 }
 .title {
   border-bottom: 2px solid #ebebeb;
@@ -34,13 +37,21 @@
 
 
 .or {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   color: #999;
 }
 
 .line {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
   flex: 1;
   height: 1px;
   background-color: #ccc;
@@ -62,12 +73,32 @@
   color: var(--red);
 }
 .input{
-    color: var(--color-main);
+  color: var(--color-main);
+}
+
+.input::-webkit-input-placeholder {
+  color: #999;
+  font-size:14px
+}
+
+.input::-moz-placeholder {
+  color: #999;
+  font-size:14px
+}
+
+.input:-ms-input-placeholder {
+  color: #999;
+  font-size:14px
+}
+
+.input::-ms-input-placeholder {
+  color: #999;
+  font-size:14px
 }
 
 .input::placeholder {
-    color: #999;
-    font-size:14px
+  color: #999;
+  font-size:14px
 }
 
 .group-button .button {
@@ -79,8 +110,9 @@
     padding: 0;
     cursor: pointer;
     border: 0;
+    -webkit-transition: all 0.24s linear 0s;
+    -o-transition: all 0.24s linear 0s;
     transition: all 0.24s linear 0s;
-    -webkit-transition: all .24s linear 0s;
 }
 .button-submit {
   margin-top: 15px;
@@ -101,6 +133,8 @@
   position: absolute;
   top: 50%;
   right: 10px;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   cursor: pointer;
 }

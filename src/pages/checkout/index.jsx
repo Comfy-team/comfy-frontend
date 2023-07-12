@@ -1,12 +1,32 @@
-import { Link, Outlet } from "react-router-dom";
-import React from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+
 //components
 import ShoppingCardComponent from "../../components/checkout/ShoppingCardComponent";
+import Breadcrumbcomponant from "../../components/checkout/Breadcrumbcomponant";
 import logoimg from "../../assets/logos/logo-header.png";
 //style
 import style from "./checkout.module.css";
-import Breadcrumbcomponant from "../../components/checkout/Breadcrumbcomponant";
+
 const Checkout = () => {
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("userToken");
+  const cart = useSelector(state => state.cart.cart);
+  useEffect(() => {
+    if (!token) {
+      navigate("/404", { replace: true });
+      return;
+    }
+  });
+  useEffect(() => {
+    if (cart?.totalPrice == 0) {
+      navigate("/home", { replace: true });
+      return;
+    }
+  });
+
   return (
     <div className={`${style.checkout}  `}>
       <div className={`${style.checkoutContainer}  mt-2  ms-0   `}>

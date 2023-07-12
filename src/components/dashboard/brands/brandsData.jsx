@@ -125,9 +125,9 @@ const BrandsData = () => {
   }
   return (
     <div className="py-4">
-      <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
+      <h1 className={`mb-2 h4 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
         Brands (total: {totalBrands} )
-      </h4>
+      </h1>
       <div className="pb-3">
         <div className="row ms-4 me-3">
           <div className="my-4 row d-flex flex-column-reverse flex-md-row  align-items-center justify-content-between">
@@ -182,7 +182,7 @@ const BrandsData = () => {
                           src={
                             process.env.REACT_APP_BASE_URL + "/" + brand.image
                           }
-                          alt="brand image"
+                          alt="brand"
                         />
                       </td>
                       <td>{brand.category}</td>

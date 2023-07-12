@@ -15,6 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 // main style
 import "./App.css";
+import TransitionToTop from "./components/common/transitionToTop";
 
 function App() {
   const toastMsg = useSelector((state) => state.toastInfo.msg);
@@ -34,6 +35,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <TransitionToTop />
       <AppRoutes />
       {toastMsg && (
         <ToastInfo

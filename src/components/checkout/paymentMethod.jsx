@@ -76,8 +76,7 @@ export default function PaymentMethod() {
         },
       })
       .then(res => {
-        dispatch(showToast("orders was make  successfully!"));
-        navigate(`/order-confirmed/${res.data._id}`);
+        navigate(`/order-confirmed/${res.data._id}`, { replace: true });
         emptyCart(cart._id);
         setIsAddingOrder(true);
         SetShowBtnSpinner(false);

@@ -12,36 +12,32 @@ const ImageMagnifier = ({
   const [showMagnifier, setShowMagnifier] = useState(false);
 
   return (
-    <div
-      style={{
-        position: "relative",
-      }}
-    >
-        <img
-          src={src}
-          alt={alt}
-          style={{ height: "100%", width: "100%" }}
-          onMouseEnter={(e) => {
-            // update image size and turn-on magnifier
-            const elem = e.currentTarget;
-            const { width, height } = elem.getBoundingClientRect();
-            setSize([width, height]);
-            setShowMagnifier(true);
-          }}
-          onMouseMove={(e) => {
-            // update cursor position
-            const elem = e.currentTarget;
-            const { top, left } = elem.getBoundingClientRect();
-            // calculate cursor position on the image
-            const x = e.pageX - left - window.pageXOffset;
-            const y = e.pageY - top - window.pageYOffset;
-            setXY([x, y]);
-          }}
-          onMouseLeave={() => {
-            // close magnifier
-            setShowMagnifier(false);
-          }}
-        />
+    <div className="position-relative">
+      <img
+        src={src}
+        alt={alt}
+        className="h-100 w-100"
+        onMouseEnter={(e) => {
+          // update image size and turn-on magnifier
+          const elem = e.currentTarget;
+          const { width, height } = elem.getBoundingClientRect();
+          setSize([width, height]);
+          setShowMagnifier(true);
+        }}
+        onMouseMove={(e) => {
+          // update cursor position
+          const elem = e.currentTarget;
+          const { top, left } = elem.getBoundingClientRect();
+          // calculate cursor position on the image
+          const x = e.pageX - left - window.pageXOffset;
+          const y = e.pageY - top - window.pageYOffset;
+          setXY([x, y]);
+        }}
+        onMouseLeave={() => {
+          // close magnifier
+          setShowMagnifier(false);
+        }}
+      />
       <div
         style={{
           display: showMagnifier ? "" : "none",
