@@ -76,7 +76,7 @@ export default function PaymentMethod() {
         },
       })
       .then(res => {
-        navigate(`/order-confirmed/${res.data._id}`);
+        navigate(`/order-confirmed/${res.data._id}`, { replace: true });
         emptyCart(cart._id);
         setIsAddingOrder(true);
         SetShowBtnSpinner(false);

@@ -8,13 +8,12 @@ import axiosInstance from "../../apis/config";
 import { cities } from "../../apis/cities";
 import { governoratesData } from "../../apis/governorates";
 
-// import store from "../../store/store";
 //componant
 import Spinner from "../common/spinner";
 //style
 import style from "../../pages/checkout/checkout.module.css";
 
-//yup validation
+// validation
 const DisplayingErrorMessagesSchema = Yup.object().shape({
   fullName: Yup.string()
     .required("Full name is required")
@@ -59,6 +58,7 @@ export default function FormComonent() {
   const savedFormData = localStorage.getItem("localFormData");
   //intial value
   const [theintialvalue, settheIntialvalue] = useState(() => {
+    
     // retrieve form data from localStorage if it exists
     if (savedFormData) {
       return JSON.parse(savedFormData);
