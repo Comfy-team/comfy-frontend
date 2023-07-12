@@ -9,6 +9,8 @@ import * as Yup from "yup";
 import axiosInstance from "../../../apis/config";
 import { showToast } from "../../../store/slices/toastSlice";
 import { setBrands } from "../../../store/slices/brandsSlice";
+import Spinner from "../../common/spinner";
+
 
 // style
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
@@ -62,15 +64,16 @@ const BrandsUpdate = () => {
         dispatch(showToast("Unable to update brand, please try again."));
       });
   };
+
   if (!brandById) {
     // Display a loading spinner or message while the data is being fetched
-    return <div>Loading...</div>;
+    return <Spinner/> ;
   }
   // Extract the file name from the path
   
   return (
     <div className="ps-5 py-4">
-      <h1 className={`py-3 ${dashStyle["fw-bold"]}`}>Update Brand</h1>
+      <h1 className={`py-3 h4 ${dashStyle["fw-bold"]}`}>Update Brand</h1>
 
       <div>
         <Formik
