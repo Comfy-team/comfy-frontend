@@ -169,7 +169,7 @@ const OrdersDash = () => {
             />
           </div>
         </div>
-        <div className="overflow-x-auto pb-3">
+        <div className="overflow-x-auto pb-3 mb-3">
           {!showSpinner ? (
             <table className="table border-top" id="DataTables_Table_0">
               <thead>
@@ -272,6 +272,7 @@ const OrdersDash = () => {
           totalPages={allOrdersInPage.totalPages}
           currentPage={currentPage}
           onPageChange={onPageChange}
+          className="mt-5"
         />
         {showWarning && orderIdToDelete && (
           <ConfirmPopup
