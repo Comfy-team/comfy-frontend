@@ -28,7 +28,7 @@ const Aside = ({
         showFilterModal ? style.show : ""
       } col-lg-3 col-md-4 pb-md-5`}
     >
-      <aside className={`bg-white ${style.aside}`}>
+      <aside className={`bg-white ${style.aside} pb-md-0 pb-4`}>
         {isSmallScreen && (
           <div className="bg-dark p-3 text-white d-flex justify-content-between align-items-center">
             <h2 className="h6 text-uppercase mb-0">Filters</h2>
