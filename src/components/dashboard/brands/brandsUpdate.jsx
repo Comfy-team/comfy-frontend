@@ -128,7 +128,7 @@ const BrandsUpdate = () => {
                         process.env.REACT_APP_BASE_URL + "/" + brandById.image
                         : URL.createObjectURL(image)
                       }
-                      alt="Current brand image"
+                      alt="Current brand"
                       className="img-thumbnail mb-2"
                       width="100"
                       name="image"
