@@ -1,12 +1,17 @@
 import { Link } from "react-router-dom";
 import { Carousel } from "react-bootstrap";
+
+// font awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+
+// style
+import  styles  from "./../../pages/home/home.module.css"
+
+// images
 import homeSlider1 from "../../assets/home-slider/slide-1.jpg";
 import homeSlider3 from "../../assets/home-slider/slide-3.jpg";
 import homeSlider2 from "../../assets/home-slider/slide-2.jpg";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import  styles  from "./../../pages/home/home.module.css"
 
 const MainCarousel = () => {
 

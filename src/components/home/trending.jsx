@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-//components
+// components
 import { LeftArrow, RightArrow } from "./../common/customSliderArrows";
 import axiosInstance from "../../apis/config";
 import ProductCard from "./../common/productCard";
 import Spinner from "../common/spinner";
 
-//style
+// style
 import styles from "./../../pages/home/home.module.css";
 
 // React multi-carousel breakpoints
@@ -47,6 +47,7 @@ const responsive = {
 const Trending = () => {
   const [product, setProduct] = useState([]);
   const [showSpinner, setShowSpinner] = useState(true);
+  
   useEffect(() => {
     setShowSpinner(true);
     axiosInstance
