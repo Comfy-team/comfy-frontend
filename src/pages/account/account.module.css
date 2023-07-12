@@ -85,6 +85,26 @@
   border-radius: 1rem !important;
 }
 
+.input::-webkit-input-placeholder {
+  color: #999 !important;
+  font-size: 14px !important;
+}
+
+.input::-moz-placeholder {
+  color: #999 !important;
+  font-size: 14px !important;
+}
+
+.input:-ms-input-placeholder {
+  color: #999 !important;
+  font-size: 14px !important;
+}
+
+.input::-ms-input-placeholder {
+  color: #999 !important;
+  font-size: 14px !important;
+}
+
 .input::placeholder {
   color: #999 !important;
   font-size: 14px !important;
