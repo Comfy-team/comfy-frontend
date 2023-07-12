@@ -1,7 +1,10 @@
+// font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCube } from "@fortawesome/free-solid-svg-icons";
 import { faRefresh } from "@fortawesome/free-solid-svg-icons";
 import { faCreditCard } from "@fortawesome/free-regular-svg-icons";
+
+// style
 import  styles  from "./../../pages/home/home.module.css"
 
 const Services = () => {
