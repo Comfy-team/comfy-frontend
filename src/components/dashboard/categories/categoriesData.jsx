@@ -133,7 +133,7 @@ const CategoriesData = () => {
 
   return (
     <div className="py-4">
-      <h1 className={`mb-2 py-4 ps-4 fs-4 ${dashStyle["fw-bold"]}`}>
+      <h1 className={`mb-2 py-3 ps-4 fs-4 ${dashStyle["fw-bold"]}`}>
         Categories (total: {totalCategories})
       </h1>
       <div className="row ms-4 me-3">
@@ -162,7 +162,7 @@ const CategoriesData = () => {
       {!showSpinner ? (
         <>
       <div className="table-responsive mb-5">
-        <table className="table ">
+        <table className="table border-top">
           <thead>
             <tr>
               <th scope="col" className="ps-4">
@@ -175,13 +175,7 @@ const CategoriesData = () => {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
-              <tr>
-                <td colSpan="5" className="text-center">
-                </td>
-              </tr>
-            ) : (
-              displayedCategories.map((category) => (
+          {displayedCategories.map((category) => (
                 <tr key={category._id}>
                   <td className="ps-4">{category._id}</td>
                   <td>{category.name}</td>
@@ -210,12 +204,11 @@ const CategoriesData = () => {
                         setCategoryToDelete(category);
                         setShowWarning(true);
                       }}
-                    />
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
+                      />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
         </table>
       </div>
 
