@@ -182,7 +182,7 @@ const BrandsData = () => {
                           src={
                             process.env.REACT_APP_BASE_URL + "/" + brand.image
                           }
-                          alt="brand image"
+                          alt="brand"
                         />
                       </td>
                       <td>{brand.category}</td>
