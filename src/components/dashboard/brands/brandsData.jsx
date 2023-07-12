@@ -129,7 +129,7 @@ const BrandsData = () => {
         Brands (total: {totalBrands} )
       </h1>
       
-      <div >
+      <div>
         <div className="row ms-4 me-3">
           <div className="my-4 row d-flex flex-column-reverse flex-md-row  align-items-center justify-content-between">
             <div className="col-12 col-md-6">
