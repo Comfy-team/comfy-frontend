@@ -2,11 +2,11 @@ import { useState } from "react";
 
 // react multi carousel
 import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 
 // components
 import { LeftArrow, RightArrow } from "../common/customSliderArrows";
 import ProductCard from "../common/productCard";
+import Spinner from "../common/spinner";
 
 // React multi-carousel breakpoints
 const responsive = {
@@ -79,7 +79,7 @@ const RelatedProducts = ({ data }) => {
       </div>
     </div>
   ) : (
-    ""
+    <Spinner />
   );
 };
 

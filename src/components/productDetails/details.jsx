@@ -28,6 +28,7 @@ const Details = ({ product }) => {
   const [terms, setTerms] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [showBtnSpinner, setBtnSpinner] = useState(false);
+  const [showBuyBtnSpinner, setShowBuyBtnSpinner] = useState(false);
   const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const Details = ({ product }) => {
   const handleColorChange = (color) => {
     setActiveColor(color);
     if (!cart.items) return;
+    // find if user added this color to cart
     const item = cart.items.find(
       (ele) => ele.product_id._id === product._id && color.color === ele.color
     );
@@ -65,10 +67,20 @@ const Details = ({ product }) => {
 
   const handleBuyProduct = () => {
     if (!inCart) {
+      setShowBuyBtnSpinner(true);
       handleAddToCart();
+    } else {
+      navigate("/checkout");
     }
-    navigate("/checkout");
   };
+
+  useEffect(() => {
+    // wait untill product added to cart then navigate to checkout
+    if (showBuyBtnSpinner) {
+      navigate("/checkout");
+      setShowBuyBtnSpinner(false);
+    }
+  }, [inCart]);
 
   useEffect(() => {
     setBtnSpinner(false);
@@ -95,7 +107,7 @@ const Details = ({ product }) => {
           }
           return;
         } else {
-          // user just navigated to page
+          // check if user just navigated to page
           item = cart.items.find((ele) => ele.product_id._id === product._id);
           if (item) {
             const newActiveColor = product.colors.find(
@@ -108,6 +120,7 @@ const Details = ({ product }) => {
           }
         }
       }
+      // user not logged in
       const firstInStockColor =
         product.colors.find((ele) => ele.stock > 0) || product.colors[0];
       setActiveColor(firstInStockColor);
@@ -169,7 +182,7 @@ const Details = ({ product }) => {
         )}
       </div>
       <div className="py-4">
-        <form action="#">
+        <form action="#" className={style["terms-form"]}>
           <div className="form-check">
             <input
               className="form-check-input"
@@ -191,23 +204,34 @@ const Details = ({ product }) => {
             </label>
           </div>
         </form>
-        <button
-          type="button"
-          className="btn my-3 py-2 d-block w-100 btn-bg-dark text-white text-uppercase"
-          disabled={
-            !terms ||
-            activeColor.stock === 0 ||
-            cart.role === "admin" ||
-            activeQuantity > activeColor.stock
-              ? true
-              : false
-          }
-          onClick={() =>
-            cart.items ? handleBuyProduct() : dispatch(showLoginModal(true))
-          }
-        >
-          buy it now
-        </button>
+        {!showBuyBtnSpinner ? (
+          <button
+            type="button"
+            className="btn my-3 py-2 d-block w-100 btn-bg-dark text-white text-uppercase"
+            disabled={
+              !terms ||
+              activeColor.stock === 0 ||
+              cart.role === "admin" ||
+              activeQuantity > activeColor.stock
+                ? true
+                : false
+            }
+            onClick={() =>
+              cart.items ? handleBuyProduct() : dispatch(showLoginModal(true))
+            }
+          >
+            buy it now
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="btn my-3 py-2 d-block w-100 btn-bg-dark text-white text-uppercase"
+          >
+            <div className="spinner-border spinner-border-sm" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </button>
+        )}
         <AdditionalInfo product={product} />
       </div>
       {showWarning && (
