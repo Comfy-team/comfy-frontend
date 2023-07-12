@@ -117,7 +117,7 @@ const BrandsAdd = () => {
                 <div>
                   {image !== "" ? (
                     <img
-                      alt="brand image"
+                      alt="brand"
                       src={URL.createObjectURL(image)}
                       className="img-thumbnail mb-2"
                       width="100"
