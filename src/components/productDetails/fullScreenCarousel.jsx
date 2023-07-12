@@ -2,6 +2,9 @@ import { useState } from "react";
 
 import Carousel from "react-bootstrap/Carousel";
 
+// components
+import Spinner from "../common/spinner";
+
 // style
 import style from "../../pages/productDetails/productDetails.module.css";
 
@@ -31,7 +34,7 @@ const FullScreenCarousel = ({ imgs, alt }) => {
       ))}
     </Carousel>
   ) : (
-    "loading"
+    <Spinner />
   );
 };
 
