@@ -9,6 +9,7 @@ import ProductColor from "./productColor";
 import ProductImage from "./productImage";
 
 const ProductForm = ({
+  form,
   errors,
   touched,
   values,
@@ -44,12 +45,14 @@ const ProductForm = ({
     <>
       {/* name */}
       <div className="form-group mb-3">
-        <label htmlFor="name" className="mb-1">
+        <label htmlFor={`${form}-prod-name`} className="mb-1">
           Name
         </label>
         <Field
           type="text"
+          autocomplete="false"
           name="name"
+          id={`${form}-prod-name`}
           className={`form-control ${
             errors.name && touched.name ? "is-invalid" : ""
           }`}
@@ -62,12 +65,13 @@ const ProductForm = ({
       </div>
       {/* description */}
       <div className="form-group mb-3">
-        <label htmlFor="description" className="mb-1">
+        <label htmlFor={`${form}-prod-description`} className="mb-1">
           Description
         </label>
         <Field
           as="textarea"
           name="description"
+          id={`${form}-prod-description`}
           className={`form-control ${
             errors.description && touched.description ? "is-invalid" : ""
           }`}
@@ -82,13 +86,14 @@ const ProductForm = ({
         {/* price */}
         <div className="col-6 px-0">
           <div className="form-group mb-3">
-            <label htmlFor="price" className="mb-1">
+            <label htmlFor={`${form}-prod-price`} className="mb-1">
               Price
             </label>
             <Field
               type="number"
               name="price"
               min="1"
+              id={`${form}-prod-price`}
               className={`form-control ${
                 errors.price && touched.price ? "is-invalid" : ""
               }`}
@@ -103,13 +108,14 @@ const ProductForm = ({
         {/* discount */}
         <div className="col-6 pe-0 ps-md-3">
           <div className="form-group mb-3">
-            <label htmlFor="discount" className="mb-1">
+            <label htmlFor={`${form}-prod-discount`} className="mb-1">
               Discount
             </label>
             <Field
               type="number"
               name="discount"
               min="0"
+              id={`${form}-prod-discount`}
               className={`form-control ${
                 errors.discount && touched.discount ? "is-invalid" : ""
               }`}
@@ -126,12 +132,13 @@ const ProductForm = ({
         {/* category */}
         <div className="col-6 px-0">
           <div className="form-group mb-3">
-            <label htmlFor="category" className="mb-1">
+            <label htmlFor={`${form}-prod-category`} className="mb-1">
               Category
             </label>
             <Field
               name="category"
               as="select"
+              id={`${form}-prod-category`}
               className={`form-control text-capitalize ${
                 errors.category && touched.category ? "is-invalid" : ""
               }`}
@@ -153,12 +160,13 @@ const ProductForm = ({
         {/* brand */}
         <div className="col-6 pe-0 ps-md-3">
           <div className="form-group mb-3">
-            <label htmlFor="brand" className="mb-1">
+            <label htmlFor={`${form}-prod-brand`} className="mb-1">
               Brand
             </label>
             <Field
               name="brand"
               as="select"
+              id={`${form}-prod-brand`}
               className={`form-control ${
                 errors.brand && touched.brand ? "is-invalid" : ""
               }`}
@@ -180,8 +188,8 @@ const ProductForm = ({
       </div>
       {/* stock and colors */}
       <div className="form-group mb-3">
-        <label htmlFor="colors" className="mb-1">
-           Colors & Stock
+        <label htmlFor={`${form}-prod-colors`} className="mb-1">
+          Colors & Stock
         </label>
         <div
           className={`d-flex gap-3 flex-wrap ${
@@ -213,6 +221,7 @@ const ProductForm = ({
         <Field
           type="color"
           name="colors"
+          id={`${form}-prod-colors`}
           className={`form-control ${
             errors.colors && touched.colors ? "is-invalid" : ""
           }`}
@@ -238,7 +247,7 @@ const ProductForm = ({
       </div>
       {/* images */}
       <div className="form-group mb-4 pb-4">
-        <label htmlFor="images" className="mb-1">
+        <label htmlFor={`${form}-prod-images`} className="mb-1">
           Images
         </label>
         <div
@@ -270,6 +279,7 @@ const ProductForm = ({
         <Field
           type="file"
           name="images"
+          id={`${form}-prod-images`}
           multiple
           className={`form-control ${imageError ? "is-invalid" : ""}`}
           onChange={onImageInput}
