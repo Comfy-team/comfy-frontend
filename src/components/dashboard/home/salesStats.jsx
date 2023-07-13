@@ -28,6 +28,9 @@ const SalesStats = () => {
       },
       legend: {
         position: "bottom",
+        labels: {
+          colors: "#697a8d",
+      },
       },
       plotOptions: {
         polarArea: {
