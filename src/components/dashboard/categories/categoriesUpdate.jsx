@@ -6,6 +6,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "../../../apis/config";
 import CategoryForm from "./categoryForm";
 import { showToast } from "../../../store/slices/toastSlice";
+import Spinner from "../../common/spinner";
 
 const CategoryUpdate = () => {
   const { id } = useParams();
@@ -21,7 +22,7 @@ const CategoryUpdate = () => {
       .then((res) => {
         setInitialValues({
           name: res.data.name,
-          image: null,
+          image: res.data.image,
         });
       })
       .catch((err) => {
@@ -51,9 +52,6 @@ const CategoryUpdate = () => {
       })
       .then(() => {
         dispatch(showToast("Category was updated successfully!"));
-        setTimeout(() => {
-          navigate("/dashboard/categories");
-        }, 4000);
       })
       .catch((err) => {
         console.log(err);
@@ -62,16 +60,16 @@ const CategoryUpdate = () => {
   };
 
   if (!initialValues) {
-    return <div>Loading...</div>;
+    return <Spinner/>
   }
 
   return (
-    <div className="ps-4 py-4">
+    <div className="px-4 py-4">
       <h1 className="fs-4 py-4">Update Category</h1>
       {errorMessage ? (
         <div className="alert alert-danger">{errorMessage}</div>
       ) : null}
-      <CategoryForm initialValues={initialValues} onSubmit={handleSubmit} />
+      <CategoryForm initialValues={initialValues} onSubmit={handleSubmit}/>
     </div>
   );
 };
