@@ -18,7 +18,7 @@ export default function ProductCardCompnant({ index, item }) {
             }`}
           />
         </div>
-        <div className={`${style.productInfo} col-7  `}>
+        <div className={`${style.productInfo} col-7  ps-4`}>
           <p className="mb-0 ">{item?.product_id?.name}</p>
           <div className={`${style.quantitCircle} mb-1"`}>{item?.quantity}</div>
           <div
