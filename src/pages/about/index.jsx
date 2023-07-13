@@ -8,7 +8,10 @@ import styles from "./about.module.css";
 const About = () => {
   return (
     <>
-      <div id="about" className={`container-fluid  mb-5   p-5 `}>
+      <div
+        id="about"
+        className={`container-fluid  mb-5    p-lg-5 p-md-5 p-sm-1`}
+      >
         <div className={` row `}>
           <div
             className={` col-sm-12 col-lg-6  mb-6 h-lg-100 h-mb-100 h-sm-100`}
