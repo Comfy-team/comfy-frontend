@@ -12,15 +12,14 @@ import axiosInstance from "./../../apis/config";
 import styles from "./../../pages/home/home.module.css";
 
 const Categories = () => {
+  
   const [categories, setCategories] = useState([]);
-  // Remove the first category from the array
-  const [
-    firstCategory,
-    secondCategory,
-    thirdCategory,
-    forthCategory,
-    fifthCategory,
-  ] = categories.slice(0, 5);
+  // Find the categories in the array by their name
+  const chairsCategory = categories.find((category) => category.name === "chairs");
+  const lightingCategory = categories.find((category) => category.name === "lighting");
+  const decorCategory = categories.find((category) => category.name === "decor");
+  const sofasCategory = categories.find((category) => category.name === "sofas");
+  const tablesCategory = categories.find((category) => category.name === "tables");
 
   useEffect(() => {
     axiosInstance
@@ -36,21 +35,21 @@ const Categories = () => {
       <div className="container-fluid px-md-5 ">
         <div className={`row ${styles.gapColumn} ${styles.category}`}>
           <div className={`col-md-4 col-12 ${styles.itemOne}`}>
-            {secondCategory && (
+            {chairsCategory && (
               <div className={`${styles.categoryItem} h-100 `}>
                 <img
                     className={`${styles.categiryImage}`}
                   src={ 
-                    process.env.REACT_APP_BASE_URL + "/" + secondCategory.image
+                    process.env.REACT_APP_BASE_URL + "/" + chairsCategory.image
                   }
-                  alt={secondCategory.name}
+                  alt={chairsCategory.name}
                 />
                 <div className={styles.overlay}>
-                  <p>{secondCategory.products_id.length} products</p>
-                  <Link to={`/shop?category=${secondCategory._id}`} className={styles.categoryLink}>
-                    <h2>{secondCategory.name}</h2>
+                  <p>{chairsCategory.products_id.length} products</p>
+                  <Link to={`/shop?category=${chairsCategory._id}`} className={styles.categoryLink}>
+                    <h2>{chairsCategory.name}</h2>
                   </Link>
-                  <Link to={`/shop?category=${secondCategory._id}`} className={styles.categoryLink}>
+                  <Link to={`/shop?category=${chairsCategory._id}`} className={styles.categoryLink}>
                     <h6>
                       Go Shopping{" "}
                       <span className="ms-2">
@@ -65,22 +64,22 @@ const Categories = () => {
           <div className={`col-md-8 col-12 d-flex flex-column ${styles.gapColumn}`}>
             <div className={`row ${styles.gapColumn}`}>
               <div className={`col-md-5 col-12 ${styles.thirdItem}`}>
-                {forthCategory && (
+                {lightingCategory && (
                   <div className={styles.categoryItem}>
                     <img
                       src={
                         process.env.REACT_APP_BASE_URL +
                         "/" +
-                        forthCategory.image
+                        lightingCategory.image
                       }
-                      alt={forthCategory.name}
+                      alt={lightingCategory.name}
                     />
                     <div className={styles.overlay}>
-                      <p>{forthCategory.products_id.length} products</p>
-                      <Link to={`/shop?category=${forthCategory._id}`} className={styles.categoryLink}>
-                        <h2>{forthCategory.name}</h2>
+                      <p>{lightingCategory.products_id.length} products</p>
+                      <Link to={`/shop?category=${lightingCategory._id}`} className={styles.categoryLink}>
+                        <h2>{lightingCategory.name}</h2>
                       </Link>
-                      <Link to={`/shop?category=${forthCategory._id}`} className={styles.categoryLink}>
+                      <Link to={`/shop?category=${lightingCategory._id}`} className={styles.categoryLink}>
                         <h6>
                           Go Shopping{" "}
                           <span className="ms-2">
@@ -93,22 +92,22 @@ const Categories = () => {
                 )}
               </div>
               <div className={`col-md-7 col-12 ${styles.secondItem}`}>
-                {firstCategory && (
+                {decorCategory && (
                   <div className={styles.categoryItem}>
                     <img
                       src={
                         process.env.REACT_APP_BASE_URL +
                         "/" +
-                        firstCategory.image
+                        decorCategory.image
                       }
-                      alt={firstCategory.name}
+                      alt={decorCategory.name}
                     />
                     <div className={styles.overlay}>
-                      <p>{firstCategory.products_id.length} products</p>
-                      <Link to={`/shop?category=${firstCategory._id}`} className={styles.categoryLink}>
-                        <h2>{firstCategory.name}</h2>
+                      <p>{decorCategory.products_id.length} products</p>
+                      <Link to={`/shop?category=${decorCategory._id}`} className={styles.categoryLink}>
+                        <h2>{decorCategory.name}</h2>
                       </Link>
-                      <Link to={`/shop?category=${firstCategory._id}`}  className={styles.categoryLink}>
+                      <Link to={`/shop?category=${decorCategory._id}`}  className={styles.categoryLink}>
                         <h6>
                           Go Shopping{" "}
                           <span className="ms-2">
@@ -123,22 +122,22 @@ const Categories = () => {
             </div>
             <div className={`row ${styles.gapColumn}`}>
               <div className={`col-md-7 col-12 ${styles.thirdItem}`}>
-                {fifthCategory && (
+                {sofasCategory && (
                   <div className={styles.categoryItem}>
                     <img
                       src={
                         process.env.REACT_APP_BASE_URL +
                         "/" +
-                        fifthCategory.image
+                        sofasCategory.image
                       }
-                      alt={fifthCategory.name}
+                      alt={sofasCategory.name}
                     />
                     <div className={styles.overlay}>
-                      <p>{fifthCategory.products_id.length} products</p>
-                      <Link to={`/shop?category=${fifthCategory._id}`} className={styles.categoryLink}>
-                        <h2>{fifthCategory.name}</h2>
+                      <p>{sofasCategory.products_id.length} products</p>
+                      <Link to={`/shop?category=${sofasCategory._id}`} className={styles.categoryLink}>
+                        <h2>{sofasCategory.name}</h2>
                       </Link>
-                      <Link to={`/shop?category=${fifthCategory._id}`} className={styles.categoryLink}>
+                      <Link to={`/shop?category=${sofasCategory._id}`} className={styles.categoryLink}>
                         <h6>
                           Go Shopping{" "}
                           <span className="ms-2">
@@ -151,22 +150,22 @@ const Categories = () => {
                 )}
               </div>
               <div className={`col-md-5 col-12 ${styles.secondItem}`}>
-                {thirdCategory && (
+                {tablesCategory && (
                   <div className={styles.categoryItem}>
                     <img
                       src={
                         process.env.REACT_APP_BASE_URL +
                         "/" +
-                        thirdCategory.image
+                        tablesCategory.image
                       }
-                      alt={thirdCategory.name}
+                      alt={tablesCategory.name}
                     />
                     <div className={styles.overlay}>
-                      <p>{thirdCategory.products_id.length} products</p>
-                      <Link to={`/shop?category=${thirdCategory._id}`} className={styles.categoryLink}>
-                        <h2>{thirdCategory.name}</h2>
+                      <p>{tablesCategory.products_id.length} products</p>
+                      <Link to={`/shop?category=${tablesCategory._id}`} className={styles.categoryLink}>
+                        <h2>{tablesCategory.name}</h2>
                       </Link>
-                      <Link to={`/shop?category=${thirdCategory._id}`} className={styles.categoryLink}>
+                      <Link to={`/shop?category=${tablesCategory._id}`} className={styles.categoryLink}>
                         <h6>
                           Go Shopping{" "}
                           <span className="ms-2">
