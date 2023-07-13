@@ -42,9 +42,19 @@ const CustomersStats = () => {
       labels: series.monthDataSeries1.dates,
       xaxis: {
         type: "datetime",
+        labels: {
+          style: {
+            colors: "#697a8d",
+          },
+        },
       },
       yaxis: {
         opposite: true,
+        labels: {
+          style: {
+            colors: "#697a8d",
+          },
+        },
       },
       legend: {
         horizontalAlign: "left",

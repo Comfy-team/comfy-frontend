@@ -45,6 +45,9 @@ const PageStats = () => {
             ""
           );
         },
+        labels: {
+          colors: "#697a8d",
+      },
       },
       markers: {
         size: 0,
