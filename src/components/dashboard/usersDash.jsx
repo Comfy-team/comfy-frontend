@@ -164,11 +164,11 @@ const UsersDash = () => {
 
   return (
     <div className={`py-4`}>
-      <h4 className={`mb-2 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
+      <h1 className={`mb-2 h4 py-3 ps-4 ${dashStyle["fw-bold"]}`}>
         Users (total: {totalUsers})
-      </h4>
+      </h1>
 
-      <div className="overflow-x-auto pb-3">
+      <div className="overflow-x-auto">
         <div className="row ms-4 me-3">
           <div className="my-4 col-12 col-md-6 d-flex align-items-center justify-content-start ">
             <input
