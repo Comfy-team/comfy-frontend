@@ -14,7 +14,6 @@ import Spinner from "../../common/spinner";
 
 // style
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
-import style from "./brands.module.css";
 
 
 const BrandsUpdate = () => {
@@ -72,7 +71,7 @@ const BrandsUpdate = () => {
   // Extract the file name from the path
   
   return (
-    <div className="ps-5 py-4">
+    <div className="px-3 px-md-4 py-4">
       <h1 className={`py-3 h4 ${dashStyle["fw-bold"]}`}>Update Brand</h1>
 
       <div>
@@ -87,9 +86,9 @@ const BrandsUpdate = () => {
           })}
           onSubmit={updateBrandSubmit}
         >
-          {({ errors, touched, setFieldValue }) => (
-            <Form className={style.label} encType="multipart/form-data">
-              <div className={`mb-4 ${style["max-w-xl"]}`}>
+          {({ errors, touched }) => (
+            <Form encType="multipart/form-data">
+              <div className={`mb-4`}>
                 <label className="mb-1" htmlFor="name">
                   Name
                 </label>
@@ -103,7 +102,7 @@ const BrandsUpdate = () => {
                   <span className="text-danger ms-2"> {errors.name}</span>
                 ) : null}
               </div>
-              <div className={`mb-4 ${style["max-w-xl"]}`}>
+              <div className={`mb-4`}>
                 <label className="mb-1" htmlFor="category">
                   Category
                 </label>
@@ -117,7 +116,7 @@ const BrandsUpdate = () => {
                   <span className="text-danger ms-2">{errors.category}</span>
                 ) : null}
               </div>
-              <div className={`mb-4 ${style["max-w-xl"]}`}>
+              <div className={`mb-4`}>
                 <label className="mb-1" htmlFor="image">
                   Image
                 </label>

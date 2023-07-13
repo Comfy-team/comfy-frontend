@@ -2,12 +2,7 @@
     width: 60px;
     height: 30px;
 }
-.max-w-xl {
-    max-width: 36rem;
-}
-.label label {
-    font-weight: 550;
-}
+
 .brandProduct{
     padding-left: 2.2rem !important;
 }
