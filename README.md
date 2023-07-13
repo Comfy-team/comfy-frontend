@@ -27,7 +27,7 @@ Comfy is a MERN fullstack furniture Ecommerce project that has the following fea
 
 ### Screenshot
 
-![](./uploads/readme-screenshot.png)
+![](./src/assets/readme-screenshot.png)
 
 ### Links
 
