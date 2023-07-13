@@ -8,6 +8,7 @@ import {
   faMagnifyingGlass,
   faCartShopping,
   faUser,
+  faUserGear,
 } from "@fortawesome/free-solid-svg-icons";
 
 // components
@@ -37,8 +38,8 @@ const BottomNav = ({ cart }) => {
                 className="btn p-0 lh-1 color-main-gray fs-5 hover-color-yellow"
                 to={`/dashboard`}
               >
-                <FontAwesomeIcon icon={faUser} />
-                <span className="visually-hidden">account</span>
+                <FontAwesomeIcon icon={faUserGear} />
+                <span className="visually-hidden">dashboard</span>
               </Link>
             ) : (
               <button
