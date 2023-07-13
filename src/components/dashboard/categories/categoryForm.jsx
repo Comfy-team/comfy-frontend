@@ -1,8 +1,13 @@
 //form validation
+import { useState } from "react";
+
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
 const CategoryForm = ({ initialValues, onSubmit }) => {
+
+  const [imageUrl, setImageUrl] = useState(null);
+
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Category Name is required"),
     image: Yup.mixed()
@@ -49,6 +54,21 @@ const CategoryForm = ({ initialValues, onSubmit }) => {
             <label htmlFor="image" className="form-label pt-4">
               {initialValues.image ? "Update" : "Upload"} Category Image
             </label>
+            <div>
+              {values.image !== null ? (
+                <img
+                src={ imageUrl === null ?
+                  process.env.REACT_APP_BASE_URL + "/" + initialValues.image
+                  : imageUrl
+                }
+                alt={`Current category: ${values.name}`}
+                className="img-thumbnail mb-2"
+                width="100"
+                name="image"
+                /> 
+                ):""}
+            </div>
+            
             <input
               type="file"
               className="form-control"
@@ -56,6 +76,7 @@ const CategoryForm = ({ initialValues, onSubmit }) => {
               name="image"
               onChange={(event) => {
                 setFieldValue("image", event.target.files[0]);
+                setImageUrl(URL.createObjectURL(event.target.files[0]))
               }}
             />
             {errors.image && touched.image ? (

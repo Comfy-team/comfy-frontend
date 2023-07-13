@@ -55,7 +55,7 @@ const AddCategory = () => {
   };
 
   return (
-    <div className="ps-4 py-4">
+    <div className="px-4 py-4">
       <h1 className={`py-4 fs-4`}>Add New Category</h1>
       {errorMessage ? (
         <div
