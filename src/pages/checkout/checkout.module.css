@@ -159,3 +159,10 @@
 .gray {
   color: var(--footer-links);
 }
+@media (max-width: 575.98px) {
+  /* Styles to apply on small screens go here */
+  .rightorderColumn {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

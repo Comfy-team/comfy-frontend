@@ -21,7 +21,7 @@ const Checkout = () => {
     }
   });
   useEffect(() => {
-    if (cart?.totalPrice == 0) {
+    if (cart?.totalPrice === 0 || cart?.role === "admin") {
       navigate("/home", { replace: true });
       return;
     }

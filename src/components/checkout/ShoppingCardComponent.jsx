@@ -26,7 +26,7 @@ export default function ShoppingCardComponent() {
 
   return (
     <div>
-      <div className="ps-4 pt-2">
+      <div className="ps-0 ps-sm- ps-4 pt-2">
         {updatedAvailableItems && updatedAvailableItems?.length > 0 ? (
           <div className="container ">
             {updatedAvailableItems.map((item, index) => (
@@ -55,9 +55,10 @@ export default function ShoppingCardComponent() {
             </div>
             <hr className="hr" />
             <div className="mb-1 row">
-              <div className="col-4 ">Total</div>
-              <div className="col-4"></div>
-              <div className="col-4">
+              <div className="col-sm-2 col-md-4 col-4 ">Total</div>
+              <div className="col-sm-0 col-md-4 col-3"></div>
+
+              <div className="col-sm-7 col-md-4 col-4">
                 <p className=" ">
                   <span className={`${style.currency}`}> USD</span>$
                   {priceWithShapping}
