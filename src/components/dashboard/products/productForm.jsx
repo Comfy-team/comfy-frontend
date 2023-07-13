@@ -50,7 +50,7 @@ const ProductForm = ({
         </label>
         <Field
           type="text"
-          autocomplete="false"
+          autoComplete="off"
           name="name"
           id={`${form}-prod-name`}
           className={`form-control ${
