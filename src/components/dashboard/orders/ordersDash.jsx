@@ -107,7 +107,7 @@ const OrdersDash = () => {
       .catch(err => {
         console.log(err);
         dispatch(
-          showToast(" error occur in order delete order ${id} !try again ")
+          showToast(`error occur in order delete order ${id} !try again `)
         );
       });
   }
@@ -255,7 +255,7 @@ const OrdersDash = () => {
                   })
                 ) : (
                   <tr>
-                    <td colSpan="8" className="text-center">
+                    <td colSpan="12" className="text-center">
                       No orders found.
                     </td>
                   </tr>
