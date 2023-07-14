@@ -18,8 +18,10 @@ const BrandsAdd = () => {
   const [image, setImage] = useState("");
   const [imageError, setImageError] = useState(null);
   const [showBtnSpinner, SetShowBtnSpinner] = useState(false);
-  const token = localStorage.getItem("userToken");
   const dispatch = useDispatch();
+
+  const token = localStorage.getItem("userToken");
+  const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
 
   const addBrandSubmit = () => {
     if (image === "") {
@@ -46,7 +48,7 @@ const BrandsAdd = () => {
         setName("");
         setCategory("");
         setImage("");
-        dispatch(setBrands(res.data))
+        dispatch(setBrands(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -129,13 +131,23 @@ const BrandsAdd = () => {
                   type="file"
                   className={`form-control`}
                   name="image"
+                  accept="image/*"
                   onChange={(event) => {
-                    setImage(event.target.files[0]);
+                    const file = event.target.files[0];
+                    if (file && allowedTypes.includes(file.type)) {
+                      setImage(file);
+                      setImageError(null);
+                    } else {
+                      setImage("");
+                      setImageError(
+                        "Please choose a valid image file (png, jpg, jpeg)"
+                      );
+                    }
                   }}
                 />
-                {image === "" ? (
-                  <span className="text-danger ms-2">Image is reqiured</span>
-                ) : null}
+                {imageError && (
+                  <span className="text-danger ms-2">{imageError}</span>
+                )}
               </div>
 
               <div className="mb-4">
