@@ -13,7 +13,7 @@ const ToastInfo = ({ msg, show, onDismissToast }) => {
         bg="dark"
         onClose={onDismissToast}
         show={show}
-        delay={3000}
+        delay={6000}
         autohide
       >
         <Toast.Header className="justify-content-end bg-white">

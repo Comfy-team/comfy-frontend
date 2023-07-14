@@ -11,7 +11,6 @@ import { setBrands } from "../../../store/slices/brandsSlice";
 
 // style
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
-import style from "./brands.module.css";
 
 const BrandsAdd = () => {
   const [name, setName] = useState("");
@@ -58,9 +57,8 @@ const BrandsAdd = () => {
   };
 
   return (
-    <div className="ps-5 py-4">
+    <div className="px-3 px-md-4 py-4">
       <h1 className={`py-3 h4 ${dashStyle["fw-bold"]}`}>Add New Brand</h1>
-
       <div>
         <Formik
           initialValues={{ name: name, category: category, image: image }}
@@ -71,8 +69,8 @@ const BrandsAdd = () => {
           onSubmit={addBrandSubmit}
         >
           {({ errors, touched, setFieldValue }) => (
-            <Form className={style.label} encType="multipart/form-data">
-              <div className={`mb-4 ${style["max-w-xl"]}`}>
+            <Form encType="multipart/form-data">
+              <div className={`mb-4`}>
                 <label className="mb-1" htmlFor="name">
                   Name
                 </label>
@@ -91,7 +89,7 @@ const BrandsAdd = () => {
                   <span className="text-danger ms-2"> {errors.name}</span>
                 ) : null}
               </div>
-              <div className={`mb-4 ${style["max-w-xl"]}`}>
+              <div className={`mb-4`}>
                 <label className="mb-1" htmlFor="category">
                   Category
                 </label>
@@ -110,7 +108,7 @@ const BrandsAdd = () => {
                   <span className="text-danger ms-2">{errors.category}</span>
                 ) : null}
               </div>
-              <div className={`mb-4 ${style["max-w-xl"]}`}>
+              <div className={`mb-4`}>
                 <label className="mb-1" htmlFor="image">
                   Image
                 </label>

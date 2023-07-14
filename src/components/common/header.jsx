@@ -9,6 +9,7 @@ import {
   faMagnifyingGlass,
   faCartShopping,
   faUser,
+  faUserGear,
 } from "@fortawesome/free-solid-svg-icons";
 // components
 import { showLoginModal } from "../../store/slices/loginModalSlice";
@@ -151,10 +152,18 @@ const Header = ({ isMediumScreen, cart }) => {
                 {isLoggedIn ? (
                   <Link
                     className="btn p-0 color-main-gray fs-5 hover-color-yellow"
-                    to={`/account/${decodedToken.id}`}
+                    to={
+                      cart?.role === "user"
+                        ? `/account/${decodedToken.id}`
+                        : "/dashboard"
+                    }
                   >
-                    <FontAwesomeIcon icon={faUser} />
-                    <span className="visually-hidden">account</span>
+                    <FontAwesomeIcon
+                      icon={cart?.role === "user" ? faUser : faUserGear}
+                    />
+                    <span className="visually-hidden">
+                      {cart?.role === "user" ? "account" : "dashboard"}
+                    </span>
                   </Link>
                 ) : (
                   <button

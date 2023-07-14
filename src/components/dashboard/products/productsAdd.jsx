@@ -110,6 +110,7 @@ const ProductsAdd = () => {
         {({ errors, touched, setFieldValue, values }) => (
           <Form>
             <ProductForm
+              form="add"
               errors={errors}
               touched={touched}
               values={values}

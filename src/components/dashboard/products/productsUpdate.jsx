@@ -142,6 +142,7 @@ const ProductsUpdate = () => {
         {({ errors, touched, setFieldValue, values }) => (
           <Form>
             <ProductForm
+              form="update"
               errors={errors}
               touched={touched}
               values={values}

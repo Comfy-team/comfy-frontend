@@ -37,6 +37,7 @@ const ProductColor = ({ color, onDelete, onUpdateStock, onStockError }) => {
         <input
           type="number"
           min={0}
+          name="stock"
           className={`form-control flex-fill ${
             style["dash-prod-color-stock"]
           } ${error ? "is-invalid" : ""}`}
