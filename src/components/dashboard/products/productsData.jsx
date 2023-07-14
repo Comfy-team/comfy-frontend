@@ -142,30 +142,30 @@ const ProductsData = () => {
       {!showSpinner ? (
         <>
           <div className="table-responsive mb-5">
-            {data.length > 0 ? (
-              <table className="table border-top">
-                <thead>
-                  <tr>
-                    <th scope="col" className="ps-4">
-                      #ID
-                    </th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Discount</th>
-                    <th scope="col">Category</th>
-                    <th scope="col" className="text-center">
-                      Brand
-                    </th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">
-                      Images
-                    </th>
-                    <th scope="col" colSpan={2}>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map((product) => (
+            <table className="table border-top mb-0">
+              <thead>
+                <tr>
+                  <th scope="col" className="ps-4">
+                    #ID
+                  </th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Discount</th>
+                  <th scope="col">Category</th>
+                  <th scope="col" className="text-center">
+                    Brand
+                  </th>
+                  <th scope="col">Stock</th>
+                  <th scope="col">Images</th>
+                  <th scope="col" colSpan={2}>
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.length > 0 ? (
+                  data.map((product) => (
                     <tr key={product._id}>
                       {/* id */}
                       <th
@@ -198,7 +198,10 @@ const ProductsData = () => {
                       <td>
                         <div>
                           {product.colors.map((ele) => (
-                            <div key={ele.color} className="d-flex justify-content-between gap-2 mb-2">
+                            <div
+                              key={ele.color}
+                              className="d-flex justify-content-between gap-2 mb-2"
+                            >
                               <span className="d-inline-block ps-1 lh-1 align-middle">
                                 {ele.stock}
                               </span>
@@ -253,12 +256,16 @@ const ProductsData = () => {
                         </div>
                       </td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <p className="text-center fs-4">"No products were found"</p>
-            )}
+                  ))
+                ) : (
+                  <tr>
+                    <td className="text-center" colSpan={10}>
+                      No products were found
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
           <DashPagination
             currentPage={page}
