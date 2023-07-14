@@ -21,7 +21,9 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    setShowBtnSpinner(true);
+    if (cart.items) {
+      setShowBtnSpinner(true);
+    }
     addItemToCart(cart._id, product._id, activeColor);
   };
 
