@@ -46,10 +46,10 @@ const Categories = () => {
                 />
                 <div className={styles.overlay}>
                   <p>{chairsCategory.products_id.length} products</p>
-                  <Link to={`/shop?category=${chairsCategory._id}`} className={styles.categoryLink}>
+                  <Link to={`shop?page=1&brand=all&category=${chairsCategory._id}&sort=0&price=0`} className={styles.categoryLink}>
                     <h2>{chairsCategory.name}</h2>
                   </Link>
-                  <Link to={`/shop?category=${chairsCategory._id}`} className={styles.categoryLink}>
+                  <Link to={`shop?page=1&brand=all&category=${chairsCategory._id}&sort=0&price=0`} className={styles.categoryLink}>
                     <h6>
                       Go Shopping{" "}
                       <span className="ms-2">
@@ -76,10 +76,10 @@ const Categories = () => {
                     />
                     <div className={styles.overlay}>
                       <p>{lightingCategory.products_id.length} products</p>
-                      <Link to={`/shop?category=${lightingCategory._id}`} className={styles.categoryLink}>
+                      <Link to={`shop?page=1&brand=all&category=${lightingCategory._id}&sort=0&price=0`} className={styles.categoryLink}>
                         <h2>{lightingCategory.name}</h2>
                       </Link>
-                      <Link to={`/shop?category=${lightingCategory._id}`} className={styles.categoryLink}>
+                      <Link to={`shop?page=1&brand=all&category=${lightingCategory._id}&sort=0&price=0`} className={styles.categoryLink}>
                         <h6>
                           Go Shopping{" "}
                           <span className="ms-2">
@@ -104,10 +104,10 @@ const Categories = () => {
                     />
                     <div className={styles.overlay}>
                       <p>{decorCategory.products_id.length} products</p>
-                      <Link to={`/shop?category=${decorCategory._id}`} className={styles.categoryLink}>
+                      <Link to={`shop?page=1&brand=all&category=${decorCategory._id}&sort=0&price=0`} className={styles.categoryLink}>
                         <h2>{decorCategory.name}</h2>
                       </Link>
-                      <Link to={`/shop?category=${decorCategory._id}`}  className={styles.categoryLink}>
+                      <Link to={`shop?page=1&brand=all&category=${decorCategory._id}&sort=0&price=0`}  className={styles.categoryLink}>
                         <h6>
                           Go Shopping{" "}
                           <span className="ms-2">
@@ -134,10 +134,10 @@ const Categories = () => {
                     />
                     <div className={styles.overlay}>
                       <p>{sofasCategory.products_id.length} products</p>
-                      <Link to={`/shop?category=${sofasCategory._id}`} className={styles.categoryLink}>
+                      <Link to={`shop?page=1&brand=all&category=${sofasCategory._id}&sort=0&price=0`} className={styles.categoryLink}>
                         <h2>{sofasCategory.name}</h2>
                       </Link>
-                      <Link to={`/shop?category=${sofasCategory._id}`} className={styles.categoryLink}>
+                      <Link to={`shop?page=1&brand=all&category=${sofasCategory._id}&sort=0&price=0`} className={styles.categoryLink}>
                         <h6>
                           Go Shopping{" "}
                           <span className="ms-2">
@@ -162,10 +162,10 @@ const Categories = () => {
                     />
                     <div className={styles.overlay}>
                       <p>{tablesCategory.products_id.length} products</p>
-                      <Link to={`/shop?category=${tablesCategory._id}`} className={styles.categoryLink}>
+                      <Link to={`shop?page=1&brand=all&category=${tablesCategory._id}&sort=0&price=0`} className={styles.categoryLink}>
                         <h2>{tablesCategory.name}</h2>
                       </Link>
-                      <Link to={`/shop?category=${tablesCategory._id}`} className={styles.categoryLink}>
+                      <Link to={`shop?page=1&brand=all&category=${tablesCategory._id}&sort=0&price=0`} className={styles.categoryLink}>
                         <h6>
                           Go Shopping{" "}
                           <span className="ms-2">
