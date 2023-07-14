@@ -11,12 +11,6 @@ const CategoryForm = ({ initialValues, onSubmit }) => {
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Category Name is required"),
     image: Yup.mixed()
-      .test("fileSize", "File size too large", (value) => {
-        if (value && value.size) {
-          return value.size <= 2000000;
-        }
-        return true;
-      })
       .test("fileType", "Invalid file, Images only", (value) => {
         if (value && value.type) {
           return value.type.startsWith("image");
