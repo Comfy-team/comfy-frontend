@@ -14,7 +14,6 @@ import { showToast } from "../../../store/slices/toastSlice";
 import ConfirmPopup from "../../common/confirmPopup";
 import Spinner from "../../common/spinner";
 
-
 //style
 import dashStyle from "../../../pages/dashboard/dashboard.module.css";
 
@@ -25,11 +24,9 @@ const CategoriesData = () => {
   const [totalCategories, setTotalCategories] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState(null);
   const [showWarning, setShowWarning] = useState(false);
   const [showSpinner, setShowSpinner] = useState(true);
-
 
   const token = localStorage.getItem("userToken");
   const navigate = useNavigate();
@@ -44,11 +41,10 @@ const CategoriesData = () => {
           },
         })
         .then((res) => {
-          setShowSpinner(false); 
+          setShowSpinner(false);
           setDisplayedCategories(res.data.data);
           setAllCategories(res.data);
           setTotalCategories(res.data.totalCategories);
-          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
@@ -78,12 +74,9 @@ const CategoriesData = () => {
     setCurrentPage(1);
     setSearchQuery(query);
     if (query === "") {
-      setDisplayedCategories(categories.slice(0, 10));
+      setDisplayedCategories(allCategories);
     } else {
-      const filteredCategories = categories.filter((category) =>
-        category.name.toLowerCase().includes(query)
-      );
-      setDisplayedCategories(filteredCategories.slice(0, 10));
+      setDisplayedCategories(allCategories);
     }
   }
 
@@ -161,66 +154,80 @@ const CategoriesData = () => {
       </div>
       {!showSpinner ? (
         <>
-      <div className="table-responsive mb-5">
-        <table className="table border-top">
-          <thead>
-            <tr>
-              <th scope="col" className="ps-4">
-                #ID
-              </th>
-              <th scope="col" >Name</th>
-              <th scope="col" >Products</th>
-              <th scope="col">Image</th>
-              <th scope="col" className="text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-          {displayedCategories.map((category) => (
-                <tr key={category._id}>
-                  <td className="ps-4">{category._id}</td>
-                  <td>{category.name}</td>
-                  <td className={`${dashStyle.categoryProduct}`}>{category.products_id.length}</td>
-                  <td>
-                    <img
-                      src={
-                        process.env.REACT_APP_BASE_URL + "/" + category.image
-                      }
-                      alt={category.name}
-                      className={`${dashStyle["categories-img"]}`}
-                    />
-                  </td>
-                  <td className="text-center">
-                    <FontAwesomeIcon
-                      icon={faEdit}
-                      type="button"
-                      className={`btn p-0 ${dashStyle["dash-purple"]}`}
-                      onClick={() => handleUpdateCategory(category._id)}
-                    />
-                    <FontAwesomeIcon
-                      icon={faTrashCan}
-                      type="button"
-                      className="btn text-danger p-0 ms-2"
-                      onClick={() => {
-                        setCategoryToDelete(category);
-                        setShowWarning(true);
-                      }}
-                      />
+          <div className="table-responsive mb-5">
+            <table className="table border-top">
+              <thead>
+                <tr>
+                  <th scope="col" className="ps-4">
+                    #ID
+                  </th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Products</th>
+                  <th scope="col">Image</th>
+                  <th scope="col" className="text-center">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {displayedCategories.length > 0 ? (
+                  displayedCategories.map((category) => (
+                    <tr key={category._id}>
+                      <td className="ps-4">{category._id}</td>
+                      <td>{category.name}</td>
+                      <td className={`${dashStyle.categoryProduct}`}>
+                        {category.products_id.length}
+                      </td>
+                      <td>
+                        <img
+                          src={
+                            process.env.REACT_APP_BASE_URL +
+                            "/" +
+                            category.image
+                          }
+                          alt={category.name}
+                          className={`${dashStyle["categories-img"]}`}
+                        />
+                      </td>
+                      <td className="text-center">
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          type="button"
+                          className={`btn p-0 ${dashStyle["dash-purple"]}`}
+                          onClick={() => handleUpdateCategory(category._id)}
+                        />
+                        <FontAwesomeIcon
+                          icon={faTrashCan}
+                          type="button"
+                          className="btn text-danger p-0 ms-2"
+                          onClick={() => {
+                            setCategoryToDelete(category);
+                            setShowWarning(true);
+                          }}
+                        />
                       </td>
                     </tr>
-                  ))}
-                </tbody>
-        </table>
-      </div>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5" className="text-center">
+                      No category found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
 
-      <DashPagination
-        currentPage={currentPage}
-        totalPages={allCategories.totalPages}
-        onPageChange={onPageChange}
-      />
-      </>
-        ) : (
-          <Spinner />
-        )}
+          <DashPagination
+            currentPage={currentPage}
+            totalPages={allCategories.totalPages}
+            onPageChange={onPageChange}
+          />
+        </>
+      ) : (
+        <Spinner />
+      )}
       {showWarning && categoryToDelete && (
         <ConfirmPopup
           msg={`Are you sure you want to delete ${categoryToDelete.name} from categories?`}
