@@ -43,7 +43,7 @@ const ProductsSearch = ({ onSearch, searchParams, onRemoveSearch }) => {
               <Field
                 type="text"
                 name="searchValue"
-                placeholder="search by name, category or brand"
+                placeholder="search by id, name, category or brand"
                 className={`form-control ${
                   errors.searchValue && touched.searchValue ? "is-invalid" : ""
                 }`}
