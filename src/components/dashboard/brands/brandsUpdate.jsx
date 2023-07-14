@@ -50,7 +50,6 @@ const BrandsUpdate = () => {
       formData.append("image", image);
     }
     
-
     axiosInstance
       .patch(`/brands`, formData, {
         headers: {
