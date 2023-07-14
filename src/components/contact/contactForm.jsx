@@ -75,7 +75,7 @@ const ContactForm = () => {
                 name="name"
                 className={`form-control bg-light rounded-0 border-light ${
                     touched.name && errors.name ? "is-invalid" : ""
-                }${style["placeholder-style"]}`}
+                } ${style["placeholder-style"]}`}
                 placeholder="Name"
                 autoComplete="off"
             />
@@ -91,7 +91,7 @@ const ContactForm = () => {
                 name="email"
                 className={`form-control rounded-0 bg-light border-light ${
                     touched.email && errors.email ? "is-invalid" : ""
-                }${style["placeholder-style"]}`}
+                } ${style["placeholder-style"]}`}
                 placeholder="Email"
                 autoComplete="off"
             />
