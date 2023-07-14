@@ -1,4 +1,4 @@
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -11,18 +11,19 @@ import { showToast } from "../../../store/slices/toastSlice";
 import { setBrands } from "../../../store/slices/brandsSlice";
 import Spinner from "../../common/spinner";
 
-
 // style
 import dashStyle from "./../../../pages/dashboard/dashboard.module.css";
-
 
 const BrandsUpdate = () => {
   const [brandById, setBrandById] = useState(null);
   const [showBtnSpinner, SetShowBtnSpinner] = useState(false);
   const [image, setImage] = useState(null);
-  const token = localStorage.getItem("userToken");
+  const [imageError, setImageError] = useState(null);
   const { id } = useParams();
   const dispatch = useDispatch();
+
+  const token = localStorage.getItem("userToken");
+  const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
 
   useEffect(() => {
     axiosInstance
@@ -34,18 +35,24 @@ const BrandsUpdate = () => {
         console.log(err);
       });
   }, []);
+
   const updateBrandSubmit = (brandById) => {
     SetShowBtnSpinner(true);
+    if(imageError !== null){
+       SetShowBtnSpinner(false);
+       return;
+    }
     const formData = new FormData();
-    formData.append("_id", id)
+    formData.append("_id", id);
     formData.append("name", brandById.name);
     formData.append("category", brandById.category);
-    if(image  !== null){
-      formData.append("image", image)
+    if (image !== null) {
+      formData.append("image", image);
     }
     
+
     axiosInstance
-      .patch(`/brands`, formData,{
+      .patch(`/brands`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -54,11 +61,11 @@ const BrandsUpdate = () => {
       })
       .then((res) => {
         SetShowBtnSpinner(false);
-        dispatch(setBrands(res.data))
+        dispatch(setBrands(res.data));
         dispatch(showToast("brand updated successfully!"));
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         SetShowBtnSpinner(false);
         dispatch(showToast("Unable to update brand, please try again."));
       });
@@ -66,10 +73,9 @@ const BrandsUpdate = () => {
 
   if (!brandById) {
     // Display a loading spinner or message while the data is being fetched
-    return <Spinner/> ;
+    return <Spinner />;
   }
-  // Extract the file name from the path
-  
+
   return (
     <div className="px-3 px-md-4 py-4">
       <h1 className={`py-3 h4 ${dashStyle["fw-bold"]}`}>Update Brand</h1>
@@ -123,9 +129,12 @@ const BrandsUpdate = () => {
                 <div>
                   {brandById.image && (
                     <img
-                      src={image === null ?
-                        process.env.REACT_APP_BASE_URL + "/" + brandById.image
-                        : URL.createObjectURL(image)
+                      src={
+                        image === null
+                          ? process.env.REACT_APP_BASE_URL +
+                            "/" +
+                            brandById.image
+                          : URL.createObjectURL(image)
                       }
                       alt="Current brand"
                       className="img-thumbnail mb-2"
@@ -138,20 +147,32 @@ const BrandsUpdate = () => {
                   type="file"
                   className={`form-control`}
                   name="image"
-                  onChange={(event) => {setImage(event.target.files[0]);}}
+                  accept="image/*"
+                  onChange={(event) => {
+                    const selectedFile = event.target.files[0];
+                    if (
+                      selectedFile &&
+                      !allowedTypes.includes(selectedFile.type)
+                    ) {
+                      setImageError("Only png, jpeg, or jpg files are allowed");
+                    } else {
+                      setImageError(null);
+                      setImage(selectedFile);
+                    }
+                  }}
                 />
-                {errors.image && touched.image ? (
-                  <span className="text-danger ms-2">{errors.image}</span>
-                ) : null}
+                {imageError && (
+                  <span className="text-danger ms-2">{imageError}</span>
+                )}
               </div>
 
               <div className="mb-4">
-              {!showBtnSpinner ? (
-                <input
-                  type="submit"
-                  className={`btn px-3 mb-3 rounded-pill ${dashStyle["dash-btn"]}`}
-                  value="update brand"
-                />
+                {!showBtnSpinner ? (
+                  <input
+                    type="submit"
+                    className={`btn px-3 mb-3 rounded-pill ${dashStyle["dash-btn"]}`}
+                    value="update brand"
+                  />
                 ) : (
                   <button
                     type="button"
