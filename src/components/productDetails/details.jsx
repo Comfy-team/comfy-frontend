@@ -141,7 +141,13 @@ const Details = ({ product }) => {
       <div className="border-top border-bottom py-4">
         <div className="d-flex align-items-center gap-2 mb-4">
           <span className="fw-semibold">Stock:</span>
-          <span className={activeColor.stock === 0 ? "text-danger" : ""}>
+          <span
+            className={
+              activeColor.stock === 0 || activeQuantity > activeColor.stock
+                ? "text-danger"
+                : ""
+            }
+          >
             {activeColor.stock > 0 ? activeColor.stock : "Out Of Stock"}
           </span>
         </div>

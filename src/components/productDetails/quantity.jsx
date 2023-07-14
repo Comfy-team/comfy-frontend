@@ -29,7 +29,9 @@ const Quantity = ({
           <span className="visually-hidden">Loading...</span>
         </div>
       ) : (
-        <div className="fs-4">{`${active < 10 ? "0" : ""}${active}`}</div>
+        <div className={`fs-4 ${active > stock ? "text-danger" : ""}`}>{`${
+          active < 10 ? "0" : ""
+        }${active}`}</div>
       )}
       <button
         type="button"
