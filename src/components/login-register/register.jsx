@@ -61,7 +61,14 @@ const Register = ({ onRegistrationSuccess }) => {
             .max(50, "Full name must be less than 50 characters"),
           email: Yup.string()
             .required("Email is required")
-            .matches(/^[a-z0-9.]{3,}@gmail\.com$/, "Invalid email address"),
+            .matches(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i, "Email must be a valid email address")
+            .test("email-username-length", "Sorry, email username must be between 6 and 30 characters long", function(value) {
+              const username = value.split("@")[0];
+              return username.split("@")[0].length >= 6 && username.length <= 30;
+            })
+            .test("lowercase", "Email must be lowercase", function(value) {
+              return value.toLowerCase() === value;
+            }),
           password: Yup.string()
             .required("Password is required")
             .min(8, "Password must be at least 8 characters long")
