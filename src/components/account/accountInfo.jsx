@@ -76,7 +76,15 @@ const AccountInfo = ({ user, token,setUser }) => {
             .max(50, "Full name must be less than 50 characters"),
           email: Yup.string()
             .required("Email is required")
-            .matches(/^[a-z0-9.]{3,}@gmail\.com$/, "Invalid email address"),
+            .matches(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i, "Email must be a valid email address")
+            .test("email-username-length", "Sorry, email username must be between 6 and 30 characters long", function(value) {
+              const username = value.split("@")[0];
+              return username.split("@")[0].length >= 6 && username.length <= 30;
+            })
+            .test("lowercase", "Email must be lowercase", function(value) {
+              return value.toLowerCase() === value;
+            }),
+            
           phone: Yup.string()
             .optional()
             .nullable()
@@ -153,7 +161,7 @@ const AccountInfo = ({ user, token,setUser }) => {
                 id="phone"
                 placeholder="Please enter your phone number"
               />
-              {errors.phone && touched.phone ? (
+              {errors?.phone && touched?.phone ? (
                 <span className="text-danger ms-2">{errors.phone}</span>
               ) : null}
             </div>
@@ -181,7 +189,7 @@ const AccountInfo = ({ user, token,setUser }) => {
                   </option>
                 ))}
               </Field>
-              {errors.address?.governorate && touched.address.governorate ? (
+              {errors.address?.governorate && touched?.address?.governorate ? (
                 <span className="text-danger ms-2">
                   {errors.address.governorate}
                 </span>
@@ -222,7 +230,7 @@ const AccountInfo = ({ user, token,setUser }) => {
                   return updateUser?.address.governorate;
                 })}
               </Field>
-              {errors.address?.city && touched.address.city ? (
+              {errors.address?.city && touched?.address?.city ? (
                 <span className="text-danger ms-2">{errors.address.city}</span>
               ) : null}
             </div>
@@ -238,7 +246,7 @@ const AccountInfo = ({ user, token,setUser }) => {
                 id="street"
                 placeholder="Please enter your street address"
               />
-              {errors.address?.street && touched.address.street ? (
+              {errors.address?.street && touched?.address?.street ? (
                 <span className="text-danger ms-2">
                   {errors.address.street}
                 </span>
@@ -256,7 +264,7 @@ const AccountInfo = ({ user, token,setUser }) => {
                 id="building"
                 placeholder="Please enter your building number"
               />
-              {errors.address?.building && touched.address.building ? (
+              {errors.address?.building && touched?.address?.building ? (
                 <span className="text-danger ms-2">
                   {errors.address.building}
                 </span>
@@ -274,7 +282,7 @@ const AccountInfo = ({ user, token,setUser }) => {
                 id="apartment"
                 placeholder="Please enter your apartment"
               />
-              {errors.address?.apartment && touched.address.apartment ? (
+              {errors.address?.apartment && touched?.address?.apartment ? (
                 <span className="text-danger ms-2">
                   {errors.address.apartment}
                 </span>
