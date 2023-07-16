@@ -66,7 +66,7 @@ const Login = ({ closeModal, saveUserData }) => {
         validationSchema={Yup.object({
           email: Yup.string()
             .required("Email is required")
-            .matches(/^[a-z0-9.]{3,}@gmail\.com$/, "Invalid email address"),
+            .matches(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i, "Email must be a valid email address"),
           password: Yup.string().required("Password is required"),
         })}
         onSubmit={handleSubmit}
@@ -91,8 +91,6 @@ const Login = ({ closeModal, saveUserData }) => {
               <label className="mb-1" htmlFor="password">
                 Password <span>*</span>
               </label>
-
-              {/* <Field className={`form-control ${styles.input}`} name="password" type="password" placeholder="Please enter your password"/> */}
               <div className={styles.passwordInputWrapper}>
                 <Field
                   className={`form-control ${styles.input}`}
